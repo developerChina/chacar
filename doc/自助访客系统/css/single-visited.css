@@ -1,0 +1,154 @@
+.wrap{
+	width: 100%;
+	height: 100vh;
+	background: url(../images/bg.gif);
+	background-size: 100% 100%;
+	position: relative;
+}
+.head{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-width: 800px;
+	height: 66px;
+	padding-left: 10%;
+	font: 28px/66px "";
+	color: #fff;
+	background: url(../images/single-logo.png) no-repeat 5% center;
+}
+.content{
+	width: 950px;
+	height: 450px;
+	box-sizing: border-box;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto auto;
+}
+
+.left .title{
+	height: 48px;
+	font: bold 20px/48px "";
+	color: #175cb4;
+	margin-bottom: 10px;
+}
+.left .title span:nth-child(1){
+	width: 12px;
+	height: 24px;
+	background: #2f4f7e;
+	margin: 12px 12px 0 0;
+}
+table{
+	border-collapse: collapse;
+	line-height: 22px;
+}
+thead{
+	background: #f7f7f7;
+}
+tbody{
+	background: #fff;
+	text-align: center;
+}
+tr th:nth-child(1){
+	width: 32px;
+	min-width: 32px;
+	max-width: 32px;
+}
+tr th:nth-child(2){
+	width: 225px;
+	min-width: 225px;
+	max-width: 225px;
+}
+tr th:nth-child(3){
+	width: 168px;
+	min-width: 168px;
+	max-width: 168px;
+}
+tr th:nth-child(4),tr th:nth-child(8){
+	width: 40px;
+	min-width: 40px;
+	max-width: 40px;
+}
+tr th:nth-child(5),tr th:nth-child(6){
+	width: 66px;
+	min-width: 66px;
+	max-width: 66px;
+}
+
+.down{
+	width: 7px;
+	height: 8px;
+	background: url(../images/down.png) no-repeat;
+	margin: 8px 8px 0 30px;
+}
+.member,.rigth{
+	width: 15px;
+	height: 14px;
+	margin: 4px 8px 0 0;
+}
+.member{
+	background: url(../images/member.png) no-repeat;
+}
+.rigth{
+	background: url(../images/rigth.png) no-repeat;
+	margin-right:6px ;
+}
+.check{
+	margin: 5px 4px 0 40px;
+}
+.single{
+	width:14px;
+	height: 14px;
+	background: url(../images/singleMember.png) no-repeat;
+	margin: 3px 8px 0 0;
+}
+.source,.setting,.process{
+	width: 14px;
+	height: 14px;
+	margin: 5px 8px 0 0;
+}
+.source{
+	background: url(../images/source.png) no-repeat;
+}
+.setting{
+	background: url(../images/setting.png) no-repeat;
+}
+.process{
+	background: url(../images/process.png) no-repeat;
+}
+.processChild{
+	margin-left: 40px;
+}
+
+.btnArea{
+	width: 300px;
+	float: right;
+	margin: 30px 50px 0 0;
+}
+.prevpage{
+	width: 89px;
+	height: 42px;
+	background: url(../images/prevpage.png) no-repeat;
+	margin-right: 20px;
+}
+.notice{
+	width: 81px;
+	height: 42px;
+	background: url(../images/notice.png) no-repeat;
+}
+.foot{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	min-width: 800px;
+	height: 62px;
+	padding-left: 1%;
+	font: bold 24px/62px "宋体";
+	color: #fff;
+}
+
+

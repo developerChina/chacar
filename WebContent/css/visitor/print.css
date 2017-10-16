@@ -1,0 +1,252 @@
+.wrap{
+	width: 100%;
+	height: 100vh;
+	background: url(images/bg.png);
+	background-size: 100% 100%;
+	position: relative;
+}
+.head{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-width: 800px;
+	height: 66px;
+	padding-left: 5%;
+	font: 28px/66px "";
+	color: #fff;
+}
+.content{
+	width: 950px;
+	height: 450px;
+	box-sizing: border-box;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto auto;
+}
+.content .top{
+	width: 100%;
+	height: 75px;
+	/*margin-right: 150px;*/
+	/*border-bottom: 5px solid #66bbe4;*/
+}
+.top .title{
+	height: 46px;
+	font: bold 20px/46px "";
+	color: #175cb4;
+}
+.top .title span:nth-child(1){
+	width: 12px;
+	height: 24px;
+	background: #2f4f7e;
+	margin: 12px 12px 0 0;
+}
+
+.bottom{
+	margin-bottom: 35px;
+}
+.left{
+	width: 455px;
+	height: 260px;
+	border: 1px solid #c7d8ec;
+	margin-right: 50px;
+	box-sizing: border-box;
+}
+caption{
+	height: 20px;
+	line-height: 20px;
+	color: #485899;
+	font-weight: bold;
+	text-align: left;
+	background: #dbe7fc;
+}
+table{
+	border-color:#e3e6eb;
+	font-weight: normal;
+	color: #8a8782;
+	border-collapse: collapse;
+}
+thead{
+	background: #f8f8f8;
+	color: #8a8782;
+	display: block;
+}
+thead tr th:nth-child(1){
+	width: 30px;
+	min-width: 30px;
+	max-width: 30px;
+}
+thead tr th:nth-child(2),thead tr th:nth-child(3),thead tr th:nth-child(4){
+	width: 72px;
+	min-width: 72px;
+	max-width: 72px;
+}
+thead tr th:nth-child(5){
+	width: 204px;
+	min-width: 204px;
+	max-width: 204px;
+}
+
+tbody{
+	background: #fff;
+	height: 190px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	display: block;
+	box-sizing: border-box;
+	width: 450px;
+}
+tbody tr th:nth-child(1){
+	width: 30px;
+	min-width: 30px;
+	max-width: 30px;
+}
+tbody tr th:nth-child(2),tbody tr th:nth-child(3),tbody tr th:nth-child(4){
+	width: 72px;
+	min-width: 72px;
+	max-width: 72px;
+}
+tbody tr th:nth-child(5){
+	width: 202px;
+	min-width: 202px;
+	max-width: 202px;
+}
+.tfoot{
+	width: 452px;
+	height: 26px;
+	line-height: 24px;
+	background: #efefef;
+	display: block;
+	/*border-top: 1px solid #a1a1a1;*/
+}
+.tfoot select{
+	width:40px;
+	height: 22px;
+	border: 1px solid #e3e6eb;
+	/*border-top: 0px;
+	border-left: 0px;*/
+	color: #000;
+	text-align: center;
+	margin: 2px 2px;
+	padding-left: 5px;
+	background: #fff;
+}
+.tfoot .shu{
+	width: 2px;
+	height: 22px;
+	background: #dadada;
+	margin: 2px 5px;
+}
+.tfoot .prev{
+	width: 8px;
+	height: 12px;
+	background: url(images/prev.png);
+	margin: 8px 5px 0;
+}
+.tfoot .leftIcon{
+	width: 5px;
+	height: 12px;
+	background: url(images/left-icon.png);
+	margin: 8px 5px 0;
+}
+.tfoot .num{
+	width: 30px;
+	height: 20px;
+	border: 1px solid #e3e6eb;
+	margin: 3px 3px 0 5px;
+	background: #fff;
+	text-indent: 5px;
+}
+.tfoot .rightIcon{
+	width: 5px;
+	height: 12px;
+	background: url(images/right.png);
+	margin: 8px 5px 0;
+}
+.tfoot .next{
+	width: 8px;
+	height: 12px;
+	background: url(images/next.png);
+	margin: 8px 5px 0;
+}
+.tfoot .refresh{
+	width: 12px;
+	height: 14px;
+	background: url(images/refresh.png);
+	margin-top: 6px;
+}
+
+
+.right .choice{
+	width: 300px;
+	height: 236px;
+	background: url(images/printBg.png) no-repeat;
+	position: relative;
+}
+.choice div{
+	width: 88px;
+	height: 88px;
+	border: 5px solid #ff6600;
+	border-radius: 50% 50%;
+	font: 18px/30px "";
+	text-align: center;
+	position: absolute;
+	
+}
+.choice .search{
+	left: 10px;
+	bottom: 20px;
+}
+.choice .print{
+	right: 10px;
+	bottom: 20px;
+}
+.choice span{
+	position: absolute;
+	left: 17px;
+	bottom: -15px;
+	width: 94px;
+	height: 64px;
+	background:url(images/choice-bg.png) no-repeat;
+}
+
+.btnArea{
+	width: 390px;
+	height: 62px;
+	margin: 0 auto;	
+}
+.btnArea input{
+	font: 30px/62px "";
+	color: #fff;
+	width: 168px;
+	height:62px ;
+	border: 1px solid #103d77;
+	background: #19b7f8;
+	text-indent: 65px;
+	margin-right: 40px;
+}
+.btnArea .print{
+	margin-right: 0;
+	background: #19b7f8 url(images/print-icon.png) no-repeat 20px center;
+}
+.btnArea .search{
+	background: #19b7f8 url(images/search.png) no-repeat 25px center;
+}
+
+.foot{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	min-width: 800px;
+	height: 62px;
+	padding-left: 1%;
+	font: bold 24px/62px "宋体";
+	color: #fff;
+	
+}
+
+
