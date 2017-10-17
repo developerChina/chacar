@@ -52,7 +52,7 @@ public class ExampleController {
 		// 执行添加操作
 		exampleService.addExample(example);
 		// 设置客户端跳转到查询请求
-		// mv.setViewName("redirect:/example/selectExample");
+		 mv.setViewName("redirect:/example/selectExample");
 		// 返回
 		return mv;
 	}

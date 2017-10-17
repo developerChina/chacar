@@ -6,6 +6,25 @@
 		<title></title>
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/more-visited.css" />
+		<link href="${ctx}/demo/demo.css" rel="stylesheet" type="text/css" />
+    	<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
+    	<script type="text/javascript">
+    	
+    	 function getCheckedNodes() {
+    		 var tree = mini.get("treegrid1");
+             var node = tree.getSelectedNode();
+             console.info(node);
+             alert(node.tel)
+         }
+    	 
+    	 function onBeforeNodeSelect(e) {
+             var tree = e.sender;
+             var node = e.node;
+             if (tree.hasChildren(node)) {
+                 e.cancel = true;
+             }
+         }
+    	</script>
 	</head>
 	<body>
 		<div class="wrap">
@@ -18,206 +37,26 @@
 						<span class="fl"></span>
 						<span>拜访对象</span>
 					</div>
-					<table width="800" height="280" border="1" cellpadding="0" cellspacing="0">
-						<thead>
-							<tr>
-								<th>编号</th>
-								<th>资源名称</th>
-								<th>门禁</th>
-								<th>楼层</th>
-								<th>房间</th>
-								<th>通道</th>
-								<th>上级资源ID</th>
-								<th>状态</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>8</td>
-								<td class="clearfix">
-									<span class="fl down"></span>
-									<span class="fl member"></span>
-									<span class="fl">权限管理</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>9</td>
-								<td class="clearfix">
-									<input type="checkbox" class="fl check"/>
-									<span class="fl single"></span>
-									<span class="fl">用户管理</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>10</td>
-								<td>
-									<input type="checkbox" class="fl check"/>
-									<span class="fl member"></span>
-									<span class="fl">角色管理</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>11</td>
-								<td>
-									<input type="checkbox" class="fl check"/>
-									<span class="fl source"></span>
-									<span class="fl">资源管理</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>12</td>
-								<td>
-									<span class="fl down"></span>
-									<span class="fl setting"></span>
-									<span class="fl">系统设置</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>13</td>
-								<td>
-									<input type="checkbox" class="fl check"/>
-									<span class="fl setting"></span>
-									<span class="fl">系统参数</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>14</td>
-								<td>
-									<input type="checkbox" class="fl check"/>
-									<span class="fl setting"></span>
-									<span class="fl">操作日志</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>15</td>
-								<td>
-									<span class="fl down"></span>
-									<span class="fl process"></span>
-									<span class="fl">测试资源</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>16</td>
-								<td>
-									<span class="fl down"></span>
-									<span class="fl process"></span>
-									<span class="fl">子资源</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>17</td>
-								<td>
-									<input type="checkbox" class="fl check"/>
-									<span class="fl rigth"></span>
-									<span class="fl">子子资源1</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>18</td>
-								<td>
-									<input type="checkbox" class="fl check"/>
-									<span class="fl rigth"></span>
-									<span class="fl">子子资源2</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>19</td>
-								<td>
-									<span class="fl process processChild"></span>
-									<span class="fl">子资源1</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-							<tr>
-								<td>20</td>
-								<td>
-									<span class="fl process processChild"></span>
-									<span class="fl">子资源2</span>
-								</td>
-								<td></td>
-								<td>1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>正常</td>
-							</tr>
-						</tbody>
-					</table>
+					 <div id="treegrid1" class="mini-treegrid" style="width:800px;height:280px;"     
+					    url="${ctx}/bevisited/getBevisitedTree" showTreeIcon="true" 
+					    treeColumn="taskname" idField="id" parentField="pid" resultAsTree="false"
+					    showRadioButton="true" allowMoveColumn="false" allowResizeColumn="false"
+					    showFolderCheckBox="false" expandOnLoad="true" onbeforenodeselect="onBeforeNodeSelect" >
+					    <div property="columns">
+					        <div type="indexcolumn" width="50">编号</div>
+					        <div name="taskname" field="name" width="150">资源名称</div>
+					        <div field="door" width="100">门禁</div>
+					        <div field="floor" width="50">楼层</div>
+					        <div field="room" width="100">房间</div>
+					        <div field="channel" width="100">通道</div>
+					        <div field="pname" width="pname">上级资源</div>
+					        <div field="status" width="50">状态</div>
+					    </div>
+					</div>
 				</div>
 				<div class="btnArea clearfix">
 					<a href="${ctx}/visitor/forwardMoreVisitor" class="fl prevpage"></a>
-					<a href="#" class="fl notice"></a>
+					<a href="#" class="fl notice" onclick="getCheckedNodes()"></a>
 				</div>
 			</div>
 			<div>

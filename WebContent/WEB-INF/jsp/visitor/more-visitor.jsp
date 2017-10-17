@@ -162,7 +162,7 @@
 							<img src="${ctx}/images/photoTwo.png" alt="" />
 							<p>拍照照片</p>
 						</div>
-						<a href="${ctx}/visitor/forwardMoreVisited"><div class="page"></div></a>
+						<a href="${ctx}/visitor/forwardMoreVisited" ><div class="page"></div></a>
 					</div>
 				</div>
 			</div>

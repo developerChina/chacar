@@ -74,10 +74,28 @@
 	font: 16px/32px "";
 	color: #8a8782;
 }
+.infoArea .text{
+	width: 120px;
+	height: 28px;
+	font: 16px/28px "";
+	box-sizing: border-box;
+	text-indent: 5px;
+	border: 1px solid #8a8782;
+}
 .page{
-	width: 150px;
+	width: 250px;
 	height: 60px;
-	background: url(../images/page.png) no-repeat;
+}
+.page .prevpage{
+	width: 89px;
+	height: 42px;
+	background: url(../images/prevpage.png) no-repeat;
+	margin-right: 20px;
+}
+.page .nextpage{
+	width: 89px;
+	height: 42px;
+	background: url(../images/nextpage.png) no-repeat;
 }
 .content .right{
 	width: 250px;

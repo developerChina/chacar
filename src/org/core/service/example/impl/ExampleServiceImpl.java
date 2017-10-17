@@ -3,7 +3,8 @@ package org.core.service.example.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.core.dao.ExampleDao;
+
+import org.core.dao.example.ExampleDao;
 import org.core.domain.Example;
 import org.core.service.example.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
