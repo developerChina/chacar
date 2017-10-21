@@ -26,5 +26,5 @@ public interface VisitorRecordDao {
 	
 	@SelectProvider(type=VisitorRecordProvider.class,method="selectByPage")
 	List<VisitorRecord> selectByPage(VisitorRecord entity);
-	
+
 }

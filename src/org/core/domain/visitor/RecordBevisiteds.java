@@ -10,9 +10,6 @@ public class RecordBevisiteds implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String recordBVID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录被访人员列表ID' ,
 	private String recordID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录ID' ,
-	private int isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
-	private String visitReason;   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访事由' ,
-	private String auditContent;   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人审核意见' ,
 	private String bevisitedID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人ID' ,
 	private String deptID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
 	private String bevisitedName;   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
@@ -35,24 +32,6 @@ public class RecordBevisiteds implements Serializable{
 	}
 	public void setRecordID(String recordID) {
 		this.recordID = recordID;
-	}
-	public int getIsAudit() {
-		return isAudit;
-	}
-	public void setIsAudit(int isAudit) {
-		this.isAudit = isAudit;
-	}
-	public String getVisitReason() {
-		return visitReason;
-	}
-	public void setVisitReason(String visitReason) {
-		this.visitReason = visitReason;
-	}
-	public String getAuditContent() {
-		return auditContent;
-	}
-	public void setAuditContent(String auditContent) {
-		this.auditContent = auditContent;
 	}
 	public String getBevisitedID() {
 		return bevisitedID;

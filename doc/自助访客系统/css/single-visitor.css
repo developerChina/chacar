@@ -85,6 +85,7 @@
 .page{
 	width: 250px;
 	height: 60px;
+	margin-top: 50px;
 }
 .page .prevpage{
 	width: 89px;
@@ -100,7 +101,7 @@
 .content .right{
 	width: 250px;
 	box-sizing: border-box;
-	padding-top: 50px;
+	padding-top: 25px;
 }
 .right div:nth-child(2){
 	width: 192px;

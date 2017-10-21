@@ -12,7 +12,7 @@ public interface VisitorInfoService {
 	/**
 	 * 添加访客
 	 */
-	void save(VisitorInfo entity);
+	String save(VisitorInfo entity);
 	
 	/**
 	 * 根据id删除访客
@@ -41,5 +41,5 @@ public interface VisitorInfoService {
 	 * 更新或保存访客
 	 * @param entity
 	 */
-	void saveOrUpdate(VisitorInfo entity);
+	String saveOrUpdate(VisitorInfo entity);
 }

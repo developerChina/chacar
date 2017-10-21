@@ -4,8 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.bevisited.BevisitedInfo;
-import org.core.util.BeanUtil;
-import org.core.util.GenId;;
+import org.core.util.BeanUtil;;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -16,10 +15,8 @@ public class BevisitedInfoProvider {
 		return new SQL() {
 			{
 				INSERT_INTO(BevisitedInfo.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,serialVersionUID,bevisitedID");
-				entity.setBevisitedID(GenId.UUID());
-				VALUES("bevisitedID", "#{bevisitedID}");
-				for (Map.Entry<String, Object> entry : map.entrySet()) { 
+				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,serialVersionUID");
+				for (Map.Entry<String, Object> entry : map.entrySet()) { 		
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
 				} 
 			}

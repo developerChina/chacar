@@ -63,6 +63,7 @@ caption{
 	text-align: left;
 	background: #dbe7fc;
 }
+/**
 table{
 	border-color:#e3e6eb;
 	font-weight: normal;
@@ -114,6 +115,7 @@ tbody tr th:nth-child(5){
 	min-width: 202px;
 	max-width: 202px;
 }
+*/
 .tfoot{
 	width: 452px;
 	height: 26px;

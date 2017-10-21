@@ -1,4 +1,4 @@
-package org.core.service.visitor;
+package org.core.service.record;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface RecordBevisitedsService {
 	/**
 	 * 添加来访记录被访人列表
 	 */
-	void save(RecordBevisiteds entity);
+	String save(RecordBevisiteds entity);
 	
 	/**
 	 * 根据id删除来访记录被访人列表
@@ -31,5 +31,14 @@ public interface RecordBevisitedsService {
 	 * 查询来访记录被访人列表(page信息为空不分页)
 	 */
 	List<RecordBevisiteds> selectByPage(RecordBevisiteds entity);
-	
+
+	/**
+	 * 根据记录id查询来访记录被访人列表
+	 */
+	List<RecordBevisiteds> selectBevisitedByRecordId(String recordid);
+	/**
+	 * 删除所有记录id的被访人			
+	 */
+	void deleteByRecordID(String recordid);
+
 }

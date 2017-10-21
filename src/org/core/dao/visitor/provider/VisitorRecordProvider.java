@@ -4,8 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.visitor.VisitorRecord;
-import org.core.util.BeanUtil;
-import org.core.util.GenId;;
+import org.core.util.BeanUtil;;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -16,12 +15,10 @@ public class VisitorRecordProvider {
 		return new SQL() {
 			{
 				INSERT_INTO(VisitorRecord.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,serialVersionUID,recordID");
-				entity.setRecordID(GenId.UUID());
-				VALUES("recordID", "#{recordID}");
+				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,serialVersionUID");
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
-				} 
+				} 	
 			}
 		}.toString();
 	}

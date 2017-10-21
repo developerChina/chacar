@@ -212,13 +212,21 @@ tbody tr th:nth-child(5){
 	font: 16px/22px "";
 	color: #f20f0f;
 }
-.right .page{
-	width: 88px;
-	height: 40px;
-	background: url(../images/nextPage.png) no-repeat;
-	margin: 230px 0 0 140px;
-	border: 0;
-	
+.page{
+	width: 335px;
+	height: 60px;
+	margin-top: 20px;
+}
+.page .prevpage{
+	width: 89px;
+	height: 42px;
+	background: url(../images/prevpage.png) no-repeat;
+	margin-right: 20px;
+}
+.page .nextpage{
+	width: 89px;
+	height: 42px;
+	background: url(../images/nextpage.png) no-repeat;
 }
 
 

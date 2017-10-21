@@ -11,7 +11,7 @@ public interface DepartInfoService {
 	/**
 	 * 添加被访人
 	 */
-	void save(DepartInfo entity);
+	String save(DepartInfo entity);
 	
 	/**
 	 * 根据id删除被访人

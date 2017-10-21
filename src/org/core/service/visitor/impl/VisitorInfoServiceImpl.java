@@ -5,6 +5,7 @@ import java.util.List;
 import org.core.dao.visitor.VisitorInfoDao;
 import org.core.domain.visitor.VisitorInfo;
 import org.core.service.visitor.VisitorInfoService;
+import org.core.util.GenId;
 import org.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,11 @@ public class VisitorInfoServiceImpl implements VisitorInfoService{
 	@Autowired
 	private VisitorInfoDao dao;
 	@Override
-	public void save(VisitorInfo entity) {
+	public String save(VisitorInfo entity) {
+		String uuid=GenId.UUID();
+		entity.setVisitorID(uuid);
 		dao.save(entity);
+		return uuid;
 	}
 
 	@Override
@@ -50,20 +54,23 @@ public class VisitorInfoServiceImpl implements VisitorInfoService{
 	}
 
 	@Override
-	public void saveOrUpdate(VisitorInfo entity) {
+	public String saveOrUpdate(VisitorInfo entity) {
+		String uuid=null;
 		if(StringUtils.isNotBlank(entity.getVisitorID())){
-			dao.update(entity);
-			return;
+			 update(entity);
+			 uuid=entity.getVisitorID();
 		}
 		if(StringUtils.isNotBlank(entity.getCardID())){
 			VisitorInfo exits=dao.selectOneBycardID(entity.getCardID());
 			if(exits!=null){
 				entity.setVisitorID(exits.getVisitorID());
-				dao.update(entity);
+				update(entity);
+				uuid=entity.getVisitorID();
 			}else{
-				dao.save(entity);
+				uuid=save(entity);
 			}
 		}
+		return uuid;
 	}
 	 
 }

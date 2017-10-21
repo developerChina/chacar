@@ -29,4 +29,7 @@ public interface BevisitedInfoDao {
 	
 	@Select("select * from "+BevisitedInfo.tableName)		
 	List<BevisitedInfo> selectAll();
+
+	@Select("select * from "+BevisitedInfo.tableName+" where bevisitedTel = #{tel}")
+	BevisitedInfo selectOneByTel(String tel);
 }

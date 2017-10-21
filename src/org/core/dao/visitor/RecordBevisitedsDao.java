@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.visitor.provider.RecordBevisitedsProvider;
 import org.core.domain.visitor.RecordBevisiteds;
-
 /**   
  * @Description: Mapper接口
  */
@@ -27,4 +26,9 @@ public interface RecordBevisitedsDao {
 	@SelectProvider(type=RecordBevisitedsProvider.class,method="selectByPage")
 	List<RecordBevisiteds> selectByPage(RecordBevisiteds entity);
 	
+	@Select("select * from "+RecordBevisiteds.tableName+" where recordID = #{recordid}")
+	List<RecordBevisiteds> selectBevisitedByRecordId(String recordid);
+
+	@Delete(" delete from "+RecordBevisiteds.tableName+" where recordID = #{recordid} ")
+	void deleteByRecordID(String recordid);
 }

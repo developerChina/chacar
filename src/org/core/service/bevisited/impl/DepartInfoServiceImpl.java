@@ -5,6 +5,7 @@ import java.util.List;
 import org.core.dao.bevisited.DepartInfoDao;
 import org.core.domain.bevisited.DepartInfo;
 import org.core.service.bevisited.DepartInfoService;
+import org.core.util.GenId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -19,8 +20,11 @@ public class DepartInfoServiceImpl implements DepartInfoService{
 	@Autowired
 	private DepartInfoDao dao;
 	@Override
-	public void save(DepartInfo entity) {
+	public String save(DepartInfo entity) {
+		String uuid=GenId.UUID();
+		entity.setDeptID(uuid);
 		dao.save(entity);
+		return uuid;
 	}
 
 	@Override

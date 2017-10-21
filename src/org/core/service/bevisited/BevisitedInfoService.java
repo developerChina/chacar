@@ -12,7 +12,7 @@ public interface BevisitedInfoService {
 	/**
 	 * 添加被访人
 	 */
-	void save(BevisitedInfo entity);
+	String save(BevisitedInfo entity);
 	
 	/**
 	 * 根据id删除被访人
@@ -37,5 +37,11 @@ public interface BevisitedInfoService {
 	 * @return
 	 */
 	List<Map<String, Object>> getBevisitedTree();
+
+	/**
+	 * 根据手机号获取被访问
+	 * @return
+	 */
+	BevisitedInfo selectOneByTel(String tel);
 	
 }

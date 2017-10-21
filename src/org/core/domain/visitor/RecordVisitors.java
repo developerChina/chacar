@@ -11,7 +11,7 @@ public class RecordVisitors implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String recordVID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录访客列表ID' ,
 	private String recordID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录ID' ,
-	private int recordIsOut;   // tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否已经访问完成(0=申请中，1=正在访问，2=访问结束)' ,
+	
 	private String visitorID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访客人员ID' ,
 	private String cardNo;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证物理卡号' ,
 	private String cardID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证号' ,
@@ -22,15 +22,14 @@ public class RecordVisitors implements Serializable{
 	private String cardAddress;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证地址' ,
 	private String cardPhoto;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证照片' ,
 	private String photo1;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '照片1' ,
-	private String photo2;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '照片2' ,
-	private String photo3;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '照片3' ,
 	private String telephone;   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '访客电话' ,
 	private String company;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '访客单位' ,
-	private String remarks;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '访客备注' ,
-	private String reserve1;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '备用字段1' ,
-	private String reserve2;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '备用字段2' ,
-	private String reserve3;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '备用字段3' ,
-	private String reserve4;   // varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '备用字段4' ,
+	
+	private int visitStatus;   // tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否已经访问完成(0=申请中，1=审核中，2=已审核，3=正在访问，4=访问结束,5=删除)' ,
+	private String visitReason;   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '访问事由' ,
+	private int isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
+	private String auditContent;   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人审核意见' ,
+	
 	public String getRecordVID() {
 		return recordVID;
 	}
@@ -42,12 +41,6 @@ public class RecordVisitors implements Serializable{
 	}
 	public void setRecordID(String recordID) {
 		this.recordID = recordID;
-	}
-	public int getRecordIsOut() {
-		return recordIsOut;
-	}
-	public void setRecordIsOut(int recordIsOut) {
-		this.recordIsOut = recordIsOut;
 	}
 	public String getVisitorID() {
 		return visitorID;
@@ -109,18 +102,6 @@ public class RecordVisitors implements Serializable{
 	public void setPhoto1(String photo1) {
 		this.photo1 = photo1;
 	}
-	public String getPhoto2() {
-		return photo2;
-	}
-	public void setPhoto2(String photo2) {
-		this.photo2 = photo2;
-	}
-	public String getPhoto3() {
-		return photo3;
-	}
-	public void setPhoto3(String photo3) {
-		this.photo3 = photo3;
-	}
 	public String getTelephone() {
 		return telephone;
 	}
@@ -133,34 +114,28 @@ public class RecordVisitors implements Serializable{
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public String getRemarks() {
-		return remarks;
+	public int getVisitStatus() {
+		return visitStatus;
 	}
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
+	public void setVisitStatus(int visitStatus) {
+		this.visitStatus = visitStatus;
 	}
-	public String getReserve1() {
-		return reserve1;
+	public String getVisitReason() {
+		return visitReason;
 	}
-	public void setReserve1(String reserve1) {
-		this.reserve1 = reserve1;
+	public void setVisitReason(String visitReason) {
+		this.visitReason = visitReason;
 	}
-	public String getReserve2() {
-		return reserve2;
+	public int getIsAudit() {
+		return isAudit;
 	}
-	public void setReserve2(String reserve2) {
-		this.reserve2 = reserve2;
+	public void setIsAudit(int isAudit) {
+		this.isAudit = isAudit;
 	}
-	public String getReserve3() {
-		return reserve3;
+	public String getAuditContent() {
+		return auditContent;
 	}
-	public void setReserve3(String reserve3) {
-		this.reserve3 = reserve3;
-	}
-	public String getReserve4() {
-		return reserve4;
-	}
-	public void setReserve4(String reserve4) {
-		this.reserve4 = reserve4;
+	public void setAuditContent(String auditContent) {
+		this.auditContent = auditContent;
 	}
 }

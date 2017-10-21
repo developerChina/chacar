@@ -1,4 +1,4 @@
-package org.core.service.visitor;
+package org.core.service.record;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ public interface VisitorRecordService {
 	/**
 	 * 添加来访记录
 	 */
-	void save(VisitorRecord entity);
+	String save(VisitorRecord entity);
 	
 	/**
 	 * 根据id删除来访记录
 	 */
-	void deleteById(String id);
+	void deleteById(String id);		
 	/**
 	 * 修改来访记录
 	 */
@@ -31,5 +31,9 @@ public interface VisitorRecordService {
 	 * 查询来访记录(page信息为空不分页)
 	 */
 	List<VisitorRecord> selectByPage(VisitorRecord entity);
-	
+	/**
+	 * 保存或修改来访记录
+	 */
+	String saveOrUpdate(VisitorRecord visitorRecord);
+
 }

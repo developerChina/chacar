@@ -1,4 +1,4 @@
-package org.core.service.visitor;
+package org.core.service.record;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface RecordVisitorsService {
 	/**
 	 * 添加来访记录访客列表
 	 */
-	void save(RecordVisitors entity);
+	String save(RecordVisitors entity);
 	
 	/**
 	 * 根据id删除来访记录访客列表
@@ -31,5 +31,24 @@ public interface RecordVisitorsService {
 	 * 查询来访记录访客列表(page信息为空不分页)
 	 */
 	List<RecordVisitors> selectByPage(RecordVisitors entity);
+
+	/**
+	 * 根据记录id查询来访记录访客列表
+	 */
+	List<RecordVisitors> selectVisitorByRecordId(String recordid);
+
+	/**
+	 * 删除所有记录id的访客
+	 */
+	void deleteByRecordID(String recordid);
+	
+	/**
+	 * 根据记录id和记录单状态 查询来访记录访客列表
+	 */
+	List<RecordVisitors> selectVisitorByRID_Statuts(String recordid,int status);
+	/**
+	 * 根据身份证ID和记录单状态 查询来访记录
+	 */
+	List<RecordVisitors> selectRecordInfoBycardID_status(String cardid, int status);		
 	
 }

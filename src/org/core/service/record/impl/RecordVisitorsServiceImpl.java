@@ -1,10 +1,11 @@
-package org.core.service.visitor.impl;
+package org.core.service.record.impl;
 
 import java.util.List;
 
 import org.core.dao.visitor.RecordVisitorsDao;
 import org.core.domain.visitor.RecordVisitors;
-import org.core.service.visitor.RecordVisitorsService;
+import org.core.service.record.RecordVisitorsService;
+import org.core.util.GenId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -18,9 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class RecordVisitorsServiceImpl implements RecordVisitorsService{
 	@Autowired
 	private RecordVisitorsDao dao;
-	@Override
-	public void save(RecordVisitors entity) {
+	@Override		
+	public String save(RecordVisitors entity) {
+		String uuid=GenId.UUID();
+		entity.setRecordVID(uuid);
 		dao.save(entity);
+		return uuid;
 	}
 
 	@Override
@@ -42,5 +46,24 @@ public class RecordVisitorsServiceImpl implements RecordVisitorsService{
 	public List<RecordVisitors> selectByPage(RecordVisitors entity) {
 		return dao.selectByPage(entity);
 	}
-	 
+	
+	@Override
+	public List<RecordVisitors> selectVisitorByRecordId(String recordid) {
+		return dao.selectVisitorByRecordId(recordid);
+	}
+	@Override
+	public void deleteByRecordID(String recordid) {
+		dao.deleteByRecordID(recordid);
+	}
+
+	@Override
+	public List<RecordVisitors> selectVisitorByRID_Statuts(String recordid, int status) {
+		return dao.selectVisitorByRID_Statuts(recordid,status);
+	}
+	
+	@Override
+	public List<RecordVisitors> selectRecordInfoBycardID_status(String cardid, int status) {
+		return dao.selectRecordInfoBycardID_status(cardid,status);
+	}
+
 }

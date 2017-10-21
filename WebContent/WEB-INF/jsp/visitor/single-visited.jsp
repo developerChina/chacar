@@ -6,17 +6,34 @@
 		<title></title>
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/single-visited.css" />
-		<link href="${ctx}/demo/demo.css" rel="stylesheet" type="text/css" />
     	<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
     	<script type="text/javascript">
     	
-    	 function getCheckedNodes() {
+    	 function sendMessage() {
     		 var tree = mini.get("treegrid1");
              var nodes = tree.getCheckedNodes(false);
              console.info(nodes);
+             if(nodes.length<=0){
+            	 alert('请选择您要拜访的人');
+            	 return;
+             }
+             
+             var tels =[];
              for (var i = 0; i < nodes.length; i++) {
-            	 alert(nodes[i].tel)
+            	 tels.push(nodes[i].tel);
 			}
+            //异步发送短信 alert("${recordid}-"+tels);
+            $.ajax({
+			  type: 'POST',
+			  url: '${ctx}/bevisited/sendMoreMessage',
+			  data: {"recordid":"${recordid}","tels":tels.join(",")},
+			  success: function(data){
+				 $("#telephone").val(data.telephone); 
+				 $("#company").val(data.company); 
+				 window.location.href='${ctx}/vindex.jsp'; 
+			  }
+			});
+             
          }
     	
     	</script>
@@ -35,8 +52,7 @@
 					<div id="treegrid1" class="mini-treegrid" style="width:800px;height:280px;"     
 					    url="${ctx}/bevisited/getBevisitedTree" showTreeIcon="true" 
 					    treeColumn="taskname" idField="id" parentField="pid" resultAsTree="false"
-					    showCheckBox="true" checkRecursive="true" allowMoveColumn="false" allowResizeColumn="false"
-					    showFolderCheckBox="false" expandOnLoad="true">
+					    showCheckBox="true" checkRecursive="true" showFolderCheckBox="false" expandOnLoad="true">
 					    <div property="columns">
 					        <div type="indexcolumn" width="50">编号</div>
 					        <div name="taskname" field="name" width="150">资源名称</div>
@@ -50,8 +66,8 @@
 					</div>
 				</div>
 				<div class="btnArea clearfix">
-					<a href="${ctx}/visitor/forwardSingleVisitor" class="fl prevpage"></a>
-					<a href="#" class="fl notice" onclick="getCheckedNodes()"></a>
+					<a href="${ctx}/visitor/forwardSingleVisitor?recordid=${recordid}" class="fl prevpage"></a>
+					<a href="#" class="fl notice" onclick="sendMessage()"></a>
 				</div>
 			</div>
 			<div>

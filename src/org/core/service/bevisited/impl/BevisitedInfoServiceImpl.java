@@ -10,6 +10,7 @@ import org.core.dao.bevisited.DepartInfoDao;
 import org.core.domain.bevisited.BevisitedInfo;
 import org.core.domain.bevisited.DepartInfo;
 import org.core.service.bevisited.BevisitedInfoService;
+import org.core.util.GenId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -26,8 +27,11 @@ public class BevisitedInfoServiceImpl implements BevisitedInfoService{
 	@Autowired
 	private DepartInfoDao departInfoDao;
 	@Override
-	public void save(BevisitedInfo entity) {
+	public String save(BevisitedInfo entity) {
+		String uuid=GenId.UUID();
+		entity.setBevisitedID(uuid);
 		dao.save(entity);
+		return uuid;
 	}
 
 	@Override
@@ -90,6 +94,11 @@ public class BevisitedInfoServiceImpl implements BevisitedInfoService{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public BevisitedInfo selectOneByTel(String tel) {
+		return dao.selectOneByTel(tel);
 	}
 	 
 }
