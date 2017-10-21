@@ -57,11 +57,11 @@
 }
 
 .bottom{
-	margin: 5px 0 0 40px;
+	margin: 5px 0 0 20px;
 }
 .left{
-	width: 455px;
-	height: 222px;
+	width: 470px;
+	height: 270px;
 	border: 1px solid #c7d8ec;
 	margin-right: 30px;
 	box-sizing: border-box;
@@ -199,7 +199,6 @@ tbody tr th:nth-child(5){
 	margin-top: 6px;
 }
 
-
 .right div{
 	width: 162px;
 	height: 208px;
@@ -221,15 +220,22 @@ tbody tr th:nth-child(5){
 	font: 16px/22px "";
 	color: #f20f0f;
 }
-.right .page{
+.page{
+	width: 335px;
+	height: 60px;
+	margin-top: 20px;
+}
+.page .prevpage{
+	width: 89px;
+	height: 89px;
+	background: url(images/prevpage.png) no-repeat;
+	margin-right: 20px;
+}
+.page .nextpage{
 	width: 89px;
 	height: 89px;
 	background: url(images/nextpage.png) no-repeat;
-	margin: 230px 0 0 140px;
-	border: 0;
-	
 }
-
 
 /*.js{
 	padding-left: 30px;
