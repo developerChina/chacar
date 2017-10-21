@@ -32,12 +32,12 @@
 								<p>证件照片</p>
 							</div>
 							<div class="fl">
-								<div id="photo1-div">
+								<span id="photo1-div">
 									<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
 									<input type="hidden" id="photo1" name="photo1" value="">
 									<p>拍照照片</p>
-								</div>
-								<div id="capctrl-div" style="display: none">
+								</span>
+								<span id="capctrl-div" style="display: none">
 									<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="158px" height="204px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
 								      <param name="Visible" value="0">
 								      <param name="AutoScroll" value="0">
@@ -66,7 +66,7 @@
 								      <param name="key1" value="jpkQqZaD6QlBq6L7AIl1LA9MJ04Ds+N6Ft9b47KUxAZzgfPCATMIiQ==">
 								      <param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
 								    </object>
-								</div>
+								</span>
 							</div>
 						</div>
 						<div class="infoArea">
@@ -96,10 +96,6 @@
 							<p>工作单位：<input type="text" class="text" id="company" name="company" style="width: 400px"/></p>
 							<p>访问事由：<input type="text" class="text" id="visitReason" name="visitReason" style="width: 400px"/></p>
 						</div>
-						<div class="page fr">
-							<a href="${ctx}/vindex.jsp" class="fl prevpage"></a>
-							<a href="#" class="fl nextpage" onclick="submitRecord();"></a>
-						</div>
 					</div>
 					<div class="right fl">
 						<div>
@@ -108,6 +104,10 @@
 						<div></div>
 						<div>
 							<a href="#" onclick="photograph()"><img src="${ctx}/images/photoCollect.png" alt="" /></a>
+						</div>
+						<div class="page fr">
+							<a href="${ctx}/vindex.jsp" class="fl prevpage"></a>
+							<a href="#" class="fl nextpage" onclick="submitRecord();"></a>
 						</div>
 					</div>
 				</div>

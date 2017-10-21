@@ -85,6 +85,7 @@
 .page{
 	width: 250px;
 	height: 60px;
+	margin-top: 50px;
 }
 .page .prevpage{
 	width: 89px;
