@@ -38,7 +38,7 @@
 									<p>拍照照片</p>
 								</div>
 								<div id="capctrl-div" style="display: none">
-									<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="158px" height="204px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
+									<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="158px" height="204px" codebase="${ctx}/jslib/ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
 								      <param name="Visible" value="0">
 								      <param name="AutoScroll" value="0">
 								      <param name="AutoSize" value="0">
@@ -275,10 +275,10 @@
 					capCtrl.resizePicture(158,204);
 					var baseStr64=capCtrl.jpegBase64Data;
 					if(baseStr64!=""){
-					   $("#photo1").val(baseStr64);
-						$("#photo1-img").attr("src", "data:image/png;base64,"+baseStr64);
+						$("#photo1").val(baseStr64);
+						$("#photo1-img").attr("src", "data:image/jpg;base64,"+baseStr64);
 					}
-					registerCtrl.start();
+					capCtrl.start();
 			    }
 			    catch (e) {
 			        return;
