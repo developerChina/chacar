@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>人事管理系统 ——用户管理</title>
+	<title>用户管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -20,9 +19,9 @@
 	<script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.jss" type="text/javascript"></script>
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-	
+
 	<script type="text/javascript">
 		$(function(){
 	 	   /** 获取上一次选中的部门数据 */
@@ -57,7 +56,11 @@
 	 			   });
 	 		   }
 	 	   })
-	    })
+	 	   /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		   window.location = "${ctx }/user/addUser?flag=1";
+	 	   })
+	 })
 	</script>
 </head>
 <body>
@@ -84,8 +87,9 @@
 					    <td class="font3">
 					    	用户名：<input type="text" name="username">
 					    	用户状态：<input type="text" name="status">
-					    	 <input type="submit" value="搜索"/>
+					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
+					    	<input id="add" type="button" value="添加用户"/>
 					    </td>
 					  </tr>
 					</table>
@@ -110,15 +114,14 @@
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
-				<tr id="data_${stat.index}" align="center" class="main_trbg" onMouseOver="move(this);" onMouseOut="out(this);">
+				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
 					 <td>${user.loginname }</td>
 					  <td>${user.password }</td>
 					  <td>${user.username }</td>
 					  <td>${user.status }</td>
-					  <td><f:formatDate value="${user.createDate}" 
-								type="date" dateStyle="long"/></td>
-					 <td align="center" width="40px;"><a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
+					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>
+ 					  <td align="center" width="40px;"><a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
 							<img title="修改" src="${ctx}/images/update.gif"/></a>
 					  </td>
 				</tr>
@@ -127,14 +130,16 @@
 		</td>
 	  </tr>
 	  <!-- 分页标签 -->
-	  <tr valign="top"><td align="center" class="font3">
-	  	 <fkjava:pager
-	  	        pageIndex="${requestScope.pageModel.pageIndex}" 
-	  	        pageSize="${requestScope.pageModel.pageSize}" 
-	  	        recordCount="${requestScope.pageModel.recordCount}" 
-	  	        style="digg"
-	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}"/>
-	  </td></tr>
+	  <tr valign="top">
+		    <td align="center" class="font3">
+		  	 <fkjava:pager
+		  	        pageIndex="${requestScope.pageModel.pageIndex}" 
+		  	        pageSize="${requestScope.pageModel.pageSize}" 
+		  	        recordCount="${requestScope.pageModel.recordCount}" 
+		  	        style="digg"
+		  	        submitUrl="${ctx}/user/selectUser?pageIndex={0}"/>
+		  </td>
+	  </tr>
 	</table>
 	<div style="height:10px;"></div>
 </body>

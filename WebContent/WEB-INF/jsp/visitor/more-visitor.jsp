@@ -31,7 +31,6 @@
 		</div>
 		<form id="more-visitor-form" method="post" action="${ctx}/visitor/forwardMoreVisited">
 			<input type="hidden" id="recordVisitors" name="recordVisitors" />
-			<input type="hidden" id="recordid" name="recordid" value="${recordid}" />
 		</form>
 		<div class="wrap">
 			<div class="head">
@@ -119,7 +118,7 @@
 						</div>
 					</div>
 					<div class="page fr">
-						<a href="#" class="fl prevpage"></a>
+						<a href="${ctx}/vindex.jsp" class="fl prevpage"></a>
 						<a href="#" class="fl nextpage" onclick="submitRecord()"></a>
 					</div>
 				</div>
@@ -313,14 +312,12 @@
         
         function submitRecord() {
             var data = grid.getEditData(true);
-            console.info(data)
             if(data.length<=0){
             	alert("请登记身份证信息");
 				return;
             }
             var json = mini.encode(data);
             $("#recordVisitors").val(json);
-            $("#recordid").val("${recordid}");
             $('#more-visitor-form').submit();
         }
         
@@ -329,29 +326,6 @@
             var s = '<span class="icon-remove" title="删除记录" onclick="delRow('+uid+')"></span>';
             return s;
         }
-        
-        function putmodle(cardPhoto,photo1,cardName,cardSex,cardNation,cardID,cardAddress,telephone,company,visitReason){
-        	var row = {};
-			row["cardPhoto"]=cardPhoto;
-			row["photo1"]=photo1;
-			row["cardName"]=cardName;
-			row["cardSex"]=cardSex;
-			row["cardNation"]=cardNation;
-			row["cardID"]=cardID;
-			row["cardAddress"]=cardAddress;
-			row["telephone"]=telephone;
-			row["company"]=company;
-			row["visitReason"]=visitReason;
-            grid.addRow(row);
-            grid.beginEditRow(row);
-        }
-        
-    </script>
-    
-    <c:forEach var="modle" items="${modles}">
-		  <script type="text/javascript">
-		  putmodle("${modle.cardPhoto}","${modle.photo1}","${modle.cardName}","${modle.cardSex}","${modle.cardNation}","${modle.cardID}","${modle.cardAddress}","${modle.telephone}","${modle.company}","${modle.visitReason}")
-		  </script>
-	</c:forEach>
+        </script>  
     
 </html>

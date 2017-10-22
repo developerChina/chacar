@@ -1,19 +1,17 @@
 package org.core.controller.visitor;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.VisitorInfo;
-import org.core.domain.visitor.VisitorRecord;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.util.GenId;
 import org.core.util.ImageUtils;
+import org.core.util.JsonUtils;
 import org.core.util.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,14 +46,7 @@ public class SingleVisitorController {
 	 * @return
 	 */
 	@RequestMapping(value="/visitor/forwardSingleVisitor")
-	public ModelAndView forwardSingleVisitor(ModelAndView mv,String recordid){
-		if(StringUtils.isNotBlank(recordid)){
-			List<RecordVisitors> list=recordVisitorsService.selectVisitorByRecordId(recordid);
-			if(list.size()>0){
-				mv.addObject("modle",list.get(0));
-			}
-		}
-		mv.addObject("recordid",recordid);
+	public ModelAndView forwardSingleVisitor(HttpServletRequest request,HttpServletResponse response,ModelAndView mv){
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/single-visitor");
 		// 返回ModelAndView
@@ -68,40 +59,32 @@ public class SingleVisitorController {
 	 * @param mv
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/visitor/forwardSingleVisited")
 	public ModelAndView forwardSingleVisited(HttpServletRequest request,HttpServletResponse response,
 			@ModelAttribute RecordVisitors recordVisitors,ModelAndView mv){
+		
 		//存储或修改访客信息
 		VisitorInfo visitorInfo=new VisitorInfo();
 		BeanUtils.copyProperties(recordVisitors, visitorInfo);
 		
 		//base64转图片
 		String uploadRootPath=request.getSession().getServletContext().getRealPath("/");
-		System.out.println(uploadRootPath);
-		String cardPhoto=ImageUtils.cardPhoto+GenId.UUID()+".jpg";
-		String photo1=ImageUtils.photo1+GenId.UUID()+".jpg";
+		String cardPhoto=ImageUtils.cardPhoto + visitorInfo.getCardID() + ".jpg";
+		String photo1=ImageUtils.photo1 + GenId.UUID() + ".jpg";
 		if(StringUtils.isNotBlank(visitorInfo.getCardPhoto())){
 			ImageUtils.generateImage(visitorInfo.getCardPhoto(), uploadRootPath+cardPhoto);
 			visitorInfo.setCardPhoto(cardPhoto);
+			recordVisitors.setCardPhoto(cardPhoto);
 		}
 		if(StringUtils.isNotBlank(visitorInfo.getPhoto1())){
 			ImageUtils.generateImage(visitorInfo.getPhoto1(), uploadRootPath+photo1);
 			visitorInfo.setPhoto1(photo1);
-		}
+			recordVisitors.setPhoto1(photo1);
+		}		
 		
 		String visitorID =visitorInfoService.saveOrUpdate(visitorInfo);
-		//存储访问记录
-		VisitorRecord visitorRecord=new VisitorRecord();
-		visitorRecord.setRecordID(recordVisitors.getRecordID());
-		String recordID=visitorRecordService.saveOrUpdate(visitorRecord);
-		//删除访问记录人员
-		recordVisitorsService.deleteByRecordID(recordID);
-		//存储访问记录访客信息
-		recordVisitors.setRecordID(recordID);
-		recordVisitors.setVisitorID(visitorID);
-		recordVisitorsService.save(recordVisitors);
-		//设置前台记录ID
-		mv.addObject("recordid", recordID);
+		mv.addObject("recordVisitors", JsonUtils.toJson(recordVisitors).replaceAll("\"", "\'"));
 		//设置客户端跳转到查询请求
 		mv.setViewName("visitor/single-visited");
 		//返回ModelAndView
@@ -115,39 +98,9 @@ public class SingleVisitorController {
 	 */
 	@RequestMapping(value="/visitor/getVisitorBycardID")
 	@ResponseBody
-	public Object getVisitorBycardID(String cardid){
+	public Object getVisitorBycardID(HttpServletRequest request,HttpServletResponse response,String cardid){
 		VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(cardid);
 		return visitorInfo;
-	}
-	
-	
-	/**
-	 * 测试用例
-	 */
-	@RequestMapping(value = "/visitor/test")
-	@ResponseBody
-	public Object test(HttpServletRequest request,HttpServletResponse response) {
-//		visitorInfo.setVisitorID("338c763352d64442a7a4d4fa7b998fd9");
-//		visitorInfo.setCardNo("cardNo");;   //varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证物理卡号' ,
-//		visitorInfo.setCardID("cardID");;   //varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证号' ,
-//		visitorInfo.setCardName("cardName");;   //varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证姓名' ,
-//		visitorInfo.setCardSex("cardSex");;   //varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证性别' ,
-//		visitorInfo.setCardNation("cardNation");;   //varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证名族' ,
-//		visitorInfo.setCardBirthday(new Date());;   //date NULL DEFAULT NULL COMMENT '身份证出生日期' ,
-//		visitorInfo.setCardAddress("cardAddress");;   //varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证地址' ,
-//		visitorInfo.setCardPhoto("cardPhoto");;   //varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份证照片' ,
-//		visitorInfo.setPhoto1("photo1");;   //varchar(200) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '照片1' ,
-//		// 执行添加操作
-//		visitorInfoService.update(visitorInfo);		
-////		visitorInfoService.save(visitorInfo);
-//		// 设置客户端跳转到查询请求
-//		// mv.setViewName("redirect:/visitor/single-visitor");
-//		// 返回
-//		return mv;
-		RecordVisitors entity=new RecordVisitors();
-		entity.setRecordID("ab6b674d654b415794fe558c91d4b40b");
-		entity.setVisitStatus(2);
-		return recordVisitorsService.selectVisitorByRID_Statuts("36b045674c9e4f8eb1fc4189db61307e",2);
 	}
 	
 }

@@ -68,7 +68,6 @@ public class UserController {
 	 public String selectUser(Integer pageIndex,
 			 @ModelAttribute User user,
 			 Model model){
-		System.out.println("user = " + user);
 		PageModel pageModel = new PageModel();
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);

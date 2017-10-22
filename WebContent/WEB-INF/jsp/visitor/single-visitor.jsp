@@ -282,7 +282,6 @@
 			}
 		}
 		
-		init();
 		function init(){
 			if("${modle}"==''){
 				return;

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.RecordVisitors;
-import org.core.domain.visitor.VisitorInfo;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
@@ -40,7 +39,7 @@ public class RecordController {
 	public Object selectVisitorByRecordId(HttpServletRequest request, HttpServletResponse response){
 		String recordid=request.getParameter("recordid");
 		List<RecordVisitors> list=recordVisitorsService.selectVisitorByRecordId(recordid);
-		if(list.size()==0){
+		if(list.size()==0){		
 			return null;
 		}else if(list.size()==0){
 			return list.get(0);

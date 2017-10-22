@@ -10,6 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainAckController {
 	
+	@RequestMapping(value="/loginAck")
+	 public ModelAndView loginAck(ModelAndView mv){
+		// 设置客户端跳转到查询请求
+		mv.setViewName("loginForm");
+		// 返回ModelAndView
+		return mv;
+	}
+	
 	@RequestMapping(value="/mainAck")
 	 public ModelAndView mainAck(ModelAndView mv){
 		// 设置客户端跳转到查询请求

@@ -1,7 +1,5 @@
-#创建数据库hrm_db
-CREATE DATABASE hrm_db3;
-#使用数据库hrm_db
-USE hrm_db;
+﻿#使用数据库chacar
+USE chacar;
 #创建表dept_inf
 CREATE TABLE dept_inf (
   ID INT(11) NOT NULL AUTO_INCREMENT,

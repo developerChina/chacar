@@ -66,7 +66,7 @@
 					</div>
 				</div>
 				<div class="btnArea clearfix">
-						<input type="submit" class="fl search" value="查询" onclick="findRecord()"/>
+						<input type="submit" class="fl search" value="查询" onclick="findRecordByRead()"/>
 						<input type="submit" class="fl print" value="打印" onclick="printRecord()"/>
 					</div>
 			</div>
@@ -132,39 +132,52 @@
 	 }
      
      
-	function findRecord(){
+	function findRecordByRead(){
 		var cardInfo=readIDCard();
 		if(cardInfo.state){
 			$("#cardid").val(cardInfo.message.code);
-			$.ajax({
-				  type: 'POST',
-				  url: '${ctx}/visitor/selectRecordInfo',
-				  data: {"cardid":cardInfo.message.code},
-				  success: function(data){
-					  grid.clearRows();//清除所有行，重新添加
-					 for (var i = 0; i < data.length; i++) {
-						 var row = {};
-						 row["bevisitedName"]=data[i].bevisited.bevisitedName;
-						 row["bevisitedAddress"]=data[i].bevisited.bevisitedAddress;
-						 //isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
-						 if(data[i].visitor.isAudit===0){
-							 row["auditContent"]='未审核-'+(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }else if(data[i].visitor.isAudit===1){
-							 row["auditContent"]='同意-'+(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }else if(data[i].visitor.isAudit===2){
-							 row["auditContent"]='拒绝-'+(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }else{
-							 row["auditContent"]=(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }
-						 grid.addRow(row);
-						 grid.beginEditRow(row);
-					}
-				  }
-			});
+			findRecord(cardInfo.message.code);
 		}else{
 			alert(cardInfo.message);
 		}
 	}
+	
+	
+	
+	function findRecord(cardid){
+		if(cardid==undefined || cardid==''){
+	       	 alert('请扫描省份证');
+	       	 return; 
+        }
+		$.ajax({
+			  type: 'POST',
+			  url: '${ctx}/visitor/selectRecordInfo',
+			  data: {"cardid":cardid},
+			  success: function(data){
+				  grid.clearRows();//清除所有行，重新添加
+				 for (var i = 0; i < data.length; i++) {
+					 var row = {};
+					 row["bevisitedName"]=data[i].bevisited.bevisitedName;
+					 row["bevisitedAddress"]=data[i].bevisited.bevisitedAddress;
+					 //isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
+					 if(data[i].visitor.isAudit===0){
+						 row["auditContent"]='未审核-'+(data[i].visitor.auditContent==null?'':":"+data[i].visitor.auditContent);
+					 }else if(data[i].visitor.isAudit===1){
+						 row["auditContent"]='同意-'+(data[i].visitor.auditContent==null?'':":"+data[i].visitor.auditContent);
+					 }else if(data[i].visitor.isAudit===2){
+						 row["auditContent"]='拒绝'+(data[i].visitor.auditContent==null?'':":"+data[i].visitor.auditContent);
+					 }else{
+						 row["auditContent"]=(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
+					 }
+					 grid.addRow(row);
+					 grid.beginEditRow(row);
+				}
+			  }
+		});
+	}
+	
+	
+	
      function printRecord(){
     	var cardid=$("#cardid").val();
     	var cardno=$("#cardno").val();
@@ -177,7 +190,9 @@
 		  url: '${ctx}/visitor/printRecordInfo',
 		  data: {"cardid":cardid,"cardno":cardno},
 		  success: function(data){
-			 alert(data);
+			  if(data){
+				 findRecord($("#cardid").val());
+			  }
 		  }
 		});
      }

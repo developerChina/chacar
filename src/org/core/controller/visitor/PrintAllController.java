@@ -32,7 +32,7 @@ public class PrintAllController {
 	private RecordBevisitedsService recordBevisitedsService;
 	
 	@RequestMapping(value="/visitor/forwardAllPrint")
-	 public ModelAndView forwardAllPrint(ModelAndView mv){
+	 public ModelAndView forwardAllPrint(HttpServletRequest request,HttpServletResponse response,ModelAndView mv){
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/all-print");
 		// 返回ModelAndView
@@ -72,7 +72,6 @@ public class PrintAllController {
 	@RequestMapping(value = "/visitor/printRecordInfo")
 	@ResponseBody
 	public Object printRecordInfo(HttpServletRequest request,HttpServletResponse response) {
-		List<Map<String, Object>> list=new ArrayList<>();
 		String cardid=request.getParameter("cardid");
 		String cardno=request.getParameter("cardno");
 		List<RecordVisitors> rvs= recordVisitorsService.selectRecordInfoBycardID_status(cardid,2);
@@ -83,7 +82,7 @@ public class PrintAllController {
 		}
 		//发送权限，发送打印数据给前端
 		
-		return list;
+		return true;
 	}
 	
 }

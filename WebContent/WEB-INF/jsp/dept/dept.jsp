@@ -5,7 +5,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>人事管理系统 ——部门管理</title>
+	<title>部门管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -20,7 +20,7 @@
 	<script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.jss" type="text/javascript"></script>
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script type="text/javascript">
 		$(function(){
@@ -63,6 +63,10 @@
 	 			   });
 	 		   }
 	 	   })
+	 	   /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		   window.location = "${ctx }/dept/addDept?flag=1";
+	 	   })
 	    })
 	</script>
 </head>
@@ -91,6 +95,7 @@
 					    	部门名称：<input type="text" name="name">
 					    	 <input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
+					    	<input id="add" type="button" value="添加部门"/>
 					    </td>
 					  </tr>
 					</table>
@@ -112,7 +117,7 @@
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.depts}" var="dept" varStatus="stat">
-				<tr id="data_${stat.index}" align="center" class="main_trbg" onMouseOver="move(this);" onMouseOut="out(this);">
+				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${dept.id}"></td>
 					 <td>${dept.name }</td>
 					  <td>${dept.remark }</td>
