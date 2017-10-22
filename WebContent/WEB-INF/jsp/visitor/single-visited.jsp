@@ -22,14 +22,12 @@
              for (var i = 0; i < nodes.length; i++) {
             	 tels.push(nodes[i].tel);
 			}
-            //异步发送短信 alert("${recordid}-"+tels);
             $.ajax({
 			  type: 'POST',
 			  url: '${ctx}/bevisited/sendMoreMessage',
 			  data: {"recordid":"${recordid}","tels":tels.join(",")},
 			  success: function(data){
-				 $("#telephone").val(data.telephone); 
-				 $("#company").val(data.company); 
+				 alert(data);
 				 window.location.href='${ctx}/vindex.jsp'; 
 			  }
 			});

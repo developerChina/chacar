@@ -34,6 +34,8 @@ public class BeisitedController {
 	@Qualifier("recordVisitorsService")
 	private RecordVisitorsService recordVisitorsService;
 	
+	//审核地址
+	String  auditUrl="http://localhost:8080/chacar/visitor/forwardVisitorAck?recordid=";
 	/**
 	 * 查询部门和被访人树
 	 * @param mv
@@ -72,7 +74,7 @@ public class BeisitedController {
 		}
 		//调用短信接口
 		
-		return tel;
+		return auditUrl+recordid;
 	}
 	
 	/**
@@ -102,6 +104,6 @@ public class BeisitedController {
 		}
 		//调用短信接口
 		
-		return tels;
+		return auditUrl+recordid;
 	}
 }

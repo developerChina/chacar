@@ -40,14 +40,17 @@
 				</div>
 				<div class="bottom clearfix">
 					<div class="fl left">
-						 <div id="datagrid1" class="mini-datagrid" style="width:455px;height:258px;" idField="cardName" multiSelect="true" showPager="false" allowSortColumn="false">
-					      <div property="columns">
-					      	  <div type="checkcolumn"></div>
-					          <div field="bevisitedName" width="80" headerAlign="center">姓名</div>                
-					          <div field="bevisitedAddress" width="200" headerAlign="center">办公地点</div>
-					          <div field="auditContent" width="100" headerAlign="center">确认状态</div>
-					      </div>
-					  </div>
+						打印输入:<input type="text" class="text" id="cardno" title='身份证物理卡号'/>
+						<input type="hidden" id="cardid" title='省份证号'/>
+						<br/>
+						<div id="datagrid1" class="mini-datagrid" style="width:455px;height:258px;" idField="cardName" multiSelect="true" showPager="false" allowSortColumn="false">
+						      <div property="columns">
+						      	  <div type="checkcolumn"></div>
+						          <div field="bevisitedName" width="80" headerAlign="center">姓名</div>                
+						          <div field="bevisitedAddress" width="200" headerAlign="center">办公地点</div>
+						          <div field="auditContent" width="100" headerAlign="center">确认状态</div>
+						      </div>
+						</div>
 					</div>
 					<div class="right fl clearfix">
 						<div class="choice">
@@ -61,11 +64,10 @@
 							</div>
 						</div>
 					</div>
-					
 				</div>
 				<div class="btnArea clearfix">
 						<input type="submit" class="fl search" value="查询" onclick="findRecord()"/>
-						<input type="submit" class="fl print" value="打印"/>
+						<input type="submit" class="fl print" value="打印" onclick="printRecord()"/>
 					</div>
 			</div>
 			<div>
@@ -133,6 +135,7 @@
 	function findRecord(){
 		var cardInfo=readIDCard();
 		if(cardInfo.state){
+			$("#cardid").val(cardInfo.message.code);
 			$.ajax({
 				  type: 'POST',
 				  url: '${ctx}/visitor/selectRecordInfo',
@@ -154,6 +157,7 @@
 							 row["auditContent"]=(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
 						 }
 						 grid.addRow(row);
+						 grid.beginEditRow(row);
 					}
 				  }
 			});
@@ -161,6 +165,21 @@
 			alert(cardInfo.message);
 		}
 	}
-     
+     function printRecord(){
+    	var cardid=$("#cardid").val();
+    	var cardno=$("#cardno").val();
+    	if(cardno=="" || cardid==''){
+    		alert("请登记身份证信息");
+    		return;
+    	}
+		$.ajax({
+		  type: 'POST',
+		  url: '${ctx}/visitor/printRecordInfo',
+		  data: {"cardid":cardid,"cardno":cardno},
+		  success: function(data){
+			 alert(data);
+		  }
+		});
+     }
 	</script>
 </html>

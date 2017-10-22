@@ -63,10 +63,10 @@ public class SendSmsUtil {
 		 //此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
 	    String accessKeyId = "LTAILulq86lFDuW3";//yourAccessKeyId
 	    String accessKeySecret = "lJa085SgzDXFRZqf3XJymmN2LGYt2v";//yourAccessKeySecret 
-	    String PhoneNumbers="13701075882";
+	    String PhoneNumbers="13723382349";
 	    String SignName="E访通";
 	    String TemplateCode="SMS_104740018";
-	    String TemplateParam="{\\\"visitedName\\\":\\\"边俊明 \\\", \\\"visitorName\\\":\\\"李江\\\",\\\"visitorDate\\\":\\\"20170-10-17\\\"}";
+	    String TemplateParam="{\"visitedName\":\"边俊明 \", \"visitorName\":\"李江\",\"visitorDate\":\"20170-10-17\"}";
 	    String OutId="yourOutId";
 		//发短信
         SendSmsResponse response = sendSms(accessKeyId,accessKeySecret,PhoneNumbers,SignName,TemplateCode,TemplateParam,OutId);

@@ -7,57 +7,11 @@
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/single-visitor.css" />
 		<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
-		<style> 
-			.white_content {
-				display: none;
-				position: absolute;
-				top: 25%;
-				left: 25%;
-				width: 50%;
-				height: 50%;
-				padding: 10px;
-				border: 2px solid black;
-				background-color: white;
-				z-index: 99;
-				overflow: auto;
-			}  
-		</style>
 	</head>
 	<body>
 		<div style="width: 0px;height: 0px;">
 			<object classid="clsid:5EB842AE-5C49-4FD8-8CE9-77D4AF9FD4FF" id="idrControl" width="0" height="0" ></object>
 		</div>
-		<div id="light" class="white_content">
-			<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="100%" height="100%" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
-		      <param name="Visible" value="0">
-		      <param name="AutoScroll" value="0">
-		      <param name="AutoSize" value="0">
-		      <param name="AxBorderStyle" value="1">
-		      <param name="Caption" value="scaner">
-		      <param name="Color" value="4278190095">
-		      <param name="Font" value="宋体">
-		      <param name="KeyPreview" value="0">
-		      <param name="PixelsPerInch" value="96">
-		      <param name="PrintScale" value="0.2">
-		      <param name="Scaled" value="-1">
-		      <param name="DropTarget" value="0">
-		      <param name="HelpFile" value>
-		      <param name="PopupMode" value="0">
-		      <param name="ScreenSnap" value="0">
-		      <param name="SnapBuffer" value="10">
-		      <param name="DockSite" value="0">
-		      <param name="DoubleBuffered" value="0">
-		      <param name="ParentDoubleBuffered" value="0">
-		      <param name="UseDockManager" value="0">
-		      <param name="Enabled" value="-1">
-		      <param name="AlignWithMargins" value="0">
-		      <param name="ParentCustomHint" value="-1">
-		      <param name="licenseMode" value="2">
-		      <param name="key1" value="jpkQqZaD6QlBq6L7AIl1LA9MJ04Ds+N6Ft9b47KUxAZzgfPCATMIiQ==">
-		      <param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
-		    </object> 
-		    <a href="javascript:void(0)" onclick="takecap()">拍照</a>
-        </div>
 		<form id="single-visitor-form" method="post" action="${ctx}/visitor/forwardSingleVisited">
 			<input type="hidden" id="recordVID" name="recordVID" value="${modle.recordVID}">
 			<input type="hidden" id="recordID" name="recordID" value="${recordid}" >
@@ -71,6 +25,36 @@
 							<span class="fl"></span>
 							<span>访客信息</span>
 						</div>
+						<div id="capctrl-div" style="position: absolute;display: none">
+							<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="420px" height="315px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
+							<param name="Visible" value="0">
+							<param name="AutoScroll" value="0">
+							<param name="AutoSize" value="0">
+							<param name="AxBorderStyle" value="1">
+							<param name="Caption" value="scaner">
+							<param name="Color" value="4278190095">
+							<param name="Font" value="宋体">
+							<param name="KeyPreview" value="0">
+							<param name="PixelsPerInch" value="96">
+							<param name="PrintScale" value="0.2">
+							<param name="Scaled" value="-1">
+							<param name="DropTarget" value="0">
+							<param name="HelpFile" value>
+							<param name="PopupMode" value="0">
+							<param name="ScreenSnap" value="0">
+							<param name="SnapBuffer" value="10">
+							<param name="DockSite" value="0">
+							<param name="DoubleBuffered" value="0">
+							<param name="ParentDoubleBuffered" value="0">
+							<param name="UseDockManager" value="0">
+							<param name="Enabled" value="-1">
+							<param name="AlignWithMargins" value="0">
+							<param name="ParentCustomHint" value="-1">
+							<param name="licenseMode" value="2">
+							<param name="key1" value="jpkQqZaD6QlBq6L7AIl1LA9MJ04Ds+N6Ft9b47KUxAZzgfPCATMIiQ==">
+							<param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
+							</object>
+						</div>
 						<div class="photoArea clearfix">
 							<div class="fl">
 								<img id="cardPhoto-img" src="${ctx}/images/photoOne.png" alt="" />
@@ -78,13 +62,9 @@
 								<p>证件照片</p>
 							</div>
 							<div class="fl">
-								<span id="photo1-div">
-									<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
-									<input type="hidden" id="photo1" name="photo1" value="">
-									<p>拍照照片</p>
-								</span>
-								<span id="capctrl-div" style="display: none">
-								</span>
+								<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
+								<input type="hidden" id="photo1" name="photo1" value="">
+								<p>拍照照片</p>
 							</div>
 						</div>
 						<div class="infoArea">
@@ -142,7 +122,7 @@
 		function submitRecord(){
 			var cardid=$("#cardID").val();
 			if(cardid==""){
-				alert("请登记身份证新信息");
+				alert("请登记身份证信息");
 				return;
 			}
 			$('#single-visitor-form').submit();
@@ -281,9 +261,13 @@
 		/**
 		* 拍照
 		*/
-		function photograph22(){
+		function photograph(){
+			var cardid=$("#cardID").val();
+			if(cardid==""){
+				alert("请登记身份证信息");
+				return;
+			}
 			if($('#capctrl-div').css('display') == 'none'){
-				$("#photo1-div").hide();
 				$("#capctrl-div").show();
 				capCtrl.start();
 			}else{
@@ -295,16 +279,9 @@
 				}
 				capCtrl.stop();
 				$("#capctrl-div").hide();
-				$("#photo1-div").show();
 			}
 		}
 		
-		function photograph(){
-			document.getElementById('light').style.display='block';
-		}
-		function takecap(){
-			document.getElementById('light').style.display='none';
-		}
 		init();
 		function init(){
 			if("${modle}"==''){
@@ -316,10 +293,8 @@
 				$("#cardPhoto").val("${modle.cardPhoto}");
 				$("#cardPhoto-img").attr("src", "data:image/png;base64,"+"${modle.cardPhoto}");
 			}
-			if("${modle.photo1}"!=''){
 				$("#photo1").val("${modle.photo1}");
 				$("#photo1-img").attr("src", "data:image/png;base64,"+"${modle.photo1}");
-			}
 		   
 			$("#cardName").val("${modle.cardName}");
 			$("#cardName-span").html("${modle.cardName}");

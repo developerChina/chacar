@@ -65,15 +65,16 @@ public class RecordController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		String auditContent=request.getParameter("auditContent");
 		List<RecordVisitors> list=recordVisitorsService.selectVisitorByRecordId(recordid);
 		for (RecordVisitors rv : list) {
 			rv.setVisitStatus(2);   // tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否已经访问完成(0=申请中，1=审核中，2=已审核，3=正在访问，4=访问结束,5=删除)' ,
 			rv.setIsAudit(isAudit);   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
 			rv.setAuditContent(auditContent);   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人审核意见' ,
+			recordVisitorsService.update(rv);
 		}
-		return null;
+		//<script>alert('审核通过')</script>
+		return "";
 	} 
 
 }

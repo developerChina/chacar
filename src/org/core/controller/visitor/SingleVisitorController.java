@@ -12,6 +12,8 @@ import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
+import org.core.util.GenId;
+import org.core.util.ImageUtils;
 import org.core.util.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +69,26 @@ public class SingleVisitorController {
 	 * @return
 	 */
 	@RequestMapping(value="/visitor/forwardSingleVisited")
-	public ModelAndView forwardSingleVisited(@ModelAttribute RecordVisitors recordVisitors,ModelAndView mv){
+	public ModelAndView forwardSingleVisited(HttpServletRequest request,HttpServletResponse response,
+			@ModelAttribute RecordVisitors recordVisitors,ModelAndView mv){
 		//存储或修改访客信息
 		VisitorInfo visitorInfo=new VisitorInfo();
 		BeanUtils.copyProperties(recordVisitors, visitorInfo);
+		
+		//base64转图片
+		String uploadRootPath=request.getSession().getServletContext().getRealPath("/");
+		System.out.println(uploadRootPath);
+		String cardPhoto=ImageUtils.cardPhoto+GenId.UUID()+".jpg";
+		String photo1=ImageUtils.photo1+GenId.UUID()+".jpg";
+		if(StringUtils.isNotBlank(visitorInfo.getCardPhoto())){
+			ImageUtils.generateImage(visitorInfo.getCardPhoto(), uploadRootPath+cardPhoto);
+			visitorInfo.setCardPhoto(cardPhoto);
+		}
+		if(StringUtils.isNotBlank(visitorInfo.getPhoto1())){
+			ImageUtils.generateImage(visitorInfo.getPhoto1(), uploadRootPath+photo1);
+			visitorInfo.setPhoto1(photo1);
+		}
+		
 		String visitorID =visitorInfoService.saveOrUpdate(visitorInfo);
 		//存储访问记录
 		VisitorRecord visitorRecord=new VisitorRecord();

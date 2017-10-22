@@ -38,7 +38,12 @@ public class PrintAllController {
 		// 返回ModelAndView
 		return mv;
 	}
-	
+	/**
+	 * 根据身份证号码获取已审核访问记录
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/visitor/selectRecordInfo")
 	@ResponseBody
 	public Object selectRecordInfo(HttpServletRequest request,HttpServletResponse response) {
@@ -57,4 +62,28 @@ public class PrintAllController {
 		}
 		return list;
 	}
+	
+	/**
+	 *  根据省份证号码获取单据信息，并且打印
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/visitor/printRecordInfo")
+	@ResponseBody
+	public Object printRecordInfo(HttpServletRequest request,HttpServletResponse response) {
+		List<Map<String, Object>> list=new ArrayList<>();
+		String cardid=request.getParameter("cardid");
+		String cardno=request.getParameter("cardno");
+		List<RecordVisitors> rvs= recordVisitorsService.selectRecordInfoBycardID_status(cardid,2);
+		for (RecordVisitors rv : rvs) {
+			rv.setVisitStatus(3);//0=申请中，1=审核中，2=已审核，3=正在访问，4=访问结束,5=删除
+			rv.setCardNo(cardno);//设置物理卡
+			recordVisitorsService.update(rv);
+		}
+		//发送权限，发送打印数据给前端
+		
+		return list;
+	}
+	
 }

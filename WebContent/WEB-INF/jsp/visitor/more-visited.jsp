@@ -61,8 +61,7 @@
 			  url: '${ctx}/bevisited/sendSingleMessage',
 			  data: {"recordid":"${recordid}","tel":node.tel},
 			  success: function(data){
-				 console.info(data)
-				 
+				  alert(data);
 				 window.location.href='${ctx}/vindex.jsp';
 			  }
 			});

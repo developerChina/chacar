@@ -11,7 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class VisitorAckController {
 	
 	@RequestMapping(value="/visitor/forwardVisitorAck")
-	 public ModelAndView forwardVisitorAck(ModelAndView mv){
+	 public ModelAndView forwardVisitorAck(ModelAndView mv,String recordid){
+		mv.addObject("recordid", recordid);
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/visitor-ack");
 		// 返回ModelAndView

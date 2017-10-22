@@ -22,27 +22,33 @@
 			</header>
 			<article data-role="article" id="border_article" class="active" data-scroll="verticle" style="top: 88px; bottom: 0px;">
 				<div class="scroller">
-					<form autocomplete="off" class="form-square">
+					<form autocomplete="off" class="form-square" id="autidForm" action="${ctx}/visitor/auditRecord">
+						<input type="hidden" id="recordid" name="recordid" value="${recordid }">
 						<label class="label-left" style="height: 40px;">是否同意</label> 
 						<label class="label-right" style="height: 40px;">
 							<a href="#" data-role="radio">
-							     <input type="radio" name="sex" id="rdo1"/>
+							     <input type="radio" name="isAudit" value="1" checked/>
 								 <label for="baskball1" class="black">是</label>
 							</a> 
 							<a href="#" data-role="radio">
-							    <input type="radio" name="sex" id="rdo2"/>
+							    <input type="radio" name="isAudit" value="2"/>
 								<label for="football1" class="black">否</label>
 							</a>
 						</label> 
 						<label class="label-left" for="user" style="height: 80px;">确认原因</label>
 						 <label class="label-right" style="height: 80px;">
-						    <input id="user" type="text" title="英文数字下滑线" required/>
+						    <input id="auditContent" name="auditContent" value="${auditContent}" type="text" />
 						</label>
-						<button class="block">确认</button>
+						<button class="block" onclick="auditRecord()">确认</button>
 					</form>
 				</div>
 			</article>
 		</section>
+		<script type="text/javascript">
+			function submitRecord(){
+				document.getElementById('autidForm').submit();
+			}
+		</script>
 	</div>
 </body>
 </html>
