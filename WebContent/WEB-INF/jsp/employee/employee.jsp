@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>人事管理系统 ——员工管理</title>
+	<title>员工管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -20,7 +19,7 @@
 	<script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.jss" type="text/javascript"></script>
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 
 	<script type="text/javascript">
@@ -64,6 +63,10 @@
 	    			   });
 	    		   }
 	    	   })
+	       /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		   window.location = "${ctx }/employee/addEmployee?flag=1";
+	 	   })
 	       })
 	</script>
 </head>
@@ -117,6 +120,7 @@
 							</select>&nbsp;
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
+					    	<input id="add" type="button" value="添加部门"/>
 					    </td>
 					  </tr>
 					</table>
@@ -163,11 +167,12 @@
 					  <td>${employee.dept.name }</td>
 					  <td>${employee.address }</td>
 					  <td>
-					  	<f:formatDate value="${employee.createDate}" 
-								type="date" dateStyle="long"/>
+					  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
 					  </td>
-					  <td align="center" width="40px;"><a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
-							<img title="修改" src="${ctx}/images/update.gif"/></a>
+					  <td align="center" width="40px;">
+					      <a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
+							<img title="修改" src="${ctx}/images/update.gif"/>
+						  </a>
 					  </td>
 				</tr>
 			</c:forEach>

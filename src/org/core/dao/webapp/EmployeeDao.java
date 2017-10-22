@@ -37,10 +37,10 @@ public interface EmployeeDao {
 		@Result(column="BIRTHDAY",property="birthday",javaType=java.util.Date.class),
 		@Result(column="CREATE_DATE",property="createDate",javaType=java.util.Date.class),
 		@Result(column="DEPT_ID",property="dept",
-			one=@One(select="org.fkit.hrm.dao.DeptDao.selectById",
+			one=@One(select="org.core.dao.webapp.DeptDao.selectById",
 		fetchType=FetchType.EAGER)),
 		@Result(column="JOB_ID",property="job",
-			one=@One(select="org.fkit.hrm.dao.JobDao.selectById",
+			one=@One(select="org.core.dao.webapp.JobDao.selectById",
 		fetchType=FetchType.EAGER))
 	})
 	List<Employee> selectByPage(Map<String, Object> params);
@@ -62,12 +62,8 @@ public interface EmployeeDao {
 		@Result(column="QQ_NUM",property="qqNum"),
 		@Result(column="BIRTHDAY",property="birthday",javaType=java.util.Date.class),
 		@Result(column="CREATE_DATE",property="createDate",javaType=java.util.Date.class),
-		@Result(column="DEPT_ID",property="dept",
-			one=@One(select="org.fkit.hrm.dao.DeptDao.selectById",
-		fetchType=FetchType.EAGER)),
-		@Result(column="JOB_ID",property="job",
-			one=@One(select="org.fkit.hrm.dao.JobDao.selectById",
-		fetchType=FetchType.EAGER))
+		@Result(column="DEPT_ID",property="dept",one=@One(select="org.core.dao.webapp.DeptDao.selectById",fetchType=FetchType.EAGER)),
+		@Result(column="JOB_ID",property="job",one=@One(select="org.core.dao.webapp.JobDao.selectById",fetchType=FetchType.EAGER))
 	})
 	Employee selectById(Integer id);
 	

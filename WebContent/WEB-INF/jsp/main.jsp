@@ -10,8 +10,8 @@
 <meta http-equiv="expires" content="0">    
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link href="${ctx}/favicon.ico" rel="shortcut icon"/>
 <link href="${ctx}/css/css.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 </head>
 <frameset rows="80,*" cols="*" frameborder="no" border="0" framespacing="0">
   <frame src="${ctx}/top" name="title" scrolling="no" noresize="noresize" >
