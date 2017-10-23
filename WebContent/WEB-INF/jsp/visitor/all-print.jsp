@@ -175,9 +175,7 @@
 			  }
 		});
 	}
-	
-	
-	
+
      function printRecord(){
     	var cardid=$("#cardid").val();
     	var cardno=$("#cardno").val();
@@ -195,6 +193,29 @@
 			  }
 		  }
 		});
+     }
+     //打印凭条
+     function printTicket(cardName,bevisitedName,telephone,deptID,unit,visitDate){
+    	 var TSCObj;
+    	 TSCObj = new ActiveXObject("TSCActiveX.TSCLIB");
+    	 TSCObj.ActiveXopenport ("Gprinter  GP-1625D");
+    	 TSCObj.ActiveXdownloadpcx ("C:/Windows/System/UL.PCX","UL.PCX");
+
+    	 TSCObj.ActiveXclearbuffer();
+    	 TSCObj.ActiveXwindowsfont (280, 10, 68, 0, 2, 0, "标楷体", "访客单");
+    	 TSCObj.ActiveXwindowsfont (320, 80, 45, 0, 2, 0, "标楷体", "Guest");
+    	 TSCObj.ActiveXwindowsfont (40, 150, 30, 0, 0, 0, "标楷体", "姓名：孙俊虎");
+    	 TSCObj.ActiveXwindowsfont (265, 150, 30, 0, 0,0, "标楷体", "被访人：李江");
+
+    	 TSCObj.ActiveXwindowsfont (40, 200, 30, 0, 0, 0, "标楷体", "电话：18510515186");
+    	 TSCObj.ActiveXwindowsfont (265, 200, 30, 0, 0, 0, "标楷体", "被访部门：安全环保部");
+
+    	 TSCObj.ActiveXwindowsfont (40, 250, 30, 0, 0, 0, "标楷体", "单位：北京华隆辰信息技术有限公司");
+
+    	 TSCObj.ActiveXwindowsfont (40, 300, 30, 0, 0, 0, "标楷体", "日期：2017-10-23");
+
+    	 TSCObj.ActiveXprintlabel ("1","1");
+    	 TSCObj.ActiveXcloseport();		 
      }
 	</script>
 </html>

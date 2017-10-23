@@ -55,9 +55,19 @@ public class UserController {
 			mv.setViewName("forward:/loginForm");
 		}
 		return mv;
-		
 	}
-	
+	/**
+	 * 处理登录请求
+	 * @param String loginname  登录名
+	 * @param String password 密码
+	 * @return 跳转的视图
+	 * */
+	@RequestMapping(value="/logout")
+	 public ModelAndView logout(HttpSession session,ModelAndView mv){
+		session.removeAttribute(GlobleConstants.USER_SESSION);
+		mv.setViewName("forward:/loginForm");
+		return mv;
+	}
 	/**
 	 * 处理查询请求
 	 * @param pageIndex 请求的是第几页
