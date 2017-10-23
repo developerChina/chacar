@@ -31,7 +31,6 @@
 		</div>
 		<form id="more-visitor-form" method="post" action="${ctx}/visitor/forwardMoreVisited">
 			<input type="hidden" id="recordVisitors" name="recordVisitors" />
-			<input type="hidden" id="recordid" name="recordid" value="${recordid}" />
 		</form>
 		<div class="wrap">
 			<div class="head">
@@ -76,52 +75,50 @@
 				                <input property="editor" class="mini-textbox" style="width:100%;"/>
 				              </div>                                            
 					      </div>
-					  </div>   
+					  </div>
 					</div>
-					<div class="right fl clearfix">
+					<div class="fl right clearfix">
 						<div class="fl">
 							<img id="cardPhoto-img" src="${ctx}/images/photoOne.png" alt="" />
 							<p>证件照片</p>
 						</div>
 						<div class="fl">
-							<span id="photo1-div">
-								<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
-								<p>拍照照片</p>
-							</span>
-							<span id="capctrl-div" style="display: none">
-								<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="158px" height="204px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
-							      <param name="Visible" value="0">
-							      <param name="AutoScroll" value="0">
-							      <param name="AutoSize" value="0">
-							      <param name="AxBorderStyle" value="1">
-							      <param name="Caption" value="scaner">
-							      <param name="Color" value="4278190095">
-							      <param name="Font" value="宋体">
-							      <param name="KeyPreview" value="0">
-							      <param name="PixelsPerInch" value="96">
-							      <param name="PrintScale" value="1">
-							      <param name="Scaled" value="-1">
-							      <param name="DropTarget" value="0">
-							      <param name="HelpFile" value>
-							      <param name="PopupMode" value="0">
-							      <param name="ScreenSnap" value="0">
-							      <param name="SnapBuffer" value="10">
-							      <param name="DockSite" value="0">
-							      <param name="DoubleBuffered" value="0">
-							      <param name="ParentDoubleBuffered" value="0">
-							      <param name="UseDockManager" value="0">
-							      <param name="Enabled" value="-1">
-							      <param name="AlignWithMargins" value="0">
-							      <param name="ParentCustomHint" value="-1">
-							      <param name="licenseMode" value="2">
-							      <param name="key1" value="jpkQqZaD6QlBq6L7AIl1LA9MJ04Ds+N6Ft9b47KUxAZzgfPCATMIiQ==">
-							      <param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
-							    </object>
-							</span>
+							<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
+							<p>拍照照片</p>
+						</div>
+						<div id="capctrl-div" style="position: absolute;display: none">
+							<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="420px" height="315px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
+							<param name="Visible" value="0">
+							<param name="AutoScroll" value="0">
+							<param name="AutoSize" value="0">
+							<param name="AxBorderStyle" value="1">
+							<param name="Caption" value="scaner">
+							<param name="Color" value="4278190095">
+							<param name="Font" value="宋体">
+							<param name="KeyPreview" value="0">
+							<param name="PixelsPerInch" value="96">
+							<param name="PrintScale" value="0.2">
+							<param name="Scaled" value="-1">
+							<param name="DropTarget" value="0">
+							<param name="HelpFile" value>
+							<param name="PopupMode" value="0">
+							<param name="ScreenSnap" value="0">
+							<param name="SnapBuffer" value="10">
+							<param name="DockSite" value="0">
+							<param name="DoubleBuffered" value="0">
+							<param name="ParentDoubleBuffered" value="0">
+							<param name="UseDockManager" value="0">
+							<param name="Enabled" value="-1">
+							<param name="AlignWithMargins" value="0">
+							<param name="ParentCustomHint" value="-1">
+							<param name="licenseMode" value="2">
+							<param name="key1" value="jpkQqZaD6QlBq6L7AIl1LA9MJ04Ds+N6Ft9b47KUxAZzgfPCATMIiQ==">
+							<param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
+							</object>
 						</div>
 					</div>
 					<div class="page fr">
-						<a href="#" class="fl prevpage"></a>
+						<a href="${ctx}/vindex.jsp" class="fl prevpage"></a>
 						<a href="#" class="fl nextpage" onclick="submitRecord()"></a>
 					</div>
 				</div>
@@ -140,7 +137,6 @@
         	//var cardInfo=readIDCard_test(Math.floor(Math.random()*10)); //硬件测试用例
         	var cardInfo=readIDCard();
 			if(cardInfo.state){
-
 				//判断是否添加
 				var data = grid.getEditData(true);
 				for (var i = 0; i < data.length; i++) {
@@ -165,7 +161,6 @@
 				  success: function(data){
 					  row["telephone"]=data.telephone; 
 					  row["company"]=data.company; 
-
 					  grid.addRow(row);
 			          grid.beginEditRow(row);
 			          grid.setSelected(row);
@@ -179,11 +174,16 @@
         
         //添加选中事件
         grid.on("select", function (sender,record) {
+        	console.info(sender.record)
         	if(undefined!=sender.record.cardPhoto && ""!=sender.record.cardPhoto){
         		$("#cardPhoto-img").attr("src", "data:image/png;base64,"+sender.record.cardPhoto);
+        	}else{
+        		$("#cardPhoto-img").attr("src", "${ctx}/images/photoOne.png");
         	}
         	if(undefined!=sender.record.photo1 && ""!=sender.record.photo1){
         		$("#photo1-img").attr("src", "data:image/png;base64,"+sender.record.photo1);
+        	}else{
+        		$("#photo1-img").attr("src", "${ctx}/images/photoTwo.png");
         	}
         });
         
@@ -281,27 +281,25 @@
 		* 拍照
 		*/
 		function photograph(){
+			var row=grid.getSelected();
+			console.info(row)
+			if(row==null){
+				alert("请登记身份证信息");
+				return;
+			}
 			if($('#capctrl-div').css('display') == 'none'){
-				$("#photo1-div").hide();
 				$("#capctrl-div").show();
+				capCtrl.start();
 			}else{
+				capCtrl.cap();
+				var baseStr64=capCtrl.jpegBase64Data;
+				if(baseStr64!=""){
+				   $("#photo1-img").attr("src", "data:image/png;base64,"+baseStr64);
+				   row['photo1']=baseStr64;
+				   //grid.commitEditRow(row); 
+				}
+				capCtrl.stop();
 				$("#capctrl-div").hide();
-				$("#photo1-div").show();
-				try {
-					capCtrl.cap();
-					capCtrl.resizePicture(158,204);
-					var baseStr64=capCtrl.jpegBase64Data;
-					if(baseStr64!=""){
-						$("#photo1-img").attr("src", "data:image/png;base64,"+baseStr64);
-						var row =grid.getSelected();
-						row["photo1"]=baseStr64;
-						grid.updateRow (row,row)
-					}
-					registerCtrl.start();
-			    }
-			    catch (e) {
-			        return;
-			    }
 			}
 		}
 		
@@ -314,14 +312,12 @@
         
         function submitRecord() {
             var data = grid.getEditData(true);
-            console.info(data)
             if(data.length<=0){
-            	alert("请登记身份证新信息");
+            	alert("请登记身份证信息");
 				return;
             }
             var json = mini.encode(data);
             $("#recordVisitors").val(json);
-            $("#recordid").val("${recordid}");
             $('#more-visitor-form').submit();
         }
         
@@ -330,29 +326,6 @@
             var s = '<span class="icon-remove" title="删除记录" onclick="delRow('+uid+')"></span>';
             return s;
         }
-        
-        function putmodle(cardPhoto,photo1,cardName,cardSex,cardNation,cardID,cardAddress,telephone,company,visitReason){
-        	var row = {};
-			row["cardPhoto"]=cardPhoto;
-			row["photo1"]=photo1;
-			row["cardName"]=cardName;
-			row["cardSex"]=cardSex;
-			row["cardNation"]=cardNation;
-			row["cardID"]=cardID;
-			row["cardAddress"]=cardAddress;
-			row["telephone"]=telephone;
-			row["company"]=company;
-			row["visitReason"]=visitReason;
-            grid.addRow(row);
-            grid.beginEditRow(row);
-        }
-        
-    </script>
-    
-    <c:forEach var="modle" items="${modles}">
-		  <script type="text/javascript">
-		  putmodle("${modle.cardPhoto}","${modle.photo1}","${modle.cardName}","${modle.cardSex}","${modle.cardNation}","${modle.cardID}","${modle.cardAddress}","${modle.telephone}","${modle.company}","${modle.visitReason}")
-		  </script>
-	</c:forEach>
+        </script>  
     
 </html>

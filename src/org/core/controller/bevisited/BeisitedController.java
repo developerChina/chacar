@@ -9,9 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.core.domain.bevisited.BevisitedInfo;
 import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
+import org.core.domain.visitor.VisitorInfo;
+import org.core.domain.visitor.VisitorRecord;
 import org.core.service.bevisited.BevisitedInfoService;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
+import org.core.service.record.VisitorRecordService;
+import org.core.service.visitor.VisitorInfoService;
+import org.core.util.JsonUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +38,15 @@ public class BeisitedController {
 	@Autowired
 	@Qualifier("recordVisitorsService")
 	private RecordVisitorsService recordVisitorsService;
+	@Autowired
+	@Qualifier("visitorRecordService")
+	private VisitorRecordService visitorRecordService;
+	@Autowired		
+	@Qualifier("visitorInfoService")
+	private VisitorInfoService visitorInfoService;
 	
+	//审核地址
+	String  auditUrl="http://localhost:8080/chacar/visitor/forwardVisitorAck?recordid=";
 	/**
 	 * 查询部门和被访人树
 	 * @param mv
@@ -52,27 +65,36 @@ public class BeisitedController {
 	 * @param mv
 	 * @return
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/bevisited/sendSingleMessage")
 	@ResponseBody
-	public Object sendSingleMessage(String recordid,String tel){
+	public Object sendSingleMessage(HttpServletRequest request, HttpServletResponse response,String recordVisitors,String tel){
 		
-		//删除所有记录id的被访人
-		recordBevisitedsService.deleteByRecordID(recordid);
-		//存储记录被访人
+		//保存记录
+		VisitorRecord visitorRecord=new VisitorRecord();
+		String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
+				
+		//保存记录访客
+		List<Map> rvs=JsonUtils.parse(recordVisitors.replaceAll("\'", "\""), List.class);
+		for (Map rv : rvs) {
+			if(rv.get("cardID")!=null){
+				RecordVisitors recordVisitor= new RecordVisitors();
+				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(rv.get("cardID").toString());
+				BeanUtils.copyProperties(visitorInfo, recordVisitor);
+				recordVisitor.setRecordID(recordid);
+				recordVisitorsService.save(recordVisitor);
+			}
+		}
+		//保存记录被访人
 		BevisitedInfo bevisitedInfo=bevisitedInfoService.selectOneByTel(tel);
 		RecordBevisiteds recordBevisiteds=new RecordBevisiteds();
 		BeanUtils.copyProperties(bevisitedInfo, recordBevisiteds);
 		recordBevisiteds.setRecordID(recordid);
 		recordBevisitedsService.save(recordBevisiteds);
-		//修改记录状态为审核中...
-		List<RecordVisitors> recordVisitors=recordVisitorsService.selectVisitorByRecordId(recordid);
-		for (RecordVisitors recordVisitor : recordVisitors) {
-			recordVisitor.setVisitStatus(1);
-			recordVisitorsService.update(recordVisitor);
-		}
+		
 		//调用短信接口
 		
-		return tel;
+		return auditUrl+recordid;
 	}
 	
 	/**
@@ -82,26 +104,30 @@ public class BeisitedController {
 	 */
 	@RequestMapping(value="/bevisited/sendMoreMessage")
 	@ResponseBody
-	public Object sendMoreMessage(String recordid,String tels){
-		//删除所有记录id的被访人
-		recordBevisitedsService.deleteByRecordID(recordid);
-		//存储记录被访人
+	public Object sendMoreMessage(HttpServletRequest request, HttpServletResponse response,String recordVisitors,String tels){
+		RecordVisitors recordVisitor=JsonUtils.parse(recordVisitors.replaceAll("\'", "\""), RecordVisitors.class);
 		String[] telphones=tels.split(",");
+		String returnString="";
 		for (String tel : telphones) {
+			//保存记录
+			VisitorRecord visitorRecord=new VisitorRecord();
+			String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
+			//保存记录访客
+			recordVisitor.setRecordID(recordid);
+			recordVisitor.setVisitStatus(1);
+			recordVisitorsService.save(recordVisitor);
+			//根据电话号码保存记录被访人
 			BevisitedInfo bevisitedInfo=bevisitedInfoService.selectOneByTel(tel);
-			RecordBevisiteds recordBevisiteds=new RecordBevisiteds();
-			BeanUtils.copyProperties(bevisitedInfo, recordBevisiteds);
-			recordBevisiteds.setRecordID(recordid);
-			recordBevisitedsService.save(recordBevisiteds);
-			//修改记录状态为审核中...
-			List<RecordVisitors> recordVisitors=recordVisitorsService.selectVisitorByRecordId(recordid);
-			for (RecordVisitors recordVisitor : recordVisitors) {
-				recordVisitor.setVisitStatus(1);
-				recordVisitorsService.update(recordVisitor);
-			}
+			RecordBevisiteds recordBevisited=new RecordBevisiteds();
+			BeanUtils.copyProperties(bevisitedInfo, recordBevisited);
+			recordBevisited.setRecordID(recordid);
+			recordBevisitedsService.save(recordBevisited);
+			
+			returnString=returnString+auditUrl+recordid+"<br/>";
 		}
 		//调用短信接口
 		
-		return tels;
+		return returnString;
+		
 	}
 }

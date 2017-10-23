@@ -40,14 +40,17 @@
 				</div>
 				<div class="bottom clearfix">
 					<div class="fl left">
-						 <div id="datagrid1" class="mini-datagrid" style="width:455px;height:258px;" idField="cardName" multiSelect="true" showPager="false" allowSortColumn="false">
-					      <div property="columns">
-					      	  <div type="checkcolumn"></div>
-					          <div field="bevisitedName" width="80" headerAlign="center">姓名</div>                
-					          <div field="bevisitedAddress" width="200" headerAlign="center">办公地点</div>
-					          <div field="auditContent" width="100" headerAlign="center">确认状态</div>
-					      </div>
-					  </div>
+						打印输入:<input type="text" class="text" id="cardno" title='身份证物理卡号'/>
+						<input type="hidden" id="cardid" title='省份证号'/>
+						<br/>
+						<div id="datagrid1" class="mini-datagrid" style="width:455px;height:258px;" idField="cardName" multiSelect="true" showPager="false" allowSortColumn="false">
+						      <div property="columns">
+						      	  <div type="checkcolumn"></div>
+						          <div field="bevisitedName" width="80" headerAlign="center">姓名</div>                
+						          <div field="bevisitedAddress" width="200" headerAlign="center">办公地点</div>
+						          <div field="auditContent" width="100" headerAlign="center">确认状态</div>
+						      </div>
+						</div>
 					</div>
 					<div class="right fl clearfix">
 						<div class="choice">
@@ -61,11 +64,10 @@
 							</div>
 						</div>
 					</div>
-					
 				</div>
 				<div class="btnArea clearfix">
-						<input type="submit" class="fl search" value="查询" onclick="findRecord()"/>
-						<input type="submit" class="fl print" value="打印"/>
+						<input type="submit" class="fl search" value="查询" onclick="findRecordByRead()"/>
+						<input type="submit" class="fl print" value="打印" onclick="printRecord()"/>
 					</div>
 			</div>
 			<div>
@@ -130,37 +132,69 @@
 	 }
      
      
-	function findRecord(){
+	function findRecordByRead(){
 		var cardInfo=readIDCard();
 		if(cardInfo.state){
-			$.ajax({
-				  type: 'POST',
-				  url: '${ctx}/visitor/selectRecordInfo',
-				  data: {"cardid":cardInfo.message.code},
-				  success: function(data){
-					  grid.clearRows();//清除所有行，重新添加
-					 for (var i = 0; i < data.length; i++) {
-						 var row = {};
-						 row["bevisitedName"]=data[i].bevisited.bevisitedName;
-						 row["bevisitedAddress"]=data[i].bevisited.bevisitedAddress;
-						 //isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
-						 if(data[i].visitor.isAudit===0){
-							 row["auditContent"]='未审核-'+(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }else if(data[i].visitor.isAudit===1){
-							 row["auditContent"]='同意-'+(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }else if(data[i].visitor.isAudit===2){
-							 row["auditContent"]='拒绝-'+(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }else{
-							 row["auditContent"]=(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
-						 }
-						 grid.addRow(row);
-					}
-				  }
-			});
+			$("#cardid").val(cardInfo.message.code);
+			findRecord(cardInfo.message.code);
 		}else{
 			alert(cardInfo.message);
 		}
 	}
-     
+	
+	
+	
+	function findRecord(cardid){
+		if(cardid==undefined || cardid==''){
+	       	 alert('请扫描省份证');
+	       	 return; 
+        }
+		$.ajax({
+			  type: 'POST',
+			  url: '${ctx}/visitor/selectRecordInfo',
+			  data: {"cardid":cardid},
+			  success: function(data){
+				  grid.clearRows();//清除所有行，重新添加
+				 for (var i = 0; i < data.length; i++) {
+					 var row = {};
+					 row["bevisitedName"]=data[i].bevisited.bevisitedName;
+					 row["bevisitedAddress"]=data[i].bevisited.bevisitedAddress;
+					 //isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
+					 if(data[i].visitor.isAudit===0){
+						 row["auditContent"]='未审核-'+(data[i].visitor.auditContent==null?'':":"+data[i].visitor.auditContent);
+					 }else if(data[i].visitor.isAudit===1){
+						 row["auditContent"]='同意-'+(data[i].visitor.auditContent==null?'':":"+data[i].visitor.auditContent);
+					 }else if(data[i].visitor.isAudit===2){
+						 row["auditContent"]='拒绝'+(data[i].visitor.auditContent==null?'':":"+data[i].visitor.auditContent);
+					 }else{
+						 row["auditContent"]=(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
+					 }
+					 grid.addRow(row);
+					 grid.beginEditRow(row);
+				}
+			  }
+		});
+	}
+	
+	
+	
+     function printRecord(){
+    	var cardid=$("#cardid").val();
+    	var cardno=$("#cardno").val();
+    	if(cardno=="" || cardid==''){
+    		alert("请登记身份证信息");
+    		return;
+    	}
+		$.ajax({
+		  type: 'POST',
+		  url: '${ctx}/visitor/printRecordInfo',
+		  data: {"cardid":cardid,"cardno":cardno},
+		  success: function(data){
+			  if(data){
+				 findRecord($("#cardid").val());
+			  }
+		  }
+		});
+     }
 	</script>
 </html>

@@ -7,6 +7,32 @@
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/more-visited.css" />
     	<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
+    	<style type="text/css">
+			 
+			.mydiv {
+			background-color: #fff;
+			border: 1px solid #f90;
+			text-align: center;
+			line-height: 20px;
+			font-size: 12px;
+			font-weight: bold;
+			z-index:99;
+			width: 900px;
+			height: 300px;
+			left:25%;/*FF IE7*/
+			top: 100px;/*FF IE7*/
+			
+			margin-left:-150px!important;/*FF IE7 该值为本身宽的一半 */
+			margin-top:-60px!important;/*FF IE7 该值为本身高的一半*/
+			
+			margin-top:0px;
+			
+			position:fixed!important;/*FF IE7*/
+			position:absolute;/*IE6*/
+			
+			}
+			
+			</style>
 	</head>
 	<body>
 		<div class="wrap">
@@ -34,9 +60,10 @@
 					        <div field="status" width="50">状态</div>
 					    </div>
 					</div>
+					<input type="hidden" id="recordVisitors" name="recordVisitors" value="${recordVisitors}">
 				</div>
 				<div class="btnArea clearfix">
-					<a href="${ctx}/visitor/forwardMoreVisitor?recordid=${recordid}" class="fl prevpage"></a>
+					<a href="${ctx}/visitor/forwardMoreVisitor" class="fl prevpage"></a>
 					<a href="#" class="fl notice" onclick="sendMessage()"></a>
 				</div>
 			</div>
@@ -44,6 +71,17 @@
 				<a href="${ctx}/vindex.jsp" class="foot">返回</a>
 			</div>
 		</div>
+		
+		
+		
+		<div id="popDiv" class="mydiv" style="display:none;">
+		  <br/>
+		  <div id="contextDiv"></div>
+		  <br/>
+		  <a href="javascript:document.getElementById('popDiv').style.display='none';window.location.href='${ctx}/vindex.jsp';">关闭窗口</a>
+		</div>
+		
+		
 		<script type="text/javascript">
     	
     	 function sendMessage() {
@@ -59,11 +97,11 @@
             $.ajax({
 			  type: 'POST',
 			  url: '${ctx}/bevisited/sendSingleMessage',
-			  data: {"recordid":"${recordid}","tel":node.tel},
+			  data: {"recordVisitors":$("#recordVisitors").val(),"tel":node.tel},
 			  success: function(data){
-				 console.info(data)
-				 
-				 window.location.href='${ctx}/vindex.jsp';
+				  $("#contextDiv").html(data);
+				  document.getElementById('popDiv').style.display='block';
+				  //window.location.href='${ctx}/vindex.jsp';
 			  }
 			});
             
