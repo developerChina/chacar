@@ -24,9 +24,19 @@ public class AControlUtil {
 		//AddUserCard("192.168.1.178", 4001, 1,"0000", "000000","192","012F0984E0","0000","2017-11-11 11:11:11");
 		while(true) {
 			AddUserCard("192.168.1.178", 4001, 1,"0000", "000000","192","012F0984E0","0000","2017-11-11 11:11:11");
-		    ReadCardLog("192.168.1.178", 4001, 1, "0000", "000000");
-	        DeleUserCard("192.168.1.178", 4001, 1, "0000", "000000", "012F0984E0");
 			try {
+				Thread.sleep(1000*5); 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			ReadCardLog("192.168.1.178", 4001, 1, "0000", "000000");
+			try {
+				Thread.sleep(1000*5); 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	        DeleUserCard("192.168.1.178", 4001, 1, "0000", "000000", "012F0984E0");
+	        try {
 				Thread.sleep(1000*5); 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
