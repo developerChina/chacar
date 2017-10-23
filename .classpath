@@ -15,5 +15,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aliyun-java-sdk-core-3.3.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aliyun-java-sdk-dysmsapi-1.0.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ksoap2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
