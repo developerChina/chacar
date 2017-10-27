@@ -21,4 +21,12 @@ public class VisitorAckController {
 		// 返回ModelAndView
 		return mv;
 	}
+	
+	@RequestMapping(value="/visitor/queryVisitorAck")
+	 public ModelAndView queryVisitorAck(HttpServletRequest request,HttpServletResponse response,ModelAndView mv,String recordid){
+		// 设置客户端跳转到查询请求
+		mv.setViewName("employee/queryVisitor");
+		// 返回ModelAndView
+		return mv;
+	}
 }

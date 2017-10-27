@@ -63,10 +63,8 @@
 		  
 		  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">访客管理</div></td></tr>
 		  <tr valign="top" id="submenu3" style="display: none">
-		    <td class="left_nav_bgshw" height="50">
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="job/selectJob" target="main">黑名单</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="job/addJob?flag=1" target="main">备份事由</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="job/addJob?flag=1" target="main">访客查询</a></img></p>
+		    <td class="left_nav_bgshw" height="30">
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">访客查询</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
