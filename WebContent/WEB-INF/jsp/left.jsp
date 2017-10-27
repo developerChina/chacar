@@ -41,8 +41,8 @@
 		  <tr valign="top">
 		    <td class="left_nav_bgshw" height="50">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/user/selectUser" target="main">用户管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="user/addUser?flag=1" target="main">资源管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="user/addUser?flag=1" target="main">权限分配</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/resource/resourcesAck" target="main">资源管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/authority/authorityAck" target="main">权限分配</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -52,8 +52,11 @@
 		    <td class="left_nav_bgshw" height="50">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/dept/selectDept" target="main">部门管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/job/selectJob" target="main">职位管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/selectDept" target="main">楼层分配</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">匝道分配</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">电梯分配</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁分配</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/employee/selectEmployee" target="main">员工管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/card/cardAck" target="main">办卡中心</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -101,7 +104,7 @@
 		  </tr>
 		  <tr><td height="2"></td></tr>
 
-		  <tr valign="top"><td height="100%" align="center"><div class="copycct"><br /><strong>技术支持：</strong><br><strong>北京华隆辰信息技术有限公司</strong><br>Http://www.hualc.com</div></td></tr>
+		  <tr valign="top"><td height="100%" align="center"><div class="copycct"><br /><strong>技术支持：</strong><br><strong>北京华隆辰信息技术有限公司</strong><br>www.hualc.com</div></td></tr>
 		  <tr><td height="10"><img src="${ctx}/images/left_nav_bottom.gif" height="10"></img></td></tr>
 		  <tr><td height="10" bgcolor="#e5f0ff">&nbsp;</td></tr>
 		</table>
