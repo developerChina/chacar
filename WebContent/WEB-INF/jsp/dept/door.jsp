@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>门管理</title>
+	<title>通道管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -33,7 +33,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：速通门管理 &gt; 速通门查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：通道管理 &gt; 通道查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -53,7 +53,7 @@
 					    	用户状态：<input type="text" name="status">
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加速通门"/>
+					    	<input id="add" type="button" value="添加通道"/>
 					    </td>
 					  </tr>
 					</table>
@@ -70,10 +70,10 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>速通门名</td>
+			  <td>通道名称</td>
 			  <td>控制器SN</td>
 			  <td>控制器IP</td>
-			  <td>速通门编号</td>
+			  <td>通道编号</td>
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">

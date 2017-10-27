@@ -47,16 +47,24 @@
 		  </tr>
 		  <tr><td height="2"></td></tr>
 
-		  <tr><td id="navbg2" class="left_nav_closed" ><div class="font1">员工管理</div></td></tr>
-		  <tr valign="top" id="submenu2">
+          <tr><td id="navbg4" class="left_nav_closed" ><div class="font1">卡口设备</div></td></tr>
+		  <tr valign="top" id="submenu4">
+		    <td class="left_nav_bgshw" height="50">
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">电梯管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carIdAck" target="main">车辆识别仪</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+
+		  <tr><td id="navbg2" class="left_nav_closed" ><div class="font1">人员管理</div></td></tr>
+		  <tr valign="top" id="submenu2" style="display: none">
 		    <td class="left_nav_bgshw" height="50">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/dept/selectDept" target="main">部门管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/job/selectJob" target="main">职位管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">匝道分配</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">电梯分配</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁分配</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/employee/selectEmployee" target="main">员工管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/card/cardAck" target="main">办卡中心</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/card/cardAck" target="main">卡/车管理</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -64,21 +72,14 @@
 		  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">访客管理</div></td></tr>
 		  <tr valign="top" id="submenu3" style="display: none">
 		    <td class="left_nav_bgshw" height="30">
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">访客查询</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">黑名单</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">拜访事由</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">访客/车通道</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">访问轨迹查询</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
-
-		  <tr><td id="navbg4" class="left_nav_closed" ><div class="font1">停车场管理</div></td></tr>
-		  <tr valign="top" id="submenu4" style="display: none">
-		    <td class="left_nav_bgshw" height="50">
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">出入口管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/employee/addEmployee?flag=1" target="main">车辆管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/employee/addEmployee?flag=1" target="main">出入查询</a></img></p>
-			</td>
-		  </tr>
-		  <tr><td height="2"></td></tr>
-		  
+ 
 		  <tr><td id="navbg5" class="left_nav_closed" ><div class="font1">排队叫号</div></td></tr>
 		  <tr valign="top" id="submenu5" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
