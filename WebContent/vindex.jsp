@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,6 +6,7 @@
 		<title></title>
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/index.css" />
+		<link href="${ctx}/images/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
 	</head>
 	<body>
 		<div class="wrap">

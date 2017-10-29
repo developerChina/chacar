@@ -121,6 +121,8 @@
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
 					    	<input id="add" type="button" value="添加部门"/>
+					    	<input id="add" type="button" value="批量导入"/>
+					    	<input id="add" type="button" value="导出Excel"/>
 					    </td>
 					  </tr>
 					</table>
