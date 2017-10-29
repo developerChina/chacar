@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="foot">
-				在使用过程中，有任何问题请于工作人员联系 
+				在使用过程中，有任何问题请于工作人员联系
 			</div>
 		</div>
 	</body>
