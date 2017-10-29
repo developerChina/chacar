@@ -2,5 +2,5 @@
   
 <!-- 立即请求/main -->
 <script type="text/javascript">  
-  window.location="${ctx}/loginAck";  
+  window.location="${ctx}/loginAck";
 </script> 
