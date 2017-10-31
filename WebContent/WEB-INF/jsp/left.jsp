@@ -64,7 +64,7 @@
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/dept/selectDept" target="main">部门管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/job/selectJob" target="main">职位管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/employee/selectEmployee" target="main">员工管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/card/cardAck" target="main">卡/车管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/card/cardAck" target="main">授权管理</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
