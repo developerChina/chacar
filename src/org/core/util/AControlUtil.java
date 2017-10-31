@@ -1,164 +1,131 @@
 package org.core.util;
 
-import java.text.SimpleDateFormat;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
+import org.wiegand.at8000.WgUdpCommShort;
+
 /**
  * 门禁下发控制
- * @author Administrator
+ * 
+ * @author sunjunhu
  *
  */
 public class AControlUtil {
-	// 和webService服务器交互
-	// webService命名空间
-	static final String namespace = "http://tempuri.org/";
-	// 访问对象地址
-	static final String transUrl = "http://192.168.1.18:8081/MJService.asmx";
-	// 后台询问或者从wsdl文档或者服务说明中查看
-	static final int envolopeVersion = SoapEnvelope.VER12;
 
 	public static void main(String[] args) {
-		//DeleUserCard("192.168.1.178", 4001, 1, "0000", "000000", "012F0984E0");
-		//AddUserCard("192.168.1.178", 4001, 1,"0000", "000000","192","012F0984E0","0000","2017-11-11 11:11:11");
-		while(true) {
-			AddUserCard("192.168.1.178", 4001, 1,"0000", "000000","192","012F0984E0","0000","2017-11-11 11:11:11");
-			try {
-				Thread.sleep(1000*5); 
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			ReadCardLog("192.168.1.178", 4001, 1, "0000", "000000");
-			try {
-				Thread.sleep(1000*5); 
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-	        DeleUserCard("192.168.1.178", 4001, 1, "0000", "000000", "012F0984E0");
-	        try {
-				Thread.sleep(1000*5); 
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static String ReadCardLog(String mjIP, int mjPort, int netId, String szSysPwd, String szKeyPwd) {
-		String method = "ReadCardLog";
-		SoapObject request = new SoapObject(namespace, method);
-		request.addProperty("mjIP", mjIP);//
-		request.addProperty("mjPort", mjPort);//
-		request.addProperty("netId", netId);//
-		request.addProperty("szSysPwd", szSysPwd);//
-		request.addProperty("szKeyPwd", szKeyPwd);//
-
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(envolopeVersion);
-		envelope.setOutputSoapObject(request);
-		envelope.dotNet = true;
-		HttpTransportSE httpse = new HttpTransportSE(transUrl);
-		Object response = null;
-		try {
-			httpse.call(null, envelope);
-			if (envelope.getResponse() != null) {
-				response = (Object) envelope.getResponse();
-				System.out.println("=签离人员==:" + response.toString());
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return "";
-
+		long controllerSN = 433104811;
+		String controllerIP = "192.168.1.8";
+		long cardNO = 0xE5C97C;
+		byte era=0x20;
+		byte endYeaar = 0x29;
+		byte endMonth = 0x12;
+		byte endDay = 0x31;
+		int authority[] = { 1, 1, 0, 1}; 
+        //截止日期: 2029年12月31日  一、二、四门有权限
+		AddUserCard(controllerSN,controllerIP, cardNO,era,endYeaar, endMonth,endDay,authority);
+		//删除卡权限
+		DeleUserCard(controllerSN, controllerIP,cardNO);
 	}
 
 	/**
+	 * 给门禁授权
 	 * 
-	 * @param mjIP
-	 * @param mjPort
-	 * @param netId
-	 * @param szSysPwd
-	 * @param szKeyPwd
-	 * @param txtCardNo
+	 * @param controllerSN
+	 *            门禁控制器序列号（硬件上查询）
+	 * @param controllerIP
+	 *            门禁控制器IP
+	 * @param cardNO
+	 *            IC/身份证号
+	 * @param era
+	 *            纪元  20年，30年         
+	 * @param endYeaar
+	 *            有效期年
+	 * @param endMonth
+	 *            有效期月
+	 * @param endDay
+	 *            有效期日
+	 * @param authority
+	 *            控制门权限 ，数组每一位代表一门
 	 * @return
 	 */
-	public static String DeleUserCard(String mjIP, int mjPort, int netId, String szSysPwd, String szKeyPwd,
-			String txtCardNo) {
-		String method = "DeleUserCard";
-		SoapObject request = new SoapObject(namespace, method);
-		request.addProperty("mjIP", mjIP);//
-		request.addProperty("mjPort", mjPort);//
-		request.addProperty("netId", netId);//
-		request.addProperty("szSysPwd", szSysPwd);//
-		request.addProperty("szKeyPwd", szKeyPwd);//
-		request.addProperty("txtCardNo", txtCardNo);//
-
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(envolopeVersion);
-		envelope.setOutputSoapObject(request);
-		envelope.dotNet = true;
-		HttpTransportSE httpse = new HttpTransportSE(transUrl);
-		Object response = null;
-		try {
-			httpse.call(null, envelope);
-			if (envelope.getResponse() != null) {
-				response = (Object) envelope.getResponse();
-				System.out.println("=删除人员成功==:" + response.toString());
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static int AddUserCard(long controllerSN, String controllerIP, long cardNO,byte era,byte endYeaar, byte endMonth,
+			byte endDay, int[] authority) {
+		byte[] recvBuff;
+		int success = 0;
+		WgUdpCommShort pkt = new WgUdpCommShort();
+		pkt.iDevSn = controllerSN;
+		// 打开udp连接
+		pkt.CommOpen(controllerIP);
+		pkt.Reset();
+		pkt.functionID = (byte) 0x50;
+		pkt.iDevSn = controllerSN;
+		long cardNOOfPrivilege = cardNO;
+		System.arraycopy(WgUdpCommShort.longToByte(cardNOOfPrivilege), 0, pkt.data, 0, 4);
+		// 20 10 01 01 起始日期: 2010年01月01日 (必须大于2001年)
+		pkt.data[4] = era;
+		pkt.data[5] = 0x10;
+		pkt.data[6] = 0x01;
+		pkt.data[7] = 0x01;
+		// 20 29 12 31 截止日期: 2029年12月31日
+		pkt.data[8] = 0x20;
+		pkt.data[9] = endYeaar;
+		pkt.data[10] = endMonth;
+		pkt.data[11] = endDay;
+		// 默认都是关闭
+		pkt.data[12] = 0x00;
+		pkt.data[13] = 0x00;
+		pkt.data[14] = 0x00;
+		pkt.data[15] = 0x00;
+		// 每一位代表一个门
+		if (authority[0] == 1) {
+			pkt.data[12] = 0x01;
 		}
-
-		return "";
+		if (authority[1] == 1) {
+			pkt.data[13] = 0x01;
+		}
+		if (authority[2] == 1) {
+			pkt.data[14] = 0x01;
+		}
+		if (authority[3] == 1) {
+			pkt.data[15] = 0x01;
+		}
+		recvBuff = pkt.run();
+		success = 0;
+		if (recvBuff != null) {
+			if (WgUdpCommShort.getIntByByte(recvBuff[8]) == 1) {
+				success = 1;
+			}
+		}
+		// 关闭udp连接
+		pkt.CommClose();
+		return success;
 	}
-
-	/***
-	 * 
-	 * @param mjIP
-	 * @param mjPort
-	 * @param netId
-	 * @param szSysPwd
-	 * @param szKeyPwd
-	 * @param txtDooRight
-	 * @param txtCardNo
-	 * @param txtDooPwd
-	 * @param dt
-	 * @return
-	 */
-	public static String AddUserCard(String mjIP, int mjPort, int netId, String szSysPwd, String szKeyPwd,
-			String txtDooRight, String txtCardNo, String txtDooPwd, String dt) {
-		String method = "AddUserCard";
-		SoapObject request = new SoapObject(namespace, method);
-		request.addProperty("mjIP", mjIP);//
-		request.addProperty("mjPort", mjPort);//
-		request.addProperty("netId", netId);//
-		request.addProperty("szSysPwd", szSysPwd);//
-		request.addProperty("szKeyPwd", szKeyPwd);//
-
-		request.addProperty("txtDooRight", txtDooRight);//
-		request.addProperty("txtCardNo", txtCardNo);//
-		request.addProperty("txtDooPwd", txtDooPwd);//
-
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-		String str = df.format(DateUtil.StringToDate(dt, "yyyy-MM-dd HH:mm:ss"));
-		request.addProperty("dt", str);//
-
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(envolopeVersion);
-		envelope.setOutputSoapObject(request);
-		envelope.dotNet = true;
-		HttpTransportSE httpse = new HttpTransportSE(transUrl);
-		Object response = null;
-		try {
-			httpse.call(null, envelope);
-			if (envelope.getResponse() != null) {
-				response = (Object) envelope.getResponse();
-				System.out.println("=添加人员=:" + response.toString());
+    /**
+     * 删除卡权限
+     * @param controllerSN
+     * @param controllerIP
+     * @param cardNO
+     * @return
+     */
+	public static int DeleUserCard(long controllerSN, String controllerIP,long cardNO) {
+		byte[] recvBuff;
+		int success = 0;
+		WgUdpCommShort pkt = new WgUdpCommShort();
+		pkt.iDevSn = controllerSN;
+		// 打开udp连接
+		pkt.CommOpen(controllerIP);
+		pkt.Reset();
+		pkt.functionID = (byte) 0x52;
+		pkt.iDevSn = controllerSN;
+		long cardNOOfPrivilegeToDelete = cardNO;
+		System.arraycopy(WgUdpCommShort.longToByte(cardNOOfPrivilegeToDelete), 0, pkt.data, 0, 4);
+		recvBuff = pkt.run();
+		success = 0;
+		if (recvBuff != null) {
+			if (WgUdpCommShort.getIntByByte(recvBuff[8]) == 1) {
+				success = 1;
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return "";
+		// 关闭udp连接
+		pkt.CommClose();
+		return success;
 	}
 }
