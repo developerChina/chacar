@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>门管理</title>
+	<title>访客轨迹</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -33,7 +33,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：卡/车管理 &gt; 卡/车查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：访客轨迹 &gt; 访客轨迹查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -52,9 +52,6 @@
 					    	用户名：<input type="text" name="username">
 					    	用户状态：<input type="text" name="status">
 					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="个人办理"/>
-					    	<input id="add" type="button" value="部门办理"/>
 					    </td>
 					  </tr>
 					</table>
@@ -71,16 +68,13 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>员工</td>
-			  <td>卡号</td>
-			  <td>车牌号</td>
-			  
-			  <td>通道</td>
-			  <td>电梯</td>
-			  <td>门禁</td>
-			  <td>停车场</td>
-			   <td>有效期</td>
-			  <td align="center">操作</td>
+			  <td>访客名称</td>
+			  <td>访客身份证</td>
+			  <td>轨迹</td>
+			  <td>进出</td>
+			  <td>时间</td>
+			  <td>描述 </td>
+			  <td align="center">图形显示</td>
 			</tr>
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">

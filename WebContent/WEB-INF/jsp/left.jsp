@@ -53,7 +53,7 @@
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">电梯管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carIdAck" target="main">车辆识别仪</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carIdAck" target="main">车辆管理</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -74,8 +74,7 @@
 		    <td class="left_nav_bgshw" height="30">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/blackAck" target="main">黑名单</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/reasonAck" target="main">拜访事由</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/visitorCardAck" target="main">访客/车通道</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/queryVisitorAck" target="main">访问轨迹查询</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访客轨迹</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>

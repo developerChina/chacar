@@ -148,6 +148,7 @@
 			  <td>学历</td>
 			  <td>身份证号码</td>
 			  <td>部门</td>
+			  <td>车牌号码</td>
 			  <td>联系地址</td>
 			  <td>建档日期</td>
 			  <td align="center">操作</td>
@@ -165,6 +166,8 @@
 					  <td>${employee.phone }</td>
 					  <td>${employee.email }</td>
 					  <td>${employee.job.name }</td>
+					  <td>${employee.education }</td>
+					   <td>${employee.job.name }</td>
 					  <td>${employee.education }</td>
 					  <td>${employee.cardId }</td>
 					  <td>${employee.dept.name }</td>

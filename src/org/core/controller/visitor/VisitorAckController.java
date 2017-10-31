@@ -53,4 +53,11 @@ public class VisitorAckController {
 		// 返回ModelAndView
 		return mv;
 	}
+	@RequestMapping(value="/visitor/trajectoryAck")
+	 public ModelAndView trajectoryAck(HttpServletRequest request,HttpServletResponse response,ModelAndView mv,String recordid){
+		// 设置客户端跳转到查询请求
+		mv.setViewName("visitor/trajectory");
+		// 返回ModelAndView
+		return mv;
+	}
 }
