@@ -120,9 +120,9 @@
 							</select>&nbsp;
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加部门"/>
+					    	<input id="add" type="button" value="添加员工"/>
 					    	<input id="add" type="button" value="批量导入"/>
-					    	<input id="add" type="button" value="导出Excel"/>
+					    	<!-- <input id="add" type="button" value="导出Excel"/>  -->
 					    </td>
 					  </tr>
 					</table>
@@ -142,6 +142,7 @@
 			  <td>姓名</td>
 			  <td>性别</td>
 			  <td>手机号码</td>
+			  <td>员工卡号</td>
 			  <td>邮箱</td>
 			  <td>职位</td>
 			  <td>学历</td>
