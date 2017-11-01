@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>车辆识别仪</title>
+	<title>车辆管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -33,7 +33,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆识别仪 &gt; 车辆识别仪查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆管理 &gt; 车辆管理查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -71,8 +71,15 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>名称</td>
-			  <td>识别仪IP</td>
-			  <td>描述</td>
+			  <td>分组</td>
+			  <td>车位总数</td>
+			  <td>车位剩余数</td>
+			  <td>场地类型</td>
+			  <td>相机ip</td>
+			  <td>进出类型</td>
+			  <td>显示屏模板</td>
+			  <td>语音模板</td>
+			  <td>所属车牌</td>
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
