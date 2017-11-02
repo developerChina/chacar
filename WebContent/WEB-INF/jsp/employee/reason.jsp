@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>楼层管理</title>
+	<title>访客事由</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -25,7 +25,6 @@
 	<script type="text/javascript">
 		$(function(){
 
-
 		 	   /** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   
@@ -42,25 +41,25 @@
 		 		   /** 获取到用户选中的复选框  */
 		 		   var checkedBoxs = boxs.filter(":checked");
 		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error("请选择一个需要删除的门禁！");
+		 			   $.ligerDialog.error("请选择一个需要删除的事由！");
 		 		   }else{
 		 			   /** 得到用户选中的所有的需要删除的ids */
 		 			   var ids = checkedBoxs.map(function(){
 		 				   return this.value;
 		 			   })
 		 			   
-		 			   $.ligerDialog.confirm("再考虑考虑人家嘛。。。","删除门禁",function(r){
+		 			   $.ligerDialog.confirm("确认要删除吗?","删除用户",function(r){
 		 				   if(r){
 		 					   // alert("删除："+ids.get());
 		 					   // 发送请求
-		 					   window.location = "${ctx }/floor/removeAccess?ids=" + ids.get();
+		 					   window.location = "${ctx }/visitor/removeReson?ids=" + ids.get();
 		 				   }
 		 			   });
 		 		   }
 		 	   })
 		 	   /** 添加员工绑定点击事件 */
 		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/floor/addAccess?flag=1";
+		 		   window.location = "${ctx }/visitor/addReson?flag=1";
 		 	   })
 	 })
 	</script>
@@ -71,7 +70,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：门禁管理 &gt; 门禁查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：访问事由管理 &gt; 访问事由查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -83,15 +82,24 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/floor/floorAck">
+			  	<form name="empform" method="post" id="empform" action="${ctx}/visitor/reasonAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	门禁名称：<input type="text" name="accessname">
-					    	控制器IP:<input type="text" name="cip">
+					    	事由内容：<input type="text" name="content">
+					    	拜访时长:
+		    			<select name="rtime">
+					<option disabled="disabled">-请选择拜访时长-</option>
+					<option value="1" selected="selected">10分钟以下</option>
+					<option value="0">10——30分钟</option>
+					<option value="2">30——40分钟</option>
+					<option value="3">40——60分钟</option>
+					<option value="4">1小时以上</option>
+					</select>
+						
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加门禁"/>
+					    	<input id="add" type="button" value="添加事由"/>
 					    </td>
 					  </tr>
 					</table>
@@ -108,21 +116,22 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>门禁名称</td>
-			  <td>控制器SN</td>
-			  <td>控制器IP</td>
-			  <td>门编号</td>
+			  <td>访问事由</td>
+			  <td>访问时长</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.accesss}" var="access" varStatus="stat">
+			<c:forEach items="${requestScope.resons}" var="reson" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${access.accessid}"></td>
-					 <td>${access.accessname}</td>
-					  <td>${access.csn}</td>
-					  <td>${access.cip}</td>
-					  <td>${access.accessid}</td>
- 					  <td align="center" width="40px;">
- 					       <a href="${ctx}/floor/updateAccess?flag=1&accessid=${access.accessid}">
+					<td><input type="checkbox" id="box_${stat.index}" value="${reson.rid}"></td>
+					 <td>${reson.content }</td>
+					 <td> <c:if test="${reson.rtime==1}">10分钟以下</c:if>
+					  	  <c:if test="${reson.rtime==0}">10——30分钟</c:if>
+					  	   <c:if test="${reson.rtime==2}">30——40分钟</c:if>
+					  	    <c:if test="${reson.rtime==3}">40——60分钟</c:if>
+					  	     <c:if test="${reson.rtime==4}">1小时以上</c:if>
+					  	</td>
+					  <td align="center" width="40px;">
+ 					       <a href="${ctx}/visitor/updateReson?flag=1&rid=${reson.rid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
@@ -139,7 +148,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/floor/floorAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/visitor/reasonAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

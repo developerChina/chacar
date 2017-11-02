@@ -14,7 +14,13 @@ public class GlobleConstants {
 	//WW:电梯表
 	public static final String ELEVATORTABLE = "Elevator_inf";
 	public static final String BLACKLISTTABLE = "blacklist_inf";
-	
+
+	//gy:通道数据库表常亮
+	public static final String PASSAGEWAYTABLE = "Passageway_info";
+	//sgy:门禁数据库表常亮
+	public static final String ACCESSTABLE = "Access_info";
+	//ggyy:访问事由表常量
+	public static final String RESONTABLE = "Reson_info";
 	
 	// 登录
 	public static final String LOGIN = "loginForm";

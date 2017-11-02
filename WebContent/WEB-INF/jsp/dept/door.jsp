@@ -24,6 +24,43 @@
     
 	<script type="text/javascript">
 		$(function(){
+
+		 	   /** 获取上一次选中的部门数据 */
+		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
+		 	   
+		 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
+		    	$("tr[id^='data_']").hover(function(){
+		    		$(this).css("backgroundColor","#eeccff");
+		    	},function(){
+		    		$(this).css("backgroundColor","#ffffff");
+		    	})
+		    	
+		    	
+		 	   /** 删除员工绑定点击事件 */
+		 	   $("#delete").click(function(){
+		 		   /** 获取到用户选中的复选框  */
+		 		   var checkedBoxs = boxs.filter(":checked");
+		 		   if(checkedBoxs.length < 1){
+		 			   $.ligerDialog.error("请选择一个需要删除的通道！");
+		 		   }else{
+		 			   /** 得到用户选中的所有的需要删除的ids */
+		 			   var ids = checkedBoxs.map(function(){
+		 				   return this.value;
+		 			   })
+		 			   
+		 			   $.ligerDialog.confirm("确认要删除吗?","删除用户",function(r){
+		 				   if(r){
+		 					   // alert("删除："+ids.get());
+		 					   // 发送请求
+		 					   window.location = "${ctx }/door/removePassageway?ids=" + ids.get();
+		 				   }
+		 			   });
+		 		   }
+		 	   })
+		 	   /** 添加员工绑定点击事件 */
+		 	   $("#add").click(function(){
+		 		   window.location = "${ctx }/door/addPassageway?flag=1";
+		 	   })
 	 })
 	</script>
 </head>
@@ -45,12 +82,12 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/user/selectUser">
+			  	<form name="empform" method="post" id="empform" action="${ctx}/door/doorAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	用户名：<input type="text" name="username">
-					    	用户状态：<input type="text" name="status">
+					    	通道名：<input type="text" name="passagewayName">
+					    	控制器IP：<input type="text" name="ControllerIP">
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
 					    	<input id="add" type="button" value="添加通道"/>
@@ -74,18 +111,21 @@
 			  <td>控制器SN</td>
 			  <td>控制器IP</td>
 			  <td>通道编号</td>
+			  <td>通道类型</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
+			<c:forEach items="${requestScope.passageways}" var="passageway" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
-					 <td>${user.loginname }</td>
-					  <td>${user.password }</td>
-					  <td>${user.username }</td>
-					  <td>${user.status }</td>
-					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${passageway.passagewayID}"></td>
+					 <td>${passageway.passagewayName }</td>
+					  <td>${passageway.controllerSN }</td>
+					  <td>${passageway.controllerIP }</td>
+					  <td>${passageway.passagewayID}</td>
+					  <td><c:if test="${passageway.ptype==1}">进入通道</c:if>
+					  	  <c:if test="${passageway.ptype==0}">离开通道</c:if>
+					  	</td>
  					  <td align="center" width="40px;">
- 					       <a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
+ 					       <a href="${ctx}/door/updatePassageway?flag=1&passagewayID=${passageway.passagewayID}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
@@ -102,7 +142,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/user/selectUser?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/door/doorAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>
