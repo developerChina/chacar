@@ -70,8 +70,9 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>停车场名称</td>
+			  <td>车场名称</td>
 			  <td>编号</td>
+			  <td>车位数</td>
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
