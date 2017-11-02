@@ -34,6 +34,9 @@ public class Employee implements java.io.Serializable{
 	private String hobby;				// 爱好
 	private String remark;				// 备注
 	private java.util.Date createDate;	// 建档日期
+	private String cardno;				//员工卡号
+	private String carno;				//员工车牌号
+	
 	// 无参数构造器
 	public Employee() {
 		super();
@@ -160,6 +163,18 @@ public class Employee implements java.io.Serializable{
 	}
 	public java.util.Date getCreateDate(){
 		return this.createDate;
+	}
+	public String getCardno() {
+		return cardno;
+	}
+	public void setCardno(String cardno) {
+		this.cardno = cardno;
+	}
+	public String getCarno() {
+		return carno;
+	}
+	public void setCarno(String carno) {
+		this.carno = carno;
 	}
 	@Override
 	public String toString() {

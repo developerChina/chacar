@@ -66,6 +66,7 @@
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
+		    			<td class="font3 fftd">父级部门：<input type="text" name="pid" id="pid" size="20"/> <input type="text" name="pname" id="pname" size="20"/></td>
 		    			<td class="font3 fftd">部门名称：<input type="text" name="name" id="name" size="20"/></td>
 		    			<td class="font3 fftd">详细描述：<input type="text" name="remark" id="remark" size="20"/></td>
 		    		</tr>

@@ -21,7 +21,9 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerTree.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	
 	<script type="text/javascript">
 		$(function(){
 	 	   /** 获取上一次选中的部门数据 */
@@ -67,7 +69,10 @@
 	 	   $("#add").click(function(){
 	 		   window.location = "${ctx }/dept/addDept?flag=1";
 	 	   })
+	 	   
+	 	   
 	    })
+	    
 	</script>
 </head>
 <body>
@@ -113,7 +118,6 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>名称</td>
-			  <td>编码</td>
 			  <td>上级部门</td>
 			  <td>详细信息</td>
 			  <td align="center">操作</td>
@@ -122,9 +126,8 @@
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${dept.id}"></td>
 					 <td>${dept.name }</td>
-					 <td>${dept.name }</td>
-					 <td>${dept.name }</td>
-					  <td>${dept.remark }</td>
+					 <td>${dept.pname }</td>
+					 <td>${dept.remark }</td>
 					 <td align="center" width="40px;"><a href="${ctx}/dept/updateDept?flag=1&id=${dept.id}">
 							<img title="修改" src="${ctx}/images/update.gif"/></a>
 					  </td>

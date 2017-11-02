@@ -146,13 +146,19 @@ public class EmployeeDynaSqlProvider {
 				if(employee.getJob()!= null){
 					VALUES("job_id", "#{job.id}");
 				}
+				if(employee.getCardno()!= null){
+					VALUES("cardno", "#{cardno}");
+				}
+				if(employee.getCarno()!= null){
+					VALUES("carno", "#{carno}");
+				}
 			}
 		}.toString();
 	}
 	// 动态更新
 	public String updateEmployee(Employee employee){
 		
-		return new SQL(){
+		SQL sql= new SQL(){
 			{
 				UPDATE(EMPLOYEETABLE);
 				if(employee.getName() != null){
@@ -212,9 +218,16 @@ public class EmployeeDynaSqlProvider {
 				if(employee.getJob()!= null){
 					SET(" job_id = #{job.id} ");
 				}
+				if(employee.getCardno()!= null){
+					SET(" cardno = #{cardno} ");
+				}
+				if(employee.getCarno()!= null){
+					SET(" carno = #{carno} ");
+				}
 				WHERE(" id = #{id} ");
 			}
-		}.toString();
+		};
+		return sql.toString();
 	}
 
 

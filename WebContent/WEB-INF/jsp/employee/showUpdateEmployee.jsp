@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -194,7 +193,7 @@
 			<tr>
 				<td class="font3 fftd">
 					出生日期：<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="birthday" id="birthday" size="40"/>&nbsp;&nbsp;
+					name="birthday" id="birthday" size="40" value="${employee.birthday }" />&nbsp;&nbsp;
 					民&nbsp;&nbsp;&nbsp;&nbsp;族：<input name="race" id="race" size="20" value="${employee.race }"/>
 				</td>
 			</tr>
@@ -212,7 +211,7 @@
 				<td class="font3 fftd">
 					备&nbsp;&nbsp;&nbsp;&nbsp;注：<input name="remark" id="remark" size="40" value="${employee.remark }"/>
 					&nbsp;&nbsp;所属部门：
-					<select  name="dept_id" style="width:100px;">
+					<select  name="dept_id" style="width:143px;">
 						   <option value="0">--部门选择--</option>
 						   <c:forEach items="${requestScope.depts }" var="dept">
 						   		<c:choose>
@@ -227,6 +226,11 @@
 					</select>
 				</td>
 			</tr>
+			<tr><td class="main_tdbor"></td></tr>
+			<td class="font3 fftd">
+					员工卡号：<input name="cardno" id="cardno" size="40" value="${employee.cardno }"/>
+					车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/>
+			</td>
 			<tr><td class="main_tdbor"></td></tr>
 			
 			<tr><td align="left" class="fftd"><input type="submit" value="修改">&nbsp;&nbsp;<input type="reset" value="取消 "></td></tr>
