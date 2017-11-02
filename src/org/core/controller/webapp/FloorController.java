@@ -33,6 +33,11 @@ public class FloorController {
 		// 返回ModelAndView
 		return "dept/floor";
 	}
+	@RequestMapping(value="/floor/floorGroupAck")
+	 public String floorGroupAck(Integer pageIndex, @ModelAttribute Access access,Model model){
+		// 返回ModelAndView
+		return "dept/floorGroup";
+	}
 		//删除
 	@RequestMapping(value="/floor/removeAccess")
 	public ModelAndView removeAccess(String ids,ModelAndView mv){

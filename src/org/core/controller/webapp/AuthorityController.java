@@ -17,4 +17,16 @@ public class AuthorityController {
 		// 返回ModelAndView
 		return mv;
 	}
+	/**
+	 * 门禁绑定授权
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/authority/floorBindAck")
+	 public ModelAndView floorBindAck(ModelAndView mv){
+		// 设置客户端跳转到查询请求
+		mv.setViewName("dept/floorBind");
+		// 返回ModelAndView
+		return mv;
+	}
 }
