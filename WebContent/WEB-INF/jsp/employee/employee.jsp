@@ -164,13 +164,13 @@
 					        </c:choose>
 					  </td>
 					  <td>${employee.phone }</td>
+					  <td>${employee.cardno }</td>
 					  <td>${employee.email }</td>
-					  <td>${employee.job.name }</td>
-					  <td>${employee.education }</td>
-					   <td>${employee.job.name }</td>
-					  <td>${employee.education }</td>
+					  <td>${employee.job.name  }</td>
+					   <td>${employee.education }</td>
 					  <td>${employee.cardId }</td>
 					  <td>${employee.dept.name }</td>
+					  <td>${employee.carno }</td>
 					  <td>${employee.address }</td>
 					  <td>
 					  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 

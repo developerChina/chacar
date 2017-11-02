@@ -2,6 +2,9 @@ package org.core.controller.webapp;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.core.domain.webapp.Dept;
 import org.core.service.webapp.HrmService;
 import org.core.util.tag.PageModel;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**   
@@ -22,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DeptController {
-
+		
 	/**
 	 * 自动注入UserService
 	 * */
@@ -31,7 +35,7 @@ public class DeptController {
 	private HrmService hrmService;
 	
 	/**
-	 * 处理/login请求
+	 * 处理部门列表展示
 	 * */
 	@RequestMapping(value="/dept/selectDept")
 	 public String selectDept(Model model,Integer pageIndex,
@@ -52,6 +56,13 @@ public class DeptController {
 		model.addAttribute("pageModel", pageModel);
 		return "dept/dept";
 		
+	}
+	
+	@RequestMapping(value="/dept/selectAllDept")
+	@ResponseBody
+	public Object selectAllDept(HttpServletRequest request, HttpServletResponse response){
+		List<Dept> depts = hrmService.findAllDept();
+		return depts; 
 	}
 	
 	/**
