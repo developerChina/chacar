@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>电梯管理</title>
+	<title>黑名单管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -23,6 +23,19 @@
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
     
 	<script type="text/javascript">
+	
+		function myblack(a){
+			 $.ligerDialog.confirm("确认要取消拉黑吗?","取消拉黑 ",function(r){
+				   if(r){
+					   window.location = "${ctx}/visitor/cancelblack?blacklistID="+a;
+				   }
+			   });
+		}
+	
+	
+	
+	
+	
 		$(function(){
 			/** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
@@ -33,34 +46,16 @@
 		    	},function(){
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
-		    	
-		    	
-		 	   /** 删除员工绑定点击事件 */
-		 	   $("#delete").click(function(){
-		 		   /** 获取到用户选中的复选框  */
-		 		   var checkedBoxs = boxs.filter(":checked");
-		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error(" 请选择一个需要删除的电梯！");
-		 		   }else{
-		 			   /** 得到用户选中的所有的需要删除的ids */
-		 			   var ids = checkedBoxs.map(function(){
-		 				   return this.value;
-		 			   })
-		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除电梯 ",function(r){
-		 				   if(r){
-		 					    //alert("删除："+ids.get());
-		 					   // 发送请求
-		 					   window.location = "${ctx }/elevator/removeElevator?ids=" + ids.get();
-		 				   }
-		 			   });
-		 		   }
-		 	   })
 		 	   
-		 	   /** 添加员工绑定点击事件 */
-		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/elevator/addElevator?flag=1";
+		 	   /** 手动添加 绑定点击事件 */
+		 	   $("#addManual").click(function(){
+		 		   window.location = "${ctx}/visitor/blackManual?flag=1";
 		 	   })
+		 	     /** 自动添加 绑定点击事件 */
+		 	   $("#addAutomatic").click(function(){
+		 		   window.location = "${ctx}/visitor/blackAutomatic?flag=1";
+		 	   })
+		 	  
 	 })
 	</script>
 </head>
@@ -70,7 +65,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：电梯管理 &gt; 电梯查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：黑名单 &gt; 黑名单查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -82,19 +77,23 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/elevator/elevatorAck">
+			  	
+				
+				<form name="empform" method="post" id="empform" action="${ctx}/visitor/blackAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	电梯名称：<input type="text" name="elevatorName">
-					    	控制器SN：<input type="text" name="controllerSN">
+					    	人员姓名：<input type="text" name="blacklistName">
+					    	单位名称：<input type="text" name="company">
 					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加电梯"/>
+					    	<input id="addAutomatic" type="button" value="将访客拉黑"/>
+							<input id="addManual" type="button" value="手动拉黑"/>
 					    </td>
 					  </tr>
 					</table>
 				</form>
+				
+				
 			  </td>
 			</tr>
 		  </table>
@@ -107,22 +106,22 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>电梯名</td>
-			  <td>控制器SN</td>
-			  <td>控制器IP</td>
-			  <td>楼层编号</td>
+			  <td>黑名单人员姓名</td>
+			  <td>单位</td>
+			  <td>身份证号</td>
+			  <td>拉黑原因</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.elevators}" var="elevator" varStatus="stat">
+			<c:forEach items="${requestScope.blacks}" var="black" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${elevator.elevatorID}"></td>
-					 <td>${elevator.elevatorName }</td>
-					  <td>${elevator.controllerSN }</td>
-					  <td>${elevator.controllerIP }</td>
-					  <td>${elevator.floorNumber }</td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${black.blacklistID}"></td>
+					 <td>${black.blacklistName}</td>
+					  <td>${black.company}</td>
+					  <td>${black.idNumber }</td>
+					  <td>${black.reason}</td>
  					  <td align="center" width="40px;">
- 					       <a href="${ctx}/elevator/updateElevator?flag=1&elevatorID=${elevator.elevatorID}">
-							   <img title="修改" src="${ctx}/images/update.gif"/>
+ 					       <a href="javascript:myblack(${black.blacklistID})">
+							   <img title="取消拉黑" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
 				</tr>
@@ -138,7 +137,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/elevator/elevatorAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/visitor/blackAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

@@ -11,6 +11,11 @@ public class GlobleConstants {
 	public static final String JOBTABLE = "job_inf";
 	public static final String EMPLOYEETABLE = "employee_inf";
 
+	//WW:电梯表
+	public static final String ELEVATORTABLE = "Elevator_inf";
+	public static final String BLACKLISTTABLE = "blacklist_inf";
+	
+	
 	// 登录
 	public static final String LOGIN = "loginForm";
 	// 用户的session对象
