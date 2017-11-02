@@ -63,11 +63,14 @@
 	    			   });
 	    		   }
 	    	   })
-	       /** 添加员工绑定点击事件 */
-	 	   $("#add").click(function(){
-	 		   window.location = "${ctx }/employee/addEmployee?flag=1";
-	 	   })
+	    	   
+		       /** 添加员工绑定点击事件 */
+		 	   $("#add").click(function(){
+		 		   window.location = "${ctx }/employee/addEmployee?flag=1";
+		 	   })
+		 	   
 	       })
+	       
 	</script>
 </head>
 <body>
@@ -136,7 +139,7 @@
 	  <!-- 数据展示区 -->
 	  <tr valign="top">
 	    <td height="20">
-		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
+		  <table width="100%" border="1" cellpadding="5" id="employee_table" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
@@ -155,31 +158,31 @@
 			</tr>
 			<c:forEach items="${requestScope.employees}" var="employee" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
-					<td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
-					 <td>${employee.name }</td>
-					  <td>
-					        <c:choose>
-					        	<c:when test="${employee.sex == 1 }">男</c:when>
-					        	<c:otherwise>女</c:otherwise>
-					        </c:choose>
-					  </td>
-					  <td>${employee.phone }</td>
-					  <td>${employee.cardno }</td>
-					  <td>${employee.email }</td>
-					  <td>${employee.job.name  }</td>
-					   <td>${employee.education }</td>
-					  <td>${employee.cardId }</td>
-					  <td>${employee.dept.name }</td>
-					  <td>${employee.carno }</td>
-					  <td>${employee.address }</td>
-					  <td>
-					  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
-					  </td>
-					  <td align="center" width="40px;">
-					      <a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
-							<img title="修改" src="${ctx}/images/update.gif"/>
-						  </a>
-					  </td>
+				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
+				  <td>${employee.name }</td>
+				  <td>
+			        <c:choose>
+			        	<c:when test="${employee.sex == 1 }">男</c:when>
+			        	<c:otherwise>女</c:otherwise>
+			        </c:choose>
+				  </td>
+				  <td>${employee.phone }</td>
+				  <td>${employee.cardno }</td>
+				  <td>${employee.email }</td>
+				  <td>${employee.job.name  }</td>
+				  <td>${employee.education }</td>
+				  <td>${employee.cardId }</td>
+				  <td>${employee.dept.name }</td>
+				  <td>${employee.carno }</td>
+				  <td>${employee.address }</td>
+				  <td>
+				  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
+				  </td>
+				  <td align="center" width="40px;">
+				      <a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
+						<img title="修改" src="${ctx}/images/update.gif"/>
+					  </a>
+				  </td>
 				</tr>
 			</c:forEach>
 		  </table>

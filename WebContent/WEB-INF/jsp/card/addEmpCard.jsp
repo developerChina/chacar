@@ -10,13 +10,17 @@
 	<meta http-equiv="expires" content="0" />    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
 	<meta http-equiv="description" content="This is my page" />
-	<link href="${ctx}/js/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/js/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/js/jquery-1.11.0.js" type="text/javascript"></script>
-    <script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
-    <script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script>
-    <script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-    <script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
+	<link href="${ctx}/css/css.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/js/ligerUI/skins/Aqua/css/ligerui-dialog.css"/>
+	<link href="${ctx}/js/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${ctx }/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="${ctx }/js/jquery-migrate-1.2.1.js"></script>
+	<script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
+	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
+	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript">
 	 $(function(){
 	    	/**表单提交 */
@@ -43,20 +47,35 @@
 	    	
 	    });
 		
-	 function f_open()
-     {
+	 function f_open() {
          $.ligerDialog.open({
              height:600,
              width: 800,
-             title : '打开窗口提示',
+             title : '选择员工',
              url: '${ctx}/employee/selectEmployee', 
              showMax: false,
              showToggle: true,
              showMin: false,
              isResize: true,
-             slide: false
+             slide: false,
+             buttons: [
+                 { text: '选择', onclick: function (item, dialog) { appenEmp(dialog, dialog.frame.$("input[type='checkbox'][id^='box_']"),dialog.frame.$("[id='employee_table']")   )  } },
+                 { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+             ]
          });
      }
+	 function appenEmp(dialog, boxs,table ){
+	   var checkedBoxs = boxs.filter(":checked");
+	   /** 得到用户选中的所有的需要删除的ids */
+	   var ids = checkedBoxs.map(function(){
+		   return this.value;
+	   })
+	   $("#txt2").val(ids.get());
+	   
+	   console.info(checkedBoxs.lenght)
+	   
+	   //dialog.close();
+	 }
 	</script>
 </head>
 <body>
@@ -78,7 +97,7 @@
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd" colspan="2">员工信息：<input type="text" id="txt2"  size="20"></td>
+		    			<td class="font3 fftd" colspan="2">员工信息：<input type="text" id="txt2"  size="20" onclick='f_open()'></td>
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd">卡&nbsp;&nbsp;&nbsp;&nbsp;号：<input type="text" name="cardno" id="cardno" size="20"/></td>
