@@ -47,21 +47,10 @@
 		  </tr>
 		  <tr><td height="2"></td></tr>
 
-          <tr><td id="navbg4" class="left_nav_closed" ><div class="font1">卡口设备</div></td></tr>
-		  <tr valign="top" id="submenu4">
+		  <tr><td id="navbg1" class="left_nav_closed" ><div class="font1">员工系统</div></td></tr>
+		  <tr valign="top" id="submenu1" style="display: none">
 		    <td class="left_nav_bgshw" height="50">
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">电梯管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carIdAck" target="main">车辆管理</a></img></p>
-			</td>
-		  </tr>
-		  <tr><td height="2"></td></tr>
-
-		  <tr><td id="navbg2" class="left_nav_closed" ><div class="font1">人员管理</div></td></tr>
-		  <tr valign="top" id="submenu2" style="display: none">
-		    <td class="left_nav_bgshw" height="50">
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/dept/selectDept" target="main">部门管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/blackAck" target="main">部门管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/job/selectJob" target="main">职位管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/employee/selectEmployee" target="main">员工管理</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/card/cardAck" target="main">授权管理</a></img></p>
@@ -69,39 +58,98 @@
 		  </tr>
 		  <tr><td height="2"></td></tr>
 		  
-		  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">访客管理</div></td></tr>
-		  <tr valign="top" id="submenu3" style="display: none">
+		  <tr><td id="navbg2" class="left_nav_closed" ><div class="font1">访客系统</div></td></tr>
+		  <tr valign="top" id="submenu2" style="display: none">
 		    <td class="left_nav_bgshw" height="30">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/blackAck" target="main">黑名单</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/reasonAck" target="main">拜访事由</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访客轨迹</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="" target="main">访客验证</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
  
-		  <tr><td id="navbg5" class="left_nav_closed" ><div class="font1">排队叫号</div></td></tr>
+		  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">门禁系统</div></td></tr>
+		  <tr valign="top" id="submenu3" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+
+          <tr><td id="navbg4" class="left_nav_closed" ><div class="font1">梯控系统</div></td></tr>
+		  <tr valign="top" id="submenu4" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">梯控规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+		  
+		  <tr><td id="navbg5" class="left_nav_closed" ><div class="font1">通道系统</div></td></tr>
 		  <tr valign="top" id="submenu5" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">业务类别</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">卸货岛管理</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">操作人员管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">操作员绩效统计</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/employee/addEmployee?flag=1" target="main">排队监控统计</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
-
-		  <tr><td id="navbg6" class="left_nav_closed" ><div class="font1">物流车管理</div></td></tr>
+		  
+         <tr><td id="navbg6" class="left_nav_closed" ><div class="font1">车辆系统</div></td></tr>
 		  <tr valign="top" id="submenu6" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/employee/selectEmployee" target="main">定位仪</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/employee/selectEmployee" target="main">车辆入驻</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">查询统计</a></img></p>
-              <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">违规处理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">停车场规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
 
+		  <tr><td id="navbg7" class="left_nav_closed" ><div class="font1">定位系统</div></td></tr>
+		  <tr valign="top" id="submenu7" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">定位规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+
+           <tr><td id="navbg8" class="left_nav_closed" ><div class="font1">排队叫号</div></td></tr>
+		  <tr valign="top" id="submenu8" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">排队叫号规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+		  
+		  <tr><td id="navbg9" class="left_nav_closed" ><div class="font1">视频监控</div></td></tr>
+		  <tr valign="top" id="submenu9" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">视频监控规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+		    <tr><td id="navbg10" class="left_nav_closed" ><div class="font1">人脸识别</div></td></tr>
+		  <tr valign="top" id="submenu10" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">人脸识别规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">样板维护</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+		  
+		  <tr><td id="navbg11" class="left_nav_closed" ><div class="font1">大数据中心</div></td></tr>
+		  <tr valign="top" id="submenu11" style="display: none">
+		    <td class="left_nav_bgshw tdbtmline" height="50">
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">员工打卡查询</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访客记录查询</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">车辆违规查询</a></img></p>
+			</td>
+		  </tr>
+		  <tr><td height="2"></td></tr>
+		  
 		  <tr valign="top"><td height="100%" align="center"><div class="copycct"><br /><strong>技术支持：</strong><br><strong>北京华隆辰信息技术有限公司</strong><br>www.hualc.com</div></td></tr>
 		  <tr><td height="10"><img src="${ctx}/images/left_nav_bottom.gif" height="10"></img></td></tr>
 		  <tr><td height="10" bgcolor="#e5f0ff">&nbsp;</td></tr>
