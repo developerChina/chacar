@@ -22,9 +22,61 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
     
+    <script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
+    
 	<script type="text/javascript">
 		$(function(){
-	 })
+			/** 获取上一次选中的部门数据 */
+		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
+		 	   
+		 	  /** 给全选按钮绑定点击事件  */
+		      $("#checkAll").click(function(){
+	    		 // this是checkAll  this.checked是true
+	    		 // 所有数据行的选中状态与全选的状态一致
+	    		 boxs.attr("checked",this.checked);
+		      })
+		    	
+		 	 /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
+	    	 $("tr[id^='data_']").hover(function(){
+	    		$(this).css("backgroundColor","#eeccff");
+	    	 },function(){
+	    		$(this).css("backgroundColor","#ffffff");
+	    	 })
+		    	
+		    	
+	 	   /** 删除员工绑定点击事件 */
+	 	   $("#delete").click(function(){
+	 		   /** 获取到用户选中的复选框  */
+	 		   var checkedBoxs = boxs.filter(":checked");
+	 		   if(checkedBoxs.length < 1){
+	 			  mini.showMessageBox({
+	 		           showModal: false,
+	 		            width: 250,
+	 		            title: "提示",
+	 		            message: "记录已删除",
+	 		            timeout: 2000,
+	 		            x:"center",
+	 		            y:"top"
+	 		        });
+	 		   }else{
+	 			   /** 得到用户选中的所有的需要删除的ids */
+	 			   var ids = checkedBoxs.map(function(){
+	 				   return this.value;
+	 			   })
+	 			    mini.confirm("确定删除记录？", "确定？",
+			            function (action) {
+			                if (action == "ok") {
+			                	window.location = "${ctx }/resource/removeResource?ids=" + ids.get();
+			                } 
+			            }
+			        );
+	 		   }
+	 	   })
+	 	   /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		   window.location = "${ctx }/resource/addResource?flag=1";
+	 	   })
+		})
 	</script>
 </head>
 <body>
@@ -41,16 +93,15 @@
 	<table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
 	  <!-- 查询区  -->
 	  <tr valign="top">
-	    <td height="30">
+	    <td colspan="2" height="30">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/user/selectUser">
+			  	<form name="empform" method="post" id="empform" action="${ctx}/resource/resourcesAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	用户名：<input type="text" name="username">
-					    	用户状态：<input type="text" name="status">
+					    	资源名称：<input type="text" name="name">
 					    	<input type="submit" value="搜索"/>
 					    	<input id="delete" type="button" value="删除"/>
 					    	<input id="add" type="button" value="添加资源"/>
@@ -66,28 +117,33 @@
 	  
 	  <!-- 数据展示区 -->
 	  <tr valign="top">
+	    
+	    <td width="10%" rowspan="2">
+	        <ul id="tree1" class="mini-tree" url="${ctx}/resource/selectAll"
+	        showTreeIcon="true" textField="name" idField="id" parentField="pid" resultAsTree="false" 
+	        showArrow="true" expandOnNodeClick="true" expandOnLoad="3">
+	    	</ul>
+	    </td>
+	  
 	    <td height="20">
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>序号</td>
 			  <td>名称</td>
-			  <td>编码</td>
-			  <td>上级资源</td>
 			  <td>执行路径</td>
+			  <td>上级资源</td>
 			  <td>创建时间</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
+			<c:forEach items="${requestScope.resources}" var="resource" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
-					 <td>${user.loginname }</td>
-					  <td>${user.password }</td>
-					  <td>${user.username }</td>
-					  <td>${user.status }</td>
-					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${resource.id}"></td>
+					 <td>${resource.name }</td>
+					  <td>${resource.path }</td>
+					  <td>${resource.resource.name }</td>
+					  <td><f:formatDate value="${resource.createdate}"  type="date" dateStyle="long"/></td>
  					  <td align="center" width="40px;">
- 					       <a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
+ 					       <a href="${ctx}/resource/updateResource?flag=1&id=${resource.id}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
@@ -104,7 +160,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/user/selectUser?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/resource/resourcesAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

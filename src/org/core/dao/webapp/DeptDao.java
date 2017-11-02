@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.mapping.FetchType;
 import org.core.dao.webapp.provider.DeptDynaSqlProvider;
 import org.core.domain.webapp.Dept;
 
@@ -22,6 +26,9 @@ public interface DeptDao {
 
 	// 动态查询
 	@SelectProvider(type=DeptDynaSqlProvider.class,method="selectWhitParam")
+	@Results({
+		@Result(column="pid",property="dept",one=@One(select="org.core.dao.webapp.DeptDao.selectById",fetchType=FetchType.EAGER))
+	})
 	List<Dept> selectByPage(Map<String, Object> params);
 	
 	@SelectProvider(type=DeptDynaSqlProvider.class,method="count")

@@ -62,9 +62,6 @@ public class DeptDynaSqlProvider {
 				if(dept.getPid() != null && !dept.getPid().equals("")){
 					VALUES("pid", "#{pid}");
 				}
-				if(dept.getPname() != null && !dept.getPname().equals("")){
-					VALUES("pname", "#{pname}");
-				}
 				if(dept.getRemark() != null && !dept.getRemark().equals("")){
 					VALUES("remark", "#{remark}");
 				}
@@ -73,18 +70,14 @@ public class DeptDynaSqlProvider {
 	}
 	// 动态更新
 	public String updateDept(Dept dept){
-		
 		return new SQL(){
 			{
 				UPDATE(DEPTTABLE);
 				if(dept.getName() != null){
 					SET(" name = #{name} ");
 				}
-				if(dept.getPid() != null && !dept.getPid().equals("")){
-					VALUES("pid", "#{pid}");
-				}
-				if(dept.getPname() != null && !dept.getPname().equals("")){
-					VALUES("pname", "#{pname}");
+				if(dept.getPid() != null ){
+					SET(" pid = #{pid} ");
 				}
 				if(dept.getRemark() != null){
 					SET(" remark = #{remark} ");

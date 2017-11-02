@@ -80,7 +80,7 @@ public class CardController {
 	
 	
 	@RequestMapping(value="/card/removeCard")
-	 public ModelAndView removeDept(String ids,ModelAndView mv){
+	 public ModelAndView removeCard(String ids,ModelAndView mv){
 		// 分解id字符串
 		String[] idArray = ids.split(",");
 		for(String id : idArray){

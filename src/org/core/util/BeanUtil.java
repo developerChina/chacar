@@ -24,7 +24,7 @@ public class BeanUtil {
     		if(Arrays.asList(exceptFields.split(",")).contains(field.getName())) continue;
     		field.setAccessible(true);
     		try {
-    			if(field.get(o)!=null){
+    			if(field.get(o)!=null && !"".equals(field.get(o))){
     				infoMap.put(field.getName(), field.get(o));
     			}
 			} catch (IllegalArgumentException e) {

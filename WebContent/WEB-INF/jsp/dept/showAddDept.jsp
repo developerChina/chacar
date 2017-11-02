@@ -20,6 +20,9 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	
+	<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
+	
 	<script type="text/javascript">
 	 $(function(){
 	    	/** 部门表单提交 */
@@ -35,7 +38,15 @@
 					remark.focus();
 				}
 				if (msg != ""){
-					$.ligerDialog.error(msg);
+					mini.showMessageBox({
+	 		           showModal: false,
+	 		            width: 250,
+	 		            title: "提示",
+	 		            message: msg,
+	 		            timeout: 2000,
+	 		            x:"center",
+	 		            y:"top"
+	 		        });
 					return false;
 				}else{
 					return true;
@@ -44,7 +55,6 @@
 			});
 	    });
 		
-
 	</script>
 </head>
 <body>
@@ -66,7 +76,10 @@
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">父级部门：<input type="text" name="pid" id="pid" size="20"/> <input type="text" name="pname" id="pname" size="20"/></td>
+		    			<td class="font3 fftd">父级部门：
+		    			<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/dept/selectAllDept" multiSelect="false"
+		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="3" size="20" />
+    					</td>
 		    			<td class="font3 fftd">部门名称：<input type="text" name="name" id="name" size="20"/></td>
 		    			<td class="font3 fftd">详细描述：<input type="text" name="remark" id="remark" size="20"/></td>
 		    		</tr>

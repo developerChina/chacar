@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-	<title>人事管理系统——修改部门</title>
+	<title>人事管理系统——添加资源</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -26,32 +26,29 @@
 	<script type="text/javascript">
 	 $(function(){
 	    	/** 部门表单提交 */
-			$("#deptForm").submit(function(){
+			$("#resoucesForm").submit(function(){
 				var name = $("#name");
-				var remark = $("#remark");
+				var path = $("#path");
 				var msg = "";
 				if ($.trim(name.val()) == ""){
-					msg = "部门名称不能为空！";
+					msg = "资源名称不能为空！";
 					name.focus();
-				}else if ($.trim(remark.val()) == ""){
-					msg = "详细描述不能为空！";
-					remark.focus();
 				}
 				if (msg != ""){
 					mini.showMessageBox({
-		 		           showModal: false,
-		 		            width: 250,
-		 		            title: "提示",
-		 		            message: msg,
-		 		            timeout: 2000,
-		 		            x:"center",
-		 		            y:"top"
-		 		        });
+	 		           showModal: false,
+	 		            width: 250,
+	 		            title: "提示",
+	 		            message: msg,
+	 		            timeout: 2000,
+	 		            x:"center",
+	 		            y:"top"
+	 		        });
 					return false;
 				}else{
 					return true;
 				}
-				$("#deptForm").submit();
+				$("#resoucesForm").submit();
 			});
 	    });
 		
@@ -62,36 +59,35 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：部门管理  &gt; 修改部门</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：资源管理  &gt; 添加资源</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/dept/updateDept" id="deptForm" method="post">
+    	 <form action="${ctx}/resource/addResource" id="resoucesForm" method="post">
     	 	<!-- 隐藏表单，flag表示添加标记 -->
     	 	<input type="hidden" name="flag" value="2">
-    	 	<input type="hidden" name="id" value="${dept.id }">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">父级部门：
+		    			<td class="font3 fftd">上级资源：
 		    			
-		    			<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/dept/selectAllDept" multiSelect="false"
-		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="3" size="20" value="${dept.pid }"/>
+		    			<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/resource/selectAll" multiSelect="false"
+		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="3" size="20" />
     					
     					</td>
-		    			<td class="font3 fftd">部门名称：<input type="text" name="name" id="name" size="20" value="${dept.name }"/></td>
-		    			<td class="font3 fftd">详细描述：<input type="text" name="remark" id="remark" size="20" value="${dept.remark }"/></td>
+		    			<td class="font3 fftd">资源名称：<input type="text" name="name" id="name" size="20"/></td>
+		    			<td class="font3 fftd">资源路径：<input type="text" name="path" id="path" size="60"/></td>
 		    		</tr>
 		    			
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="修改">&nbsp;&nbsp;<input type="reset" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="添加 ">&nbsp;&nbsp;<input type="reset" value="取消 "></td></tr>
 		  </table>
 		 </form>
 	</td>
