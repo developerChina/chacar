@@ -24,12 +24,11 @@
     
 	<script type="text/javascript">
 	
-		function blacka(a){
-			
+	function blacka(visitorID){
+		
 			 $.ligerDialog.confirm("确认要拉黑吗?","确认拉黑 ",function(r){
 				   if(r){
-					   var myid=a;
-					   window.location = "${ctx}/visitor/confirm?id="+myid;
+				 window.location = "${ctx}/visitor/confirm?id="+visitorID;
 				   }
 			   });
 		}
@@ -104,8 +103,9 @@
 					 <td>${myblack.cardName}</td>
 					  <td>${myblack.company}</td>
 					  <td>${myblack.cardID }</td>
+					  
  					  <td align="center" width="40px;">
- 					       <a href="javascript:blacka(${myblack.visitorID})">
+ 					       <a href='javascript:void(0)' onclick="blacka('${myblack.visitorID}')">
 							   <img title="将其拉黑" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
