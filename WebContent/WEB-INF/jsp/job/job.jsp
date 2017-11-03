@@ -93,9 +93,9 @@
 					  <tr>
 					    <td class="font3">
 					    	职位名称：<input type="text" name="name">
-					    	 <input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加职位"/>
+					    	 <input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加职位&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
