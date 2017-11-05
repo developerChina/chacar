@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.core.dao.resource.ResourceInfoDao;
-import org.core.domain.resource.ResourceInfo;
-import org.core.service.resource.ResourceInfoService;
-import org.core.util.tag.PageModel;	
+import org.core.dao.resource.ResourceAccessDao;
+import org.core.domain.resource.ResourceAccess;
+import org.core.service.resource.ResourceAccessService;
+import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -16,15 +16,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**   
- * @Description: 资源服务层接口
+ * @Description: 资源授权服务层接口
  */
 @Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
-@Service("resourceInfoService")
-public class ResourceInfoServiceImpl implements ResourceInfoService{
+@Service("resourceAccessService")
+public class ResourceAccessServiceImpl implements ResourceAccessService{
 	@Autowired
-	private ResourceInfoDao dao;
+	private ResourceAccessDao dao;
 	@Override
-	public String save(ResourceInfo entity) {
+	public String save(ResourceAccess entity) {
 		entity.setCreatedate(new Date());
 		dao.save(entity);
 		return "";
@@ -36,17 +36,17 @@ public class ResourceInfoServiceImpl implements ResourceInfoService{
 	}
 
 	@Override
-	public void update(ResourceInfo entity) {
+	public void update(ResourceAccess entity) {
 		dao.update(entity);
 	}
 
 	@Override
-	public ResourceInfo selectById(int id) {
+	public ResourceAccess selectById(int id) {
 		return dao.selectById(id);
 	}
 
 	@Override
-	public List<ResourceInfo> selectByPage(ResourceInfo entity,PageModel pageModel) {
+	public List<ResourceAccess> selectByPage(ResourceAccess entity,PageModel pageModel) {
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);
@@ -56,13 +56,28 @@ public class ResourceInfoServiceImpl implements ResourceInfoService{
 	        /** 开始分页查询数据：查询第几页的数据 */
 		    params.put("pageModel", pageModel);
 	    }
-		List<ResourceInfo> entitys = dao.selectByPage(params);
+		List<ResourceAccess> entitys = dao.selectByPage(params);
 		return entitys;
 	}
 
 	@Override
-	public List<ResourceInfo> selectAll() {
-		return dao.selectAll();
+	public List<ResourceAccess> selectByUserid(int userid) {
+		return dao.selectByUserid(userid);
+	}
+
+	@Override
+	public void deleteByUserid(int userid) {
+		dao.deleteByUserid(userid);
+	}
+	
+	@Override
+	public List<ResourceAccess> selectByResourceid(int resourceid) {
+		return dao.selectByResourceid(resourceid);
+	}
+
+	@Override
+	public ResourceAccess selectByResource_User(int userid, int resourceid) {
+		return dao.selectByResource_User(userid,resourceid);
 	}
 
 }

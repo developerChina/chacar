@@ -1,21 +1,23 @@
-package org.core.dao.resource.provider;
+package org.core.dao.car.provider;
 
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.core.domain.resource.ResourceInfo;
+import org.core.domain.car.CarAuthority;
 import org.core.util.BeanUtil;
 
 /**
  * @Description: 动态SQL语句提供类
  */
-public class ResourceInfoProvider {	
+public class CarAuthorityProvider {	
 
-	public String save(ResourceInfo entity) {
+	private String exceptFields="tableName,id,carDistinguish,carPark";
+	
+	public String save(CarAuthority entity) {
 		return new SQL() {
 			{
-				INSERT_INTO(ResourceInfo.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,id,resource");
+				INSERT_INTO(CarAuthority.tableName);
+				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
 				} 
@@ -23,11 +25,11 @@ public class ResourceInfoProvider {
 		}.toString();
 	}
 
-	public String update(ResourceInfo entity) {
+	public String update(CarAuthority entity) {
 		return new SQL() {
 			{
-				UPDATE(ResourceInfo.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,id,resource");
+				UPDATE(CarAuthority.tableName);
+				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					SET(entry.getKey()+"="+"#{"+entry.getKey()+"}");
 				}
@@ -40,9 +42,9 @@ public class ResourceInfoProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("*");
-				FROM(ResourceInfo.tableName);
+				FROM(CarAuthority.tableName);
 				if(params.get("entity") != null){
-//					ResourceInfo entity = (ResourceInfo) params.get("entity");
+//					CarAuthority entity = (CarAuthority) params.get("entity");
 //					if(dept.getName() != null && !dept.getName().equals("")){
 //						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 //					}
@@ -60,9 +62,9 @@ public class ResourceInfoProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("count(*)");
-				FROM(ResourceInfo.tableName);
+				FROM(CarAuthority.tableName);
 				if(params.get("entity") != null){
-//					ResourceInfo entity = (ResourceInfo) params.get("entity");
+//					CarAuthority entity = (CarAuthority) params.get("entity");
 //					if(dept.getName() != null && !dept.getName().equals("")){
 //						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 //					}

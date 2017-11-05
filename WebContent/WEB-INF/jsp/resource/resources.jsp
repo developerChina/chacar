@@ -27,7 +27,7 @@
 	<script type="text/javascript">
 		$(function(){
 			/** 获取上一次选中的部门数据 */
-		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
+		 	  var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   
 		 	  /** 给全选按钮绑定点击事件  */
 		      $("#checkAll").click(function(){
@@ -53,7 +53,7 @@
 	 		           showModal: false,
 	 		            width: 250,
 	 		            title: "提示",
-	 		            message: "记录已删除",
+	 		            message: "请选择要删除资源",
 	 		            timeout: 2000,
 	 		            x:"center",
 	 		            y:"top"
@@ -63,7 +63,7 @@
 	 			   var ids = checkedBoxs.map(function(){
 	 				   return this.value;
 	 			   })
-	 			    mini.confirm("确定删除记录？", "确定？",
+	 			    mini.confirm("确定删除选择资源？", "确定？",
 			            function (action) {
 			                if (action == "ok") {
 			                	window.location = "${ctx }/resource/removeResource?ids=" + ids.get();

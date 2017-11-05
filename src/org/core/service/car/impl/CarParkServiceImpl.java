@@ -1,14 +1,13 @@
-package org.core.service.resource.impl;
+package org.core.service.car.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.core.dao.resource.ResourceInfoDao;
-import org.core.domain.resource.ResourceInfo;
-import org.core.service.resource.ResourceInfoService;
-import org.core.util.tag.PageModel;	
+import org.core.dao.car.CarParkDao;
+import org.core.domain.car.CarPark;
+import org.core.service.car.CarParkService;
+import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -16,16 +15,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**   
- * @Description: 资源服务层接口
+ * @Description: 停车场服务层接口
  */
 @Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
-@Service("resourceInfoService")
-public class ResourceInfoServiceImpl implements ResourceInfoService{
+@Service("carParkService")
+public class CarParkServiceImpl implements CarParkService{
 	@Autowired
-	private ResourceInfoDao dao;
+	private CarParkDao dao;
 	@Override
-	public String save(ResourceInfo entity) {
-		entity.setCreatedate(new Date());
+	public String save(CarPark entity) {
 		dao.save(entity);
 		return "";
 	}
@@ -36,17 +34,17 @@ public class ResourceInfoServiceImpl implements ResourceInfoService{
 	}
 
 	@Override
-	public void update(ResourceInfo entity) {
+	public void update(CarPark entity) {
 		dao.update(entity);
 	}
 
 	@Override
-	public ResourceInfo selectById(int id) {
+	public CarPark selectById(int id) {
 		return dao.selectById(id);
 	}
 
 	@Override
-	public List<ResourceInfo> selectByPage(ResourceInfo entity,PageModel pageModel) {
+	public List<CarPark> selectByPage(CarPark entity,PageModel pageModel) {
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);
@@ -56,12 +54,12 @@ public class ResourceInfoServiceImpl implements ResourceInfoService{
 	        /** 开始分页查询数据：查询第几页的数据 */
 		    params.put("pageModel", pageModel);
 	    }
-		List<ResourceInfo> entitys = dao.selectByPage(params);
+		List<CarPark> entitys = dao.selectByPage(params);
 		return entitys;
 	}
 
 	@Override
-	public List<ResourceInfo> selectAll() {
+	public List<CarPark> selectAll() {
 		return dao.selectAll();
 	}
 

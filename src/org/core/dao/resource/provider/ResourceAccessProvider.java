@@ -3,18 +3,18 @@ package org.core.dao.resource.provider;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.core.domain.resource.ResourceInfo;
+import org.core.domain.resource.ResourceAccess;
 import org.core.util.BeanUtil;
 
 /**
  * @Description: 动态SQL语句提供类
  */
-public class ResourceInfoProvider {	
+public class ResourceAccessProvider {	
 
-	public String save(ResourceInfo entity) {
+	public String save(ResourceAccess entity) {
 		return new SQL() {
 			{
-				INSERT_INTO(ResourceInfo.tableName);
+				INSERT_INTO(ResourceAccess.tableName);
 				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,id,resource");
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
@@ -23,10 +23,10 @@ public class ResourceInfoProvider {
 		}.toString();
 	}
 
-	public String update(ResourceInfo entity) {
+	public String update(ResourceAccess entity) {
 		return new SQL() {
 			{
-				UPDATE(ResourceInfo.tableName);
+				UPDATE(ResourceAccess.tableName);
 				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,id,resource");
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					SET(entry.getKey()+"="+"#{"+entry.getKey()+"}");
@@ -40,9 +40,9 @@ public class ResourceInfoProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("*");
-				FROM(ResourceInfo.tableName);
+				FROM(ResourceAccess.tableName);
 				if(params.get("entity") != null){
-//					ResourceInfo entity = (ResourceInfo) params.get("entity");
+//					ResourceAccess entity = (ResourceAccess) params.get("entity");
 //					if(dept.getName() != null && !dept.getName().equals("")){
 //						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 //					}
@@ -60,9 +60,9 @@ public class ResourceInfoProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("count(*)");
-				FROM(ResourceInfo.tableName);
+				FROM(ResourceAccess.tableName);
 				if(params.get("entity") != null){
-//					ResourceInfo entity = (ResourceInfo) params.get("entity");
+//					ResourceAccess entity = (ResourceAccess) params.get("entity");
 //					if(dept.getName() != null && !dept.getName().equals("")){
 //						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 //					}

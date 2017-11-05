@@ -22,9 +22,114 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
     
+    
+    <script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
+   
+    <link href="${ctx}/scripts/demo.css" rel="stylesheet" type="text/css" />
+    
 	<script type="text/javascript">
 		$(function(){
-	 })
+			/** 获取上一次选中的部门数据 */
+		 	  var boxs  = $("input[type='checkbox'][id^='box_']");
+		 	   
+		 	  /** 给全选按钮绑定点击事件  */
+		      $("#checkAll").click(function(){
+	    		 // this是checkAll  this.checked是true
+	    		 // 所有数据行的选中状态与全选的状态一致
+	    		 boxs.attr("checked",this.checked);
+		      })
+		    	
+		 	 /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
+	    	 $("tr[id^='data_']").hover(function(){
+	    		$(this).css("backgroundColor","#eeccff");
+	    	 },function(){
+	    		$(this).css("backgroundColor","#ffffff");
+	    	 })
+		    	
+		   
+	 	   /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		  /** 获取到用户选中的复选框  */
+	 		   var checkedBoxs = boxs.filter(":checked");
+	 		   if(checkedBoxs.length < 1){
+	 			  mini.showMessageBox({
+	 		            showModal: false,
+	 		            width: 250,
+	 		            title: "提示",
+	 		            message: "请选择授权人",
+	 		            timeout: 2000,
+	 		            x:"center",
+	 		            y:"top"
+	 		        });
+	 			  return;
+	 		   }
+	 		  var userids = checkedBoxs.map(function(){return this.value;});
+	 		  var tree = mini.get("tree1");
+	          var resources = tree.getValue(true);
+	          if(resources==""){
+	 			  mini.showMessageBox({
+	 		            showModal: false,
+	 		            width: 250,
+	 		            title: "提示",
+	 		            message: "请选择授权内容",
+	 		            timeout: 2000,
+	 		            x:"center",
+	 		            y:"top"
+	 		        });
+	 			 return;
+	 		   }
+	          mini.confirm("确定添加授权？", "确定？",
+		            function (action) {
+		                if (action == "ok") {
+		                	addAuthority(userids,resources);
+		                } 
+		            }
+		        );
+	 	   })
+	 	});
+		/**
+		*显示授权
+		*/
+		function showAuthority(userid){
+			 var tree = mini.get("tree1");
+	         tree.load("${ctx}/authority/showAuthority?userid="+userid);
+		}
+		/**
+		*添加授权
+		*/
+		function addAuthority(userids,resources){
+		  var tree = mini.get("tree1");
+          resources = tree.getValue(true);
+          if(resources==""){
+ 			  mini.showMessageBox({
+ 		            showModal: false,
+ 		            width: 250,
+ 		            title: "提示",
+ 		            message: "请选择授权内容",
+ 		            timeout: 2000,
+ 		            x:"center",
+ 		            y:"top"
+ 		        });
+ 			 return;
+ 		   }
+			$.post(
+				"${ctx}/authority/addAuthority",
+				{
+					userids:userids,
+					resources:resources
+				},
+				function(result){
+					mini.showMessageBox({
+	 		            showModal: false,
+	 		            width: 250,
+	 		            title: "提示",
+	 		            message: result.message,
+	 		            timeout: 2000,
+	 		            x:"center",
+	 		            y:"top"
+	 		        });
+			});
+		}
 	</script>
 </head>
 <body>
@@ -41,19 +146,17 @@
 	<table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
 	  <!-- 查询区  -->
 	  <tr valign="top">
-	    <td height="30">
+	    <td colspan="2" height="30">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/user/selectUser">
+			  	<form name="empform" method="post" id="empform" action="${ctx}/authority/authorityAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
 					    	用户名：<input type="text" name="username">
-					    	用户状态：<input type="text" name="status">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加权限"/>
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加授权&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -70,29 +173,36 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>序号</td>
-			  <td>资源名</td>
-			  <td>所属用户</td>
-			  <td>创建时间</td>
+			  <td>用户</td>
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
-					 <td>${user.loginname }</td>
-					  <td>${user.password }</td>
 					  <td>${user.username }</td>
-					  <td>${user.status }</td>
-					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>
- 					  <td align="center" width="40px;">
- 					       <a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
-							   <img title="修改" src="${ctx}/images/update.gif"/>
+ 					  <td align="center" width="120px;">
+ 					       <a onclick="addAuthority(${user.id})">
+							   <img title="添加授权" src="${ctx}/images/authority.png"/>
+						   </a>
+						   &nbsp;&nbsp;
+ 					       <a onclick="showAuthority(${user.id})">
+							   <img title="显示授权" src="${ctx}/images/prev.gif"/>
 						   </a>
 					  </td>
 				</tr>
 			</c:forEach>
 		  </table>
 		</td>
+		
+		<td width="20%" rowspan="2">
+		      存在问题。。。等待解决
+	    	<ul id="tree1" class="mini-tree" url="${ctx}/resource/selectAll" style="width:200px;padding:5px;" 
+		        showTreeIcon="true" textField="name" idField="id" parentField="pid" resultAsTree="false"  
+		        showCheckBox="true" allowSelect="true" checkOnTextClick="true" 
+		        enableHotTrack="false" expandOnLoad="3">
+		    </ul>
+	    </td>
+	    
 	  </tr>
 	  <!-- 分页标签 -->
 	  <tr valign="top">
@@ -102,7 +212,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/user/selectUser?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/authority/authorityAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

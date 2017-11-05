@@ -16,7 +16,10 @@ public class ResourceInfo implements java.io.Serializable{
 	private String path;    // varchar(50) CHARACTER  COMMENT '资源路劲' ,
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdate;    // date NULL DEFAULT NULL COMMENT '创建时间' , 
-	private ResourceInfo resource;    // 上级资源名称 ,
+
+	////表外字段
+	private ResourceInfo resource;    // 上级资源名称 ,（表外字段）
+	
 	public int getId() {
 		return id;
 	}

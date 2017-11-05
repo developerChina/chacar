@@ -1,21 +1,21 @@
-package org.core.dao.resource.provider;
+package org.core.dao.car.provider;
 
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.core.domain.resource.ResourceInfo;
+import org.core.domain.car.CarPark;
 import org.core.util.BeanUtil;
 
 /**
  * @Description: 动态SQL语句提供类
  */
-public class ResourceInfoProvider {	
-
-	public String save(ResourceInfo entity) {
+public class CarParkProvider {	
+	private String exceptFields="tableName,id";
+	public String save(CarPark entity) {
 		return new SQL() {
 			{
-				INSERT_INTO(ResourceInfo.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,id,resource");
+				INSERT_INTO(CarPark.tableName);
+				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
 				} 
@@ -23,11 +23,11 @@ public class ResourceInfoProvider {
 		}.toString();
 	}
 
-	public String update(ResourceInfo entity) {
+	public String update(CarPark entity) {
 		return new SQL() {
 			{
-				UPDATE(ResourceInfo.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,id,resource");
+				UPDATE(CarPark.tableName);
+				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					SET(entry.getKey()+"="+"#{"+entry.getKey()+"}");
 				}
@@ -40,9 +40,9 @@ public class ResourceInfoProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("*");
-				FROM(ResourceInfo.tableName);
+				FROM(CarPark.tableName);
 				if(params.get("entity") != null){
-//					ResourceInfo entity = (ResourceInfo) params.get("entity");
+//					CarPark entity = (CarPark) params.get("entity");
 //					if(dept.getName() != null && !dept.getName().equals("")){
 //						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 //					}
@@ -60,9 +60,9 @@ public class ResourceInfoProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("count(*)");
-				FROM(ResourceInfo.tableName);
+				FROM(CarPark.tableName);
 				if(params.get("entity") != null){
-//					ResourceInfo entity = (ResourceInfo) params.get("entity");
+//					CarPark entity = (CarPark) params.get("entity");
 //					if(dept.getName() != null && !dept.getName().equals("")){
 //						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 //					}
@@ -71,5 +71,5 @@ public class ResourceInfoProvider {
 		}.toString();
 		return sql;
 	}
-
+	
 }

@@ -26,6 +26,7 @@ public class BeanUtil {
     		try {
     			if(field.get(o)!=null && !"".equals(field.get(o))){
     				infoMap.put(field.getName(), field.get(o));
+    				System.out.println(field.getName()+"="+field.get(o)+"----"+field.get(o).getClass().getName());
     			}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();

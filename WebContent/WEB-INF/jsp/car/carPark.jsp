@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>识别仪管理</title>
+	<title>车辆分类</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -23,49 +23,49 @@
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
     
 	<script type="text/javascript">
-		$(function(){
-			/** 获取上一次选中的部门数据 */
-		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
-		 	   
-			  /** 给全选按钮绑定点击事件  */
-		      $("#checkAll").click(function(){
-	    		 // this是checkAll  this.checked是true
-	    		 // 所有数据行的选中状态与全选的状态一致
-	    		 boxs.attr("checked",this.checked);
-		      })
-			      
-		 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
-		    	$("tr[id^='data_']").hover(function(){
-		    		$(this).css("backgroundColor","#eeccff");
-		    	},function(){
-		    		$(this).css("backgroundColor","#ffffff");
-		    	})
-		    	
-		    	
-		 	   /** 删除员工绑定点击事件 */
-		 	   $("#delete").click(function(){
-		 		   /** 获取到选中的复选框  */
-		 		   var checkedBoxs = boxs.filter(":checked");
-		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error("请选择一个需要删除的识别仪！");
-		 		   }else{
-		 			   /** 得到选中的所有的需要删除的ids */
-		 			   var ids = checkedBoxs.map(function(){
-		 				   return this.value;
-		 			   })
-		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除识别仪",function(r){
-		 				   if(r){
-		 					   window.location = "${ctx }/car/deletecarDistinguish?ids=" + ids.get();
-		 				   }
-		 			   });
-		 		   }
-		 	   })
-		 	   /** 添加员工绑定点击事件 */
-		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/car/addcarDistinguish?flag=1";
-		 	   })
-		})
+	 $(function(){
+		 /** 获取上一次选中的部门数据 */
+	 	   var boxs  = $("input[type='checkbox'][id^='box_']");
+	 	   
+	 	  /** 给全选按钮绑定点击事件  */
+	      $("#checkAll").click(function(){
+    		 // this是checkAll  this.checked是true
+    		 // 所有数据行的选中状态与全选的状态一致
+    		 boxs.attr("checked",this.checked);
+	      })
+		      
+	 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
+	    	$("tr[id^='data_']").hover(function(){
+	    		$(this).css("backgroundColor","#eeccff");
+	    	},function(){
+	    		$(this).css("backgroundColor","#ffffff");
+	    	})
+	    	
+	    	
+	 	   /** 删除员工绑定点击事件 */
+	 	   $("#delete").click(function(){
+	 		   /** 获取到选中的复选框  */
+	 		   var checkedBoxs = boxs.filter(":checked");
+	 		   if(checkedBoxs.length < 1){
+	 			   $.ligerDialog.error("请选择一个需要删除的车场！");
+	 		   }else{
+	 			   /** 得到选中的所有的需要删除的ids */
+	 			   var ids = checkedBoxs.map(function(){
+	 				   return this.value;
+	 			   })
+	 			   
+	 			   $.ligerDialog.confirm("确认要删除吗?","删除车场",function(r){
+	 				   if(r){
+	 					   window.location = "${ctx }/car/deletecarPark?ids=" + ids.get();
+	 				   }
+	 			   });
+	 		   }
+	 	   })
+	 	   /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		   window.location = "${ctx }/car/addcarPark?flag=1";
+	 	   })	
+	 })
 	</script>
 </head>
 <body>
@@ -74,7 +74,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：识别仪 &gt; 识别仪查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：停车场分类 &gt; 停车场查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -86,7 +86,7 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/car/carDistinguish">
+			  	<form name="empform" method="post" id="empform" action="${ctx}/car/carPark">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
@@ -111,21 +111,19 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>识别仪名称</td>
-			  <td>识别仪编号</td>
-			  <td>识别仪地址</td>
-			  <td>执行类</td>
+			  <td>车场名称</td>
+			  <td>编号</td>
+			  <td>车位数</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.distiguishes}" var="distiguishe" varStatus="stat">
+			<c:forEach items="${requestScope.parks}" var="park" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${distiguishe.id}"></td>
-					 <td>${distiguishe.name }</td>
-					  <td>${distiguishe.no }</td>
-					  <td>${distiguishe.ip }</td>
-					  <td>${distiguishe.action }</td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${park.id}"></td>
+					 <td>${park.name }</td>
+					  <td>${park.no }</td>
+					  <td>${park.num }</td>
  					  <td align="center" width="40px;">
- 					       <a href="${ctx}/car/updatecarDistinguish?flag=1&id=${distiguishe.id}">
+ 					       <a href="${ctx}/car/updatecarPark?flag=1&id=${park.id}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
@@ -142,7 +140,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/car/carDistinguish?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/car/carPark?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

@@ -29,7 +29,7 @@ public class ResourceController {
 	private ResourceInfoService resourceInfoService;
 	
 	@RequestMapping(value="/resource/resourcesAck")
-	 public ModelAndView resourcesAck(Integer pageIndex,ModelAndView mv,@ModelAttribute ResourceInfo resourceInfo){
+	public ModelAndView resourcesAck(Integer pageIndex,ModelAndView mv,@ModelAttribute ResourceInfo resourceInfo){
 		PageModel pageModel = new PageModel();
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);
@@ -49,7 +49,7 @@ public class ResourceController {
 	}
 	
 	@RequestMapping(value="/resource/addResource")
-	 public ModelAndView addResource(
+	public ModelAndView addResource(
 			 String flag,
 			 @ModelAttribute ResourceInfo resourceInfo,
 			 ModelAndView mv){
@@ -63,7 +63,7 @@ public class ResourceController {
 	}
 	
 	@RequestMapping(value="/resource/updateResource")
-	 public ModelAndView updateResource(
+	public ModelAndView updateResource(
 			 String flag,
 			 @ModelAttribute ResourceInfo resourceInfo,
 			 ModelAndView mv){
