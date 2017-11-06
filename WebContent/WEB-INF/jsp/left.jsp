@@ -110,8 +110,10 @@
 		  <tr><td id="navbg7" class="left_nav_closed" ><div class="font1">定位系统</div></td></tr>
 		  <tr valign="top" id="submenu7" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">定位规划</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">定位仪管理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">车辆绑定</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">当前位置</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">轨迹回放</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
