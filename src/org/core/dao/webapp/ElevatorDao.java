@@ -34,6 +34,9 @@ public interface ElevatorDao {
 	Elevator selectById(Integer elevatorID);
 	@SelectProvider(type=ElevatorDynaSqlProvider.class,method="updateElevator")
 	void update(Elevator elevator);
+	
+	@SelectProvider(type=ElevatorDynaSqlProvider.class,method="selectEGisE")
+	int selectEGisE(String id);
 
 	
 	

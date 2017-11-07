@@ -71,9 +71,9 @@
 		  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">门禁系统</div></td></tr>
 		  <tr valign="top" id="submenu3" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁管理</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorGroupAck" target="main">门禁分组</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/authority/floorBindAck" target="main">绑定授权</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/accessGroup/floorSplit" target="main">门禁分组</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/AccessJurisdiction/selectAJ" target="main">绑定授权</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -82,7 +82,8 @@
 		  <tr valign="top" id="submenu4" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">梯控规划</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="" target="main">绑定授权</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Grouping/elevatorSplit" target="main">梯控分组</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/Jurisdiction/getEJ" target="main">绑定授权</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -91,7 +92,8 @@
 		  <tr valign="top" id="submenu5" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道规划</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/passagewayGroup/doorSplit" target="main">通道分组</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/PassagewayJurisdiction/selectPJ" target="main">绑定授权</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>

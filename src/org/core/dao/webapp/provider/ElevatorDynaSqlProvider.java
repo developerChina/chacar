@@ -1,7 +1,7 @@
 package org.core.dao.webapp.provider;
 
 import static org.core.util.GlobleConstants.ELEVATORTABLE;
-
+import static org.core.util.GlobleConstants.ELEVATORGROUPTABLE;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
@@ -109,9 +109,18 @@ public class ElevatorDynaSqlProvider {
 				}		
 		
 		
-		
-		
-		
+		//删除时的判断 父级是否有子级的东西
+				public String selectEGisE(String id){
+					String sql =  new SQL(){
+						{
+							SELECT("count(*)");
+							FROM(ELEVATORGROUPTABLE);
+							WHERE(" egssxj LIKE CONCAT('%',#{id},'%') ");
+							
+						}
+					}.toString();
+					return sql;
+				}
 		
 	
 	

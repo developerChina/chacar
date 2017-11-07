@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.webapp.Access;
-
+import static org.core.util.GlobleConstants.ACCESSGROUPTABLE;
 public class AccessDynaSqlProvider {
 
 
@@ -67,6 +67,9 @@ public class AccessDynaSqlProvider {
 				if(access.getCip()!= null){
 					SET(" cip = #{cip} ");
 				}
+				if(access.getAcno()!=null){
+					SET(" acno = #{acno}");
+				}
 				WHERE(" accessid = #{accessid} ");
 			}
 		}.toString();
@@ -86,10 +89,21 @@ public class AccessDynaSqlProvider {
 					if(access.getCsn()!=null && !access.getCsn().equals("")){
 						VALUES("csn","#{csn}");
 					}
+					if(access.getAcno()!=null && !access.getAcno().equals("")){
+						VALUES("acno","#{acno}");
+					}
 					
 				}
 			}.toString();
 		}
-		
+		public String selectAccessGroupByid(String id){
+			return new SQL(){
+				{
+					SELECT("count(*)");
+					FROM(ACCESSGROUPTABLE);
+					WHERE(" agssxj LIKE CONCAT('%',#{id},'%') ");
+				}
+			}.toString();
+		}
 
 }

@@ -2,20 +2,19 @@ package org.core.domain.webapp;
 
 import java.io.Serializable;
 
-public class Elevator implements Serializable {
 
-	/**
-	 * 
-	 */
+/**
+ * table="elevator" <br/>
+ * 电梯表
+ */
+public class Elevator implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	
 	
 	private Integer elevatorID;	    //主键id
 	private String  elevatorName;	//电梯名
 	private String  controllerSN;	//控制器SN
-	private Integer controllerIP;   //控制器IP
-	private Integer floorNumber;    //楼层编号
+	private String controllerIP;   //控制器IP
+	private String floorNumber;    //楼层编号
 	
 	
 	
@@ -56,25 +55,31 @@ public class Elevator implements Serializable {
 
 
 
-	public Integer getControllerIP() {
+	
+
+
+	
+
+
+
+	public String getControllerIP() {
 		return controllerIP;
 	}
 
 
-
-	public void setControllerIP(Integer controllerIP) {
+	public void setControllerIP(String controllerIP) {
 		this.controllerIP = controllerIP;
 	}
 
 
-
-	public Integer getFloorNumber() {
+	public String getFloorNumber() {
 		return floorNumber;
 	}
-	public void setFloorNumber(Integer floorNumber) {
+
+
+	public void setFloorNumber(String floorNumber) {
 		this.floorNumber = floorNumber;
 	}
-
 
 
 	@Override

@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
+//通道
 /**
  * 转向首页
  * */
@@ -44,8 +44,13 @@ public class DoorController {
 		// 分解id字符串
 		String[] idArray = ids.split(",");
 		for(String id : idArray){
-			// 根据id删除通道
-			passagewayService.removePassagewayById(Integer.parseInt(id));
+			int count=passagewayService.selectPassagewayGroupByid(id);
+			if(count>0){
+				
+			}else{
+				// 根据id删除通道
+				passagewayService.removePassagewayById(Integer.parseInt(id));
+			}
 		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/door/doorAck");

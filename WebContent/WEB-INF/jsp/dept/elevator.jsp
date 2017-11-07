@@ -21,12 +21,21 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-    
-	<script type="text/javascript">
+
+<script type="text/javascript">
 		$(function(){
 			/** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   
+			
+			
+		 	  /** 给全选按钮绑定点击事件  */
+		    	$("#checkAll").click(function(){
+		    		// this是checkAll  this.checked是true
+		    		// 所有数据行的选中状态与全选的状态一致
+		    		boxs.attr("checked",this.checked);
+		    	})
+		    	
 		 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
 		    	$("tr[id^='data_']").hover(function(){
 		    		$(this).css("backgroundColor","#eeccff");
@@ -52,6 +61,7 @@
 		 					    //alert("删除："+ids.get());
 		 					   // 发送请求
 		 					   window.location = "${ctx }/elevator/removeElevator?ids=" + ids.get();
+		 					   
 		 				   }
 		 			   });
 		 		   }
@@ -63,6 +73,7 @@
 		 	   })
 	 })
 	</script>
+	
 </head>
 <body>
 	<!-- 导航 -->

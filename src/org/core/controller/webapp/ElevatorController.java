@@ -56,12 +56,17 @@ public class ElevatorController {
 		// 分解id字符串
 		String[] idArray = ids.split(",");
 		for(String id : idArray){
-			// 根据id删除员工
-			elevatorService.removeElevatorByID(Integer.parseInt(id));
+			//先查询父级是否有子级的东西 电梯组EG有这个电梯E
+			int count =elevatorService.selectEGisE(id);
+			//System.out.println(count);
+			if(count>0){
+				
+			}else{
+				// 根据id删除员工
+				elevatorService.removeElevatorByID(Integer.parseInt(id));
+			}
 		}
-		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/elevator/elevatorAck");
-		// 返回ModelAndView
 		return mv;
 	}
 	

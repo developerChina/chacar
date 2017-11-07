@@ -24,7 +24,12 @@
     
 	<script type="text/javascript">
 		$(function(){
-
+			/** 给全选按钮绑定点击事件  */
+	    	$("#checkAll").click(function(){
+	    		// this是checkAll  this.checked是true
+	    		// 所有数据行的选中状态与全选的状态一致
+	    		boxs.attr("checked",this.checked);
+	    	})
 
 		 	   /** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
@@ -49,7 +54,7 @@
 		 				   return this.value;
 		 			   })
 		 			   
-		 			   $.ligerDialog.confirm("再考虑考虑人家嘛。。。","删除门禁",function(r){
+		 			   $.ligerDialog.confirm("确定删除吗？","删除门禁",function(r){
 		 				   if(r){
 		 					   // alert("删除："+ids.get());
 		 					   // 发送请求
@@ -120,7 +125,7 @@
 					 <td>${access.accessname}</td>
 					  <td>${access.csn}</td>
 					  <td>${access.cip}</td>
-					  <td>${access.accessid}</td>
+					  <td>${access.acno}</td>
  					  <td align="center" width="40px;">
  					       <a href="${ctx}/floor/updateAccess?flag=1&accessid=${access.accessid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>

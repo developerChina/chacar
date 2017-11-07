@@ -59,5 +59,10 @@ public class AccessServiceImpl implements AccessService{
 		// TODO Auto-generated method stub
 		accessDao.save(access);
 	}
+	//根据id模糊查询
+	@Override
+	public int selectAccessGroupByid(String id) {
+		return accessDao.selectAccessGroupByid(id);
+	}
 
 }

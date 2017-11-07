@@ -24,7 +24,12 @@
     
 	<script type="text/javascript">
 		$(function(){
-
+			/** 给全选按钮绑定点击事件  */
+	    	$("#checkAll").click(function(){
+	    		// this是checkAll  this.checked是true
+	    		// 所有数据行的选中状态与全选的状态一致
+	    		boxs.attr("checked",this.checked);
+	    	})
 		 	   /** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   

@@ -61,7 +61,7 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：电梯管理  &gt; 添加电梯</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：电梯管理  &gt; 修改电梯</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>

@@ -29,7 +29,7 @@
 			var controllerIP = $("#controllerIP");
 			var msg = "";
 			if ($.trim(controllerIP.val()) == ""){
-				msg = "控制器IP不能为空！";
+				msg = "事由不能为空！";
 				controllerIP.focus();
 			}
 			if (msg != ""){
