@@ -127,7 +127,7 @@
 		  </tr>
 		  <tr><td height="2"></td></tr>
 		  
-		  <tr><td id="navbg9" class="left_nav_closed" ><div class="font1">视频监控</div></td></tr>
+		 <!--  <tr><td id="navbg9" class="left_nav_closed" ><div class="font1">视频监控</div></td></tr>
 		  <tr valign="top" id="submenu9" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="javascript:void(0)" target="main">视频监控规划</a></img></p>
@@ -143,7 +143,7 @@
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="javascript:void(0)" target="main">绑定授权</a></img></p>
 			</td>
 		  </tr>
-		  <tr><td height="2"></td></tr>
+		  <tr><td height="2"></td></tr> -->
 		  
 		  <tr><td id="navbg11" class="left_nav_closed" ><div class="font1">大数据中心</div></td></tr>
 		  <tr valign="top" id="submenu11" style="display: none">
