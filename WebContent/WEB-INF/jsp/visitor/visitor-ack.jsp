@@ -43,11 +43,11 @@
 						 <label class="label-right" style="height: 80px;">
 						    <a href="#" data-role="checkbox">
 						    		<input type="checkbox" id="baskball" checked disabled/>
-						  			<label for="baskball" class="black">大门通道一</label>
+						  			<label for="baskball" class="black">大门进通道一</label>
 						  		</a>
 						  		<a href="#" data-role="checkbox">
 						  			<input type="checkbox" id="football" checked disabled/>
-						  			<label for="football" class="black">大门通道二</label>
+						  			<label for="football" class="black">大门出通道二</label>
 						  		</a>
 						</label>
 						

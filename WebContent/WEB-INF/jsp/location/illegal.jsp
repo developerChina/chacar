@@ -94,6 +94,7 @@
 					    <td class="font3">
 					    	车辆号码：<input type="text" name="name">
 					    	 <input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	 <input type="submit" value="&nbsp;违规办理&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -121,7 +122,7 @@
 			  <td>设防经度</td>
 			  <td>设防纬度</td>
 			  <td>设防纬度</td>
-			  <td align="center"><font color="#FF0000">回放</font></td>
+			  <td align="center"><font color="#FF0000">状态</font></td>
 			</tr>
 			<c:forEach items="${requestScope.jobs}" var="job" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
