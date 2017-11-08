@@ -1,6 +1,7 @@
 package org.core.dao.webapp.provider;
 
 import static org.core.util.GlobleConstants.ACCESSGROUPTABLE;
+import static org.core.util.GlobleConstants.MiddletoAGTABLE;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
@@ -45,22 +46,44 @@ public class AccessGroupSqlProvider {
 			}.toString();
 		}
 		//添加
-		public String saveAgroup(String agname,String ids,String uuid){
+		public String saveAgroup(String agname,String uuid){
 			return new SQL(){
 				{
 					INSERT_INTO(ACCESSGROUPTABLE);
-					if(ids!=null){
-						VALUES("agssxj","#{arg0}");
-					}
 					if(agname!=null && !agname.equals("")){
-						VALUES("agname","#{arg1}");
+						VALUES("agname","#{arg0}");
 					}
 					if(uuid!=null && !uuid.equals("")){
-						VALUES("agid","#{arg2}");
+						VALUES("agid","#{arg1}");
 					}
 				}
 			}.toString();
 		}
+		
+		
+		
+		public String addaddAGrouptoMiddle(String id,String uuid){
+			return new SQL(){
+				{
+					INSERT_INTO(MiddletoAGTABLE);
+					if(id!=null && !id.equals("")){
+						VALUES("agroupid","#{arg0}");
+					}
+					if(uuid!=null && !uuid.equals("")){
+						VALUES("accessid","#{arg1}");
+					}
+				}
+			}.toString();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		public String updateAG(AccessGroup accessGroup){
 			return new SQL(){
 				{

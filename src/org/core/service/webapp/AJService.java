@@ -36,7 +36,7 @@ public interface AJService {
 	 * @param id ajname  ajgroup(分组的id 多个)
 	 * @return 用户对象的集合
 	 * */
-	void saveAJNew(String myempid, String ajname, String ajgroup);
+	void saveAJNew(String[] myempid, String ajname, String ajgroup);
 	/**
 	 * 根据id 查employee
 	 * @param id  员工id

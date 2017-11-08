@@ -115,12 +115,7 @@ public class AccessJurisdictionController {
 					mv.setViewName("group/showaddEmptoAJ");
 				}else{
 					String[] empids = request.getParameterValues("ajemps");
-					for (int i=0; i<empids.length; i++) {  
-						//System.out.println("员工的id:"+empids[i]);
-						aJService.saveAJNew(empids[i],ajname,ajgroup);
-						
-				    } 
-					//aJService.saveAJ(accessj);
+					aJService.saveAJNew(empids,ajname,ajgroup);
 					mv.setViewName("redirect:/AccessJurisdiction/selectAJ");
 				}
 			

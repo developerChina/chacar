@@ -8,6 +8,7 @@ import java.util.Map;
 import org.core.dao.webapp.AccessGroupDao;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
+import org.core.domain.webapp.MiddletoAG;
 import org.core.service.webapp.AccessGroupService;
 import org.core.util.GenId;
 import org.core.util.tag.PageModel;
@@ -59,21 +60,32 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			public void addAGroup(String ids, String agname) {
 				
 					String uuid=GenId.UUID();
-					accessGroupDao.addAGroup(ids, agname,uuid);
-				
-				
+					accessGroupDao.addAGroup(agname,uuid);
+					String[] idArry = ids.split(",");
+					for (String id : idArry) {
+						
+						accessGroupDao.addaddAGrouptoMiddle(uuid,id);
+					}
+					
 			}
 			//根据id查找所属下级
+			/*String[] idArry = selectids.split(",");
+			List<Access> addList = new ArrayList<>();
+			for (String id : idArry) {
+				Access addAccess =accessGroupDao.getAccessByid(Integer.parseInt(id));
+				  addList.add(addAccess);
+			}
+			return addList;*/
 			@Override
 			public List<Access> getAccessById(String selectids) {
-				String[] idArry = selectids.split(",");
+				List<MiddletoAG> MiddletoAGList = accessGroupDao.getMiddle(selectids);
 				List<Access> addList = new ArrayList<>();
-				for (String id : idArry) {
-					Access addAccess =accessGroupDao.getAccessByid(Integer.parseInt(id));
-					  addList.add(addAccess);
+				for (MiddletoAG mymiddletoAG : MiddletoAGList) {
+					Access addAccess =accessGroupDao.getAccessByid(Integer.parseInt(mymiddletoAG.getAccessid()));
+					addList.add(addAccess);
 				}
 				return addList;
-				}
+			}
 			//修改前查询一遍
 			@Override
 			public AccessGroup selectAGbyId(String id) {

@@ -1,6 +1,9 @@
 package org.core.dao.webapp;
-import static org.core.util.GlobleConstants.ACCESSJTABLE;
 import static org.core.util.GlobleConstants.ACCESSGROUPTABLE;
+import static org.core.util.GlobleConstants.ACCESSJTABLE;
+import static org.core.util.GlobleConstants.ACCESSTABLE;
+import static org.core.util.GlobleConstants.MiddletoAGTABLE;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +11,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.AJSqlProvider;
+import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
 import org.core.domain.webapp.Accessj;
 
@@ -38,4 +42,7 @@ public interface AJDao {
 	
 	@Select(" select * from "+ACCESSJTABLE+" where ajempid = #{id}")
 	List<Accessj> selectAjByEmpid(String id);
+	
+	@Select("select * from "+ACCESSTABLE+" as ai,"+MiddletoAGTABLE+" as gm"+" where ai.accessid=gm.accessid and agroupid=#{groupid} ORDER BY ai.acno")
+	List<Access> getAccess(String groupid);
 }

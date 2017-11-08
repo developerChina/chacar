@@ -28,8 +28,11 @@ public class GlobleConstants {
 	public static final String PASSAGEWAYGROUPTABLE = "passagewaygroup_info";
 	//门禁分组
 	public static final String ACCESSGROUPTABLE = "accessgroup_info";
+	//门禁分组中间表
+	public static final String MiddletoAGTABLE = "agroupmiddle_info";
 	//电梯分组
 	public static final String ELEVATORGROUPTABLE = "elevatorgroup_info";
+	
 	// 登录
 	public static final String LOGIN = "loginForm";
 	// 用户的session对象
