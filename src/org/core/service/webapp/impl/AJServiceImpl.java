@@ -8,8 +8,10 @@ import java.util.Map;
 
 import org.core.dao.webapp.AJDao;
 import org.core.dao.webapp.AccessGroupDao;
+import org.core.dao.webapp.EmployeeDao;
 import org.core.domain.webapp.AccessGroup;
 import org.core.domain.webapp.Accessj;
+import org.core.domain.webapp.Employee;
 import org.core.service.webapp.AJService;
 import org.core.util.GenId;
 import org.core.util.tag.PageModel;
@@ -23,6 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AJServiceImpl implements AJService {
 	@Autowired
 	private AJDao aJDao;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
 	//查询所有权限表
 	@Autowired
 	private AccessGroupDao accessGroupDao;
@@ -91,5 +96,65 @@ public class AJServiceImpl implements AJService {
 		}
 		return addList;
 	}
+	
+	
+	
+	//查询员工集合 根据IDS 
+	@Override
+	public List<Employee> findEmployeeByIds(String ids) {
+		// TODO Auto-generated method stub
+		String[] idArry = ids.split(",");
+		List<Employee> seList = new ArrayList<Employee>();
+		for (String id : idArry) {
+			Employee myAEmp=employeeDao.selectById(Integer.parseInt(id));
+			seList.add(myAEmp);
+		}
+		return seList;
+	}
+	
+	
+	@Override
+	public void saveAJNew(String myempid, String ajname, String ajgroup) {
+		// TODO Auto-generated method stub
+		String[] idArry = ajgroup.split(",");
+		for (String groupid : idArry) {
+			Accessj accessj = new Accessj();
+			accessj.setAjgroupid(groupid);
+			accessj.setAjempid(myempid);
+			accessj.setAjname(ajname);
+			String uuid=GenId.UUID();
+			accessj.setAjid(uuid);
+			aJDao.saveAJ(accessj);
+		}
+	}
+	
+	
+	@Override
+	public Employee selectAjEmpbyId(String selectEmps) {
+		// TODO Auto-generated method stub
+		Employee myAEmp=employeeDao.selectById(Integer.parseInt(selectEmps));
+		return myAEmp;
+	}
+	
+	@Override
+	public List<Accessj> selectAjByEmpid(String id) {
+		// TODO Auto-generated method stub
+		return aJDao.selectAjByEmpid(id);
+	}
+	@Override
+	public Employee selectEmployee(String id) {
+		// TODO Auto-generated method stub
+		return employeeDao.selectById(Integer.parseInt(id));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

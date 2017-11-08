@@ -35,4 +35,7 @@ public interface AJDao {
 	//修改
 	@SelectProvider(method = "updateAj", type = AJSqlProvider.class)
 	void updateAj(Accessj accessj);
+	
+	@Select(" select * from "+ACCESSJTABLE+" where ajempid = #{id}")
+	List<Accessj> selectAjByEmpid(String id);
 }

@@ -27,8 +27,7 @@
 		  // 给其授权 按钮添加 点击事件
 		  $("#upEG").click(function(){
 			  var myajname =document.getElementById("myajname").value;
-			  var empname = document.getElementById("empname").value;
-			 var cardno = document.getElementById("cardno").value;
+			 
 			  var msg = "";
 		 		if ($.trim(myajname) == ""){
 					msg = "授权名称不能为空！";
@@ -46,7 +45,7 @@
 		      				   return this.value;
 		      			   })
 		      			   
-		      			   $.ligerDialog.confirm("确认要修改吗?","修改门禁组",function(r){
+		      			   $.ligerDialog.confirm("确认要授权吗?","给当前员工授权",function(r){
 		      				   if(r){
 		      					   // alert("卡号："+cardno+"员工"+empid+"删除："+ids.get()+"授权名"+myajname);
 		      					   // 发送请求
@@ -81,9 +80,13 @@
 		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="ajemp" id="empname" value="${findEmployeeById.id}" size="20"/>
+		    			<td class="font3 fftd">给当前员工添加权限：
+		    			<c:forEach items="${requestScope.findEmployeeByIds}" var="emps">
+		    				<input type="hidden" name="ajemps" id="empname" value="${emps.id}" size="20"/>${emps.name}&nbsp;
+		    			</c:forEach>
+		    			<%-- <input type="hidden" name="ajemp" id="empname" value="${findEmployeeById.id}" size="20"/>
 		    			${findEmployeeById.name}
-		    			<input type="hidden" name="ajcard" id="cardno" value="${findEmployeeById.cardno}">
+		    			<input type="hidden" name="ajcard" id="cardno" value="${findEmployeeById.cardno}"> --%>
 		    			</td>
 		    		</tr>
 		    		<tr>
@@ -108,13 +111,13 @@
 		    		<hr>
 		    		</td>
 		    		<tr>
-		    		<tr>
-		    		<td class="font3 fftd">请选择一个门禁：
+		    		
+		    		<%-- <td class="font3 fftd">请选择一个门禁：
 		    			<c:forEach items="${agAccesss}" var="Aname" varStatus="stat">
          				<input type="checkbox" name="ajaccess" id="box_${stat.index}" value="${Aname.accessname}"/>${Aname.accessname}&nbsp;&nbsp;
 		    			</c:forEach>
-		    		</td>
-		    		<tr>
+		    		</td> --%>
+		    		
 		    		
 		    		
 		    		

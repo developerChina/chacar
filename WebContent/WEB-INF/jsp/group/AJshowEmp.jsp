@@ -40,7 +40,27 @@
 		    	},function(){
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
-		    	
+		    	//给绑定授权 添加按钮
+		    	$("#bdsq").click(function(){
+		    		var checkedBoxs = boxs.filter(":checked");
+			 		   if(checkedBoxs.length < 1){
+			 			   $.ligerDialog.error(" 请选择一个需要授权的员工！");
+			 		   }else{
+			 			   /** 得到用户选中的所有的需要添加的ids */
+			 			   var ids = checkedBoxs.map(function(){
+			 				   return this.value;
+			 			   })
+			 			   
+			 			   $.ligerDialog.confirm("确认要授权吗?","授权 ",function(r){
+			 				   if(r){
+			 					    //alert("删除："+ids.get());
+			 					   // 发送请求
+			 					   //$("#addEgroup").submit();
+			 					   window.location ="${ctx}/AccessJurisdiction/shouAJG?flag=1&ids="+ids.get(); 
+			 				   }
+			 			   });
+			 		   }
+		    	})
 		   
 	       })
 	</script>
@@ -66,7 +86,13 @@
 			  	<form name="empform" method="post" id="empform" action="${ctx}/AccessJurisdiction/selectEmploee">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
-					    <td class="font3">
+					  <td>
+					    	所属部门：<select  name="dept_id" style="width:100px;">
+								   <option value="0">--部门选择--</option>
+								   <c:forEach items="${requestScope.depts }" var="dept">
+					    				<option value="${dept.id }">${dept.name }</option>
+					    			</c:forEach>
+							</select>&nbsp;&nbsp;
 					    	职位：
 							    <select name="job_id" style="width:143px;">
 					    			<option value="0">--请选择职位--</option>
@@ -74,27 +100,8 @@
 					    				<option value="${job.id }">${job.name }</option>
 					    			</c:forEach>
 					    		</select>
-					    	姓名：<input type="text" name="name">
-					    	身份证号码：<input type="text" name="cardId" maxlength="18">
-					    </td>
-					  </tr>
-					  <tr>
-					    <td class="font3">
-					    	性别：
-					    		<select name="sex" style="width:143px;">
-					    			<option value="0">--请选择性别--</option>
-					    			<option value="1">男</option>
-					    			<option value="2">女</option>
-					    		</select>
-					    	手机：<input type="text" name="phone">
-					    	所属部门：<select  name="dept_id" style="width:100px;">
-								   <option value="0">--部门选择--</option>
-								   <c:forEach items="${requestScope.depts }" var="dept">
-					    				<option value="${dept.id }">${dept.name }</option>
-					    			</c:forEach>
-							</select>&nbsp;
-					    	<input type="submit" value="搜索"/>
-					    	
+					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					    	<input type="button" id="bdsq" value="绑定授权（门禁）"/>
 					    </td>
 					  </tr>
 					</table>
@@ -112,42 +119,23 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
-			  <td>性别</td>
-			 
 			  <td>员工卡号</td>
-			
 			  <td>职位</td>
-			
-			  <td>身份证号码</td>
 			  <td>部门</td>
-			 
-			 
-			  <td align="center">操作</td>
+			  <!-- <td align="center">操作</td> -->
 			</tr>
 			<c:forEach items="${requestScope.employees}" var="employee" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 					<td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 					 <td>${employee.name }</td>
-					  <td>
-					        <c:choose>
-					        	<c:when test="${employee.sex == 1 }">男</c:when>
-					        	<c:otherwise>女</c:otherwise>
-					        </c:choose>
-					  </td>
-					 
 					  <td>${employee.cardno }</td>
-					 
 					  <td>${employee.job.name  }</td>
-					  
-					  <td>${employee.cardId }</td>
 					  <td>${employee.dept.name }</td>
-					 
-					 
-					  <td align="center" width="40px;">
+					  <%-- <td align="center" width="40px;">
 					      <a href="${ctx}/AccessJurisdiction/shouAJG?flag=1&id=${employee.id}">
 							<img title="给其授权门禁组" src="${ctx}/images/update.gif"/>
 						  </a>
-					  </td>
+					  </td> --%>
 				</tr>
 			</c:forEach>
 		  </table>

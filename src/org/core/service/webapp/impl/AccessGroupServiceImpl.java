@@ -57,8 +57,11 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			//添加分组
 			@Override
 			public void addAGroup(String ids, String agname) {
-				String uuid=GenId.UUID();
-				accessGroupDao.addAGroup(ids, agname,uuid);
+				
+					String uuid=GenId.UUID();
+					accessGroupDao.addAGroup(ids, agname,uuid);
+				
+				
 			}
 			//根据id查找所属下级
 			@Override

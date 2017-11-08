@@ -53,17 +53,11 @@ public class AJSqlProvider {
 				if(accessj.getAjname()!=null && !accessj.getAjname().equals("")){
 					VALUES("ajname", "#{ajname}");
 				}
-				if(accessj.getAjemp()!= null && !accessj.getAjemp().equals("")){
-					VALUES("ajemp", "#{ajemp}");
+				if(accessj.getAjempid()!= null && !accessj.getAjempid().equals("")){
+					VALUES("ajempid", "#{ajempid}");
 				}
-				if(accessj.getAjcard()!= null && !accessj.getAjcard().equals("")){
-					VALUES("ajcard", "#{ajcard}");
-				}
-				if(accessj.getAjgroup()!= null && !accessj.getAjgroup().equals("")){
-					VALUES("ajgroup", "#{ajgroup}");
-				}
-				if(accessj.getAjaccess()!= null && !accessj.getAjaccess().equals("")){
-					VALUES("ajaccess", "#{ajaccess}");
+				if(accessj.getAjgroupid()!= null && !accessj.getAjgroupid().equals("")){
+					VALUES("ajgroupid", "#{ajgroupid}");
 				}
 			
 			}
@@ -80,8 +74,8 @@ public class AJSqlProvider {
 					if(accessj.getAjname() != null){
 						SET(" ajname = #{ajname} ");
 					}
-					if(accessj.getAjgroup() != null){
-						SET(" ajgroup = #{ajgroup} ");
+					if(accessj.getAjgroupid() != null){
+						SET(" ajgroupid = #{ajgroupid} ");
 					}
 					WHERE(" ajid = #{ajid}");
 				}
