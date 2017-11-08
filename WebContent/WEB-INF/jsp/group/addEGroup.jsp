@@ -64,8 +64,9 @@
 			 				   if(r){
 			 					   // alert(myegname+"删除："+ids.get());
 			 					   // 发送请求
-			 					  window.location ="${ctx }/Grouping/addEGroup?flag=2&egname="
-			 						 +myegname+"&ids="+ids.get();
+			 					   $("#addEgroup").submit();
+			 					  /* window.location ="${ctx }/Grouping/addEGroup?flag=2&egname="
+			 						 +myegname+"&ids="+ids.get(); */
 			 				   }
 			 			   });
 			 		   }
@@ -94,9 +95,10 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/elevator/addElevator" id="elevatorForm" method="post">
+    	 <form action="${ctx}/Grouping/addEGroup" id="addEgroup" method="post">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    	<input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">电梯分组名称：<input type="text" name="egname" id="myegname" size="20"/></td>
@@ -112,7 +114,7 @@
 						</tr>
 						 <c:forEach items="${requestScope.egElevators}" var="Ele" varStatus="stat">
 								<tr id="data_${stat.index}" align="center" class="main_trbg">
-								<td><input type="checkbox" id="box_${stat.index}" value="${Ele.elevatorID}"></td>
+								<td><input type="checkbox" name="ids"  id="box_${stat.index}" value="${Ele.elevatorID}"></td>
 									 <td>${Ele.elevatorName}</td>
 								</tr>
 						</c:forEach>
@@ -125,7 +127,7 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="addEtoEG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="addEtoEG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
 		  </table>
 		 </form>
 	</td>

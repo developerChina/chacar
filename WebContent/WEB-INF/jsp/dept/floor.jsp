@@ -94,8 +94,8 @@
 					    <td class="font3">
 					    	门禁名称：<input type="text" name="accessname">
 					    	控制器IP:<input type="text" name="cip">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
+					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
+					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="添加门禁"/>
 					    </td>
 					  </tr>

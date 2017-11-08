@@ -99,8 +99,8 @@
 					    <td class="font3">
 					    	电梯名称：<input type="text" name="elevatorName">
 					    	控制器SN：<input type="text" name="controllerSN">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
+					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
+					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="添加电梯"/>
 					    </td>
 					  </tr>

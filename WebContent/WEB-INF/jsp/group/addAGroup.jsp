@@ -60,13 +60,15 @@
 			 				   if(r){
 			 					   // alert(myegname+"删除："+ids.get());
 			 					   // 发送请求
-			 					  window.location ="${ctx }/accessGroup/addaccessGroup?flag=2&agname="
-			 						 +myagname+"&ids="+ids.get();
+			 					   $("#addAgroup").submit();
+			 					  /* window.location ="${ctx }/accessGroup/addaccessGroup?flag=2&agname="
+			 						 +myagname+"&ids="+ids.get(); */
 			 				   }
 			 			   });
 			 		   }
 				}
 		 	   })
+		 	  
     });
 	</script>
 		
@@ -84,8 +86,10 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
+    <form action="${ctx }/accessGroup/addaccessGroup" method="post" id="addAgroup">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    	<input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">门禁分组名称：<input type="text" name="agname" id="myagname" size="20"/></td>
@@ -98,9 +102,10 @@
 						  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 						  <td>门禁名称</td>
 						</tr>
+						
 						 <c:forEach items="${requestScope.agAccesss}" var="Ale" varStatus="stat">
 								<tr id="data_${stat.index}" align="center" class="main_trbg">
-								<td><input type="checkbox" id="box_${stat.index}" value="${Ale.accessid}"></td>
+								<td><input type="checkbox" name="ids" id="box_${stat.index}" value="${Ale.accessid}"></td>
 									 <td>${Ale.accessname}</td>
 								</tr>
 						</c:forEach>
@@ -112,8 +117,9 @@
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="button" id="addAtoAG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="addAtoAG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
 		  </table>
+		 </form>
 	</td>
   </tr>
 </table>

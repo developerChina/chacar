@@ -92,8 +92,8 @@
 					  <tr>
 					    <td class="font3">
 					    	门禁分组名称：<input type="text" name="agname">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
+					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
+					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="添加门禁分组"/>
 					    </td>
 					  </tr>

@@ -50,7 +50,8 @@
 		      				   if(r){
 		      					    //alert("卡号："+cardno+"员工"+empid+"删除："+ids.get()+"授权名"+myejname);
 		      					   // 发送请求
-		      					   window.location = "${ctx}/Jurisdiction/getParts?flag=2&ejgroup=" + ids.get()+"&ejname="+myejname+"&ejemp="+empid+"&ejcard"+cardno;
+		      					    $("#addEmpToEj").submit();
+		      					   //window.location = "${ctx}/Jurisdiction/getParts?flag=2&ejgroup=" + ids.get()+"&ejname="+myejname+"&ejemp="+empid+"&ejcard"+cardno;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -74,14 +75,16 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
+    <form action="${ctx}/Jurisdiction/getParts" method="post" id="addEmpToEj">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		     <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="empname" id="empname" value="${findEmployeeById.id}" size="20"/>
+		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="ejemp" id="empname" value="${findEmployeeById.id}" size="20"/>
 		    			${findEmployeeById.name}
 		    			
-		    			<input type="hidden" name="cardno" id="cardno" value="${findEmployeeById.cardno}" size="20"/>
+		    			<input type="hidden" name="ejcard" id="cardno" value="${findEmployeeById.cardno}" size="20"/>
 		    			</td>
 		    		</tr>
 		    		<tr>
@@ -92,7 +95,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">请选择一个分组：<br/><br/>
 		    			<c:forEach items="${elevatorGroups}" var="EGroups" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${EGroups.egid}"/>
+         				<input type="checkbox" name="ejgroup" id="box_${stat.index}" value="${EGroups.egid}"/>
          					${EGroups.egname}
          					(<c:forEach items="${EGroups.orderItems}" var="E">
 					  		${E.elevatorName}&nbsp;
@@ -109,7 +112,7 @@
 		    		<tr>
 		    		<td class="font3 fftd">请选择一个电梯：
 		    			<c:forEach items="${egElevators}" var="Ename" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${Ename.elevatorID}"/>${Ename.elevatorName}&nbsp;&nbsp;
+         				<input type="checkbox" name="ejelevator" id="box_${stat.index}" value="${Ename.elevatorID}"/>${Ename.elevatorName}&nbsp;&nbsp;
 		    			</c:forEach>
 		    		</td>
 		    		<tr>
@@ -120,8 +123,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

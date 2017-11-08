@@ -60,8 +60,9 @@
 			 				   if(r){
 			 					   // alert(myegname+"删除："+ids.get());
 			 					   // 发送请求
-			 					  window.location ="${ctx }/passagewayGroup/addpassagewayGroup?flag=2&pgname="
-			 						 +mypgname+"&ids="+ids.get();
+			 					   $("#addPgroup").submit();
+			 					  /* window.location ="${ctx }/passagewayGroup/addpassagewayGroup?flag=2&pgname="
+			 						 +mypgname+"&ids="+ids.get(); */
 			 				   }
 			 			   });
 			 		   }
@@ -83,8 +84,10 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
+    	<form action="${ctx }/passagewayGroup/addpassagewayGroup" method="get" id="addPgroup"> 
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    	<input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">通道分组名称：<input type="text" name="pgname" id="mypgname" size="20"/></td>
@@ -99,7 +102,7 @@
 						</tr>
 						 <c:forEach items="${requestScope.pgPassageways}" var="Ple" varStatus="stat">
 								<tr id="data_${stat.index}" align="center" class="main_trbg">
-								<td><input type="checkbox" id="box_${stat.index}" value="${Ple.passagewayID}"></td>
+								<td><input type="checkbox" name="ids" id="box_${stat.index}" value="${Ple.passagewayID}"></td>
 									 <td>${Ple.passagewayName}</td>
 								</tr>
 						</c:forEach>
@@ -111,8 +114,9 @@
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="button" id="addPtoPG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="addPtoPG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

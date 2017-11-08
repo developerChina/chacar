@@ -50,7 +50,8 @@
 		      				   if(r){
 		      					   // alert("卡号："+cardno+"员工"+empid+"删除："+ids.get()+"授权名"+myajname);
 		      					   // 发送请求
-		      					  window.location = "${ctx}/PassagewayJurisdiction/shouPJG?flag=2&pjgroup=" + ids.get()+"&pjname="+mypjname+"&pjemp="+empname+"&pjcard"+cardno;
+		      					   $("#addEmpToPj").submit();
+		      					  //window.location = "${ctx}/PassagewayJurisdiction/shouPJG?flag=2&pjgroup=" + ids.get()+"&pjname="+mypjname+"&pjemp="+empname+"&pjcard"+cardno;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -74,13 +75,15 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
+    <form action="${ctx}/PassagewayJurisdiction/shouPJG" method="post" id="addEmpToPj">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="empname" id="empname" value="${findEmployeeById.id}" size="20"/>
+		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="pjemp" id="empname" value="${findEmployeeById.id}" size="20"/>
 		    			${findEmployeeById.name}
-		    			<input type="hidden" name="cardno" id="cardno" value="${findEmployeeById.cardno}" size="20"/>
+		    			<input type="hidden" name="pjcard" id="cardno" value="${findEmployeeById.cardno}" size="20"/>
 		    			</td>
 		    		</tr>
 		    		<tr>
@@ -91,7 +94,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">请选择一个分组：<br/><br/>
 		    			<c:forEach items="${passageGroups}" var="passageGroup" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${passageGroup.pgid}"/>
+         				<input type="checkbox" name="pjgroup" id="box_${stat.index}" value="${passageGroup.pgid}"/>
          					${passageGroup.pgname}
          					(<c:forEach items="${passageGroup.orderItems}" var="myAs">
 					  		${myAs.passagewayName}
@@ -106,9 +109,9 @@
 		    		</td>
 		    		<tr>	
 		    		<tr>
-		    		<td class="font3 fftd">请选择一个通道：
+		    		<td class="font3 fftd">请选择一个通道：<br>
 		    			<c:forEach items="${pgPassageways}" var="Pname" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${Pname.passagewayName}"/>${Pname.passagewayName}&nbsp;&nbsp;
+         				<input type="checkbox" name="pjpassageway" id="box_${stat.index}" value="${Pname.passagewayName}"/>${Pname.passagewayName}&nbsp;
 		    			</c:forEach>
 		    		</td>
 		    		<tr>
@@ -119,8 +122,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upPG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upPG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

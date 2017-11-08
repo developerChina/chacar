@@ -29,7 +29,7 @@
 		                //拆分为字符串数组
 		                  var checkArray =checkeds.split(",");
 		                  //获得所有的复选框对象
-		                 var checkBoxAll = $("input[name='media']");
+		                 var checkBoxAll = $("input[name='agssxj']");
 		                 //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
 		                for(var i=0;i<checkArray.length;i++){
 		                     //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
@@ -69,7 +69,8 @@
 		      				   if(r){
 		      					    //弹框 alert("删除："+ids.get()+myagname+"id"+myagid);
 		      					   // 发送请求
-		      					   window.location = "${ctx}/accessGroup/updateAG?flag=2&agssxj=" + ids.get()+"&agid="+myagid+"&agname="+myagname;
+		      					   $("#updateAg").submit();
+		      					   //window.location = "${ctx}/accessGroup/updateAG?flag=2&agssxj=" + ids.get()+"&agid="+myagid+"&agname="+myagname;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -95,20 +96,23 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
+    
     	  <input type="hidden" value="${accessgroupById.agssxj}" id="meidaHidden">
+    	  <form action="${ctx}/accessGroup/updateAG" method="post" id="updateAg">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    	<input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">门禁组名称：<input type="text" name="agname" id="myagname" value="${accessgroupById.agname}" size="20"/>
-		    				<input type="hidden" value="${accessgroupById.agid}" id="myagid">
+		    				<input type="hidden" name="agid" value="${accessgroupById.agid}" id="myagid">
 		    			</td>
 		    		</tr>
 		    			
 		    		<tr>
-		    			<td class="font3 fftd">所属下级门禁名称：
+		    			<td class="font3 fftd">所属下级门禁名称：<br>
 		    			<c:forEach items="${agAlevators}" var="Aname" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${Aname.accessid}"/>${Aname.accessname}&nbsp;&nbsp;
+         				<input type="checkbox" name="agssxj" id="box_${stat.index}" value="${Aname.accessid}"/>${Aname.accessname}&nbsp;&nbsp;
 		    			</c:forEach>
 		    			</td>
 		    		</tr>
@@ -117,8 +121,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upAG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upAG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

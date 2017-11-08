@@ -30,7 +30,7 @@
             //拆分为字符串数组
               var checkArray =checkeds.split(",");
               //获得所有的复选框对象
-             var checkBoxAll = $("input[name='media']");
+             var checkBoxAll = $("input[name='pjgroup']");
              //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
             for(var i=0;i<checkArray.length;i++){
                  //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
@@ -74,7 +74,8 @@
 		      				   if(r){
 		      					   //alert("删除："+ids.get()+"=========="+mypgname+"========"+mypgid);
 		      					   // 发送请求
-		      					  window.location = "${ctx}/PassagewayJurisdiction/updetaPj?flag=2&pjgroup=" + ids.get()+"&pjid="+mypgid+"&pjname="+mypgname;
+		      					   $("#updatePJ").submit();
+		      					  //window.location = "${ctx}/PassagewayJurisdiction/updetaPj?flag=2&pjgroup=" + ids.get()+"&pjid="+mypgid+"&pjname="+mypgname;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -101,12 +102,14 @@
   <tr valign="top">
     <td>
     	  <input type="hidden" value="${myUPPassagewayj.pjgroup}" id="meidaHidden">
+    	  <form action="${ctx}/PassagewayJurisdiction/updetaPj" method="post" id="updatePJ">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">电梯授权名称：<input type="text" name="pgname" id="mypgname" value="${myUPPassagewayj.pjname}" size="20"/>
-		    				<input type="hidden" value="${myUPPassagewayj.pjid}" id="mypgid">
+		    			<td class="font3 fftd">电梯授权名称：<input type="text" name="pjname" id="mypgname" value="${myUPPassagewayj.pjname}" size="20"/>
+		    				<input type="hidden" name="pjid" value="${myUPPassagewayj.pjid}" id="mypgid">
 		    			</td>
 		    		</tr>
 		    			
@@ -114,7 +117,7 @@
 		    			<td class="font3 fftd">所属下级电梯组名称：
 		    			<c:forEach items="${passagewayGroups}" var="EGname" varStatus="stat">
 		    			<br>
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${EGname.pgid}"/>
+         				<input type="checkbox" name="pjgroup" id="box_${stat.index}" value="${EGname.pgid}"/>
 		    			${EGname.pgname}:
 		    			<c:forEach items="${EGname.orderItems}" var="EGxj" varStatus="stat">
 		    				${EGxj.passagewayName}
@@ -128,8 +131,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

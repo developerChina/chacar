@@ -93,8 +93,8 @@
 					    <td class="font3">
 					    	通道名：<input type="text" name="passagewayName">
 					    	控制器IP：<input type="text" name="ControllerIP">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
+					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
+					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="添加通道"/>
 					    </td>
 					  </tr>

@@ -29,7 +29,7 @@
 		                //拆分为字符串数组
 		                  var checkArray =checkeds.split(",");
 		                  //获得所有的复选框对象
-		                 var checkBoxAll = $("input[name='media']");
+		                 var checkBoxAll = $("input[name='pgssxj']");
 		                 //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
 		                for(var i=0;i<checkArray.length;i++){
 		                     //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
@@ -69,7 +69,8 @@
 		      				   if(r){
 		      					    //弹框 alert("删除："+ids.get()+myagname+"id"+myagid);
 		      					   // 发送请求
-		      					   window.location = "${ctx}/passagewayGroup/UpdatePG?flag=2&pgssxj=" + ids.get()+"&pgid="+mypgid+"&pgname="+mypgname;
+		      					   $("#updatePg").submit();
+		      					   //window.location = "${ctx}/passagewayGroup/UpdatePG?flag=2&pgssxj=" + ids.get()+"&pgid="+mypgid+"&pgname="+mypgname;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -96,19 +97,21 @@
   <tr valign="top">
     <td>
     	  <input type="hidden" value="${passagewayGroupByid.pgssxj}" id="meidaHidden">
+    	  <form action="${ctx}/passagewayGroup/UpdatePG" method="post" id="updatePg">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">通道组名称：<input type="text" name="pgname" id="mypgname" value="${passagewayGroupByid.pgname}" size="20"/>
-		    				<input type="hidden" value="${passagewayGroupByid.pgid}" id="mypgid">
+		    				<input type="hidden" name="pgid" value="${passagewayGroupByid.pgid}" id="mypgid">
 		    			</td>
 		    		</tr>
 		    			
 		    		<tr>
-		    			<td class="font3 fftd">所属下级通道名称：
+		    			<td class="font3 fftd">所属下级通道名称：<br>
 		    			<c:forEach items="${pgGroups}" var="Pname" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${Pname.passagewayID}"/>${Pname.passagewayName}&nbsp;&nbsp;
+         				<input type="checkbox" name="pgssxj" id="box_${stat.index}" value="${Pname.passagewayID}"/>${Pname.passagewayName}&nbsp;
 		    			</c:forEach>
 		    			</td>
 		    		</tr>
@@ -117,8 +120,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upPG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upPG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

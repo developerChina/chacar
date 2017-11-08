@@ -50,7 +50,8 @@
 		      				   if(r){
 		      					   // alert("卡号："+cardno+"员工"+empid+"删除："+ids.get()+"授权名"+myajname);
 		      					   // 发送请求
-		      					  window.location = "${ctx}/AccessJurisdiction/shouAJG?flag=2&ajgroup=" + ids.get()+"&ajname="+myajname+"&ajemp="+empname+"&ajcard"+cardno;
+		      					   $("#addEmpToAj").submit();
+		      					  //window.location = "${ctx}/AccessJurisdiction/shouAJG?flag=2&ajgroup=" + ids.get()+"&ajname="+myajname+"&ajemp="+empname+"&ajcard"+cardno;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -74,13 +75,15 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
+    	<form action="${ctx}/AccessJurisdiction/shouAJG" method="post" id="addEmpToAj">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="empname" id="empname" value="${findEmployeeById.id}" size="20"/>
+		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="ajemp" id="empname" value="${findEmployeeById.id}" size="20"/>
 		    			${findEmployeeById.name}
-		    			<input type="hidden" name="cardno" id="cardno" value="${findEmployeeById.cardno}">
+		    			<input type="hidden" name="ajcard" id="cardno" value="${findEmployeeById.cardno}">
 		    			</td>
 		    		</tr>
 		    		<tr>
@@ -91,7 +94,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">请选择一个分组：<br/><br/>
 		    			<c:forEach items="${accessGroups}" var="accessGroup" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${accessGroup.agid}"/>
+         				<input type="checkbox" name="ajgroup" id="box_${stat.index}" value="${accessGroup.agid}"/>
          					${accessGroup.agname}
          					(<c:forEach items="${accessGroup.orderItems}" var="myAs">
 					  		${myAs.accessname}
@@ -104,11 +107,11 @@
 		    		<td>
 		    		<hr>
 		    		</td>
-		    		<tr>	
+		    		<tr>
 		    		<tr>
 		    		<td class="font3 fftd">请选择一个门禁：
 		    			<c:forEach items="${agAccesss}" var="Aname" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${Aname.accessname}"/>${Aname.accessname}&nbsp;&nbsp;
+         				<input type="checkbox" name="ajaccess" id="box_${stat.index}" value="${Aname.accessname}"/>${Aname.accessname}&nbsp;&nbsp;
 		    			</c:forEach>
 		    		</td>
 		    		<tr>
@@ -119,8 +122,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>

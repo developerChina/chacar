@@ -30,7 +30,7 @@
 		                //拆分为字符串数组
 		                  var checkArray =checkeds.split(",");
 		                  //获得所有的复选框对象
-		                 var checkBoxAll = $("input[name='media']");
+		                 var checkBoxAll = $("input[name='egssxj']");
 		                 //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
 		                for(var i=0;i<checkArray.length;i++){
 		                     //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
@@ -74,7 +74,8 @@
 		      				   if(r){
 		      					    //alert("删除："+ids.get()+myegname+"id"+myegid);
 		      					   // 发送请求
-		      					   window.location = "${ctx}/Grouping/updateEG?flag=2&egssxj=" + ids.get()+"&egid="+myegid+"&egname="+myegname;
+		      					   $("#updateEg").submit();
+		      					   //window.location = "${ctx}/Grouping/updateEG?flag=2&egssxj=" + ids.get()+"&egid="+myegid+"&egname="+myegname;
 		      				   }
 		      			  	 });
 		      		   		}
@@ -101,19 +102,21 @@
   <tr valign="top">
     <td>
     	  <input type="hidden" value="${groupById.egssxj}" id="meidaHidden">
+    	  <form action="${ctx}/Grouping/updateEG" method="post" id="updateEg">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
+		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">电梯组名称：<input type="text" name="egname" id="myegname" value="${groupById.egname}" size="20"/>
-		    				<input type="hidden" value="${groupById.egid}" id="myegid">
+		    				<input type="hidden" name="egid" value="${groupById.egid}" id="myegid">
 		    			</td>
 		    		</tr>
 		    			
 		    		<tr>
-		    			<td class="font3 fftd">所属下级电梯名称：
+		    			<td class="font3 fftd">所属下级电梯名称：<br>
 		    			<c:forEach items="${egElevators}" var="Ename" varStatus="stat">
-         				<input type="checkbox" name="media" id="box_${stat.index}" value="${Ename.elevatorID}"/>${Ename.elevatorName}&nbsp;&nbsp;
+         				<input type="checkbox" name="egssxj" id="box_${stat.index}" value="${Ename.elevatorID}"/>${Ename.elevatorName}
 		    			</c:forEach>
 		    			</td>
 		    		</tr>
@@ -122,8 +125,9 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
 		  </table>
+		  </form>
 	</td>
   </tr>
 </table>
