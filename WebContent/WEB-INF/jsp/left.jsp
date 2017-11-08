@@ -80,10 +80,10 @@
 
           <tr><td id="navbg4" class="left_nav_closed" ><div class="font1">梯控系统</div></td></tr>
 		  <tr valign="top" id="submenu4" style="display: none">
-		    <td class="left_nav_bgshw tdbtmline" height="50">
+		    <td class="left_nav_bgshw tdbtmline" height="40">
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">梯控规划</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Grouping/elevatorSplit" target="main">梯控分组</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/Jurisdiction/getEJ" target="main">绑定授权</a></img></p>
+		      <!-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Grouping/elevatorSplit" target="main">梯控分组</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/Jurisdiction/getEJ" target="main">绑定授权</a></img></p> -->
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
