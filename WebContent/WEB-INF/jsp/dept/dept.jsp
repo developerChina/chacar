@@ -79,6 +79,17 @@
 	 		   window.location = "${ctx }/dept/addDept?flag=1";
 	 	   })
 	 	   
+	 	   $("#search").click(function(){
+	 		   var actionURL = $("#deptform").attr("action");
+	 	       $("#deptform").attr("action","${ctx}/dept/selectDept");
+	 	       $("#deptform").submit();
+	 	   })
+	 	   
+	 	   $("#export").click(function(){
+	 		   var actionURL = $("#deptform").attr("action");
+	 	       $("#deptform").attr("action","${ctx}/dept/exportExcel");
+	 	       $("#deptform").submit();
+	 	   })
 	 	   
 	    })
 	    
@@ -102,14 +113,15 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="deptform" method="post" id="deptform" action="${ctx}/dept/selectDept">
+			  	<form name="deptform" method="post" id="deptform">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
 					    	部门名称：<input type="text" name="name">
-					    	 <input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加部门"/>
+					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加部门&nbsp;"/>
+					    	<input id="export" type="button" value="&nbsp; 导出 &nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

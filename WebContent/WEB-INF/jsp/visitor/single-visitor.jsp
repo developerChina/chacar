@@ -71,24 +71,24 @@
 							<p class="clearfix">
 								<span class="fl">
 									<input type="hidden" id="cardName" name="cardName" value="">
-									姓名：<span id="cardName-span"></span>
+									姓名：<span id="cardName-span" class="underline"></span>
 								</span>
 								<span class="fl">
 									<input type="hidden" id="cardSex" name="cardSex" value="">
-									&nbsp;&nbsp;性别：<span id="cardSex-span"></span>
+									&nbsp;&nbsp;性别：<span id="cardSex-span" class="underline sex"></span>
 								</span>
 								<span class="fl">
 									<input type="hidden" id="cardNation" name="cardNation" value="">
-									&nbsp;&nbsp;民族：<span id="cardNation-span"></span>
+									&nbsp;&nbsp;民族：<span id="cardNation-span" class="underline"></span>
 								</span>
 							</p>
 							<p>
 								<input type="hidden" id="cardID" name="cardID" value="">
-								身份号码：<span id="cardID-span"></span>
+								身份号码：<span id="cardID-span" class="underline ID"></span>
 							</p>
 							<p>
 								<input type="hidden" id="cardAddress" name="cardAddress" value="">
-								住址：<span id="cardAddress-span"></span>
+								住址：<span id="cardAddress-span" class="underline address"></span>
 							</p>
 							<p>联系电话：<input type="text" class="text" id="telephone" name="telephone" style="width: 200px"/></p>
 							<p>工作单位：<input type="text" class="text" id="company" name="company" style="width: 400px"/></p>
@@ -212,8 +212,8 @@
 		*  新建访问人
 		*/	
 		function newvisitor(){
-			//var cardInfo=readIDCard_test();//硬件测试用例
-			var cardInfo=readIDCard();
+			var cardInfo=readIDCard_test();//硬件测试用例
+			//var cardInfo=readIDCard();
 			if(cardInfo.state){
 				$("#cardPhoto").val(cardInfo.message.photobuf);
 				$("#cardPhoto-img").attr("src", "data:image/png;base64,"+cardInfo.message.photobuf);

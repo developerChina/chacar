@@ -138,14 +138,10 @@ public class HrmServiceImpl implements HrmService{
 		params.put("dept", dept);
 		int recordCount = deptDao.count(params);
 		pageModel.setRecordCount(recordCount);
-		
 		if(recordCount > 0){
-	        /** 开始分页查询数据：查询第几页的数据 */
 		    params.put("pageModel", pageModel);
 	    }
-		
 		List<Dept> depts = deptDao.selectByPage(params);
-		 
 		return depts;
 	}
 	

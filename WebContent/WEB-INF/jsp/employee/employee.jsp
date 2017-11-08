@@ -69,6 +69,11 @@
 		 		   window.location = "${ctx }/employee/addEmployee?flag=1";
 		 	   })
 		 	   
+		 	  $("#import").click(function(){
+		 		   window.location = "${ctx }/employee/importEmployeePage";
+		 	   }) 
+		 	  
+		 	   
 	       })
 	       
 	</script>
@@ -121,11 +126,10 @@
 					    				<option value="${dept.id }">${dept.name }</option>
 					    			</c:forEach>
 							</select>&nbsp;
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加员工"/>
-					    	<input id="add" type="button" value="批量导入"/>
-					    	<!-- <input id="add" type="button" value="导出Excel"/>  -->
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加员工&nbsp;"/>
+					    	<input id="import" type="button" value="&nbsp;批量导入&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

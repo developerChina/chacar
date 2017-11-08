@@ -71,16 +71,35 @@
 	color: #f20f0f;
 }
 .infoArea{
+	color: #8a8782;
 	font: 16px/32px "";
+}
+.infoArea .underline{
+	font: 16px "";
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+	border-bottom: 1px solid #8a8782;
+	width: 80px;
 	color: #8a8782;
 }
+.infoArea .sex{
+	width: 16px;
+}
+.infoArea .ID{
+	width: 260px;
+}
+.infoArea .address{
+	width: 480px;
+}
 .infoArea .text{
-	width: 120px;
+	width: 150px;
 	height: 28px;
 	font: 16px/28px "";
 	box-sizing: border-box;
 	text-indent: 5px;
 	border: 1px solid #8a8782;
+	border-radius: 6px 6px;
 }
 .page{
 	width: 250px;

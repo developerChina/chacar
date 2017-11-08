@@ -85,7 +85,7 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="添加 ">&nbsp;&nbsp;<input type="reset" value="取消 " onclick="javascript:window.history.back(-1);"></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;添加 &nbsp;">&nbsp;&nbsp;<input type="reset" value="&nbsp;取消 &nbsp;" onclick="javascript:window.history.back(-1);"></td></tr>
 		  </table>
 		 </form>
 	</td>

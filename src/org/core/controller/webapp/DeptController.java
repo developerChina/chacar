@@ -1,12 +1,21 @@
 package org.core.controller.webapp;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.core.domain.webapp.Dept;
 import org.core.service.webapp.HrmService;
+import org.core.util.ExcelUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @version V1.0   
  */
 
+@SuppressWarnings("deprecation")
 @Controller
 public class DeptController {
 		
@@ -137,4 +147,87 @@ public class DeptController {
 		return mv;
 	}
 	
+	
+	/**
+	 * 导出部门
+	 * @param request
+	 * @param response
+	 * @param dept
+	 */
+	@RequestMapping(value="/dept/exportExcel")
+	public void exportExcel(HttpServletRequest request,HttpServletResponse response,@ModelAttribute Dept dept){
+		PageModel pageModel = new PageModel();
+		pageModel.setPageSize(Integer.MAX_VALUE);
+		List<Dept> depts = hrmService.findDept(dept, pageModel);
+
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		String sheetName = "部门";//sheet名称
+		HSSFSheet sheet = workbook.createSheet(sheetName);
+		sheet.setFitToPage(true);  
+	    sheet.setHorizontallyCenter(true);
+	    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+	    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");  
+		sheet.setAutoFilter(c);
+	    //设置列宽
+	    sheet.setColumnWidth(0, 7800);
+        sheet.setColumnWidth(1, 9600);		
+        sheet.setColumnWidth(2, 7800);
+        sheet.setColumnWidth(3, 9600);
+		//定义表格行索引
+        int index=0;
+        
+        //添加标题
+        HSSFRow row_title = sheet.createRow(index++);
+        row_title.setHeight((short) 600);// 设置行高 
+        HSSFCell row_title0 = row_title.createCell(0);   
+        row_title0.setCellValue(new HSSFRichTextString("部门")); 
+        //合并表头单元格
+        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)3),ExcelUtil.createTitleStyle(workbook));
+        sheet.addMergedRegion(new Region(
+        0 //first row (0-based) from 行  
+        ,(short)0 //first column (0-based) from 列     
+        ,0//last row  (0-based)  to 行
+        ,(short)3//last column  (0-based)  to 列     
+        ));
+        
+        //添加头信息
+        String[] titles={"编码","名称","上级部门","描述"};
+        HSSFRow row_head = sheet.createRow(index++);
+        for (int i=0; i<titles.length;i++) {
+        	HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+        //添加内容
+        for (Dept entity : depts) {
+        	HSSFRow row = sheet.createRow(index++);
+        	//编码
+        	HSSFCell cell0 = row.createCell(0);
+        	cell0.setCellValue(entity.getId());
+        	cell0.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//名称
+			HSSFCell cell1 = row.createCell(1);
+			cell1.setCellValue(entity.getName());
+			cell1.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//上级部门
+			HSSFCell cell2 = row.createCell(2);
+			if(entity.getDept()!=null){
+				cell2.setCellValue(entity.getDept().getName());
+			}
+			cell2.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//描述
+			HSSFCell cell3 = row.createCell(3);
+			cell3.setCellValue(entity.getRemark());
+			cell3.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+		try {
+			String fileName="部门管理";
+			ExcelUtil.write(request, response, workbook, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	 
 }
