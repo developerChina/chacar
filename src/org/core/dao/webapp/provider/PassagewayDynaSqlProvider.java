@@ -4,7 +4,7 @@ import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.webapp.Passageway;
 
 import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
-
+import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
 import java.util.Map;
 public class PassagewayDynaSqlProvider {
 	
@@ -94,4 +94,13 @@ public class PassagewayDynaSqlProvider {
 				}.toString();
 			}
 			
+			public String selectPassagewayGroupByid(String id){
+				return new SQL(){
+					{
+						SELECT("count(*)");
+						FROM(PASSAGEWAYGROUPTABLE);
+						WHERE(" pgssxj LIKE CONCAT('%',#{id},'%')");
+					}
+				}.toString();
+			}
 }

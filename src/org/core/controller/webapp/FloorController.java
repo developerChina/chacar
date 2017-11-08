@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
+//门禁
 /**
  * 转向首页
  * */
@@ -33,19 +33,18 @@ public class FloorController {
 		// 返回ModelAndView
 		return "dept/floor";
 	}
-	@RequestMapping(value="/floor/floorGroupAck")
-	 public String floorGroupAck(Integer pageIndex, @ModelAttribute Access access,Model model){
-		// 返回ModelAndView
-		return "dept/floorGroup";
-	}
 		//删除
 	@RequestMapping(value="/floor/removeAccess")
 	public ModelAndView removeAccess(String ids,ModelAndView mv){
 		// 分解id字符串
 		String[] idArray = ids.split(",");
 		for(String id : idArray){
-			// 根据id删除通道
-			accessService.removeAccessById(Integer.parseInt(id));
+			int count=accessService.selectAccessGroupByid(id);
+			if(count>0){
+				
+			}else{
+				accessService.removeAccessById(Integer.parseInt(id));
+			}
 		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/floor/floorAck");

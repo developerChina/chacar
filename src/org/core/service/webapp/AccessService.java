@@ -17,4 +17,6 @@ void modifyAccess(Access access);
 Access findAccessById(Integer accessid);
 //添加通道
 void addAccess(Access access);
+//根据id模糊查询
+int selectAccessGroupByid(String id);
 }

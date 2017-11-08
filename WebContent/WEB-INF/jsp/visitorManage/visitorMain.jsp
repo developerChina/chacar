@@ -32,11 +32,15 @@
 			   });
 		}
 	
-	
-	
-	
-	
 		$(function(){
+			
+			/** 给全选按钮绑定点击事件  */
+	    	$("#checkAll").click(function(){
+	    		// this是checkAll  this.checked是true
+	    		// 所有数据行的选中状态与全选的状态一致
+	    		boxs.attr("checked",this.checked);
+	    	})
+	    	
 			/** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   
@@ -47,6 +51,28 @@
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
 		 	   
+		    
+		    	 /** 删除员工绑定点击事件 */
+		 	   $("#deletemy").click(function(){
+		 		   /** 获取到用户选中的复选框  */
+		 		   var checkedBoxs = boxs.filter(":checked");
+		 		   if(checkedBoxs.length < 1){
+		 			   $.ligerDialog.error(" 请选择一个需要移除黑名单的人员！");
+		 		   }else{
+		 			   /** 得到用户选中的所有的需要删除的ids */
+		 			   var ids = checkedBoxs.map(function(){
+		 				   return this.value;
+		 			   })
+		 			   
+		 			   $.ligerDialog.confirm("确认要移除吗?","移除黑名单 ",function(r){
+		 				   if(r){
+		 					   window.location = "${ctx}/visitor/batchDelete?ids=" + ids.get();
+		 				   }
+		 			   });
+		 		   }
+		 	   })
+		    	
+		    	
 		 	   /** 手动添加 绑定点击事件 */
 		 	   $("#addManual").click(function(){
 		 		   window.location = "${ctx}/visitor/blackManual?flag=1";
@@ -88,6 +114,7 @@
 					    	<input type="submit" value="搜索"/>
 					    	<input id="addAutomatic" type="button" value="将访客拉黑"/>
 							<input id="addManual" type="button" value="手动拉黑"/>
+							<input id="deletemy" type="button" value="批量取消拉黑"/>
 					    </td>
 					  </tr>
 					</table>

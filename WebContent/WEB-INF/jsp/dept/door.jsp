@@ -24,7 +24,12 @@
     
 	<script type="text/javascript">
 		$(function(){
-
+			/** 给全选按钮绑定点击事件  */
+	    	$("#checkAll").click(function(){
+	    		// this是checkAll  this.checked是true
+	    		// 所有数据行的选中状态与全选的状态一致
+	    		boxs.attr("checked",this.checked);
+	    	})
 		 	   /** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   
@@ -88,8 +93,8 @@
 					    <td class="font3">
 					    	通道名：<input type="text" name="passagewayName">
 					    	控制器IP：<input type="text" name="ControllerIP">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
+					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
+					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="添加通道"/>
 					    </td>
 					  </tr>

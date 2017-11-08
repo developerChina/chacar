@@ -218,15 +218,27 @@ tbody tr th:nth-child(5){
 	height: 62px;
 	margin: 0 auto;	
 }
-.btnArea input{
+.btnArea a{
 	font: 30px/62px "";
 	color: #fff;
 	width: 168px;
 	height:62px ;
 	border: 1px solid #103d77;
 	background: #19b7f8;
-	text-indent: 65px;
+	text-indent: 85px;
 	margin-right: 40px;
+}
+.btnArea a:link{
+	color: #fff;
+}
+.btnArea a:visited{
+	color: #551a8b;
+}
+.btnArea a:hover{
+	color: #000;
+}
+.btnArea a:active{
+	color: #FF0000;
 }
 .btnArea .print{
 	margin-right: 0;

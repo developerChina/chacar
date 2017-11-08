@@ -86,6 +86,14 @@ public class ElevatorServiceImpl implements ElevatorService {
 		// TODO Auto-generated method stub
 		elevatorDao.update(elevator);
 	}
+
+
+
+	@Override
+	public int selectEGisE(String id) {
+		
+		return elevatorDao.selectEGisE(id);
+	}
 	
 	
 	

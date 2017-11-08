@@ -2,6 +2,10 @@ package org.core.domain.webapp;
 
 import java.io.Serializable;
 
+/**
+ * table="blacklist" <br/>
+ * 黑名单表
+ */
 public class Blacklist implements Serializable{
 
 	private static final long serialVersionUID = 1L;

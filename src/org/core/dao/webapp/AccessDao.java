@@ -30,5 +30,7 @@ public interface AccessDao {
 	//添加通道
 	@SelectProvider(method = "insertAccess", type = AccessDynaSqlProvider.class)
 	void save(Access access);
-	
+	//根据id模糊查询
+	@SelectProvider(method = "selectAccessGroupByid", type = AccessDynaSqlProvider.class)
+	int selectAccessGroupByid(String id);
 }

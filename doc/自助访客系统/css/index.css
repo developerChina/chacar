@@ -67,6 +67,18 @@
 .right .btn:nth-child(3) a{
 	background: url(../images/print.png) no-repeat 10% center;
 }
+.right .btn a:link{
+	color: #fff;
+}
+.right .btn a:visited{
+	color: #551a8b;
+}
+.right .btn a:hover{
+	color: #000;
+}
+.right .btn a:active{
+	color: #FF0000;
+}
 .foot{
 	position: absolute;
 	left: 0;

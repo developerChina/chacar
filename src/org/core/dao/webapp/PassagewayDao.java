@@ -30,5 +30,8 @@ public interface PassagewayDao {
 		//添加通道
 		@SelectProvider(method = "insertPassageway", type = PassagewayDynaSqlProvider.class)
 		void save(Passageway passageway);
+		//根据id模糊查询
+		@SelectProvider(method = "selectPassagewayGroupByid", type = PassagewayDynaSqlProvider.class)
+		int selectPassagewayGroupByid(String id);
 		
 }

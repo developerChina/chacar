@@ -28,5 +28,8 @@ public interface ElevatorService {
 	void modifyElevator(Elevator elevator);
 	
 	
+	int selectEGisE(String id);
+	
+	
 
 }

@@ -11,6 +11,7 @@ public class Access implements Serializable{
 		private String accessname;
 		private String csn;
 		private String cip;
+		private String acno;
 		public Integer getAccessid() {
 			return accessid;
 		}
@@ -39,10 +40,17 @@ public class Access implements Serializable{
 			super();
 			// TODO Auto-generated constructor stub
 		}
+		
+		public String getAcno() {
+			return acno;
+		}
+		public void setAcno(String acno) {
+			this.acno = acno;
+		}
 		@Override
 		public String toString() {
 			return "Access [accessid=" + accessid + ", accessname=" + accessname + ", csn=" + csn + ", cip=" + cip
-					+ "]";
+					+ ", acno=" + acno + "]";
 		}
 		
 		
