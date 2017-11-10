@@ -71,28 +71,28 @@
 							<p class="clearfix">
 								<span class="fl">
 									<input type="hidden" id="cardName" name="cardName" value="">
-									姓名：<span id="cardName-span" class="underline"></span>
+									姓&nbsp;&nbsp;名&nbsp;&nbsp;<span id="cardName-span" class="underline"></span>
 								</span>
 								<span class="fl">
 									<input type="hidden" id="cardSex" name="cardSex" value="">
-									&nbsp;&nbsp;性别：<span id="cardSex-span" class="underline sex"></span>
+									性&nbsp;&nbsp;别&nbsp;&nbsp;<span id="cardSex-span" class="underline sex"></span>
 								</span>
 								<span class="fl">
 									<input type="hidden" id="cardNation" name="cardNation" value="">
-									&nbsp;&nbsp;民族：<span id="cardNation-span" class="underline"></span>
+									民&nbsp;&nbsp;族&nbsp;&nbsp;<span id="cardNation-span" class="underline"></span>
 								</span>
 							</p>
 							<p>
-								<input type="hidden" id="cardID" name="cardID" value="">
-								身份号码：<span id="cardID-span" class="underline ID"></span>
+								<input type="hidden" id="cardAddress" name="cardAddress" value="">
+								住&nbsp;&nbsp;址&nbsp;&nbsp;<span id="cardAddress-span" class="underline address"></span>
 							</p>
 							<p>
-								<input type="hidden" id="cardAddress" name="cardAddress" value="">
-								住址：<span id="cardAddress-span" class="underline address"></span>
+								<input type="hidden" id="cardID" name="cardID" value="">
+								身份号码&nbsp;&nbsp;<span id="cardID-span" class="underline ID"></span>
 							</p>
-							<p>联系电话：<input type="text" class="text" id="telephone" name="telephone" style="width: 200px"/></p>
-							<p>工作单位：<input type="text" class="text" id="company" name="company" style="width: 400px"/></p>
-							<p>访问事由：<input type="text" class="text" id="visitReason" name="visitReason" style="width: 400px"/></p>
+							<p>联系电话&nbsp;&nbsp;<input type="text" class="text" id="telephone" name="telephone" style="width: 200px"/></p>
+							<p>工作单位&nbsp;&nbsp;<input type="text" class="text" id="company" name="company" style="width: 400px"/></p>
+							<p>访问事由&nbsp;&nbsp;<input type="text" class="text" id="visitReason" name="visitReason" style="width: 400px"/></p>
 						</div>
 					</div>
 					<div class="right fl">
