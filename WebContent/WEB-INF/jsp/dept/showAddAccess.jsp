@@ -28,6 +28,8 @@
 			var accessname = $("#accessname");
 			var csn = $("#csn");
 			var cip = $("#cip");
+			var acno = $("#acno")
+			var floorno = $("#floorno")
 			var msg = "";
 			if ($.trim(accessname.val()) == ""){
 				msg = "姓名不能为空！";
@@ -38,6 +40,12 @@
 			}else if ($.trim(cip.val()) == ""){
 				msg = "控制器IP不能为空！";
 				cip.focus();
+			}else if($.trim(acno.val()) == ""){
+				msg = "门禁编号不能为空！";
+				acno.focus();
+			}else if($.trim(floorno.val()) == ""){
+				msg = "楼层编号不能为空！";
+				floorno.focus();
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
@@ -78,14 +86,16 @@
 		    			
 		    		<tr>
 		    			<td class="font3 fftd">控制器IP:<input name="cip" id="cip" size="20" /></td>
-		    			
+		    			<td class="font3 fftd">门禁编号:<input name="acno" id="acno" size="20" /></td>
 		    		</tr>
-		    		
+		    		<tr>
+		    			<td class="font3 fftd">楼层编号:<input name="floorno" id="floorno" size="20" /></td>
+		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;添加 &nbsp;">&nbsp;&nbsp;<input type="reset" value="&nbsp;取消 &nbsp;" onclick="javascript:window.history.back(-1);"></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="添加 ">&nbsp;&nbsp;<input type="reset" value="返回 " onclick="javascript:window.history.back(-1);"></td></tr>
 		  </table>
 		 </form>
 	</td>

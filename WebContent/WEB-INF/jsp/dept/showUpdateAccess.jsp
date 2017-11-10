@@ -29,6 +29,7 @@
 			var csn = $("#csn");
 			var cip = $("#cip");
 			var acno = $("#acno")
+			var floorno = $("#floorno")
 			var msg = "";
 			if ($.trim(accessname.val()) == ""){
 				msg = "姓名不能为空！";
@@ -42,6 +43,9 @@
 			}else if($.trim(acno.val()) == ""){
 				msg = "门禁编号不能为空！";
 				acno.focus();
+			}else if($.trim(floorno.val()) == ""){
+				msg = "楼层编号不能为空！";
+				floorno.focus();
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
@@ -84,7 +88,9 @@
 		    			<td class="font3 fftd">控制器IP:<input name="cip" id="cip" size="20" value="${access.cip }"/></td>
 		    			<td class="font3 fftd">门禁编号:<input name="acno" id="acno" size="20" value="${access.acno}" /></td>
 		    		</tr>
-		    		
+		    		<tr>
+		    			<td class="font3 fftd">楼层编号:<input name="floorno" id="floorno" size="20" value="${access.floorno}" /></td>
+		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>

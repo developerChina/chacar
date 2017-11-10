@@ -2,6 +2,8 @@ package org.core.controller.webapp;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
 import org.core.domain.webapp.Accessj;
@@ -86,16 +88,17 @@ public class AccessJurisdictionController {
 			}
 		}
 		@RequestMapping(value="/AccessJurisdiction/shouAJG")
-		public ModelAndView shouAJG(String id,String flag,Model model,
+		public ModelAndView shouAJG(String ids,String flag,Model model,
 				ModelAndView mv,
-				@ModelAttribute Accessj accessj){
-			int count=aJService.selectAJG(id);
+				String ajemps,String ajname,String ajgroup,
+				HttpServletRequest request){
+			/* i n t count=aJService.selectAJG(id);*/
 			//判断是否已经授权
-			if(count>0){
+			/*if(count>0){
 				//System.out.println("已经存在权限。。。");
-			}else{
+			}else{}*/
 				if(flag.equals("1")){
-					Employee findEmployeeById = hrmService.findEmployeeById(Integer.parseInt(id));
+					List<Employee> findEmployeeByIds = aJService.findEmployeeByIds(ids);
 					List<AccessGroup> accessGroups = aJService.findAGAll();
 					for (AccessGroup myA : accessGroups) {
 						String selectids=myA.getAgssxj();
@@ -107,14 +110,15 @@ public class AccessJurisdictionController {
 					}
 					List<Access> agAccesss=accessgroupService.selectAGSubordinate();
 					model.addAttribute("accessGroups", accessGroups);
-					model.addAttribute("findEmployeeById", findEmployeeById);
+					model.addAttribute("findEmployeeByIds", findEmployeeByIds);
 					model.addAttribute("agAccesss", agAccesss);
 					mv.setViewName("group/showaddEmptoAJ");
 				}else{
-					aJService.saveAJ(accessj);
+					String[] empids = request.getParameterValues("ajemps");
+					aJService.saveAJNew(empids,ajname,ajgroup);
 					mv.setViewName("redirect:/AccessJurisdiction/selectAJ");
 				}
-			}
+			
 			return mv;
 		}
 		/**
@@ -129,7 +133,7 @@ public class AccessJurisdictionController {
 			List<Accessj> accessjs = aJService.selectAJ(accessj,pageModel);
 			for (Accessj selectaccessj : accessjs) {
 				//先来 电梯组
-				String selectEGs = selectaccessj.getAjgroup();
+				String selectEGs = selectaccessj.getAjgroupid();
 				List<AccessGroup> groupById = aJService.selectPGbyId(selectEGs);
 				if(groupById.size()>0){
 					for (AccessGroup myGroup : groupById) {
@@ -145,11 +149,10 @@ public class AccessJurisdictionController {
 					}
 				}
 				
-				/*String selectEmps = myelevatorj.getEjemp();
+				String selectEmps = selectaccessj.getAjempid();
+				Employee EmpById = aJService.selectAjEmpbyId(selectEmps);
+				selectaccessj.setAjEmployee(EmpById);
 				
-				String selectEs = myelevatorj.getEjelevator();*/
-			
-
 			}
 			model.addAttribute("accessjs", accessjs);
 			model.addAttribute("pageModel", pageModel);
@@ -179,6 +182,10 @@ public class AccessJurisdictionController {
 			if(flag.equals("1")){
 				//根据id查自身
 				Accessj myUPAccessj = aJService.selectAjByid(id);
+				//根据empid 查授权表 得到集合
+				//List<Accessj> myUPAccessjs= aJService.selectAjByEmpid(id);
+				Employee updateEmp = aJService.selectEmployee(myUPAccessj.getAjempid());
+				
 				//所有的电梯组 及其下级单位
 				List<AccessGroup> accessGroups = aJService.findAGAll();
 				for (AccessGroup myA : accessGroups) {
@@ -191,7 +198,7 @@ public class AccessJurisdictionController {
 				
 				//自身的东西
 				model.addAttribute("myUPAccessj", myUPAccessj);
-				
+				model.addAttribute("updateEmp", updateEmp);
 				//所有东西
 				model.addAttribute("accessGroups", accessGroups);
 

@@ -92,9 +92,9 @@
 					  <tr>
 					    <td class="font3">
 					    	门禁分组名称：<input type="text" name="agname">
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="添加门禁分组"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加门禁分组&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -111,8 +111,8 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>分组名称</td>
-			  <td>所属下级</td>
+			  <td>门禁分组名称</td>
+			  <td>分组中包含的门禁名称</td>
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.accessGroups}" var="accessGroup" varStatus="stat">

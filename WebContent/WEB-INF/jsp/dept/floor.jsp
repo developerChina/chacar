@@ -116,6 +116,7 @@
 			  <td>门禁名称</td>
 			  <td>控制器SN</td>
 			  <td>控制器IP</td>
+			  <td>楼层编号</td>
 			  <td>门编号</td>
 			  <td align="center">操作</td>
 			</tr>
@@ -125,6 +126,7 @@
 					 <td>${access.accessname}</td>
 					  <td>${access.csn}</td>
 					  <td>${access.cip}</td>
+					  <td>${access.floorno}</td>
 					  <td>${access.acno}</td>
  					  <td align="center" width="40px;">
  					       <a href="${ctx}/floor/updateAccess?flag=1&accessid=${access.accessid}">

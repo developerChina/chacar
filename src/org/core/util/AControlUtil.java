@@ -20,11 +20,11 @@ public class AControlUtil {
 		byte endDay = 0x31;
 		int authority[] = { 1, 1, 0, 1}; 
         //截止日期: 2029年12月31日  一、二、四门有权限
-		AddUserCard(controllerSN,controllerIP, cardNO,era,endYeaar, endMonth,endDay,authority);
+		AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay,authority);
 		//删除卡权限
 		DeleUserCard(controllerSN, controllerIP,cardNO);
 	}
-
+	
 	/**
 	 * 给门禁授权
 	 * 

@@ -70,6 +70,9 @@ public class AccessDynaSqlProvider {
 				if(access.getAcno()!=null){
 					SET(" acno = #{acno}");
 				}
+				if(access.getFloorno()!=null){
+					SET(" floorno = #{floorno}");
+				}
 				WHERE(" accessid = #{accessid} ");
 			}
 		}.toString();
@@ -92,7 +95,9 @@ public class AccessDynaSqlProvider {
 					if(access.getAcno()!=null && !access.getAcno().equals("")){
 						VALUES("acno","#{acno}");
 					}
-					
+					if(access.getFloorno()!=null && !access.getFloorno().equals("")){
+						VALUES("floorno","#{floorno}");
+					}
 				}
 			}.toString();
 		}

@@ -35,13 +35,18 @@ public class AccessGroupController {
 			}
 		List<AccessGroup> accessGroups = accessgroupService.findAccessGroup(accessGroup, pageModel);
 		for (AccessGroup ags : accessGroups) {
-			String selectids=ags.getAgssxj();
+			String selectids=ags.getAgid();
 			List<Access> saveaccesss = accessgroupService.getAccessById(selectids);
 			for (Access access : saveaccesss) {
 				//把查到的门禁集合挨个添加到门禁组的一个集合中
 				ags.getOrderItems().add(access);
 			}
+			
 		}
+		
+		
+		
+		
 		model.addAttribute("accessGroups", accessGroups);
 		model.addAttribute("pageModel", pageModel);
 		return "group/showaccessgroup";

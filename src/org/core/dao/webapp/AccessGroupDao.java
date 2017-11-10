@@ -1,6 +1,7 @@
 package org.core.dao.webapp;
 
 import static org.core.util.GlobleConstants.ACCESSGROUPTABLE;
+import static org.core.util.GlobleConstants.MiddletoAGTABLE;
 import static org.core.util.GlobleConstants.ACCESSTABLE;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.AccessGroupSqlProvider;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
+import org.core.domain.webapp.MiddletoAG;
 public interface AccessGroupDao {
 	/*
 	 * 门禁分组
@@ -34,7 +36,7 @@ public interface AccessGroupDao {
 	
 	//添加门禁分组
 	@SelectProvider(method = "saveAgroup", type = AccessGroupSqlProvider.class)
-	void addAGroup(String agname,String ids,String uuid);
+	void addAGroup(String agname,String uuid);
 	
 	//根据id查询所属下级
 	@Select(" select * from "+ACCESSTABLE+" where accessid=#{id}")
@@ -45,4 +47,9 @@ public interface AccessGroupDao {
 	//修改
 	@SelectProvider(method = "updateAG", type = AccessGroupSqlProvider.class)
 	void updateAG(AccessGroup accessGroup);
+	//向中间表中添加
+	@SelectProvider(method = "addaddAGrouptoMiddle", type = AccessGroupSqlProvider.class)
+	void addaddAGrouptoMiddle(String uuid, String id);
+	@Select(" select * from "+MiddletoAGTABLE+" where agroupid=#{selectids}")
+	List<MiddletoAG> getMiddle(String selectids);
 }

@@ -12,15 +12,15 @@ public class Accessj implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String ajid;//门禁授权id
 	private String ajname;//门禁授权名称
-	private String ajemp;//门禁授权所属员工
-	private String ajcard;//门禁授权所属员工卡号
-	private String ajgroup;//门禁授权所属门禁分组
-	private String ajaccess;//门禁授权所属门禁
+	private String ajempid;//门禁授权所属员工
+	private String ajgroupid;//门禁授权所属门禁分组
 	/*
 	 *  授权里的门禁分组集合
 	 */
 	private Set<AccessGroup> agroups = new HashSet<AccessGroup>();
-
+	
+	private Employee ajEmployee = new Employee();
+	
 	public String getAjid() {
 		return ajid;
 	}
@@ -33,41 +33,17 @@ public class Accessj implements Serializable{
 	public void setAjname(String ajname) {
 		this.ajname = ajname;
 	}
-	public String getAjemp() {
-		return ajemp;
+	public String getAjempid() {
+		return ajempid;
 	}
-	public void setAjemp(String ajemp) {
-		this.ajemp = ajemp;
+	public void setAjempid(String ajempid) {
+		this.ajempid = ajempid;
 	}
-	public String getAjcard() {
-		return ajcard;
+	public String getAjgroupid() {
+		return ajgroupid;
 	}
-	public void setAjcard(String ajcard) {
-		this.ajcard = ajcard;
-	}
-	public String getAjgroup() {
-		return ajgroup;
-	}
-	public void setAjgroup(String ajgroup) {
-		this.ajgroup = ajgroup;
-	}
-	public String getAjaccess() {
-		return ajaccess;
-	}
-	public void setAjaccess(String ajaccess) {
-		this.ajaccess = ajaccess;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	@Override
-	public String toString() {
-		return "Accessj [ajid=" + ajid + ", ajname=" + ajname + ", ajemp=" + ajemp + ", ajcard=" + ajcard + ", ajgroup="
-				+ ajgroup + ", ajaccess=" + ajaccess + "]";
-	}
-	public Accessj() {
-		super();
-		// TODO Auto-generated constructor stub
+	public void setAjgroupid(String ajgroupid) {
+		this.ajgroupid = ajgroupid;
 	}
 	public Set<AccessGroup> getAgroups() {
 		return agroups;
@@ -75,5 +51,14 @@ public class Accessj implements Serializable{
 	public void setAgroups(Set<AccessGroup> agroups) {
 		this.agroups = agroups;
 	}
+	public Employee getAjEmployee() {
+		return ajEmployee;
+	}
+	public void setAjEmployee(Employee ajEmployee) {
+		this.ajEmployee = ajEmployee;
+	}
+	
+	
+	
 	
 }

@@ -113,9 +113,8 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>门禁授权名称</td>
-			  <!-- <td>授权员工</td>
-			  <td>授权员工的卡号</td> -->
-			  <td>所属门禁或门禁组</td>
+			  <td>所属门禁组名称(门禁名称)</td>
+			  <td>被授权的员工姓名</td>
 			  <td align="center">操作</td>
 			</tr>
 			
@@ -131,6 +130,7 @@
 					 		</c:forEach>)
 					 	</c:forEach>
 					 </td>
+					 <td>${passageway.ajEmployee.name}</td>
 					  <td align="center" width="40px;">
  					       <a href="${ctx}/AccessJurisdiction/updetaAj?flag=1&id=${passageway.ajid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>

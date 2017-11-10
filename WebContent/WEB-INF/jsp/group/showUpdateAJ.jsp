@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-	<title>修改门禁组的信息</title>
+	<title>修改门禁授权的信息</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -30,7 +30,7 @@
             //拆分为字符串数组
               var checkArray =checkeds.split(",");
               //获得所有的复选框对象
-             var checkBoxAll = $("input[name='ajgroup']");
+             var checkBoxAll = $("input[name='ajgroupid']");
              //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
             for(var i=0;i<checkArray.length;i++){
                  //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
@@ -47,7 +47,7 @@
 		             
 		             
 		             
-		           var boxs  = $("input[type='checkbox'][id^='box_']");
+		           var boxs  = $("input[type='radio'][id^='box_']");
 		           /** 修改绑定点击事件 */
 		      	   $("#upEG").click(function(){
 		      		 	var myagname =document.getElementById("myagname").value;
@@ -94,30 +94,39 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：电梯组管理  &gt; 修改电梯组</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：门禁授权管理  &gt; 修改门禁授权</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	  <input type="hidden" value="${myUPAccessj.ajgroup}" id="meidaHidden">
+    	  <input type="hidden" value="${myUPAccessj.ajgroupid}" id="meidaHidden">
     	  <form action="${ctx}/AccessJurisdiction/updetaAj" method="post" id="uodateAJ">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">电梯授权名称：<input type="text" name="ajname" id="myagname" value="${myUPAccessj.ajname}" size="20"/>
-		    				<input type="hidden" name="ajid" value="${myUPAccessj.ajid}" id="myagid">
+		    		<td class="font3 fftd">
+		    				被授权的员工:${updateEmp.name}
+		    				<input type="hidden" name="ajempid" value="${updateEmp.id}" id="myagid">
 		    			</td>
-		    		</tr>
 		    			
+		    		</tr>
+		    			<tr>
+		    			<td class="font3 fftd">
+		    				电梯授权名称：
+		    				<input type="text" name="ajname" id="myagname" value="${myUPAccessj.ajname}" size="20"/>
+		    				<input type="hidden" name="ajid" value="${myUPAccessj.ajid}" id="myagid">
+		    			</td> 
+		    			
+		    			</tr>	
 		    		<tr>
-		    			<td class="font3 fftd">所属下级电梯组名称：
+		    			<td class="font3 fftd">请选择门禁分组：
 		    			<c:forEach items="${accessGroups}" var="EGname" varStatus="stat">
 		    			<br>
-         				<input type="checkbox" name="ajgroup" id="box_${stat.index}" value="${EGname.agid}"/>
+         				<input type="radio" name="ajgroupid" id="box_${stat.index}" value="${EGname.agid}"/>
 		    			${EGname.agname}:
 		    			<c:forEach items="${EGname.orderItems}" var="EGxj" varStatus="stat">
 		    				${EGxj.accessname}
