@@ -134,8 +134,8 @@
         var grid = mini.get("datagrid1");
 
         function newvisitor() {
-        	var cardInfo=readIDCard_test(Math.floor(Math.random()*10)); //硬件测试用例
-        	//var cardInfo=readIDCard();
+        	//var cardInfo=readIDCard_test(Math.floor(Math.random()*10)); //硬件测试用例
+        	var cardInfo=readIDCard();
 			if(cardInfo.state){
 				//判断是否添加
 				var data = grid.getEditData(true);
