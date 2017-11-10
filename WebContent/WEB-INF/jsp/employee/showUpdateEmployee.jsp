@@ -25,24 +25,19 @@
 		// 控制文档加载完成以后 选中性别 
 		$("#sex").val("${employee.sex}");
 		$("#job_id").val("${employee.job.id}");
-		
+		$("#birthday").val("${employee.birthday}");
     	/** 员工表单提交 */
 		$("#employeeForm").submit(function(){
+			var msg = "";
 			var name = $("#name");
 			var cardId = $("#cardId");
-			var education = $("#education");
 			var email = $("#email");
 			var phone = $("#phone");
 			var tel = $("#tel");
-			var party = $("#party");
 			var qqNum = $("#qqNum");
-			var address = $("#address");
 			var postCode = $("#postCode");
-			var birthday = $("#birthday");
-			var race = $("#race");
-			var speciality = $("#speciality");
-			var hobby = $("#hobby");
-			var msg = "";
+			var job_id = $("#job_id");
+			var dept_id = $("#dept_id");
 			if ($.trim(name.val()) == ""){
 				msg = "姓名不能为空！";
 				name.focus();
@@ -52,61 +47,25 @@
 			}else if (!/^[1-9]\d{16}[0-9A-Za-z]$/.test($.trim(cardId.val()))){
 				msg = "身份证号码格式不正确！";
 				cardId.focus();
-			}else if ($.trim(education.val()) == ""){
-				msg = "学历不能为空！";
-				education.focus();
-			}else if ($.trim(email.val()) == ""){
-				msg = "邮箱不能为空！";
-				email.focus();
-			}else if (!/^\w+@\w{2,3}\.\w{2,6}$/.test($.trim(email.val()))){
+			}else if ($.trim(email.val()) != "" && !/^\w+@\w{2,3}\.\w{2,6}$/.test($.trim(email.val()))){
 				msg = "邮箱格式不正确！";
 				email.focus();
-			}else if ($.trim(phone.val()) == ""){
-				msg = "手机号码不能为空！";
-				phone.focus();
-			}else if (!/^1[3|5|8]\d{9}$/.test($.trim(phone.val()))){
+			}else if ($.trim(phone.val()) != "" && !/^1[3|5|8]\d{9}$/.test($.trim(phone.val()))){
 				msg = "手机号码格式不正确！";
 				phone.focus();
-			}else if ($.trim(tel.val()) == ""){
-				msg = "电话号码不能为空！";
-				tel.focus();
-			}else if (!/^0\d{2,3}-?\d{7,8}$/.test($.trim(tel.val()))){
+			}else if ($.trim(tel.val()) != "" && !/^0\d{2,3}-?\d{7,8}$/.test($.trim(tel.val()))){
 				msg = "电话号码格式不正确！";
 				tel.focus();
-			}else if ($.trim(party.val()) == ""){
-				msg = "政治面貌不能为空！";
-				party.focus();
-			}else if ($.trim(qqNum.val()) == ""){
-				msg = "QQ号码不能为空！";
-				qqNum.focus();
-			}else if (!/^\d{6,}$/.test($.trim(qqNum.val()))){
+			}else if ($.trim(qqNum.val()) != "" && !/^\d{6,}$/.test($.trim(qqNum.val()))){
 				msg = "QQ号码格式不正确！";
 				qqNum.focus();
-			}else if ($.trim(address.val()) == ""){
-				msg = "地址不能为空！";
-				address.focus();
-			}else if ($.trim(postCode.val()) == ""){
-				msg = "邮政编码不能为空！";
-				postCode.focus();
-			}else if (!/^[1-9]\d{5}$/.test($.trim(postCode.val()))){
+			}else if ($.trim(postCode.val()) != "" && !/^[1-9]\d{5}$/.test($.trim(postCode.val()))){
 				msg = "邮政编码格式不正确！";
 				postCode.focus();
-			}else if ($.trim(birthday.val()) == ""){
-				msg = "出生日期不能为空！";
-				birthday.focus();
-			}else if (!birthday.val()){
-//					!/^\d{4}-\d{2}-\d{2}$/.test($.trim(birthday.val()))
-				msg = "出生日期格式不正确！";
-				birthday.focus();
-			}else if ($.trim(race.val()) == ""){
-				msg = "民族不能为空！";
-				race.focus();
-			}else if ($.trim(speciality.val()) == ""){
-				msg = "专业不能为空！";
-				speciality.focus();
-			}else if ($.trim(hobby.val()) == ""){
-				msg = "爱好不能为空！";
-				hobby.focus();
+			}else if ($.trim(job_id.val()) == ""){
+				msg = "职位不能为空！";
+			}else if ($.trim(dept_id.val()) == ""){
+				msg = "部门不能为空！";
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
@@ -154,7 +113,7 @@
 					    </td>
 		    			<td class="font3 fftd">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：
 		    			 	<select id="job_id" name="job_id" style="width:143px;">
-					    			<option value="0">--请选择职位--</option>
+					    			<option value="">--请选择职位--</option>
 					    			<c:forEach items="${requestScope.jobs }" var="job">
 					    				<option value="${job.id }">${job.name }</option>
 					    			</c:forEach>
@@ -211,8 +170,8 @@
 				<td class="font3 fftd">
 					备&nbsp;&nbsp;&nbsp;&nbsp;注：<input name="remark" id="remark" size="40" value="${employee.remark }"/>
 					&nbsp;&nbsp;所属部门：
-					<select  name="dept_id" style="width:143px;">
-						   <option value="0">--部门选择--</option>
+					<select  name="dept_id" id="dept_id" style="width:143px;">
+						   <option value="">--部门选择--</option>
 						   <c:forEach items="${requestScope.depts }" var="dept">
 						   		<c:choose>
 			    					<c:when test="${employee.dept.id == dept.id }">
@@ -229,7 +188,7 @@
 			<tr><td class="main_tdbor"></td></tr>
 			<td class="font3 fftd">
 					员工卡号：<input name="cardno" id="cardno" size="40" value="${employee.cardno }"/>
-					车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/>
+					&nbsp;车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/>
 			</td>
 			<tr><td class="main_tdbor"></td></tr>
 			

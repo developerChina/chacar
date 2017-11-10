@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${ctx}/layout/third/flat/flat.color.css">
 <link rel="stylesheet" href="${ctx}/layout/third/flat/iconline.css">
 <link rel="stylesheet" href="${ctx}/layout/third/flat/iconform.css">
+<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="section_container">
@@ -22,7 +23,7 @@
 			</header>
 			<article data-role="article" id="border_article" class="active" data-scroll="verticle" style="top: 40px; bottom: 0px;">
 				<div class="scroller">
-					<form autocomplete="off" class="form-square" id="autidForm" action="${ctx}/visitor/auditRecord">
+					<form autocomplete="off" class="form-square" id="autidForm" action="${ctx}/visitor/auditRecord" method="post">
 						<input type="hidden" id="recordid" name="recordid" value="${recordid }">
 						<label class="label-left" style="height: 40px;">是否同意</label> 
 						<label class="label-right" style="height: 40px;">
@@ -40,43 +41,71 @@
 						    <input id="auditContent" name="auditContent" value="${auditContent}" type="text" />
 						</label>
 						<label class="label-left" for="user" style="height: 80px;">访客通道</label>
-						 <label class="label-right" style="height: 80px;">
+						 <label class="label-right" style="height: 80px;" id="pws_lable">
+						   <c:forEach items="${pws}" var="pw" varStatus="stat">
+							<a href="#" data-role="checkbox">
+						    	<input type="hidden" name="pw" value="${pw.passagewayID}"/>
+					    		<input type="checkbox" checked disabled/>
+					  			<label for="baskball" class="black">${pw.passagewayName}</label>
+					  		</a>
+						   </c:forEach>
+						    <!--  
 						    <a href="#" data-role="checkbox">
-						    		<input type="checkbox" id="baskball" checked disabled/>
-						  			<label for="baskball" class="black">大门进通道一</label>
-						  		</a>
-						  		<a href="#" data-role="checkbox">
-						  			<input type="checkbox" id="football" checked disabled/>
-						  			<label for="football" class="black">大门出通道二</label>
-						  		</a>
+						    	<input type="hidden" name="pw" value="1"/>
+					    		<input type="checkbox" checked disabled/>
+					  			<label for="baskball" class="black">大门进通道一</label>
+					  		</a>
+					  		<a href="#" data-role="checkbox">
+					  			<input type="hidden" name="pw" value="2"/>
+					  			<input type="checkbox" checked disabled/>
+					  			<label for="football" class="black">大门出通道二</label>
+					  		</a>
+					  		-->
 						</label>
 						
 						<label class="label-left" for="user" style="height: 80px;">访客电梯</label>
-						 <label class="label-right" style="height: 80px;">
-						    <a href="#" data-role="checkbox">
-						    		<input type="checkbox" id="baskball" checked disabled/>
-						  			<label for="baskball" class="black">电梯一</label>
-						  		</a>
-						  		<a href="#" data-role="checkbox">
-						  			<input type="checkbox" id="football" checked disabled/>
-						  			<label for="football" class="black">电梯二</label>
-						  		</a>
+						 <label class="label-right" style="height: 80px;" id="elts_lable">
+						   <c:forEach items="${elts}" var="elt" varStatus="stat">
+							<a href="#" data-role="checkbox">
+						    	<input type="hidden" name="elt" value="${elt.elevatorID }"/>
+					    		<input type="checkbox" checked disabled/>
+					  			<label for="baskball" class="black">${elt.elevatorName }</label>
+					  		</a>
+						   </c:forEach>
+						    <!--<a href="#" data-role="checkbox">
+						    	<input type="hidden" name="elt" value="1"/>
+					    		<input type="checkbox" checked disabled/>
+					  			<label for="baskball" class="black">电梯一</label>
+					  		</a>
+					  		<a href="#" data-role="checkbox">
+					  			<input type="hidden" name="elt" value="2" />
+					  			<input type="checkbox" checked disabled/>
+					  			<label for="football" class="black">电梯二</label>
+					  		</a>
+					  		-->
 						</label>
 						
 						<label class="label-left" for="user" style="height: 120px;">访客门禁</label>
-						 <label class="label-right" style="height: 120px;">
-						     <a href="#" data-role="radio">
-							    <input type="radio" name="isAudit" value="2"/>
+						 <label class="label-right" style="height: 120px;" id="acces_lable">
+							 <c:forEach items="${acces}" var="acce" varStatus="stat">
+								<a href="#" data-role="radio">
+								    <input type="radio" name="acce" value="${acce.accessid }"/>
+									<label for="football1" class="black">${acce.accessname }</label>
+							 	</a>
+							   </c:forEach>
+						     <!--<a href="#" data-role="radio">
+							    <input type="radio" name="acce" value="1"/>
 								<label for="football1" class="black">一号楼一层</label>
 							 </a>
 							 <a href="#" data-role="radio">
-							    <input type="radio" name="isAudit" value="2"/>
+							    <input type="radio" name="acce" value="2"/>
 								<label for="football1" class="black">一号楼二层</label>
 							 </a>
 							 <a href="#" data-role="radio">
-							    <input type="radio" name="isAudit" value="2"/>
+							    <input type="radio" name="acce" value="3"/>
 								<label for="football1" class="black">一号楼三层</label>
 							 </a>
+							 -->
 						</label>
 						<button class="block" onclick="auditRecord()">确认</button>
 					</form>
@@ -84,9 +113,17 @@
 			</article>
 		</section>
 		<script type="text/javascript">
-			function submitRecord(){
-				document.getElementById('autidForm').submit();
+			function auditRecord(){
+				$('#autidForm').submit();
 			}
+			
+			console.info("${pws}");
+			console.info("${elts}");
+			console.info("${acces}");
+			
+			var pws=JSON.stringify("${pws}");
+			console.info(pws.length);
+			
 		</script>
 	</div>
 </body>

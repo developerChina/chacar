@@ -18,4 +18,19 @@ public class StringUtils {
 	 {
 	   return !isBlank(str);
 	 }
+	 
+	 public static String join(String[] array,String separator){
+		 if(array==null || array.length<=0){
+			 return "";
+		 }
+		 StringBuilder buf = new StringBuilder();
+		 for (int i=0;i<array.length;i++) {
+			 if(array.length-1==i){
+				 buf.append(array[i]); 
+			 }else{
+				 buf.append(array[i]).append(separator); 
+			 }
+		 }
+		 return buf.toString();
+	 }
 }

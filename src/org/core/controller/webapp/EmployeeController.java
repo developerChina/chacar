@@ -15,6 +15,8 @@ import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
 import org.core.service.webapp.HrmService;
+import org.core.util.DateStyle;
+import org.core.util.DateUtil;
 import org.core.util.ExcelUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,6 +210,7 @@ public class EmployeeController {
 	/**
 	 * 批量导入员工
 	 * */
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/employee/importEmployee")
 	public ModelAndView importEmployee(
 			 ModelAndView mv,
@@ -222,12 +225,39 @@ public class EmployeeController {
 		   List<Map<Integer, String>> list= ExcelUtil.readSheet(sheet, colNum);
 		   //名称,身份证号,邮政编码,电话,手机,qq号码,邮箱,性别,政治面貌,生日,民族,学历,专业,爱好,备注,卡号,车牌号,部门,职位,部门ID,职位ID
 		   for (Map<Integer, String> data : list) {
-			   //Employee employee=new Employee();
+			   Employee employee=new Employee();
 			   for (Integer key : data.keySet()) {
-				System.out.println(key);
-				System.out.println(data.get(key));
-				System.out.println("=========");
+				   employee.setName(data.get(0));
+				   employee.setCardId(data.get(1));
+				   employee.setPostCode(data.get(2));
+				   employee.setTel(data.get(3));
+				   employee.setPhone(data.get(4));
+				   employee.setQqNum(data.get(5));
+				   employee.setEmail(data.get(6));
+				   if("女".equals(data.get(7))){
+					   employee.setSex(0);   
+				   }else{
+					   employee.setSex(1);		
+				   }
+				   employee.setParty(data.get(8));
+				   employee.setBirthday(DateUtil.StringToDate(data.get(9), DateStyle.YYYY_MM_DD));   
+				   employee.setRace(data.get(10));
+				   employee.setEducation(data.get(11));
+				   employee.setSpeciality(data.get(12));
+				   employee.setHobby(data.get(13));
+				   employee.setRemark(data.get(14));
+				   employee.setCardno(data.get(15));
+				   employee.setCarno(data.get(16));
+				   Dept dept=new Dept();
+				   dept.setId(Integer.parseInt(data.get(19)));
+				   employee.setDept(dept);
+				   Job job=new Job();
+				   job.setId(Integer.parseInt(data.get(20)));
+				   employee.setJob(job);
 			   }
+			   
+			   hrmService.addEmployee(employee); 
+			   
 		   }
 	    } catch (IOException e1) {
 		   e1.printStackTrace();

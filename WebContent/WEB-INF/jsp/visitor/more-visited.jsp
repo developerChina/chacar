@@ -51,6 +51,7 @@
 					    showRadioButton="true" showFolderCheckBox="false" expandOnLoad="true" onbeforenodeselect="onBeforeNodeSelect" >
 					    <div property="columns">
 					        <div type="indexcolumn" width="50">编号</div>
+					        <div field="id" visible="false">资源id</div>
 					        <div name="taskname" field="name" width="150">资源名称</div>
 					        <div field="door" width="100">门禁</div>
 					        <div field="floor" width="50">楼层</div>
@@ -92,12 +93,16 @@
             	 alert('请选择您要拜访的人');
             	 return; 
              }
+             if(node.tel==undefined || node.tel==''){
+            	 alert(node.name+'没有维护电话不能访问');
+            	 return; 
+             }
              
            //异步发送短信 alert("${recordid}-"+node.tel);
             $.ajax({
 			  type: 'POST',
 			  url: '${ctx}/bevisited/sendSingleMessage',
-			  data: {"recordVisitors":$("#recordVisitors").val(),"tel":node.tel},
+			  data: {"recordVisitors":$("#recordVisitors").val(),"id":node.id},
 			  success: function(data){
 				  $("#contextDiv").html(data);
 				  document.getElementById('popDiv').style.display='block';

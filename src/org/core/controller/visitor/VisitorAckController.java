@@ -6,10 +6,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.VisitorInfo;
+import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Blacklist;
+import org.core.domain.webapp.Elevator;
+import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.Reson;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.visitor.VisitorService;
+import org.core.service.webapp.AccessService;
+import org.core.service.webapp.ElevatorService;
+import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +38,36 @@ public class VisitorAckController {
 	@Autowired
 	@Qualifier("visitorInfoService")
 	private VisitorInfoService visitorInfoService;
-
+	@Autowired
+	@Qualifier("passagewayService")
+	private PassagewayService passagewayService;// 通道
+	@Autowired
+	@Qualifier("elevatorService")
+	private ElevatorService elevatorService;//电梯
+	@Autowired
+	@Qualifier("accessService")
+	private AccessService accessService;//门禁
+	
+	
+	
 	@RequestMapping(value = "/visitor/forwardVisitorAck")
 	public ModelAndView forwardVisitorAck(HttpServletRequest request, HttpServletResponse response, ModelAndView mv,
 			String recordid) {
+		// 添加访问记录id
 		mv.addObject("recordid", recordid);
+		PageModel pageModel=new PageModel();
+		pageModel.setPageIndex(1);
+		pageModel.setRecordCount(Integer.MAX_VALUE);
+		pageModel.setPageSize(Integer.MAX_VALUE);
+		//添加通道
+		List<Passageway> pws=passagewayService.findPassageway(new Passageway(), pageModel);
+		mv.addObject("pws", pws);
+		//添加电梯
+		List<Elevator> elts=elevatorService.findElevator(new Elevator(), pageModel);
+		mv.addObject("elts", elts);
+		//添加楼层
+		List<Access> acces=accessService.findAccess(new Access(), pageModel);
+		mv.addObject("acces", acces);
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/visitor-ack");
 		// 返回ModelAndView

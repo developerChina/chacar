@@ -50,12 +50,16 @@
              
              var tels =[];
              for (var i = 0; i < nodes.length; i++) {
-            	 tels.push(nodes[i].tel);
+            	 if(nodes[i].tel==undefined || nodes[i].tel==''){
+                	 alert(nodes[i].name+'没有维护电话不能访问');
+                	 return; 
+                 }
+            	 tels.push(nodes[i].id);
 			}
             $.ajax({
 			  type: 'POST',
 			  url: '${ctx}/bevisited/sendMoreMessage',
-			  data: {"recordVisitors":$("#recordVisitors").val(),"tels":tels.join(",")},
+			  data: {"recordVisitors":$("#recordVisitors").val(),"ids":tels.join(",")},
 			  success: function(data){
 				  $("#contextDiv").html(data);
 				  document.getElementById('popDiv').style.display='block';
@@ -84,6 +88,7 @@
 					    showCheckBox="true" checkRecursive="true" showFolderCheckBox="false" expandOnLoad="true">
 					    <div property="columns">
 					        <div type="indexcolumn" width="50">编号</div>
+					        <div field="id" visible="false">资源id</div>
 					        <div name="taskname" field="name" width="150">资源名称</div>
 					        <div field="door" width="100">门禁</div>
 					        <div field="floor" width="50">楼层</div>

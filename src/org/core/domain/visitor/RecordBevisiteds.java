@@ -11,8 +11,9 @@ public class RecordBevisiteds implements Serializable{
 	private String recordBVID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录被访人员列表ID' ,
 	private String recordID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录ID' ,
 	private String bevisitedID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人ID' ,
-	private String deptID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
 	private String bevisitedName;   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
+	private String deptID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
+	private String deptName;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门名称' ,
 	private String bevisitedPosition;   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人职位' ,
 	private String bevisitedStatus;   // tinyint(4) NOT NULL DEFAULT 0 COMMENT '被访人状态（0=正常，1=离职.......）' ,
 	private String bevisitedTel;   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人手机号码' ,
@@ -39,17 +40,23 @@ public class RecordBevisiteds implements Serializable{
 	public void setBevisitedID(String bevisitedID) {
 		this.bevisitedID = bevisitedID;
 	}
+	public String getBevisitedName() {
+		return bevisitedName;
+	}
+	public void setBevisitedName(String bevisitedName) {
+		this.bevisitedName = bevisitedName;
+	}
 	public String getDeptID() {
 		return deptID;
 	}
 	public void setDeptID(String deptID) {
 		this.deptID = deptID;
 	}
-	public String getBevisitedName() {
-		return bevisitedName;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setBevisitedName(String bevisitedName) {
-		this.bevisitedName = bevisitedName;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public String getBevisitedPosition() {
 		return bevisitedPosition;

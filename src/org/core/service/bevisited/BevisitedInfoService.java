@@ -36,6 +36,12 @@ public interface BevisitedInfoService {
 	 * 获取被访人和部门树关系
 	 * @return
 	 */
+	List<Map<String, Object>> getBevisitedTree_Old();
+	
+	/**
+	 * 获取被访人和部门树关系
+	 * @return
+	 */
 	List<Map<String, Object>> getBevisitedTree();
 
 	/**
