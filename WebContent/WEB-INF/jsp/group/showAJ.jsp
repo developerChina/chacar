@@ -112,25 +112,27 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>门禁授权名称</td>
-			  <td>所属门禁组名称(门禁名称)</td>
-			  <td>被授权的员工姓名</td>
+			  <td>名称</td>
+			  <td>门禁组</td>
+			  <td>门禁</td> 
+			  <td>员工</td>
 			  <td align="center">操作</td>
 			</tr>
 			
-			<c:forEach items="${requestScope.accessjs}" var="passageway" varStatus="stat">
+			<c:forEach items="${requestScope.accessjs}" var="aj" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${passageway.ajid}"></td>
-					 <td>${passageway.ajname}</td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${aj.ajempid};${aj.ajaccessid}"></td>
+					 <td>${aj.ajname}</td>
 					 <td>
-					 	<c:forEach items="${ passageway.agroups}" var="gy">
-					 		${gy.agname}
-					 		(<c:forEach items="${gy.orderItems}" var="gyo">
-					 		${gyo.accessname}
-					 		</c:forEach>)
-					 	</c:forEach>
+					 		${aj.agroups.agname} ${aj.agroups.agid}
+					 		<%-- (<c:forEach items="${aj.accessList}" var="gyo">
+					 		${gyo.accessname}${gyo.accessid}
+					 		</c:forEach>) --%>
 					 </td>
-					 <td>${passageway.ajEmployee.name}</td>
+					 <td>
+						${aj.accessList.accessname}  ${aj.ajaccessid}
+					 </td>
+					 <td>${aj.ajEmployee.name}   ${aj.ajEmployee.id}</td>
 					  <td align="center" width="40px;">
  					       <a href="${ctx}/AccessJurisdiction/updetaAj?flag=1&id=${passageway.ajid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>

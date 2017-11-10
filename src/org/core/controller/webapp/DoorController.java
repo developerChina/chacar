@@ -44,13 +44,10 @@ public class DoorController {
 		// 分解id字符串
 		String[] idArray = ids.split(",");
 		for(String id : idArray){
-			int count=passagewayService.selectPassagewayGroupByid(id);
-			if(count>0){
-				
-			}else{
+			 
 				// 根据id删除通道
 				passagewayService.removePassagewayById(Integer.parseInt(id));
-			}
+			
 		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/door/doorAck");

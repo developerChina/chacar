@@ -13,19 +13,22 @@ public class Passageway implements Serializable {
 	private String ControllerSN; //控制SN
 	private String ControllerIP; //控制IP
 	private String ptype; //通道类型
+	private Integer pno;//通道编号
 
 	//toString
-	@Override
-	public String toString() {
-		return "Passageway [passagewayID=" + passagewayID + ", passagewayName=" + passagewayName + ", ControllerSN="
-				+ ControllerSN + ", ControllerIP=" + ControllerIP + ", ptype=" + ptype + "]";
-	}
+	
 	
 	//getset
 		public Integer getPassagewayID() {
 				return passagewayID;
 			}
 		
+	@Override
+		public String toString() {
+			return "Passageway [passagewayID=" + passagewayID + ", passagewayName=" + passagewayName + ", ControllerSN="
+					+ ControllerSN + ", ControllerIP=" + ControllerIP + ", ptype=" + ptype + ", pno=" + pno + "]";
+		}
+
 	public void setPassagewayID(Integer passagewayID) {
 		this.passagewayID = passagewayID;
 	}
@@ -60,6 +63,14 @@ public class Passageway implements Serializable {
 	}
 	public void setPtype(String ptype) {
 		this.ptype = ptype;
+	}
+
+	public Integer getPno() {
+		return pno;
+	}
+
+	public void setPno(Integer pno) {
+		this.pno = pno;
 	}
 	
 	

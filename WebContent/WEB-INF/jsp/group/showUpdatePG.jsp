@@ -25,18 +25,31 @@
 		              //当页面加载完成的时候，自动调用该方法
 		              window.onload=function(){
 		                  //获得所要回显的值，
-		                  var checkeds = $("#meidaHidden").val();
+		                  var checkeds =document.getElementsByName("meidaHidden");
+		                  /* var arr =[];
+		                  for(var i=0;i<=checkeds.length;i++){
+		                	  //alert(checkeds[i].value);
+		                	 //arr.push(checkeds[i].value)
+		                	 
+		                  }  */
+		                  /* var meides = $("input[name='meidaHidden']").map(function(){
+			 				   return this.value;
+			 			   })
+			 			  
+		                 var myid = meides.get(); */
+		                
 		                //拆分为字符串数组
-		                  var checkArray =checkeds.split(",");
+		                 // var checkArray =myid.split(",");
+		               
 		                  //获得所有的复选框对象
-		                 var checkBoxAll = $("input[name='pgssxj']");
+		                 var checkBoxAll = $("input[type='checkbox'][name='pid']");
 		                 //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
-		                for(var i=0;i<checkArray.length;i++){
+		                for(var i=0;i<checkeds.length;i++){
 		                     //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
 		                     $.each(checkBoxAll,function(j,checkbox){
 		                         //获取复选框的value属性
 		                         var checkValue=$(checkbox).val();
-		                         if(checkArray[i]==checkValue){
+		                         if(checkeds[i].value==checkValue){
 		                             $(checkbox).attr("checked",true);
 		                         }
 		                     })
@@ -96,7 +109,9 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	  <input type="hidden" value="${passagewayGroupByid.pgssxj}" id="meidaHidden">
+    	 <c:forEach items="${passagewayGroupByid.orderItems}" var="pgo">
+    	 	 <input type="hidden" name="meidaHidden" value="${pgo.passagewayID}" >
+    	 </c:forEach>
     	  <form action="${ctx}/passagewayGroup/UpdatePG" method="post" id="updatePg">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
@@ -109,13 +124,10 @@
 		    		</tr>
 		    			
 		    		<tr>
-		    			<td class="font3 fftd">所属下级通道名称：<br>
-		    			<c:forEach items="${pgGroups}" var="Pname" varStatus="stat">
-         				<input type="checkbox" name="pgssxj" id="box_${stat.index}" value="${Pname.passagewayID}"/>${Pname.passagewayName}&nbsp;
+		    			<td class="font3 fftd">请选择通道：<br>
+		    			<c:forEach items="${passList}" var="Pname" varStatus="stat">
+         				<input type="checkbox" name="pid" id="box_${stat.index}" value="${Pname.passagewayID}"/>${Pname.passagewayName}&nbsp;
 		    			</c:forEach>
-		    			</td>
-		    		</tr>
-		    		
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>

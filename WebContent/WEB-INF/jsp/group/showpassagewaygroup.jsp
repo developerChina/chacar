@@ -112,7 +112,7 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>分组名称</td>
-			  <td>所属下级</td>
+			  <td>所属通道</td>
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.passagewayGroups}" var="passagewayGroup" varStatus="stat">

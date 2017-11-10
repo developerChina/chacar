@@ -54,8 +54,9 @@
 		 			   $.ligerDialog.confirm("确认要删除吗?","删除通道",function(r){
 		 				   if(r){
 		 					    //alert("删除："+ids.get());
+		 					    $("#remove").submit();
 		 					   // 发送请求
-		 					   window.location = "${ctx}/PassagewayJurisdiction/removePJ?ids=" + ids.get();
+		 					   //window.location = "${ctx}/PassagewayJurisdiction/removePJ?ids=" + ids.get();
 		 				   }
 		 			   });
 		 		   }
@@ -63,6 +64,7 @@
 		 	   
 		 	   
 		 	    $("#addpj").click(function(){
+		 	    	//添加按钮之后
 		 		   window.location = "${ctx}/PassagewayJurisdiction/selectEmploee";
 		 	   });
 		 	   
@@ -92,10 +94,10 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	通道授权名：<input type="text" name="pjname">&nbsp;&nbsp;
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delpj" type="button" value="删除通道授权"/>&nbsp;&nbsp;
-					    	<input id="addpj" type="button" value="添加通道授权"/>
+					    	通道授权名：<input type="text" name="pjname">&nbsp;
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="delpj" type="button" value="&nbsp;&nbsp;删除通道授权&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="addpj" type="button" value="&nbsp;&nbsp;添加通道授权&nbsp;&nbsp;"/>&nbsp;
 					    </td>
 					  </tr>
 					</table>
@@ -109,28 +111,29 @@
 	  <!-- 数据展示区 -->
 	  <tr valign="top">
 	    <td height="20">
+	    <form action="${ctx}/PassagewayJurisdiction/removePJ" method="post" id="remove">
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>通道授权名称</td>
-			  <!-- <td>授权员工</td>
-			  <td>授权员工的卡号</td> -->
-			  <td>所属通道或通道组</td>
+			  <td>通道授权</td>
+			  <td>通道组</td>
+			  <td>通道</td>
+			  <td>员工</td>
 			  <td align="center">操作</td>
 			</tr>
 			
-			<c:forEach items="${requestScope.passagewayjs}" var="passageway" varStatus="stat">
+			<c:forEach items="${requestScope.passagewayjs}" var="pp" varStatus="stat">
+				<%-- <input type="hidden" name="groups"  value="${passageway.pjgroupid}"> --%>
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${passageway.pjid}"></td>
-					 <td>${passageway.pjname}</td>
+					<td><input type="checkbox" name="ids" id="box_${stat.index}" value="${pp.pjempid};${pp.passagewayjid}"></td>
+					 <td>${pp.pjname}</td>
 					 <td>
-					 	<c:forEach items="${ passageway.pgroups}" var="gy">
-					 		${gy.pgname}
-					 		(<c:forEach items="${gy.orderItems}" var="gyo">
-					 		${gyo.passagewayName}
-					 		</c:forEach>)
-					 	</c:forEach>
+					 	${pp.pgroups.pgname}
 					 </td>
+					  <td>
+					 	${pp.pass.passagewayName}
+					 </td>
+					 <td>${pp.pjEmployee.name}</td>
 					  <td align="center" width="40px;">
  					       <a href="${ctx}/PassagewayJurisdiction/updetaPj?flag=1&id=${passageway.pjid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
@@ -139,6 +142,7 @@
 				</tr>
 			</c:forEach>
 		  </table>
+		  </form>
 		</td>
 	  </tr>
 	  <!-- 分页标签 -->

@@ -5,8 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.core.dao.webapp.EmployeeDao;
 import org.core.dao.webapp.PJDao;
+import org.core.dao.webapp.PassagewayDao;
 import org.core.dao.webapp.PassagewayGroupDao;
+import org.core.domain.webapp.Employee;
+import org.core.domain.webapp.MiddletoPG;
+import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
 import org.core.domain.webapp.Passagewayj;
 import org.core.service.webapp.PJService;
@@ -24,6 +29,8 @@ public class PJServiceImpl implements PJService {
 	private PJDao pJDao;
 	@Autowired
 	private PassagewayGroupDao passagewayGroupDao;
+	@Autowired
+	private PassagewayDao passagewayDao;
 	@Override
 	@Transactional(readOnly=true)
 	public int selectPJG(String id) {
@@ -52,10 +59,24 @@ public class PJServiceImpl implements PJService {
 		List<Passagewayj> passagewayjs = pJDao.selectByPagegy(gy);
 		return passagewayjs;
 	}
+	//根据员工id和通道id删除
 	@Override
-	public void removePassagewayjByID(String id) {
-		// TODO Auto-generated method stub
-		pJDao.removePassagewayjByID(id);
+	public void removePassagewayjByID(String ids) {
+		String[] idArrays = ids.split(","); 
+		for (String myrp : idArrays) {
+			String[] idss = myrp.split(";");
+			//员工id
+			String myempid = null;
+			//通道id
+			String mypid=null;
+			for (int i = 0; i < idss.length; i+=2) {
+				myempid = idss[i];
+			}
+			for (int i = 1; i < idss.length; i+=2) {
+				mypid=idss[i];
+			}
+			pJDao.removePassagewayjByID(myempid,mypid);
+		}
 	}
 	//查自己
 	@Override
@@ -79,15 +100,67 @@ public class PJServiceImpl implements PJService {
 	}
 	//查询的先来通道组
 	@Override
-	public List<PassagewayGroup> selectPGbyId(String selectEGs) {
-		// TODO Auto-generated method stub
-		String[] idArry = selectEGs.split(",");
-		List<PassagewayGroup> addList = new ArrayList<>();
+	public PassagewayGroup selectPGbyId(String selectEGs) {
+		return passagewayGroupDao.selectPGbyId(selectEGs);
+	}
+	
+	@Autowired
+	private EmployeeDao employeeDao;
+	@Override
+	public List<Employee> findEmployeeByIds(String ids) {
+		String[] idArry = ids.split(",");
+		List<Employee> seList = new ArrayList<Employee>();
 		for (String id : idArry) {
-			PassagewayGroup myAG=passagewayGroupDao.selectPGbyId(id);
-			addList.add(myAG);
+			Employee myAEmp=employeeDao.selectById(Integer.parseInt(id));
+			seList.add(myAEmp);
 		}
-		return addList;
+		return seList;
+	}
+	
+	@Override
+	public void savePJNew(String[] empids, String pjname, String pjgroup) {
+		for (String myempid : empids) {
+			Employee myAEmp=employeeDao.selectById(Integer.parseInt(myempid));
+			String[] idArry = pjgroup.split(",");
+			for (String groupid : idArry) {
+				 List<MiddletoPG> mymiddletoPG =passagewayGroupDao.getMiddle(groupid);
+				for (MiddletoPG middletoPG : mymiddletoPG) {
+					 Passagewayj myPass= new Passagewayj();
+						myPass.setPjgroupid(groupid);
+						myPass.setPjempid(myempid);
+						myPass.setPjname(pjname);
+						String uuid=GenId.UUID();
+						myPass.setPjid(uuid);
+						//通道id
+						myPass.setPassagewayjid(middletoPG.getPassagewayid());
+						//员工卡号
+						myPass.setPjempno(myAEmp.getCardno());
+						pJDao.savePJ(myPass);
+				}
+				
+			}
+		}
+		
+	}
+	
+	@Override
+	public Employee selectPjEmpbyId(String selectEmps) {
+		Employee myAEmp=employeeDao.selectById(Integer.parseInt(selectEmps));
+		return myAEmp;
+	}
+	
+	@Override
+	public Passageway selecPbypid(String Danpid) {
+		// TODO Auto-generated method stub
+		return passagewayDao.selectBypassagewayID(Integer.parseInt(Danpid));
+	}
+	@Override
+	public Employee selectempbyid(String myempid) {
+		// TODO Auto-generated method stub
+		return employeeDao.selectById(Integer.parseInt(myempid));
 	}
 
+	
+	
+	
 }

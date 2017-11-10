@@ -39,12 +39,7 @@ public class FloorController {
 		// 分解id字符串
 		String[] idArray = ids.split(",");
 		for(String id : idArray){
-			int count=accessService.selectAccessGroupByid(id);
-			if(count>0){
-				
-			}else{
-				accessService.removeAccessById(Integer.parseInt(id));
-			}
+			accessService.removeAccessById(Integer.parseInt(id));
 		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/floor/floorAck");

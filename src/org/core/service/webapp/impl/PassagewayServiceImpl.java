@@ -62,12 +62,6 @@ public class PassagewayServiceImpl implements PassagewayService {
 		passagewayDao.save(passageway);
 		
 	}
-	//根据id模糊查询
-	@Override
-	public int selectPassagewayGroupByid(String id) {
-		// TODO Auto-generated method stub
-		return passagewayDao.selectPassagewayGroupByid(id);
-	}
 	
 
 	}

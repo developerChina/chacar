@@ -62,14 +62,14 @@ public class AccessGroupSqlProvider {
 		
 		
 		
-		public String addaddAGrouptoMiddle(String id,String uuid){
+		public String addAGrouptoMiddle(String uuid,String id){
 			return new SQL(){
 				{
 					INSERT_INTO(MiddletoAGTABLE);
-					if(id!=null && !id.equals("")){
+					if(uuid!=null && !uuid.equals("")){
 						VALUES("agroupid","#{arg0}");
 					}
-					if(uuid!=null && !uuid.equals("")){
+					if(id!=null && !id.equals("")){
 						VALUES("accessid","#{arg1}");
 					}
 				}
@@ -90,9 +90,6 @@ public class AccessGroupSqlProvider {
 					UPDATE(ACCESSGROUPTABLE);
 					if(accessGroup.getAgname()!=null){
 						SET(" agname = #{agname}");
-					}
-					if(accessGroup.getAgssxj()!= null){
-						SET(" agssxj = #{agssxj} ");
 					}
 					WHERE(" agid = #{agid}");
 				}

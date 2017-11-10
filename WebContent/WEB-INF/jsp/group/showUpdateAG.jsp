@@ -25,18 +25,18 @@
 		              //当页面加载完成的时候，自动调用该方法
 		              window.onload=function(){
 		                  //获得所要回显的值，
-		                  var checkeds = $("#meidaHidden").val();
+		                  var checkeds = document.getElementsByName("meidaHidden");
 		                //拆分为字符串数组
-		                  var checkArray =checkeds.split(",");
+		                  //var checkArray =checkeds.split(",");
 		                  //获得所有的复选框对象
-		                 var checkBoxAll = $("input[name='agssxj']");
+		                 var checkBoxAll = $("input[name='aids']");
 		                 //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
-		                for(var i=0;i<checkArray.length;i++){
+		                for(var i=0;i<checkeds.length;i++){
 		                     //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
 		                     $.each(checkBoxAll,function(j,checkbox){
 		                         //获取复选框的value属性
 		                         var checkValue=$(checkbox).val();
-		                         if(checkArray[i]==checkValue){
+		                         if(checkeds[i].value==checkValue){
 		                             $(checkbox).attr("checked",true);
 		                         }
 		                     })
@@ -96,8 +96,10 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    
-    	  <input type="hidden" value="${accessgroupById.agssxj}" id="meidaHidden">
+    		<c:forEach items="${accessgroupById.orderItems}" var="myid">
+    			<input type="hidden" value="${myid.accessid}" name="meidaHidden">
+    		</c:forEach>
+    	  
     	  <form action="${ctx}/accessGroup/updateAG" method="post" id="updateAg">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
@@ -112,7 +114,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">所属下级门禁名称：<br>
 		    			<c:forEach items="${agAlevators}" var="Aname" varStatus="stat">
-         				<input type="checkbox" name="agssxj" id="box_${stat.index}" value="${Aname.accessid}"/>${Aname.accessname}&nbsp;&nbsp;
+         				<input type="checkbox" name="aids" id="box_${stat.index}" value="${Aname.accessid}"/>${Aname.accessname}&nbsp;&nbsp;${Aname.accessid}
 		    			</c:forEach>
 		    			</td>
 		    		</tr>

@@ -1,6 +1,7 @@
 package org.core.dao.webapp;
 
 import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
+import static org.core.util.GlobleConstants.MIDDLETOPGTABLE;
 import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.PassagewayGroupSqlProvider;
+import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
 
@@ -40,11 +42,27 @@ public interface PassagewayGroupDao {
 	
 	//添加分组
 	@SelectProvider(method = "savePgroup", type = PassagewayGroupSqlProvider.class)
-	void addPGroup(String ids, String pgname, String uuid);
+	void addPGroup( String pgname, String uuid);
 	//修改前先查询
 	@Select(" select * from "+PASSAGEWAYGROUPTABLE+" where pgid=#{id}")
 	PassagewayGroup selectPGbyId(String id);
 	//修改
 	@SelectProvider(method = "updatePG", type = PassagewayGroupSqlProvider.class)
 	void updatePG(PassagewayGroup passagewayGroup);
+	//添加到中间表中
+	@SelectProvider(method = "addaddPGrouptoMiddle", type = PassagewayGroupSqlProvider.class)
+	void addaddPGrouptoMiddle(String uuid, String id);
+	//查询中间表
+	@Select(" select * from "+MIDDLETOPGTABLE+" where pgroupid=#{selectids}")
+	List<MiddletoPG> selectMiddlePG(String selectids);
+	//删除中间表
+	@Delete(" delete from "+MIDDLETOPGTABLE+" where pgroupid=#{id} ")
+	void deleteMiddleById(String id);
+	//得到中间表
+	@Select(" select * from "+MIDDLETOPGTABLE+" where pgroupid=#{groupid} ")
+	List<MiddletoPG> getMiddle(String groupid);
+	
+	@Delete(" delete from "+MIDDLETOPGTABLE+" where pgroupid = #{mypgid} ")
+	void upDelMiddletoPG(String mypgid);
+
 }

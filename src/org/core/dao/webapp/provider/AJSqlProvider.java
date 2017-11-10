@@ -59,6 +59,12 @@ public class AJSqlProvider {
 				if(accessj.getAjgroupid()!= null && !accessj.getAjgroupid().equals("")){
 					VALUES("ajgroupid", "#{ajgroupid}");
 				}
+				if(accessj.getAjaccessid()!= null && !accessj.getAjaccessid().equals("")){
+					VALUES("ajaccessid", "#{ajaccessid}");
+				}
+				if(accessj.getAjempno()!= null && !accessj.getAjempno().equals("")){
+					VALUES("ajempno", "#{ajempno}");
+				}
 			
 			}
 		}.toString();

@@ -4,7 +4,6 @@ import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.webapp.Passageway;
 
 import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
-import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
 import java.util.Map;
 public class PassagewayDynaSqlProvider {
 	
@@ -67,6 +66,9 @@ public class PassagewayDynaSqlProvider {
 					if(passageway.getPtype() !=null){
 						SET("ptype = #{ptype}");
 					}
+					if(passageway.getPno() !=null){
+						SET("pno = #{pno}");
+					}
 					WHERE(" passagewayID = #{passagewayID} ");
 				}
 			}.toString();
@@ -89,18 +91,13 @@ public class PassagewayDynaSqlProvider {
 						if(passageway.getPtype() !=null && !passageway.getPtype().equals("")){
 							VALUES("ptype","#{ptype}");
 						}
+						if(passageway.getPno() !=null && !passageway.getPno().equals("")){
+							VALUES("pno","#{pno}");
+						}
 						
 					}
 				}.toString();
 			}
 			
-			public String selectPassagewayGroupByid(String id){
-				return new SQL(){
-					{
-						SELECT("count(*)");
-						FROM(PASSAGEWAYGROUPTABLE);
-						WHERE(" pgssxj LIKE CONCAT('%',#{id},'%')");
-					}
-				}.toString();
-			}
+			
 }

@@ -27,8 +27,6 @@
 		  // 给其授权 按钮添加 点击事件
 		  $("#upPG").click(function(){
 			  var mypjname =document.getElementById("mypjname").value;
-			  var empname = document.getElementById("empname").value;
-			 var cardno = document.getElementById("cardno").value;
 			  var msg = "";
 		 		if ($.trim(mypjname) == ""){
 					msg = "授权名称不能为空！";
@@ -40,20 +38,12 @@
 					/** 获取到用户选中的复选框  */
 		      		   var checkedBoxs = boxs.filter(":checked");
 		      		   if(checkedBoxs.length < 1){
-		      			   $.ligerDialog.error(" 请选择一个门禁或门禁组！");
+		      			   $.ligerDialog.error(" 请选择一个通道组！");
 		      		   }else{
 		      			   var ids = checkedBoxs.map(function(){
 		      				   return this.value;
 		      			   })
-		      			   
-		      			   $.ligerDialog.confirm("确认要修改吗?","修改门禁组",function(r){
-		      				   if(r){
-		      					   // alert("卡号："+cardno+"员工"+empid+"删除："+ids.get()+"授权名"+myajname);
-		      					   // 发送请求
-		      					   $("#addEmpToPj").submit();
-		      					  //window.location = "${ctx}/PassagewayJurisdiction/shouPJG?flag=2&pjgroup=" + ids.get()+"&pjname="+mypjname+"&pjemp="+empname+"&pjcard"+cardno;
-		      				   }
-		      			  	 });
+		      			 $("#addEmpToPj").submit();
 		      		   		}
 				}
 		 		
@@ -81,10 +71,14 @@
 		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：<input type="hidden" name="pjemp" id="empname" value="${findEmployeeById.id}" size="20"/>
+		    			<td class="font3 fftd">给当前员工添加权限：<br>
+		    			<c:forEach items="${requestScope.findEmployeeById}" var="emps">
+		    				<input type="hidden" name="pjemps" id="empname" value="${emps.id}" size="20"/>${emps.name}&nbsp;
+		    			</c:forEach>
+		    			<%-- <input type="hidden" name="pjemp" id="empname" value="${findEmployeeById.id}" size="20"/>
 		    			${findEmployeeById.name}
 		    			<input type="hidden" name="pjcard" id="cardno" value="${findEmployeeById.cardno}" size="20"/>
-		    			</td>
+		    			 --%></td>
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd">授权名称：<input type="text" name="pjname" id="mypjname"  size="20"/>
@@ -103,18 +97,17 @@
 		    			</c:forEach>
 		    			</td>
 		    		</tr>
-		    		<tr>
-		    		<td>
-		    		<hr>
-		    		</td>
-		    		<tr>	
+		    		
+		    		
+		    		
+		    		<%-- <tr>	
 		    		<tr>
 		    		<td class="font3 fftd">请选择一个通道：<br>
 		    			<c:forEach items="${pgPassageways}" var="Pname" varStatus="stat">
          				<input type="checkbox" name="pjpassageway" id="box_${stat.index}" value="${Pname.passagewayName}"/>${Pname.passagewayName}&nbsp;
 		    			</c:forEach>
 		    		</td>
-		    		<tr>
+		    		<tr> --%>
 		    		
 		    		
 		    		

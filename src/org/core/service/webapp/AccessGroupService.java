@@ -23,6 +23,8 @@ public interface AccessGroupService {
 	//修改前查询一遍
 	AccessGroup selectAGbyId(String id);
 	//修改
-	void updateAG(AccessGroup accessGroup);
+	void updateAG(AccessGroup accessGroup,String aids);
+	
+	List<Access> getAbyGroupid(String selectids);
 	
 }

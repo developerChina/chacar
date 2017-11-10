@@ -11,17 +11,17 @@ import org.wiegand.at8000.WgUdpCommShort;
 public class LadderControlUtil {
 
 	public static void main(String[] args) {
-		long controllerSN = 433104811;
-		String controllerIP = "192.168.1.8";
-		long cardNO = 0xE5C97C;
-		int ifAddOrDelete = 1;
+		long controllerSN = 173100788;
+		String controllerIP = "192.168.1.6";
+		long cardNO = 0xE9A97AEC;
+		int ifAddOrDelete = 0;
 		byte era = 0x20;
 		byte endYeaar = 0x29;
 		byte endMonth = 0x12;
 		byte endDay = 0x31;
 
 		int r = LadderControlUserCard(controllerSN, controllerIP, cardNO, ifAddOrDelete, era, endYeaar, endMonth,
-				endDay, "10000000", "11111111", "11111111", "11111111", "11111111");
+				endDay, 192, 0, 0, 0, 0);
 		System.out.println("授权是否成功" + r);
 	}
 
@@ -57,8 +57,8 @@ public class LadderControlUtil {
 	 * @return
 	 */
 	public static int LadderControlUserCard(long controllerSN, String controllerIP, long cardNO, int ifAddOrDelete,
-			byte era, byte endYeaar, byte endMonth, byte endDay, String layOne, String layTwo, String layThree,
-			String layFour, String layFive) {
+			byte era, byte endYeaar, byte endMonth, byte endDay, int layOne, int layTwo, int layThree,
+			int layFour, int layFive) {
 		byte[] recvBuff;
 		int success = 0;
 		WgUdpCommShort pkt = new WgUdpCommShort();
@@ -84,15 +84,16 @@ public class LadderControlUtil {
 		int doorNO = ifAddOrDelete;
 		pkt.data[12] = (byte) (doorNO & 0xff);
 		// 1-8 8层：10000000 1-8层：11111111
-		pkt.data[13] = (byte) (Integer.parseInt(layOne, 2) & 0xff);
+		pkt.data[13] = (byte) (layOne & 0xff);
 		// 9-16
-		pkt.data[14] = (byte) (Integer.parseInt(layTwo, 2) & 0xff);
+		pkt.data[14] = (byte) (layTwo & 0xff);
 		// 17-24
-		pkt.data[15] = (byte) (Integer.parseInt(layThree, 2) & 0xff);
+		pkt.data[15] = (byte) (layThree & 0xff);
 		// 25-33
-		pkt.data[16] = (byte) (Integer.parseInt(layFour, 2) & 0xff);
+		pkt.data[16] = (byte) (layFour & 0xff);
 		// 34-40
-		pkt.data[17] = (byte) (Integer.parseInt(layFive, 2) & 0xff);
+		pkt.data[17] = (byte) (layFive & 0xff);
+
 		recvBuff = pkt.run();
 		success = 0;
 		if (recvBuff != null) {

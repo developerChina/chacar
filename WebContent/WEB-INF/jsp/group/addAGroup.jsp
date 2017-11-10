@@ -97,18 +97,19 @@
 		    		<tr>
 		    		<td>
 		    			<!-- TD 表格BEGIN  -->
-		    			<table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
-					    <tr class="main_trbg_tit" align="center">
-						  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-						  <td>门禁名称</td>
+		    			<table width="100%" border="0" cellpadding="5" cellspacing="0" style="border:#c2c6cc 0px solid; border-collapse:collapse;">
+					    <tr >
+					    	<td>请选择你的门禁：&nbsp;
+						  全选：<input type="checkbox" name="checkAll" id="checkAll">
+						  <br>
+						  <c:forEach items="${requestScope.agAccesss}" var="Ale" varStatus="stat">
+								 ${Ale.accessname}:
+								<input type="checkbox" name="ids" id="box_${stat.index}" value="${Ale.accessid}"><br>
+						</c:forEach>
+						</td>
 						</tr>
 						
-						 <c:forEach items="${requestScope.agAccesss}" var="Ale" varStatus="stat">
-								<tr id="data_${stat.index}" align="center" class="main_trbg">
-								<td><input type="checkbox" name="ids" id="box_${stat.index}" value="${Ale.accessid}"></td>
-									 <td>${Ale.accessname}</td>
-								</tr>
-						</c:forEach>
+						
 						<!-- <tr><td></td><td></td></tr> -->
 					  	</table>
 					  	<!-- TD 表格END  -->

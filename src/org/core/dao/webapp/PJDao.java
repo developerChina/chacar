@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.PJSqlProvider;
+import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
 import org.core.domain.webapp.Passagewayj;
 
@@ -21,8 +22,8 @@ public interface PJDao {
 	@SelectProvider(method = "selectWhitGy", type = PJSqlProvider.class)
 	List<Passagewayj> selectByPagegy(Map<String, Object> gy);
 	//删除通道授权
-	@Delete(" delete from "+PASSAGEWAYJTABLE+" where pjid = #{id} ")
-	void removePassagewayjByID(String id);
+	@Delete(" delete from "+PASSAGEWAYJTABLE+" where pjempid = #{arg0} and passagewayjid = #{arg1} ")
+	void removePassagewayjByID(String myempid,String mypid);
 	//查自己
 	@Select(" select * from "+PASSAGEWAYJTABLE+" where pjid = #{id} ")
 	Passagewayj selectPjByid(String id);
@@ -32,4 +33,7 @@ public interface PJDao {
 	//添加
 	@SelectProvider(method = "savePJ", type = PJSqlProvider.class)
 	void savePJ(Passagewayj passagewayj);
+	//根据pid查询通道
+	@Select(" select * from "+PASSAGEWAYJTABLE+" where passagewayjid=#{danpid}")
+	Passageway selecPbypid(String Danpid);
 }

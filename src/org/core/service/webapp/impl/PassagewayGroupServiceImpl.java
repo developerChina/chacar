@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.core.dao.webapp.PassagewayGroupDao;
+import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
 import org.core.service.webapp.PassagewayGroupService;
@@ -43,18 +44,20 @@ public class PassagewayGroupServiceImpl implements PassagewayGroupService {
 	@Override
 	public void removePassagewayGroupById(String id) {
 		passagewayGroupDao.deletePassagewayGroupById(id);
+		passagewayGroupDao.deleteMiddleById(id);
 	}
 	//查询下级
 	@Override
 	public List<Passageway> getPassagewayById(String selectids) {
-		String[] idArry = selectids.split(",");
-		List<Passageway> addList = new ArrayList<>();
-		for (String id : idArry) {
-			Passageway addPassageway =passagewayGroupDao.getPassagewayByid(Integer.parseInt(id));
-			  addList.add(addPassageway);
-		}
+		List<MiddletoPG> middletoPGList =passagewayGroupDao.selectMiddlePG(selectids);
+		List<Passageway> addList = new ArrayList<Passageway>();
+			for (MiddletoPG myMiddletoPG : middletoPGList) {
+				Passageway addPassageway =passagewayGroupDao.getPassagewayByid(Integer.parseInt(myMiddletoPG.getPassagewayid()));
+				addList.add(addPassageway);
+			}
 		return addList;
 		}
+	
 	//查询所有通道
 	@Override
 	public List<Passageway> selectPGSubordinate() {
@@ -64,16 +67,33 @@ public class PassagewayGroupServiceImpl implements PassagewayGroupService {
 	@Override
 	public void addPGroup(String ids, String pgname) {
 		String uuid=GenId.UUID();
-		passagewayGroupDao.addPGroup(ids, pgname,uuid);
+		passagewayGroupDao.addPGroup(pgname,uuid);
+		String[] idArry = ids.split(",");
+		for (String id : idArry) {
+			passagewayGroupDao.addaddPGrouptoMiddle(uuid,id);
+		}
 	}
 	@Override
 	public PassagewayGroup selectPGbyId(String id) {
-		// TODO Auto-generated method stub
-		return passagewayGroupDao.selectPGbyId(id);
+		
+		PassagewayGroup selectPGbyId = passagewayGroupDao.selectPGbyId(id);
+		//执行一个查中间表的集合的方法
+		List<MiddletoPG> selectMiddlePG = passagewayGroupDao.selectMiddlePG(id);
+		for (MiddletoPG middletoPG : selectMiddlePG) {
+			Passageway passagewayByid = passagewayGroupDao.getPassagewayByid(Integer.parseInt(middletoPG.getPassagewayid()));
+			selectPGbyId.getOrderItems().add(passagewayByid);
+		}
+		return selectPGbyId;
 	}
+	//修改
 	@Override
-	public void updatePG(PassagewayGroup passagewayGroup) {
-		// TODO Auto-generated method stub
+	public void updatePG(PassagewayGroup passagewayGroup,String pid) {
 		passagewayGroupDao.updatePG(passagewayGroup);
+		String mypgid = passagewayGroup.getPgid();
+		passagewayGroupDao.upDelMiddletoPG(mypgid);
+		String[] idArry = pid.split(",");
+		for (String ppid : idArry) {
+			passagewayGroupDao.addaddPGrouptoMiddle(mypgid,ppid);
+		}	
 	}
 }

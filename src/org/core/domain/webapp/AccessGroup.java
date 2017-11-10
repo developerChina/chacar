@@ -17,6 +17,11 @@ public class AccessGroup implements Serializable{
 		 * */
 		private Set<Access> orderItems = new HashSet<Access>();
 
+		
+		
+		
+		
+		
 		public String getAgid() {
 			return agid;
 		}

@@ -26,6 +26,7 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			 * */
 			@Autowired
 			private AccessGroupDao accessGroupDao;
+			
 			@Transactional(readOnly=true)
 			/*
 			 * 门禁分组
@@ -49,6 +50,8 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			@Override
 			public void removeAccessGroupById(String id) {
 				accessGroupDao.deleteByagID(id);
+				accessGroupDao.deleteAgMiddleByagID(id);
+				
 			}
 			//查询所有门禁
 			@Override
@@ -64,7 +67,7 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 					String[] idArry = ids.split(",");
 					for (String id : idArry) {
 						
-						accessGroupDao.addaddAGrouptoMiddle(uuid,id);
+						accessGroupDao.addAGrouptoMiddle(uuid,id);
 					}
 					
 			}
@@ -89,13 +92,47 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			//修改前查询一遍
 			@Override
 			public AccessGroup selectAGbyId(String id) {
-				// TODO Auto-generated method stub
-				return accessGroupDao.selectAGbyId(id);
+				
+				AccessGroup selectAGbyId = accessGroupDao.selectAGbyId(id);
+				List<MiddletoAG> MiddletoAGList = accessGroupDao.getMiddle(id);
+				for (MiddletoAG mymiddletoAG : MiddletoAGList) {
+					Access addAccess =accessGroupDao.getAccessByid(Integer.parseInt(mymiddletoAG.getAccessid()));
+					selectAGbyId.getOrderItems().add(addAccess);
+				}
+				
+				return selectAGbyId;
 			}
+			
 			@Override
-			public void updateAG(AccessGroup accessGroup) {
-				// TODO Auto-generated method stub
-				accessGroupDao.updateAG(accessGroup);
+			public void updateAG(AccessGroup accessGroup,String aids) {
+				//第一步 修改分组表里的名称 根据 分组表的主键id：agid
+					accessGroupDao.updateAG(accessGroup);
+				//第二步 1将分组表的主键id：agid 拿出来用
+					String myagid = accessGroup.getAgid();
+					  //2删除中间表 where 表中字段=#{myagid}
+					accessGroupDao.upDelMiddletoAG(myagid);
+				//第三步 1 拆分字符串  你有可能选了多个门禁到组内 （选择门禁就代表你传上来多个门禁id）
+					String[] idArry = aids.split(",");
+					  //2 向中间表 重新添加
+					for (String aid : idArry) {
+						accessGroupDao.addAGrouptoMiddle(myagid,aid);
+					}	
 			}
+			
+			@Override
+			public List<Access> getAbyGroupid(String selectids) {
+				List<MiddletoAG> MiddletoAGList = accessGroupDao.getMiddle(selectids);
+				List<Access> selectAList= new ArrayList<Access>();
+				for (MiddletoAG mymiddletoAG : MiddletoAGList) {
+					Access addAccess =accessGroupDao.getAccessByid(Integer.parseInt(mymiddletoAG.getAccessid()));
+					selectAList.add(addAccess);
+				}
+				return selectAList;
+			}
+			
+			
+			
+			
+			
 			
 	}

@@ -32,7 +32,7 @@ public class PassagewayGroupController {
 			}
 		List<PassagewayGroup> passagewayGroups = passagewayGroupService.findPassagewayGroup(passagewayGroup, pageModel);
 		for (PassagewayGroup ags : passagewayGroups) {
-			String selectids=ags.getPgssxj();
+			String selectids=ags.getPgid();
 			List<Passageway> saveaccesss = passagewayGroupService.getPassagewayById(selectids);
 			for (Passageway passageway : saveaccesss) {
 				ags.getOrderItems().add(passageway);
@@ -68,16 +68,27 @@ public class PassagewayGroupController {
 	}
 	//修改
 	@RequestMapping(value="/passagewayGroup/UpdatePG")
-	public ModelAndView  UpdatePG(String id,String flag,Model model, @ModelAttribute PassagewayGroup passagewayGroup,ModelAndView mv){
+	public ModelAndView  UpdatePG(String id,String flag,Model model, @ModelAttribute PassagewayGroup passagewayGroup,ModelAndView mv,String pid){
 		if(flag.equals("1")){
+			/*
+			 * flag=1时进行修改并将以下查到的对应显示
+			 * 传来一个分组id
+			 * 根据分组id查出一个分组对象放在passagewayGroupByid里
+			 * 查询所有通道放在集合passList里
+			 * */
 			PassagewayGroup passagewayGroupByid = passagewayGroupService.selectPGbyId(id);
-			List<Passageway> pgGroups=passagewayGroupService.selectPGSubordinate();
+			List<Passageway> passList=passagewayGroupService.selectPGSubordinate();
 			model.addAttribute("passagewayGroupByid", passagewayGroupByid);
-			model.addAttribute("pgGroups", pgGroups);
+			model.addAttribute("passList", passList);
 			mv.setViewName("group/showUpdatePG");
 		}else{
-			passagewayGroupService.updatePG(passagewayGroup);
+			
+			/*System.out.println("通道id"+pid);
+			System.out.println("通道组名称"+passagewayGroup.getPgname());
+			System.out.println("分组id"+passagewayGroup.getPgid());*/
+			passagewayGroupService.updatePG(passagewayGroup,pid);
 			mv.setViewName("redirect:/passagewayGroup/doorSplit");
+			
 		}
 		return mv;
 	}

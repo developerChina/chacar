@@ -17,6 +17,5 @@ public interface PassagewayService {
 	Passageway findPassagewayById(Integer passagewayID);
 	//添加通道
 	void addPassageway(Passageway passageway);
-	//根据id模糊查询
-	int selectPassagewayGroupByid(String id);
+	
 }

@@ -20,5 +20,5 @@ void addPGroup(String ids, String pgname);
 //修改前查询下
 PassagewayGroup selectPGbyId(String id);
 //修改
-void updatePG(PassagewayGroup passagewayGroup);
+void updatePG(PassagewayGroup passagewayGroup,String pid);
 }

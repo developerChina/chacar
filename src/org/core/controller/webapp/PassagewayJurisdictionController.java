@@ -2,6 +2,8 @@ package org.core.controller.webapp;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
@@ -37,6 +39,7 @@ public class PassagewayJurisdictionController {
 	@Autowired
 	@Qualifier("hrmService")
 	private HrmService hrmService;
+	
 	/**
 	 * 查询一遍员工，显示id，姓名，卡号
 	 * */
@@ -87,23 +90,25 @@ public class PassagewayJurisdictionController {
 		}
 		//通道绑定授权
 		@RequestMapping(value="/PassagewayJurisdiction/shouPJG")
-		public ModelAndView shouPJG(String id,String flag,Model model,ModelAndView mv,
-				@ModelAttribute Passagewayj passagewayj){
-			int count = pJService.selectPJG(id);
+		public ModelAndView shouPJG(String ids,String flag,Model model,ModelAndView mv,
+				String pjemps,String pjname,String pjgroup,
+				HttpServletRequest request){
+			/*int count = pJService.selectPJG(id);
 			if(count>0){
 				//System.out.println("已经存在权限。。。");
-			}else{
+			}else{*/
+			
 				if(flag.equals("1")){
 					//查询一下单个员工
-					Employee findEmployeeById = hrmService.findEmployeeById(Integer.parseInt(id));
+					List<Employee> findEmployeeById = pJService.findEmployeeByIds(ids);
 					//查询一下通道分组所有信息
 					List<PassagewayGroup> passageGroups = pJService.selectAll();
 					//循环遍历
 					for (PassagewayGroup myP : passageGroups) {
-						String selectids=myP.getPgssxj();
+						String selectids=myP.getPgid();
 						List<Passageway> savepassageway = passagewayGroupService.getPassagewayById(selectids);
 						for (Passageway passageway : savepassageway) {
-							//把查到的通道集合挨个添加到门通道的一个集合中
+							//把查到的通道集合挨个添加到通道的一个集合中
 							myP.getOrderItems().add(passageway);
 						}
 					}
@@ -113,10 +118,16 @@ public class PassagewayJurisdictionController {
 					model.addAttribute("pgPassageways", pgPassageways);
 					mv.setViewName("group/showaddEmptoPJ");
 				}else{
-					pJService.savePJ(passagewayj);
+					//执行保存
+					String[] empids = request.getParameterValues("pjemps");
+					
+						pJService.savePJNew(empids,pjname,pjgroup);
+						
+				
+					//pJService.savePJ(passagewayj);
 					mv.setViewName("redirect:/PassagewayJurisdiction/selectPJ");
 				}
-			}
+			
 			return mv;
 		}
 		/**
@@ -131,30 +142,24 @@ public class PassagewayJurisdictionController {
 			
 			List<Passagewayj> passagewayjs = pJService.selectPJ(passagewayj,pageModel);
 			for (Passagewayj ps: passagewayjs) {
-
-				//先来 电梯组
-				String selectEGs = ps.getPjgroup();
-				List<PassagewayGroup> groupById = pJService.selectPGbyId(selectEGs);
-				if(groupById.size()>0){
-					for (PassagewayGroup myGroup : groupById) {
-						if(myGroup!=null){
-							String selectids =myGroup.getPgssxj();
-							List<Passageway> addElevators =passagewayGroupService.getPassagewayById(selectids);
-							for (Passageway myelevator : addElevators) {
-								
-								myGroup.getOrderItems().add(myelevator);
-							}
-						}
-						ps.getPgroups().add(myGroup);
-					}
-				}
+				//得到单个通道分组id
+				String selectEGs = ps.getPjgroupid();
+				//得到通道分组
+				PassagewayGroup groupById = pJService.selectPGbyId(selectEGs);
+				//保存到授权表中
+				ps.setPgroups(groupById);
 				
-				/*String selectEmps = myelevatorj.getEjemp();
+				//得到单个通道id
+				String Danpid = ps.getPassagewayjid();
+				//得到通道
+				Passageway passagewaybyid= pJService.selecPbypid(Danpid);
+				//保存一个通道对象到授权实体中的Pass中
+				ps.setPass(passagewaybyid);
 				
-				String selectEs = myelevatorj.getEjelevator();*/
-			
+				String selectEmps = ps.getPjempid();
+				Employee EmpById = pJService.selectPjEmpbyId(selectEmps);
+				ps.setPjEmployee(EmpById);
 
-			
 			}
 			model.addAttribute("passagewayjs", passagewayjs);
 			model.addAttribute("pageModel", pageModel);
@@ -164,19 +169,18 @@ public class PassagewayJurisdictionController {
 		 * 删除授权表
 		 * */
 		@RequestMapping(value="/PassagewayJurisdiction/removePJ")
-		public ModelAndView removePassagewayj(String ids,ModelAndView mv){
-			// 分解id字符串
-			String[] idArray = ids.split(",");
-			for(String id : idArray){
-				// 根据id删除员工
-				pJService.removePassagewayjByID(id);
-			}
+		public ModelAndView removePassagewayj(String ids,ModelAndView mv,
+				HttpServletRequest request){
+			pJService.removePassagewayjByID(ids);
 			// 设置客户端跳转到查询请求
 			mv.setViewName("redirect:/PassagewayJurisdiction/selectPJ");
 			// 返回ModelAndView
 			return mv;
 		}
-		//修改
+		/**
+		 * 修改
+		 * 
+		 * */
 				@RequestMapping(value = "/PassagewayJurisdiction/updetaPj")
 				public ModelAndView updetaPj(String id,String flag,Model model,
 						@ModelAttribute Passagewayj passagewayj,
@@ -187,7 +191,7 @@ public class PassagewayJurisdictionController {
 						//所有的电梯组 及其下级单位
 						List<PassagewayGroup> passagewayGroups = pJService.selectAll();
 						for (PassagewayGroup myP : passagewayGroups) {
-							String selectids = myP.getPgssxj();
+							String selectids = myP.getPgid();
 							List<Passageway> addPassageway =passagewayGroupService.getPassagewayById(selectids);
 							for (Passageway mypassageway : addPassageway) {
 								myP.getOrderItems().add(mypassageway);
@@ -207,8 +211,6 @@ public class PassagewayJurisdictionController {
 						pJService.updatePj(passagewayj);
 						 mv.setViewName("redirect:/PassagewayJurisdiction/selectPJ");
 					}
-					
 					return mv;
 				}
-				
 }

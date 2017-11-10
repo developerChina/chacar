@@ -1,12 +1,12 @@
 package org.core.dao.webapp.provider;
 
-import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
+import static org.core.util.GlobleConstants.MIDDLETOPGTABLE;
 
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.webapp.PassagewayGroup;
-
+import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
 public class PassagewayGroupSqlProvider {
 	/*
 	 * 通道分组
@@ -23,8 +23,8 @@ public class PassagewayGroupSqlProvider {
 					if(passagewayGroup.getPgname()!=null && !passagewayGroup.getPgname().equals("")){
 						WHERE("pgname LIKE CONCAT('%',#{passagewayGroup.pgname},'%')");
 					}
-					if(passagewayGroup.getPgssxj()!=null && !passagewayGroup.getPgssxj().equals("")){
-						WHERE("pgssxj LIKE CONCAT('%',#{passagewayGroup.pgssxj},'%')");
+					if(passagewayGroup.getPgid()!=null && !passagewayGroup.getPgid().equals("")){
+						WHERE("pgid LIKE CONCAT('%',#{passagewayGroup.pgid},'%')");
 					}
 				}
 			}
@@ -46,30 +46,28 @@ public class PassagewayGroupSqlProvider {
 					if(passagewayGroup.getPgname()!= null && !passagewayGroup.getPgname().equals("")){
 						WHERE(" pgname LIKE CONCAT('%',#{passagewayGroup.pgname},'%') ");
 					}
-					if(passagewayGroup.getPgssxj()!=null && !passagewayGroup.getPgssxj().equals("")){
-						WHERE("pgssxj LIKE CONCAT('%',#{passagewayGroup.pgssxj},'%')");
+					if(passagewayGroup.getPgid()!=null && !passagewayGroup.getPgid().equals("")){
+						WHERE("pgid LIKE CONCAT('%',#{passagewayGroup.pgid},'%')");
 					}
 				} 
 			}
 		}.toString();
 	}
 	//添加
-	public String savePgroup(String pgname,String ids,String uuid){
+	public String savePgroup(String pgname,String uuid){
 		return new SQL(){
 			{
 				INSERT_INTO(PASSAGEWAYGROUPTABLE);
-				if(ids!=null){
-					VALUES("pgssxj","#{arg0}");
-				}
 				if(pgname!=null && !pgname.equals("")){
-					VALUES("pgname","#{arg1}");
+					VALUES("pgname","#{arg0}");
 				}
 				if(uuid!=null && !uuid.equals("")){
-					VALUES("pgid","#{arg2}");
+					VALUES("pgid","#{arg1}");
 				}
 			}
 		}.toString();
 	}
+	//修改
 	public String updatePG(PassagewayGroup passagewayGroup){
 		return new SQL(){
 			{
@@ -77,11 +75,23 @@ public class PassagewayGroupSqlProvider {
 				if(passagewayGroup.getPgname()!=null){
 					SET(" pgname = #{pgname}");
 				}
-				if(passagewayGroup.getPgssxj()!=null){
-					SET(" pgssxj = #{pgssxj}");
-				}
-				WHERE(" pgid=#{pgid}");
+				WHERE(" pgid=#{pgid} ");
 			}
 		}.toString();
 	}
+	//添加到中间表
+	public String addaddPGrouptoMiddle(String uuid,String id){
+		return new SQL(){
+			{
+				INSERT_INTO(MIDDLETOPGTABLE);
+				if(id!=null && !id.equals("")){
+					VALUES("passagewayid","#{arg1}");
+				}
+				if(uuid!=null && !uuid.equals("")){
+					VALUES("pgroupid","#{arg0}");
+				}
+			}
+		}.toString();
+	}
+
 }

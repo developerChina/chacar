@@ -29,7 +29,8 @@ public interface AccessGroupDao {
 	//删除
 	@Delete(" delete from "+ACCESSGROUPTABLE+" where agid = #{id} ")
 	void deleteByagID(String id);
-	
+	@Delete(" delete from "+MiddletoAGTABLE+" where agroupid = #{id} ")
+	void deleteAgMiddleByagID(String id);
 	//查询所有门禁
 	@Select(" select * from "+ACCESSTABLE)
 	List<Access> selectAGSubordinate();
@@ -48,8 +49,21 @@ public interface AccessGroupDao {
 	@SelectProvider(method = "updateAG", type = AccessGroupSqlProvider.class)
 	void updateAG(AccessGroup accessGroup);
 	//向中间表中添加
-	@SelectProvider(method = "addaddAGrouptoMiddle", type = AccessGroupSqlProvider.class)
-	void addaddAGrouptoMiddle(String uuid, String id);
+	@SelectProvider(method = "addAGrouptoMiddle", type = AccessGroupSqlProvider.class)
+	void addAGrouptoMiddle(String uuid, String id);
+	
+	
+	
+	
 	@Select(" select * from "+MiddletoAGTABLE+" where agroupid=#{selectids}")
 	List<MiddletoAG> getMiddle(String selectids);
+	
+	@Delete(" delete from "+MiddletoAGTABLE+" where agroupid = #{myagid} ")
+	void upDelMiddletoAG(String myagid);
+	
+	
+	
+	
+
+	
 }

@@ -1,12 +1,13 @@
 package org.core.service.webapp.impl;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.core.dao.webapp.AJDao;
+import org.core.dao.webapp.AccessDao;
 import org.core.dao.webapp.AccessGroupDao;
 import org.core.dao.webapp.ElevatorDao;
 import org.core.dao.webapp.EmployeeDao;
@@ -15,17 +16,21 @@ import org.core.domain.webapp.AccessGroup;
 import org.core.domain.webapp.Accessj;
 import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Employee;
+import org.core.domain.webapp.MiddletoAG;
 import org.core.service.webapp.AJService;
 import org.core.util.AControlUtil;
+import org.core.util.DTConstants;
 import org.core.util.GenId;
 import org.core.util.LadderControlUtil;
+import org.core.util.O2MoreOnlyMap;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
+
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service("aJService")
 public class AJServiceImpl implements AJService {
 	@Autowired
@@ -34,167 +39,242 @@ public class AJServiceImpl implements AJService {
 	ElevatorDao elevatorDao;
 	@Autowired
 	private EmployeeDao employeeDao;
-	//查询所有权限表
+	// 查询所有权限表
 	@Autowired
 	private AccessGroupDao accessGroupDao;
-	@Transactional(readOnly=true)
+
+	@Autowired
+	private AccessDao accessDao;
+
+	@Transactional(readOnly = true)
 	@Override
 	public int selectAJG(String id) {
-		// TODO Auto-generated method stub
 		return aJDao.selectAJG(id);
 	}
-	//查询所有门禁分组
-	@Transactional(readOnly=true)
+
+	// 查询所有门禁分组
+	@Transactional(readOnly = true)
 	@Override
 	public List<AccessGroup> findAGAll() {
-		// TODO Auto-generated method stub
 		return aJDao.findAGAll();
 	}
-	//查询授权并分页
+
+	@Override
+	public Access getAccessById(String accessid) {
+
+		return accessDao.selectByaccessid(Integer.parseInt(accessid));
+	}
+
+	// 查询授权并分页
 	@Override
 	public List<Accessj> selectAJ(Accessj accessj, PageModel pageModel) {
-		/** 当前需要分页的总数据条数  */
-		Map<String,Object> gy = new HashMap<>();
+		/** 当前需要分页的总数据条数 */
+		Map<String, Object> gy = new HashMap<>();
 		gy.put("accessj", accessj);
 		int recordCount = aJDao.count(gy);
 		pageModel.setRecordCount(recordCount);
-		if(recordCount > 0){
-	        /** 开始分页查询数据：查询第几页的数据 */
-		    gy.put("pageModel", pageModel);
-	    }
+		if (recordCount > 0) {
+			/** 开始分页查询数据：查询第几页的数据 */
+			gy.put("pageModel", pageModel);
+		}
 		List<Accessj> accessjs = aJDao.selectByPagegy(gy);
 		return accessjs;
 	}
-	@Override
-	public void removeAccessjByID(String  id) {
-		// TODO Auto-generated method stub
-		aJDao.removeAccessjByID(id);
-	}
+
 	@Override
 	public void saveAJ(Accessj accessj) {
-		// TODO Auto-generated method stub
-		//uuid
-		String uuid=GenId.UUID();
+		// uuid
+		String uuid = GenId.UUID();
 		accessj.setAjid(uuid);
 		aJDao.saveAJ(accessj);
-		
+
 	}
+
 	@Override
 	public Accessj selectAjByid(String id) {
-		// TODO Auto-generated method stub
 		return aJDao.selectAjByid(id);
 	}
-	//修改
+
+	// 修改
 	@Override
 	public void updateAj(Accessj accessj) {
-		// TODO Auto-generated method stub
 		aJDao.updateAj(accessj);
 	}
-	//查询里的先来门禁组
+
+	// 查询里的先来门禁组
 	@Override
-	public List<AccessGroup> selectPGbyId(String selectEGs) {
-		// TODO Auto-generated method stub
-		String[] idArry = selectEGs.split(",");
-		List<AccessGroup> addList = new ArrayList<>();
-		for (String id : idArry) {
-			AccessGroup myAG=accessGroupDao.selectAGbyId(id);
-			addList.add(myAG);
-		}
-		return addList;
+	public AccessGroup selectPGbyId(String selectEGs) {
+		AccessGroup myAG = accessGroupDao.selectAGbyId(selectEGs);
+		return myAG;
 	}
-	
-	
-	
-	//查询员工集合 根据IDS 
+
+	// 查询员工集合 根据IDS
 	@Override
 	public List<Employee> findEmployeeByIds(String ids) {
-		// TODO Auto-generated method stub
 		String[] idArry = ids.split(",");
 		List<Employee> seList = new ArrayList<Employee>();
 		for (String id : idArry) {
-			Employee myAEmp=employeeDao.selectById(Integer.parseInt(id));
+			Employee myAEmp = employeeDao.selectById(Integer.parseInt(id));
 			seList.add(myAEmp);
 		}
 		return seList;
 	}
-	
-	
+
 	@Override
-	public void saveAJNew(String[] empids, String ajname,String ajgroup) {
-		String[] idArry = ajgroup.split(",");
-		List<Elevator> elevators=elevatorDao.selectByPage(new HashMap<String, Object>());//所有电梯
-		for (int i=0; i<empids.length; i++) { 
-			Employee myAEmp=employeeDao.selectById(Integer.parseInt(empids[i]));//某个人
-			for (String groupid : idArry) {
-				Accessj accessj = new Accessj();
-				accessj.setAjgroupid(groupid);
-				accessj.setAjempid(empids[i]);
-				accessj.setAjname(ajname);
-				String uuid=GenId.UUID();
-				accessj.setAjid(uuid);
-				aJDao.saveAJ(accessj);
-				/**
-				 * 门禁下发权限
-				 */
-				String lay[]={"0","0","0","0","0","0","0","0",
-					      "0","0","0","0","0","0","0","0",
-					      "0","0","0","0","0","0","0","0",
-					      "0","0","0","0","0","0","0","0",
-					      "0","0","0","0","0","0","0","0"};
-				
-				List<Access> la=aJDao.getAccess(groupid);
-				for(Access ac:la) {
-					int authority[] = {0, 0, 0, 0};
-					authority[(ac.getAcno()-1)]= 1;
-					lay[(ac.getFloorno()-1)]="1";
-					AControlUtil.AddUserCard(Long.valueOf(ac.getCsn()),ac.getCip(),Long.valueOf(myAEmp.getCardno()),(byte)0x20,(byte)0x29,(byte)0x12,(byte)0x31,authority);
-				}
-				/**
-				 * 下发电梯
-				 */
-				for(Elevator el: elevators) {
-					LadderControlUtil.LadderControlUserCard(Long.valueOf(el.getControllerSN()),el.getControllerIP(),Long.valueOf(myAEmp.getCardno()),1,(byte)0x20,(byte)0x29,(byte)0x12,(byte)0x31,
-					lay[0]+lay[1]+lay[2]+lay[3]+lay[4]+lay[5]+lay[6]+lay[7],
-					lay[8]+lay[9]+lay[10]+lay[11]+lay[12]+lay[13]+lay[14]+lay[15],
-					lay[16]+lay[17]+lay[18]+lay[19]+lay[20]+lay[21]+lay[22]+lay[23], 
-					lay[24]+lay[25]+lay[26]+lay[27]+lay[28]+lay[29]+lay[30]+lay[31],
-					lay[32]+lay[33]+lay[34]+lay[35]+lay[36]+lay[37]+lay[38]+lay[39]);
-				}
-				/**
-				 * select * from  agroupmiddle_info gm, access_info ai
-                   where  gm.agroupid="948139c2ff4e4f1bb93ee79424e9741d" and ai.accessid =gm.accessid
-                    ORDER BY ai.acno
-				*/
+	public void removeAccessjByID(String ids) {
+		// 分解id字符串
+		String[] idArrayto = ids.split(",");
+		for (String idto : idArrayto) {
+			String[] idArray = idto.split(";");
+			String myempid = null;
+			String accessid = null;
+			for (int i = 0; i < idArray.length; i += 2) {
+				myempid = idArray[i];
 			}
-	    } 
+			for (int i = 1; i < idArray.length; i += 2) {
+				accessid = idArray[i];
+			}
+			// 删除授权
+			GrantAuthorization(myempid,1);
+			aJDao.removeAccessjByID(myempid, accessid);
+		}
+	}
+	// 添加授权
+	public void saveAJNew(String[] empids, String ajname, String ajgroup) {
+		for (String myempid : empids) {
+			Employee selectById = employeeDao.selectById(Integer.parseInt(myempid));
+			String[] idArry = ajgroup.split(",");
+			for (String groupid : idArry) {
+				List<MiddletoAG> middle = accessGroupDao.getMiddle(groupid);
+				for (MiddletoAG middletoAG : middle) {
+					Accessj accessj = new Accessj();
+					accessj.setAjgroupid(groupid);
+					accessj.setAjempid(myempid);
+					accessj.setAjname(ajname);
+					String uuid = GenId.UUID();
+					accessj.setAjid(uuid);
+					accessj.setAjaccessid(middletoAG.getAccessid());
+					accessj.setAjempno(selectById.getCardno());
+					aJDao.saveAJ(accessj);
+				}
+			}
+			// 授权
+			GrantAuthorization(myempid,2);
+		}
+	}
+
+	/**
+	 * 公用 授权函数（电梯，门禁） 逻辑 查询 某个人-》权限 -》 某层 -》 某门禁
+	 * 
+	 * @param empids
+	 */
+	public void GrantAuthorization(String empid,int opt) {
+		if (empid != null && !"".equals(empid)) {
+			List<Access> la = aJDao.getGrantAuthorization(Integer.parseInt(empid));
+			O2MoreOnlyMap<Integer, String> moreDTMap = new O2MoreOnlyMap<>();// 某个人的“去重”后的所有 电梯  权限
+			O2MoreOnlyMap<String, Integer> moreMJMap = new O2MoreOnlyMap<>();// 某个人的“去重”后的所有  门禁 权限
+			for (Access ac : la) {
+				moreDTMap.put(ac.getFloorno(), ac.getCsn() + "," + ac.getCip() + "," + ac.getAjempno() + "," + ac.getAcno());
+				moreMJMap.put(ac.getCsn() + "," + ac.getCip() + "," + ac.getAjempno() + "," +ac.getFloorno(), ac.getAcno());
+			}
+			//System.out.println("授权==dianti==" + moreDTMap.getAll());
+			//System.out.println("授权==mengj==" + moreMJMap.getAll());
+			InitMJGrant(moreMJMap,opt);
+			InitDTGrant(moreDTMap,opt);
+		}
+	}
+	/**
+	 * {433104923,192.168.1.5,3918980220,14  -->  1}
+	 * @param moreMap
+	 * @param opt
+	 */
+	public void InitMJGrant(O2MoreOnlyMap<String,Integer> moreMap,int opt) {
+		int authority[] = { 0, 0, 0, 0 };
+		long cardno = 0;
+		String sn="",ip="";
+		if(moreMap !=null &&  moreMap.getSize()>0) {
+			for (int i = 0; i < moreMap.getSize(); i++) {
+				String[] key = moreMap.getkey(i).split(",");
+				sn=key[0];
+				ip=key[1];
+				cardno = Long.valueOf(key[2]);
+				for (Iterator<Integer> it = moreMap.getvalue(i).iterator(); it.hasNext();) {
+					authority[it.next() - 1] = opt==1?0:1;
+				}
+				//System.out.println("授权====" + authority[0]+"  "+ authority[1]+"  "+ authority[2]+"  "+ authority[3]);
+				AControlUtil.AddUserCard(Long.valueOf(sn),ip,Long.valueOf(cardno),(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31,authority);
+				authority[0]=0; authority[1]=0; authority[2]=0;authority[3]=0;
+			}
+		}
+	}
+	/**
+	 * 
+	 * {14 --> 433104923,192.168.1.5,3918980220,1}
+	 * @param moreMap
+	 * @param opt
+	 */
+	public void InitDTGrant(O2MoreOnlyMap<Integer, String> moreMap,int opt) {
+		int layOne = 0, layTwo = 0, layThree = 0, layFour = 0, layFive = 0;
+		long cardno = 0;
+		if(moreMap !=null &&  moreMap.getSize()>0) {
+			for (int i = 0; i < moreMap.getSize(); i++) {// 一个控制器，一层，一个人
+				Integer key = moreMap.getkey(i);
+				if (key >= 1 && key <= 8) {
+					layOne = opt==1?0:(layOne + DTConstants.getFloor(key));
+				}
+				if (key >= 9 && key <= 16) {
+					layTwo = opt==1?0:(layTwo + DTConstants.getFloor(key));
+				}
+				if (key >= 17 && key <= 24) {
+					layThree = opt==1?0:(layThree + DTConstants.getFloor(key));
+				}
+				if (key >= 25 && key <= 32) {
+					layFour =opt==1?0:( layFour + DTConstants.getFloor(key));
+				}
+				if (key >= 33 && key <= 40) {
+					layFive = opt==1?0:(layFive + DTConstants.getFloor(key));
+				}
+				for (Iterator<String> it = moreMap.getvalue(i).iterator(); it.hasNext();) {
+					String[] value = it.next().split(",");
+					cardno = Long.valueOf(value[2]);
+					if(cardno!=0) break;
+				}
+			}
+			//System.out.println("==dianti==" + layOne+"  "+ layTwo+"  "+layThree+"  "+layFour+"  "+layFive);
+			GrantDianTi(layOne, layTwo, layThree, layFour, layFive, cardno);
+		}
+	}
+	
+	public void GrantDianTi(int layOne, int layTwo, int layThree, int layFour, int layFive, Long cardno) {
+		List<Elevator> elevators = elevatorDao.selectByPage(new HashMap<String, Object>());// 所有电梯
+		for (Elevator el : elevators) {
+			LadderControlUtil.LadderControlUserCard(Long.valueOf(el.getControllerSN()), el.getControllerIP(), cardno, 1,
+					(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31, layOne, layTwo, layThree, layFour, layFive);
+		}
 	}
 
 	@Override
 	public Employee selectAjEmpbyId(String selectEmps) {
-	
-		Employee myAEmp=employeeDao.selectById(Integer.parseInt(selectEmps));
+		Employee myAEmp = employeeDao.selectById(Integer.parseInt(selectEmps));
 		return myAEmp;
 	}
-	
+
 	@Override
 	public List<Accessj> selectAjByEmpid(String id) {
 
 		return aJDao.selectAjByEmpid(id);
 	}
+
 	@Override
 	public Employee selectEmployee(String id) {
 
 		return employeeDao.selectById(Integer.parseInt(id));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public List<MiddletoAG> selectAGinMiddle(String selectEGs) {
+
+		return accessGroupDao.getMiddle(selectEGs);
+	}
+
 }

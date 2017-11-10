@@ -11,20 +11,61 @@ import org.wiegand.at8000.WgUdpCommShort;
 public class AControlUtil {
 
 	public static void main(String[] args) {
-		long controllerSN = 433104811;
-		String controllerIP = "192.168.1.8";
-		long cardNO = 0xE5C97C;
+		long controllerSN = 433104927;
+		String controllerIP = "192.168.1.2";
+		long cardNO = 0xE996E47C;
 		byte era=0x20;
 		byte endYeaar = 0x29;
 		byte endMonth = 0x12;
 		byte endDay = 0x31;
 		int authority[] = { 1, 1, 0, 1}; 
         //截止日期: 2029年12月31日  一、二、四门有权限
-		AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay,authority);
+		//AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay,authority);
 		//删除卡权限
-		DeleUserCard(controllerSN, controllerIP,cardNO);
+		//DeleUserCard(controllerSN, controllerIP,cardNO);
+		//删除单项
+		AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay);
 	}
+	public static int AddUserCard(long controllerSN, String controllerIP, long cardNO,byte era,byte endYeaar, byte endMonth,
+			byte endDay) {
+		byte[] recvBuff;
+		int success = 0;
+		WgUdpCommShort pkt = new WgUdpCommShort();
+		pkt.iDevSn = controllerSN;
+		// 打开udp连接
+		pkt.CommOpen(controllerIP);
+		pkt.Reset();
+		pkt.functionID = (byte) 0x50;
+		pkt.iDevSn = controllerSN;
+		long cardNOOfPrivilege = cardNO;
+		System.arraycopy(WgUdpCommShort.longToByte(cardNOOfPrivilege), 0, pkt.data, 0, 4);
+		// 20 10 01 01 起始日期: 2010年01月01日 (必须大于2001年)
+		pkt.data[4] = era;
+		pkt.data[5] = 0x10;
+		pkt.data[6] = 0x01;
+		pkt.data[7] = 0x01;
+		// 20 29 12 31 截止日期: 2029年12月31日
+		pkt.data[8] = 0x20;
+		pkt.data[9] = endYeaar;
+		pkt.data[10] = endMonth;
+		pkt.data[11] = endDay;
+		// 每一位代表一个门
+		pkt.data[12] = 0x00;
+	    pkt.data[13] = 0x01;
+		pkt.data[14] = 0x01;
+		pkt.data[15] = 0x01;
 	
+		recvBuff = pkt.run();
+		success = 0;
+		if (recvBuff != null) {
+			if (WgUdpCommShort.getIntByByte(recvBuff[8]) == 1) {
+				success = 1;
+			}
+		}
+		// 关闭udp连接
+		pkt.CommClose();
+		return success;
+	}
 	/**
 	 * 给门禁授权
 	 * 

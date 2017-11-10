@@ -34,6 +34,7 @@ public class AccessGroupController {
 			pageModel.setPageIndex(pageIndex);
 			}
 		List<AccessGroup> accessGroups = accessgroupService.findAccessGroup(accessGroup, pageModel);
+		
 		for (AccessGroup ags : accessGroups) {
 			String selectids=ags.getAgid();
 			List<Access> saveaccesss = accessgroupService.getAccessById(selectids);
@@ -43,9 +44,6 @@ public class AccessGroupController {
 			}
 			
 		}
-		
-		
-		
 		
 		model.addAttribute("accessGroups", accessGroups);
 		model.addAttribute("pageModel", pageModel);
@@ -80,13 +78,16 @@ public class AccessGroupController {
 	 */
 	@RequestMapping(value = "/accessGroup/updateAG")
 	public ModelAndView updateAG(String id,String flag,Model model,
+			String aids,
 			@ModelAttribute AccessGroup accessGroup,
 			ModelAndView mv) {
 		//System.out.println(id);
 		
 		if(flag.equals("1")){
 			AccessGroup accessgroupById = accessgroupService.selectAGbyId(id);
+			
 			List<Access> agAlevators= accessgroupService.selectAGSubordinate();
+			
 			model.addAttribute("agAlevators",agAlevators);
 			model.addAttribute("accessgroupById", accessgroupById);
 			// 设置客户端跳转到查询请求
@@ -94,7 +95,7 @@ public class AccessGroupController {
 			
 			
 		}else{
-			 accessgroupService.updateAG(accessGroup);
+			 accessgroupService.updateAG(accessGroup,aids);
 			 mv.setViewName("redirect:/accessGroup/floorSplit");
 			
 		}

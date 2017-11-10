@@ -13,6 +13,15 @@ public class Access implements Serializable{
 		private String cip;
 		private Integer acno;
 		private Integer floorno;
+		
+		private String ajempno;
+		
+		public String getAjempno() {
+			return ajempno;
+		}
+		public void setAjempno(String ajempno) {
+			this.ajempno = ajempno;
+		}
 		public Integer getAccessid() {
 			return accessid;
 		}

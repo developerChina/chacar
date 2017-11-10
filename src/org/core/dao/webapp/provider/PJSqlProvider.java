@@ -48,8 +48,8 @@ public class PJSqlProvider {
 				if(passagewayj.getPjname() != null){
 					SET(" pjname = #{pjname} ");
 				}
-				if(passagewayj.getPjgroup() != null){
-					SET(" pjgroup = #{pjgroup} ");
+				if(passagewayj.getPjgroupid() != null){
+					SET(" pjgroupid = #{pjgroupid} ");
 				}
 				WHERE(" pjid = #{pjid}");
 			}
@@ -68,19 +68,19 @@ public class PJSqlProvider {
 				if(passagewayj.getPjname()!=null && !passagewayj.getPjname().equals("")){
 					VALUES("pjname", "#{pjname}");
 				}
-				if(passagewayj.getPjemp()!= null && !passagewayj.getPjemp().equals("")){
-					VALUES("pjemp", "#{pjemp}");
+				if(passagewayj.getPjempid()!= null && !passagewayj.getPjempid().equals("")){
+					VALUES("pjempid", "#{pjempid}");
 				}
-				if(passagewayj.getPjcard()!= null && !passagewayj.getPjcard().equals("")){
-					VALUES("pjcard", "#{pjcard}");
+				if(passagewayj.getPjgroupid()!= null && !passagewayj.getPjgroupid().equals("")){
+					VALUES("pjgroupid", "#{pjgroupid}");
 				}
-				if(passagewayj.getPjgroup()!= null && !passagewayj.getPjgroup().equals("")){
-					VALUES("pjgroup", "#{pjgroup}");
+				if(passagewayj.getPassagewayjid()!= null && !passagewayj.getPassagewayjid().equals("")){
+					VALUES("passagewayjid", "#{passagewayjid}");
 				}
-				if(passagewayj.getPjpassageway()!= null && !passagewayj.getPjpassageway().equals("")){
-					VALUES("pjpassageway", "#{pjpassageway}");
+				if(passagewayj.getPjempno()!= null && !passagewayj.getPjempno().equals("")){
+					VALUES("pjempno", "#{pjempno}");
 				}
-			
+				
 			}
 		}.toString();
 	}

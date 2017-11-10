@@ -15,7 +15,7 @@ public class PassagewayGroup implements Serializable{
 		}
 		private String pgid;	//通道分组id
 		private String pgname;	//	通道分组名称
-		private String pgssxj;	//通道分组所属下级
+		//private String pgssxj;	//通道分组所属下级
 		/*
 		 * 存放通道的集合
 		 * */
@@ -33,18 +33,13 @@ public class PassagewayGroup implements Serializable{
 		public void setPgname(String pgname) {
 			this.pgname = pgname;
 		}
-		public String getPgssxj() {
-			return pgssxj;
-		}
-		public void setPgssxj(String pgssxj) {
-			this.pgssxj = pgssxj;
-		}
+		
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
 		@Override
 		public String toString() {
-			return "PassagewayGroup [pgid=" + pgid + ", pgname=" + pgname + ", pgssxj=" + pgssxj + "]";
+			return "PassagewayGroup [pgid=" + pgid + ", pgname=" + pgname + "]";
 		}
 		public Set<Passageway> getOrderItems() {
 			return orderItems;
