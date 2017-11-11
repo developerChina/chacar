@@ -56,7 +56,6 @@ public class Passageway implements Serializable {
 	//无参构造
 	public Passageway() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public String getPtype() {
 		return ptype;
