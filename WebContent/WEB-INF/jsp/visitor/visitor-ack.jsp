@@ -23,7 +23,7 @@
 			</header>
 			<article data-role="article" id="border_article" class="active" data-scroll="verticle" style="top: 40px; bottom: 0px;">
 				<div class="scroller">
-					<form autocomplete="off" class="form-square" id="autidForm" action="${ctx}/visitor/auditRecord" method="post">
+					<form autocomplete="off" class="form-group form-square" id="autidForm" action="${ctx}/visitor/auditRecord" method="post">
 						<input type="hidden" id="recordid" name="recordid" value="${recordid }">
 						<label class="label-left" style="height: 40px;">是否同意</label> 
 						<label class="label-right" style="height: 40px;">
@@ -49,18 +49,6 @@
 					  			<label for="baskball" class="black">${pw.passagewayName}</label>
 					  		</a>
 						   </c:forEach>
-						    <!--  
-						    <a href="#" data-role="checkbox">
-						    	<input type="hidden" name="pw" value="1"/>
-					    		<input type="checkbox" checked disabled/>
-					  			<label for="baskball" class="black">大门进通道一</label>
-					  		</a>
-					  		<a href="#" data-role="checkbox">
-					  			<input type="hidden" name="pw" value="2"/>
-					  			<input type="checkbox" checked disabled/>
-					  			<label for="football" class="black">大门出通道二</label>
-					  		</a>
-					  		-->
 						</label>
 						
 						<label class="label-left" for="user" style="height: 80px;">访客电梯</label>
@@ -72,41 +60,18 @@
 					  			<label for="baskball" class="black">${elt.elevatorName }</label>
 					  		</a>
 						   </c:forEach>
-						    <!--<a href="#" data-role="checkbox">
-						    	<input type="hidden" name="elt" value="1"/>
-					    		<input type="checkbox" checked disabled/>
-					  			<label for="baskball" class="black">电梯一</label>
-					  		</a>
-					  		<a href="#" data-role="checkbox">
-					  			<input type="hidden" name="elt" value="2" />
-					  			<input type="checkbox" checked disabled/>
-					  			<label for="football" class="black">电梯二</label>
-					  		</a>
-					  		-->
 						</label>
 						
-						<label class="label-left" for="user" style="height: 120px;">访客门禁</label>
-						 <label class="label-right" style="height: 120px;" id="acces_lable">
-							 <c:forEach items="${acces}" var="acce" varStatus="stat">
-								<a href="#" data-role="radio">
-								    <input type="radio" name="acce" value="${acce.accessid }"/>
-									<label for="football1" class="black">${acce.accessname }</label>
-							 	</a>
-							   </c:forEach>
-						     <!--<a href="#" data-role="radio">
-							    <input type="radio" name="acce" value="1"/>
-								<label for="football1" class="black">一号楼一层</label>
-							 </a>
-							 <a href="#" data-role="radio">
-							    <input type="radio" name="acce" value="2"/>
-								<label for="football1" class="black">一号楼二层</label>
-							 </a>
-							 <a href="#" data-role="radio">
-							    <input type="radio" name="acce" value="3"/>
-								<label for="football1" class="black">一号楼三层</label>
-							 </a>
-							 -->
-						</label>
+						<label class="label-left" for="user" style="height: 80px;">访客门禁</label>
+						 <label class="label-right" style="height: 80px;" id="acces_lable">
+							 <div data-role="select" class="card">
+									<select placeholder="选择门禁">
+									  	<c:forEach items="${acces}" var="acce" varStatus="stat">
+									  		<option value="${acce.accessid }">${acce.accessname }</option>	
+									   </c:forEach>
+									</select>
+							  	</div>
+						 </label>
 						<button class="block" onclick="auditRecord()">确认</button>
 					</form>
 				</div>

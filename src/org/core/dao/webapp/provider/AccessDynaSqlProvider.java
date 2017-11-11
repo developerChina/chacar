@@ -32,6 +32,7 @@ public class AccessDynaSqlProvider {
 		if(sgy.get("pageModel")!=null){
 			sql+=" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
 		}
+		System.out.println(sql);
 		return sql;
 	}
 	//动态查询总数量

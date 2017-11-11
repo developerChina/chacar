@@ -134,8 +134,8 @@
         var grid = mini.get("datagrid1");
 
         function newvisitor() {
-        	//var cardInfo=readIDCard_test(Math.floor(Math.random()*10)); //硬件测试用例
-        	var cardInfo=readIDCard();
+        	var cardInfo=readIDCard_test(Math.floor(Math.random()*10)); //硬件测试用例
+        	//var cardInfo=readIDCard();
 			if(cardInfo.state){
 				//判断是否添加
 				var data = grid.getEditData(true);
@@ -174,7 +174,6 @@
         
         //添加选中事件
         grid.on("select", function (sender,record) {
-        	console.info(sender.record)
         	if(undefined!=sender.record.cardPhoto && ""!=sender.record.cardPhoto){
         		$("#cardPhoto-img").attr("src", "data:image/png;base64,"+sender.record.cardPhoto);
         	}else{
@@ -282,7 +281,6 @@
 		*/
 		function photograph(){
 			var row=grid.getSelected();
-			console.info(row)
 			if(row==null){
 				alert("请登记身份证信息");
 				return;
@@ -311,12 +309,23 @@
         }
         
         function submitRecord() {
-            var data = grid.getEditData(true);
-            if(data.length<=0){
+            var datas = grid.getEditData(true);
+            if(datas.length<=0){
             	alert("请登记身份证信息");
 				return;
+            }else{
+            	for (i=0;i<datas.length;i++) {
+					if(datas[i].telephone==""){
+						alert(datas[i].cardName+"请登记联系电话");
+						return;
+					}
+					if(datas[i].company==""){
+						alert(datas[i].company+"请登记工作单位");
+						return;
+					}
+				}
             }
-            var json = mini.encode(data);
+            var json = mini.encode(datas);
             $("#recordVisitors").val(json);
             $('#more-visitor-form').submit();
         }

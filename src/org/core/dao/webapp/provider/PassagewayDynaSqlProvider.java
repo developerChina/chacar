@@ -2,6 +2,7 @@ package org.core.dao.webapp.provider;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.webapp.Passageway;
+import org.core.util.StringUtils;
 
 import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
 import java.util.Map;
@@ -99,5 +100,16 @@ public class PassagewayDynaSqlProvider {
 				}.toString();
 			}
 			
+			
+			public String selectByIds(String ids) {
+				String where="";
+				if(StringUtils.isNotBlank(ids)){
+					where=" passagewayID in ( "+ ids +" )";
+				}else{
+					where=" 1=0 ";
+				}
+				String sql ="select * from " +PASSAGEWAYTABLE +" where "+ where;
+				return sql;
+			}
 			
 }

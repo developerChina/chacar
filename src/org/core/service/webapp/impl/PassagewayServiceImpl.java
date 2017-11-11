@@ -62,6 +62,10 @@ public class PassagewayServiceImpl implements PassagewayService {
 		passagewayDao.save(passageway);
 		
 	}
+	@Override
+	public List<Passageway> selectByIds(String ids) {
+		return passagewayDao.selectByIds(ids);
+	}
 	
 
 	}

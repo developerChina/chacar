@@ -18,4 +18,11 @@ public interface PassagewayService {
 	//添加通道
 	void addPassageway(Passageway passageway);
 	
+	/**
+	 * 根据ids查询列表
+	 * @param ids
+	 * @return
+	 */
+	List<Passageway> selectByIds(String ids);
+	
 }

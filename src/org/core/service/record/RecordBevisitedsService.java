@@ -33,9 +33,9 @@ public interface RecordBevisitedsService {
 	List<RecordBevisiteds> selectByPage(RecordBevisiteds entity);
 
 	/**
-	 * 根据记录id查询来访记录被访人列表
+	 * 根据记录id查询来访记录被访人
 	 */
-	List<RecordBevisiteds> selectBevisitedByRecordId(String recordid);
+	RecordBevisiteds selectBevisitedByRecordId(String recordid);
 	/**
 	 * 删除所有记录id的被访人			
 	 */

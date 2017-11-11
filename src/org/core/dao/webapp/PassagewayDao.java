@@ -31,5 +31,8 @@ public interface PassagewayDao {
 		@SelectProvider(method = "insertPassageway", type = PassagewayDynaSqlProvider.class)
 		void save(Passageway passageway);
 		
+		@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectByIds")
+		List<Passageway> selectByIds(String ids);
+		
 		
 }

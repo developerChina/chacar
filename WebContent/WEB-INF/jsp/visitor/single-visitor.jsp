@@ -125,6 +125,17 @@
 				alert("请登记身份证信息");
 				return;
 			}
+			var telephone=$("#telephone").val();
+			if(telephone==""){
+				alert("请登记联系电话");
+				return;
+			}
+			var company=$("#company").val();
+			if(company==""){
+				alert("请登记工作单位");
+				return;
+			}
+			
 			$('#single-visitor-form').submit();
 		}
 		
@@ -212,8 +223,8 @@
 		*  新建访问人
 		*/	
 		function newvisitor(){
-			//var cardInfo=readIDCard_test();//硬件测试用例
-			var cardInfo=readIDCard();
+			var cardInfo=readIDCard_test();//硬件测试用例
+			//var cardInfo=readIDCard();
 			if(cardInfo.state){
 				$("#cardPhoto").val(cardInfo.message.photobuf);
 				$("#cardPhoto-img").attr("src", "data:image/png;base64,"+cardInfo.message.photobuf);
