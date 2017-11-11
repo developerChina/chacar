@@ -42,13 +42,18 @@
 					<div class="fl left">
 						打印输入:<input type="text" class="text" id="cardno" title='身份证物理卡号'/>
 						<input type="hidden" id="cardid" title='省份证号'/>
+						<input type="hidden" id="name" title='访客姓名'/>
+						<input type="hidden" id="phone" title='访客电话'/>
+						<input type="hidden" id="company" title='工作单位'/>
+						<input type="hidden" id="date" title='访问时间'/>
 						<br/>
 						<div id="datagrid1" class="mini-datagrid" style="width:455px;height:258px;" idField="cardName" multiSelect="true" showPager="false" allowSortColumn="false">
 						      <div property="columns">
-						      	  <div type="checkcolumn"></div>
-						          <div field="bevisitedName" width="80" headerAlign="center">姓名</div>                
+						          <div field="bevisitedName" width="80" headerAlign="center">姓名</div>
 						          <div field="bevisitedAddress" width="200" headerAlign="center">办公地点</div>
 						          <div field="auditContent" width="100" headerAlign="center">确认状态</div>
+						          <div field="deptName" width="100" headerAlign="center" visible="false">部门</div>
+						          <div field="isAudit" width="100" headerAlign="center" visible="false">是否同意</div>
 						      </div>
 						</div>
 					</div>
@@ -169,8 +174,15 @@
 					 }else{
 						 row["auditContent"]=(data[i].visitor.auditContent==null?'':data[i].visitor.auditContent);
 					 }
+					 row["deptName"]=data[i].bevisited.deptName;
+					 row["isAudit"]=data[i].visitor.isAudit;
 					 grid.addRow(row);
 					 grid.beginEditRow(row);
+					 
+					 $("#name").val(data[i].visitor.cardName);
+					 $("#phone").val(data[i].visitor.telephone);
+					 $("#company").val(data[i].visitor.company);
+					 $("#date").val(data[i].date);
 				}
 			  }
 		});
@@ -188,14 +200,39 @@
 		  url: '${ctx}/visitor/printRecordInfo',
 		  data: {"cardid":cardid,"cardno":cardno},
 		  success: function(data){
-			  if(data){
-				 findRecord($("#cardid").val());
-			  }
+			 findRecord($("#cardid").val());//刷新
+			 
+			
+			//获取打印数据
+			var datagrid = mini.get("datagrid1");
+			datagrid.selectAll();
+			var nodes=datagrid.getSelecteds();
+			for (var i = 0; i < nodes.length; i++) {
+	            if(nodes[i].isAudit==1){
+	            	printTicket(
+            			$("#name").val(),
+            			$("#phone").val(),
+            			$("#company").val(),
+            			nodes[i].bevisitedName,
+            			nodes[i].deptName,
+            			$("#date").val()
+	            	);
+	            }
+			}
+			 
 		  }
 		});
      }
-     //打印凭条
-     function printTicket(cardName,bevisitedName,telephone,deptID,unit,visitDate){
+     
+     /**
+     * cardName 访客姓名
+     * bevisitedName 被访人姓名
+     * telephone 访客电话
+     * dept 被访人部门
+     * unit	访客工作单位
+     * visitDate 访问时间
+     */
+     function printTicket(cardName,telephone,unit,bevisitedName,dept,visitDate){
     	 var TSCObj;
     	 TSCObj = new ActiveXObject("TSCActiveX.TSCLIB");
     	 TSCObj.ActiveXopenport ("Gprinter  GP-1625D");
@@ -204,15 +241,15 @@
     	 TSCObj.ActiveXclearbuffer();
     	 TSCObj.ActiveXwindowsfont (280, 10, 68, 0, 2, 0, "标楷体", "访客单");
     	 TSCObj.ActiveXwindowsfont (320, 80, 45, 0, 2, 0, "标楷体", "Guest");
-    	 TSCObj.ActiveXwindowsfont (40, 150, 30, 0, 0, 0, "标楷体", "姓名：孙俊虎");
-    	 TSCObj.ActiveXwindowsfont (265, 150, 30, 0, 0,0, "标楷体", "被访人：李江");
+    	 TSCObj.ActiveXwindowsfont (40, 150, 30, 0, 0, 0, "标楷体", "姓名："+cardName);
+    	 TSCObj.ActiveXwindowsfont (265, 150, 30, 0, 0,0, "标楷体", "被访人："+bevisitedName);
 
-    	 TSCObj.ActiveXwindowsfont (40, 200, 30, 0, 0, 0, "标楷体", "电话：18510515186");
-    	 TSCObj.ActiveXwindowsfont (265, 200, 30, 0, 0, 0, "标楷体", "被访部门：安全环保部");
+    	 TSCObj.ActiveXwindowsfont (40, 200, 30, 0, 0, 0, "标楷体", "电话："+telephone);
+    	 TSCObj.ActiveXwindowsfont (265, 200, 30, 0, 0, 0, "标楷体", "被访部门："+dept);
 
-    	 TSCObj.ActiveXwindowsfont (40, 250, 30, 0, 0, 0, "标楷体", "单位：北京华隆辰信息技术有限公司");
+    	 TSCObj.ActiveXwindowsfont (40, 250, 30, 0, 0, 0, "标楷体", "单位："+unit);
 
-    	 TSCObj.ActiveXwindowsfont (40, 300, 30, 0, 0, 0, "标楷体", "日期：2017-10-23");
+    	 TSCObj.ActiveXwindowsfont (40, 300, 30, 0, 0, 0, "标楷体", "日期："+visitDate);
 
     	 TSCObj.ActiveXprintlabel ("1","1");
     	 TSCObj.ActiveXcloseport();		 

@@ -43,12 +43,25 @@ public interface RecordVisitorsService {
 	void deleteByRecordID(String recordid);
 	
 	/**
-	 * 根据记录id和记录单状态 查询来访记录访客列表
+	 * 根据记录id和记录单状态
+	 * <br/>查询来访记录访客列表
 	 */
 	List<RecordVisitors> selectVisitorByRID_Statuts(String recordid,int status);
 	/**
-	 * 根据身份证ID和记录单状态 查询来访记录
+	 * 根据身份证ID和记录单状态
+	 * <br/>查询来访记录访客列表
 	 */
-	List<RecordVisitors> selectRecordInfoBycardID_status(String cardid, int status);		
+	List<RecordVisitors> selectRecordInfoBycardID_status(String cardid, int status);
+	
+	/**
+	 * 根据记录id和记录单状态,审核状态
+	 * <br/>查询来访记录访客列表
+	 */
+	List<RecordVisitors> selectVisitorByRID_Statuts_audit(String recordid,int status,int audit);
+	/**
+	 * 根据身份证ID和记录单状态 ,审核状态
+	 * <br/>查询来访记录访客列表
+	 */
+	List<RecordVisitors> selectRecordInfoBycardID_status_audit(String cardid, int status,int audit);	
 	
 }

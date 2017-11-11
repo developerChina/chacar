@@ -38,6 +38,9 @@ public interface ElevatorDao {
 	@SelectProvider(type=ElevatorDynaSqlProvider.class,method="selectEGisE")
 	int selectEGisE(String id);
 
+	@SelectProvider(type=ElevatorDynaSqlProvider.class,method="selectByIds")
+	List<Elevator> selectByIds(String ids);
+
 	
 	
 	

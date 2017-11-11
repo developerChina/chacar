@@ -94,6 +94,13 @@ public class ElevatorServiceImpl implements ElevatorService {
 		
 		return elevatorDao.selectEGisE(id);
 	}
+
+
+
+	@Override
+	public List<Elevator> selectByIds(String ids) {
+		return elevatorDao.selectByIds(ids);
+	}
 	
 	
 	

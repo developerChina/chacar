@@ -77,9 +77,6 @@ public class CarDistinguishProvider {
 		String where="";
 		if(StringUtils.isNotBlank(ids)){
 			where=" id in ( "+ ids +" )";
-//			for (String id : ids.split(",")) {
-//				where=where+" or id = "+id;
-//			}
 		}else{
 			where=" 1=0 ";
 		}

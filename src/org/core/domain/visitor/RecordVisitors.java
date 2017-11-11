@@ -30,6 +30,9 @@ public class RecordVisitors implements Serializable{
 	private int isAudit;   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
 	private String auditContent;   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人审核意见' ,
 	
+	private Date inDate;   // datetime NULL DEFAULT NULL COMMENT '访客进入时间' ,
+	private Date outDate;   // datetime NULL DEFAULT NULL COMMENT '访客签离时间' ,
+	
 	public String getRecordVID() {
 		return recordVID;
 	}
@@ -137,5 +140,17 @@ public class RecordVisitors implements Serializable{
 	}
 	public void setAuditContent(String auditContent) {
 		this.auditContent = auditContent;
+	}
+	public Date getInDate() {
+		return inDate;
+	}
+	public void setInDate(Date inDate) {
+		this.inDate = inDate;
+	}
+	public Date getOutDate() {
+		return outDate;
+	}
+	public void setOutDate(Date outDate) {
+		this.outDate = outDate;
 	}
 }
