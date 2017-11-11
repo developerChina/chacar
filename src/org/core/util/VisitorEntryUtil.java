@@ -1,5 +1,6 @@
 package org.core.util;
 
+import java.util.Iterator;
 import java.util.List;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Elevator;
@@ -40,14 +41,29 @@ public class VisitorEntryUtil {
 					(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31, lay[0], lay[1], lay[2], lay[3], lay[4]);
 		}
 		//3:通道
+		O2MoreOnlyMap<String, String> moreTDMap = new O2MoreOnlyMap<>();
 		for (Passageway dto : td) {
-			int autd[] = { 0, 0, 0, 0 };
-			//0:离开 -》1门      1：进入 -》2，门
-			if (dto.getPtype() != null) {
-				authority[Integer.parseInt(dto.getPtype())] = 1;
+			moreTDMap.put(dto.getControllerSN() + "," + dto.getControllerIP()+","+dto.getPjempno(), dto.getPtype());// 0:出  1：进
+		}
+		InitTDGrant(moreTDMap);
+	}
+	public static void InitTDGrant(O2MoreOnlyMap<String,String> moreMap) {
+		int authority[] = { 0, 0, 0, 0 };
+		long cardno = 0;
+		String sn="",ip="";
+		if(moreMap !=null &&  moreMap.getSize()>0) {
+			for (int i = 0; i < moreMap.getSize(); i++) {
+				String[] key = moreMap.getkey(i).split(",");
+				sn=key[0];
+				ip=key[1];
+				cardno = Long.valueOf(key[2]);
+				for (Iterator<String> it = moreMap.getvalue(i).iterator(); it.hasNext();) {
+					authority[Integer.parseInt(it.next())] = 1;
+				}
+				//System.out.println("授权====" + authority[0]+"  "+ authority[1]+"  "+ authority[2]+"  "+ authority[3]);
+				AControlUtil.AddUserCard(Long.valueOf(sn),ip,Long.valueOf(cardno),(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31,authority);
+				authority[0]=0; authority[1]=0; authority[2]=0;authority[3]=0;
 			}
-			AControlUtil.AddUserCard(Long.valueOf(mj.getCsn()), mj.getCip(), Long.valueOf(cardno), (byte) 0x20, (byte) 0x29,
-					(byte) 0x12, (byte) 0x31, autd);
 		}
 	}
 }

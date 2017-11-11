@@ -10,7 +10,6 @@ import org.core.dao.webapp.EmployeeDao;
 import org.core.dao.webapp.PJDao;
 import org.core.dao.webapp.PassagewayDao;
 import org.core.dao.webapp.PassagewayGroupDao;
-import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
