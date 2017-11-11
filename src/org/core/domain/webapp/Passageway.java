@@ -14,7 +14,7 @@ public class Passageway implements Serializable {
 	private String ControllerIP; //控制IP
 	private String ptype; //通道类型
 	private Integer pno;//通道编号
-
+	private String pjempno;//卡号
 	//toString
 	
 	
@@ -71,7 +71,13 @@ public class Passageway implements Serializable {
 	public void setPno(Integer pno) {
 		this.pno = pno;
 	}
-	
-	
+
+	public String getPjempno() {
+		return pjempno;
+	}
+
+	public void setPjempno(String pjempno) {
+		this.pjempno = pjempno;
+	}
 
 }
