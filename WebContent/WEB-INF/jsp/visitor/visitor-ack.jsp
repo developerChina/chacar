@@ -65,7 +65,7 @@
 						<label class="label-left" for="user" style="height: 80px;">访客门禁</label>
 						 <label class="label-right" style="height: 80px;" id="acces_lable">
 							 <div data-role="select" class="card">
-									<select placeholder="选择门禁">
+									<select name="acce" placeholder="选择门禁">
 									  	<c:forEach items="${acces}" var="acce" varStatus="stat">
 									  		<option value="${acce.accessid }">${acce.accessname }</option>	
 									   </c:forEach>

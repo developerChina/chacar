@@ -43,20 +43,18 @@ public class VisitorEntryUtil {
 		//3:通道
 		O2MoreOnlyMap<String, String> moreTDMap = new O2MoreOnlyMap<>();
 		for (Passageway dto : td) {
-			moreTDMap.put(dto.getControllerSN() + "," + dto.getControllerIP()+","+dto.getPjempno(), dto.getPtype());// 0:出  1：进
+			moreTDMap.put(dto.getControllerSN() + "," + dto.getControllerIP(), dto.getPtype());// 0:出  1：进
 		}
-		InitTDGrant(moreTDMap);
+		InitTDGrant(moreTDMap,cardno);
 	}
-	public static void InitTDGrant(O2MoreOnlyMap<String,String> moreMap) {
+	public static void InitTDGrant(O2MoreOnlyMap<String,String> moreMap,String cardno) {
 		int authority[] = { 0, 0, 0, 0 };
-		long cardno = 0;
 		String sn="",ip="";
 		if(moreMap !=null &&  moreMap.getSize()>0) {
 			for (int i = 0; i < moreMap.getSize(); i++) {
 				String[] key = moreMap.getkey(i).split(",");
 				sn=key[0];
 				ip=key[1];
-				cardno = Long.valueOf(key[2]);
 				for (Iterator<String> it = moreMap.getvalue(i).iterator(); it.hasNext();) {
 					authority[Integer.parseInt(it.next())] = 1;
 				}

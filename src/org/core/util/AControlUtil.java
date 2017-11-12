@@ -11,20 +11,20 @@ import org.wiegand.at8000.WgUdpCommShort;
 public class AControlUtil {
 
 	public static void main(String[] args) {
-		long controllerSN = 433104927;
-		String controllerIP = "192.168.1.2";
-		long cardNO = 0xE996E47C;
+		long controllerSN = 433104923;
+		String controllerIP = "192.168.1.5";
+		long cardNO = 0x800B97C8;
 		byte era=0x20;
 		byte endYeaar = 0x29;
 		byte endMonth = 0x12;
 		byte endDay = 0x31;
-		int authority[] = { 1, 1, 0, 1}; 
+		int authority[] = { 0, 0, 0, 0}; 
         //截止日期: 2029年12月31日  一、二、四门有权限
 		//AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay,authority);
 		//删除卡权限
 		//DeleUserCard(controllerSN, controllerIP,cardNO);
 		//删除单项
-		AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay);
+		AddUserCard(controllerSN,controllerIP,cardNO,era,endYeaar, endMonth,endDay,authority);
 	}
 	public static int AddUserCard(long controllerSN, String controllerIP, long cardNO,byte era,byte endYeaar, byte endMonth,
 			byte endDay) {
