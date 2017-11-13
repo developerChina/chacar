@@ -105,23 +105,30 @@ public class PrintAllController {
 			rv.setCardNo(cardno);//设置物理卡
 			rv.setInDate(new Date());//授权时间
 			recordVisitorsService.update(rv);
+		}
+		
+		//授权所有正在访问的权限
+		List<RecordVisitors> rvss= recordVisitorsService.selectRecordInfoBycardID_status(cardid,3);
+		List<Passageway> td=new ArrayList<>();
+		List<Elevator> dt=new ArrayList<>();
+		List<Access> mj=new ArrayList<>();
+		for (RecordVisitors rv : rvss) {
 			//发送权限
 			if(rv.getIsAudit()==1){
 				RecordBevisiteds rb=recordBevisitedsService.selectBevisitedByRecordId(rv.getRecordID());
 				//通道授权
 				String channels=rb.getBevisitedChannel();
-				List<Passageway> td=passagewayService.selectByIds(channels);
+				td.addAll(passagewayService.selectByIds(channels));
 				//梯控授权
 				String floors=rb.getBevisitedFloor();
-				List<Elevator> dt=elevatorService.selectByIds(floors);
+				dt.addAll(elevatorService.selectByIds(floors));
 				//门禁授权
 				String door=rb.getBevisitedDoor();
-				Access mj=accessService.findAccessById(Integer.parseInt(door));
-				
-				//VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
+				mj.add(accessService.findAccessById(Integer.parseInt(door)));
 			}
-			
 		}
+		VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
+		
 		return null;
 	}
 	
