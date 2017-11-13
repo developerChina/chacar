@@ -1,4 +1,4 @@
-package org.core.dao.webapp;
+﻿package org.core.dao.webapp;
 
 import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
 
@@ -34,6 +34,8 @@ public interface PassagewayDao {
 		//删除的判断
 		@Select("select * from "+MIDDLETOPGTABLE+" where passagewayid = #{id}")
 		List<MiddletoPG> selectMiddle(Integer id);
+@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectByIds")
+		List<Passageway> selectByIds(String ids);
 		
 		
 }
