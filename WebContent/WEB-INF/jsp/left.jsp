@@ -39,10 +39,10 @@
 		  
 		  <tr><td class="left_nav_top"><div class="font1">系统管理</div></td></tr>
 		  <tr valign="top">
-		    <td class="left_nav_bgshw" height="50">
+		    <td class="left_nav_bgshw" height="30">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/user/selectUser" target="main">用户管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/resource/resourcesAck" target="main">资源管理</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/authority/authorityAck" target="main">权限分配</a></img></p>
+			  <!-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/resource/resourcesAck" target="main">资源管理</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/authority/authorityAck" target="main">权限分配</a></img></p> -->
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -63,7 +63,7 @@
 		    <td class="left_nav_bgshw" height="30">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/blackAck" target="main">黑名单</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/reasonAck" target="main">拜访事由</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="javascript:void(0)" target="main">访客验证</a></img></p>
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访客查询</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -145,14 +145,14 @@
 		  </tr>
 		  <tr><td height="2"></td></tr> -->
 		  
-		  <tr><td id="navbg11" class="left_nav_closed" ><div class="font1">大数据中心</div></td></tr>
+		 <!-- <tr><td id="navbg11" class="left_nav_closed" ><div class="font1">数据中心</div></td></tr>
 		  <tr valign="top" id="submenu11" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">员工打卡查询</a></img></p>
+		       <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">员工打卡查询</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访客记录查询</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">车辆违规查询</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">车辆违规查询</a></img></p> 
 			</td>
-		  </tr>
+		  </tr>-->
 		  <tr><td height="2"></td></tr>
 		  
 		  <tr valign="top"><td height="100%" align="center"><div class="copycct"><br /><strong>技术支持：</strong><br><strong>北京华隆辰信息技术有限公司</strong><br>www.hualc.com</div></td></tr>
