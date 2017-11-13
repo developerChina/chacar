@@ -11,6 +11,7 @@ import org.core.dao.webapp.PassagewayGroupDao;
 import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
+import org.core.domain.webapp.Passagewayj;
 import org.core.service.webapp.PassagewayGroupService;
 import org.core.util.GenId;
 import org.core.util.tag.PageModel;
@@ -43,8 +44,14 @@ public class PassagewayGroupServiceImpl implements PassagewayGroupService {
 	//删除
 	@Override
 	public void removePassagewayGroupById(String id) {
-		passagewayGroupDao.deletePassagewayGroupById(id);
-		passagewayGroupDao.deleteMiddleById(id);
+		List<Passagewayj> pj= passagewayGroupDao.selectPJ(id);
+		if(pj.size()>0){
+			
+		}else{
+			passagewayGroupDao.deletePassagewayGroupById(id);
+			passagewayGroupDao.deleteMiddleById(id);
+		}
+		
 	}
 	//查询下级
 	@Override

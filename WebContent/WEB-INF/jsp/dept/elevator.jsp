@@ -97,11 +97,11 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	电梯名称：<input type="text" name="elevatorName">
-					    	控制器SN：<input type="text" name="controllerSN">
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="添加电梯"/>
+					    	电梯名称:<input type="text" name="elevatorName">
+					    	控制器SN:<input type="text" name="controllerSN">
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加电梯&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

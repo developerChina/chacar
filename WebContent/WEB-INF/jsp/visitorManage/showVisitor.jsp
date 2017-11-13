@@ -73,7 +73,7 @@
 					    <td class="font3">
 					    	人员姓名：<input type="text" name="cardName">
 					    	单位名称：<input type="text" name="company">
-					    	<input type="submit" value="搜索"/><input type="button" onclick="javascript:window.history.back(-1);" value="取消 ">
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/><input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;">
 					    </td>
 					  </tr>
 					</table>
@@ -106,7 +106,7 @@
 					  
  					  <td align="center" width="40px;">
  					       <a href='javascript:void(0)' onclick="blacka('${myblack.visitorID}')">
-							   <img title="将其拉黑" src="${ctx}/images/update.gif"/>
+							   <img title="&nbsp;&nbsp;将其拉黑&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
 				</tr>

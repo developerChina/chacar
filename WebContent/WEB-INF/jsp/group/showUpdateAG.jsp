@@ -112,9 +112,12 @@
 		    		</tr>
 		    			
 		    		<tr>
-		    			<td class="font3 fftd">所属下级门禁名称：<br>
+		    			<td class="font3 fftd">请选择一个门禁：<br>
 		    			<c:forEach items="${agAlevators}" var="Aname" varStatus="stat">
-         				<input type="checkbox" name="aids" id="box_${stat.index}" value="${Aname.accessid}"/>${Aname.accessname}&nbsp;&nbsp;${Aname.accessid}
+         				<input type="checkbox" name="aids" id="box_${stat.index}" value="${Aname.accessid}"/>${Aname.accessname}&nbsp;
+         				<c:if test="${stat.count % 5 == 0}">
+         				<br>
+         				</c:if>
 		    			</c:forEach>
 		    			</td>
 		    		</tr>
@@ -123,7 +126,7 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upAG" value="修改">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upAG" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;"></td></tr>
 		  </table>
 		  </form>
 	</td>

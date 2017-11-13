@@ -45,14 +45,14 @@
 		      				   return this.value;
 		      			   })
 		      			   
-		      			   $.ligerDialog.confirm("确认要授权吗?","给当前员工授权",function(r){
-		      				   if(r){
+		      			  /*  $.ligerDialog.confirm("确认要授权吗?","给当前员工授权",function(r){
+		      				   if(r){   }
+		      			  	 }); */
 		      					   // alert("卡号："+cardno+"员工"+empid+"删除："+ids.get()+"授权名"+myajname);
 		      					   // 发送请求
 		      					   $("#addEmpToAj").submit();
 		      					  //window.location = "${ctx}/AccessJurisdiction/shouAJG?flag=2&ajgroup=" + ids.get()+"&ajname="+myajname+"&ajemp="+empname+"&ajcard"+cardno;
-		      				   }
-		      			  	 });
+		      				
 		      		   		}
 				}
 		 		
@@ -125,7 +125,7 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="给其授权">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upEG" value="&nbsp;&nbsp;给其授权&nbsp;&nbsp;">&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		  </form>
 	</td>

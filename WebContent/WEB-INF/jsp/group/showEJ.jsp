@@ -92,10 +92,10 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	电梯授权名：<input type="text" name="ejname">&nbsp;&nbsp;
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delej" type="button" value="删除电梯授权"/>&nbsp;&nbsp;
-					    	<input id="addej" type="button" value="添加电梯授权"/>
+					    	电梯授权名：<input type="text" name="ejname">
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="delej" type="button" value="&nbsp;&nbsp;删除电梯授权&nbsp;&nbsp;"/>
+					    	<input id="addej" type="button" value="&nbsp;&nbsp;添加电梯授权&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

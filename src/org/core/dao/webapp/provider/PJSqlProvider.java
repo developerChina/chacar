@@ -16,17 +16,22 @@ public class PJSqlProvider {
 				if(gy.get("passagewayj")!=null){
 					Passagewayj passagewayj=(Passagewayj) gy.get("passagewayj");
 					if(passagewayj.getPjname()!=null && !passagewayj.getPjname().equals("")){
-						WHERE("pjname LIKE CONCAT('%',#{passagewayj.pjname},'%')");
+						WHERE(" pjname LIKE CONCAT('%',#{passagewayj.pjname},'%')");
 					}
+					if(passagewayj.getPganame()!=null && !passagewayj.getPganame().equals("")){
+						WHERE(" passagewayjid in ( "+ passagewayj.getPganame() +"  ) ");
+					}
+					
 					}
 			}
 		}.toString();
 		if(gy.get("pageModel")!=null){
 			sql+=" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
 		}
+		System.out.println(sql);
 		return sql;
 	}
-	//动态查询总数量
+	//动态查询总数量  +','+PASSAGEWAYTABLE+','+MIDDLETOPGTABLE
 	public String countgy(Map<String, Object> gy){
 		return new SQL(){
 			{
@@ -34,8 +39,11 @@ public class PJSqlProvider {
 				FROM(PASSAGEWAYJTABLE);
 				if(gy.get("passagewayj") != null){
 					Passagewayj passagewayj = (Passagewayj)gy.get("passagewayj");
-					if(passagewayj.getPjname()!= null && !passagewayj.getPjname().equals("")){
-						WHERE(" pjname LIKE CONCAT('%',#{passagewayj.pjname},'%') ");
+					if(passagewayj.getPjname()!=null && !passagewayj.getPjname().equals("")){
+						WHERE(" pjname LIKE CONCAT('%',#{passagewayj.pjname},'%')");
+					}
+					if(passagewayj.getPganame()!=null && !passagewayj.getPganame().equals("")){
+						WHERE(" passagewayjid in ( "+ passagewayj.getPganame() +"  ) ");
 					}
 					} 
 			}

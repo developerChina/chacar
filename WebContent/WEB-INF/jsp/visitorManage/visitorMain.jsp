@@ -111,10 +111,10 @@
 					    <td class="font3">
 					    	人员姓名：<input type="text" name="blacklistName">
 					    	单位名称：<input type="text" name="company">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="addAutomatic" type="button" value="将访客拉黑"/>
-							<input id="addManual" type="button" value="手动拉黑"/>
-							<input id="deletemy" type="button" value="批量取消拉黑"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="addAutomatic" type="button" value="&nbsp;&nbsp;将访客拉黑&nbsp;&nbsp;"/>
+							<input id="addManual" type="button" value="&nbsp;&nbsp;手动拉黑&nbsp;&nbsp;"/>
+							<input id="deletemy" type="button" value="&nbsp;&nbsp;批量取消拉黑&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -148,7 +148,7 @@
 					  <td>${black.reason}</td>
  					  <td align="center" width="40px;">
  					       <a href="javascript:myblack(${black.blacklistID})">
-							   <img title="取消拉黑" src="${ctx}/images/update.gif"/>
+							   <img title="&nbsp;&nbsp;取消拉黑&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
 				</tr>

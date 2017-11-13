@@ -93,7 +93,7 @@
 					    				<option value="${dept.id }">${dept.name }</option>
 					    			</c:forEach>
 							</select>&nbsp;
-					    	<input type="submit" value="搜索"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
 					    	
 					    </td>
 					  </tr>
@@ -145,7 +145,7 @@
 					 
 					  <td align="center" width="40px;">
 					      <a href="${ctx}/Jurisdiction/getParts?flag=1&id=${employee.id}">
-							<img title="给其授权电梯组" src="${ctx}/images/update.gif"/>
+							<img title="&nbsp;&nbsp;给其授权电梯组&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
 						  </a>
 					  </td>
 				</tr>

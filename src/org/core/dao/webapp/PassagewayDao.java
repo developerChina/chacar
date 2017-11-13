@@ -9,8 +9,9 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.PassagewayDynaSqlProvider;
+import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
-
+import static org.core.util.GlobleConstants.MIDDLETOPGTABLE;
 public interface PassagewayDao {
 		// 动态查询
 		@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectWhitGy")
@@ -30,9 +31,9 @@ public interface PassagewayDao {
 		//添加通道
 		@SelectProvider(method = "insertPassageway", type = PassagewayDynaSqlProvider.class)
 		void save(Passageway passageway);
-		
-		@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectByIds")
-		List<Passageway> selectByIds(String ids);
+		//删除的判断
+		@Select("select * from "+MIDDLETOPGTABLE+" where passagewayid = #{id}")
+		List<MiddletoPG> selectMiddle(Integer id);
 		
 		
 }

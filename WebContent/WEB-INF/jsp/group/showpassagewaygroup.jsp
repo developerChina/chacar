@@ -92,9 +92,9 @@
 					  <tr>
 					    <td class="font3">
 					    	通道分组名称：<input type="text" name="pgname">
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="添加通道分组"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加通道分组&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

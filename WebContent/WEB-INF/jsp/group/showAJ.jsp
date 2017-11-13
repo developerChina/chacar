@@ -44,14 +44,14 @@
 		 		   /** 获取到用户选中的复选框  */
 		 		   var checkedBoxs = boxs.filter(":checked");
 		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error(" 请选择一个需要删除的门禁！");
+		 			   $.ligerDialog.error(" 请选择一个需要删除的授权！");
 		 		   }else{
 		 			   /** 得到用户选中的所有的需要删除的ids */
 		 			   var ids = checkedBoxs.map(function(){
 		 				   return this.value;
 		 			   })
 		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除门禁",function(r){
+		 			   $.ligerDialog.confirm("确认要删除吗?","删除授权",function(r){
 		 				   if(r){
 		 					    //alert("删除："+ids.get());
 		 					   // 发送请求
@@ -92,10 +92,11 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	门禁授权名：<input type="text" name="ajname">&nbsp;&nbsp;
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delaj" type="button" value="删除门禁授权"/>&nbsp;&nbsp;
-					    	<input id="addaj" type="button" value="添加门禁授权"/>
+					    	门禁授权名:<input type="text" name="ajname">&nbsp;
+					    	门禁名:<input type="text" name="pganame">&nbsp;
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="delaj" type="button" value="&nbsp;&nbsp;删除门禁授权&nbsp;&nbsp;"/>
+					    	<input id="addaj" type="button" value="&nbsp;&nbsp;添加门禁授权&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -116,7 +117,7 @@
 			  <td>门禁组</td>
 			  <td>门禁</td> 
 			  <td>员工</td>
-			  <td align="center">操作</td>
+			 <!--  <td align="center">操作</td> -->
 			</tr>
 			
 			<c:forEach items="${requestScope.accessjs}" var="aj" varStatus="stat">
@@ -124,20 +125,20 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${aj.ajempid};${aj.ajaccessid}"></td>
 					 <td>${aj.ajname}</td>
 					 <td>
-					 		${aj.agroups.agname} ${aj.agroups.agid}
+					 		${aj.agroups.agname}<%--${aj.agroups.agid} --%>
 					 		<%-- (<c:forEach items="${aj.accessList}" var="gyo">
 					 		${gyo.accessname}${gyo.accessid}
 					 		</c:forEach>) --%>
 					 </td>
 					 <td>
-						${aj.accessList.accessname}  ${aj.ajaccessid}
+						${aj.accessList.accessname}<%--${aj.ajaccessid} --%>
 					 </td>
-					 <td>${aj.ajEmployee.name}   ${aj.ajEmployee.id}</td>
-					  <td align="center" width="40px;">
+					 <td>${aj.ajEmployee.name} <%--${aj.ajEmployee.id} --%></td>
+					  <%-- <td align="center" width="40px;">
  					       <a href="${ctx}/AccessJurisdiction/updetaAj?flag=1&id=${passageway.ajid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
-					  </td>
+					  </td> --%>
 				</tr>
 			</c:forEach>
 		  </table>

@@ -15,6 +15,9 @@ public class Accessj implements Serializable{
 	
 	private String ajaccessid;  //门禁授权  门禁
 	private String ajempno;  	//门禁授权  员工卡号
+	
+	private	String pganame;		//用来模糊查询门禁名称
+	
 	/*
 	 *  授权里的门禁分组集合
 	 */
@@ -82,6 +85,12 @@ public class Accessj implements Serializable{
 	}
 	public void setAccessList(Access accessList) {
 		this.accessList = accessList;
+	}
+	public String getPganame() {
+		return pganame;
+	}
+	public void setPganame(String pganame) {
+		this.pganame = pganame;
 	}
 	
 	

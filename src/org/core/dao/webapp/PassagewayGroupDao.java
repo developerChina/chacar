@@ -14,7 +14,8 @@ import org.core.dao.webapp.provider.PassagewayGroupSqlProvider;
 import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
-
+import org.core.domain.webapp.Passagewayj;
+import static org.core.util.GlobleConstants.PASSAGEWAYJTABLE;
 public interface PassagewayGroupDao {
 	/*
 	 * 通道分组
@@ -64,5 +65,8 @@ public interface PassagewayGroupDao {
 	
 	@Delete(" delete from "+MIDDLETOPGTABLE+" where pgroupid = #{mypgid} ")
 	void upDelMiddletoPG(String mypgid);
+	//删除验证
+	@Select(" select * from "+PASSAGEWAYJTABLE+" where pjgroupid=#{id} ")
+	List<Passagewayj> selectPJ(String id);
 
 }
