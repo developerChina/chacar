@@ -27,7 +27,7 @@ public interface RecordBevisitedsDao {
 	List<RecordBevisiteds> selectByPage(RecordBevisiteds entity);
 	
 	@Select("select * from "+RecordBevisiteds.tableName+" where recordID = #{recordid}")
-	List<RecordBevisiteds> selectBevisitedByRecordId(String recordid);
+	RecordBevisiteds selectBevisitedByRecordId(String recordid);
 
 	@Delete(" delete from "+RecordBevisiteds.tableName+" where recordID = #{recordid} ")
 	void deleteByRecordID(String recordid);

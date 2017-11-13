@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.webapp.Elevator;
+import org.core.util.StringUtils;
 
 public class ElevatorDynaSqlProvider {
 	
@@ -122,7 +123,16 @@ public class ElevatorDynaSqlProvider {
 					return sql;
 				}
 		
-	
+				public String selectByIds(String ids) {
+					String where="";
+					if(StringUtils.isNotBlank(ids)){
+						where=" elevatorID in ( "+ ids +" )";
+					}else{
+						where=" 1=0 ";
+					}
+					String sql ="select * from " +ELEVATORTABLE+" where "+ where;
+					return sql;
+				}
 	
 	
 }

@@ -38,6 +38,12 @@ public interface RecordVisitorsDao {
 	List<RecordVisitors> selectVisitorByRID_Statuts(@Param("recordid")String recordid, @Param("status")int status);
 
 	@Select("select * from "+RecordVisitors.tableName+" where cardID = #{cardid} and visitStatus=#{status}")
-	List<RecordVisitors> selectRecordInfoBycardID_status(@Param("cardid")String cardid, @Param("status")int status);
+	List<RecordVisitors> selectRecordInfoBycardID_status(@Param("cardid")String cardid,@Param("status")int status);
+	
+	@Select("select * from "+RecordVisitors.tableName+" where recordID = #{recordid} and visitStatus=#{status} and isAudit=#{audit} ")
+	List<RecordVisitors> selectVisitorByRID_Statuts_audit(@Param("recordid")String recordid, @Param("status")int status, @Param("audit")int audit);
+	
+	@Select("select * from "+RecordVisitors.tableName+" where cardID = #{cardid} and visitStatus=#{status}  and isAudit=#{audit} ")
+	List<RecordVisitors> selectRecordInfoBycardID_status_audit(@Param("cardid")String cardid,@Param("status")int status,@Param("audit")int audit);
 
 }

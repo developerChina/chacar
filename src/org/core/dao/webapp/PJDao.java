@@ -1,6 +1,7 @@
 package org.core.dao.webapp;
-import static org.core.util.GlobleConstants.PASSAGEWAYJTABLE;
 import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
+import static org.core.util.GlobleConstants.PASSAGEWAYJTABLE;
+
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +37,6 @@ public interface PJDao {
 	//根据pid查询通道
 	@Select(" select * from "+PASSAGEWAYJTABLE+" where passagewayjid=#{danpid}")
 	Passageway selecPbypid(String Danpid);
+	@Select("select * from  passagewayj_info aj , passageway_info ac where aj.pjempid=#{empid} and  ac.passagewayID=aj.passagewayjid")
+	List<Passageway> getGrantAuthorization(int empid);
 }

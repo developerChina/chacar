@@ -1,6 +1,8 @@
 package org.core.controller.record;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,17 +83,18 @@ public class RecordController {
 			recordVisitorsService.update(rv);
 		}
 		
-		List<RecordBevisiteds> rbvs=recordBevisitedsService.selectBevisitedByRecordId(recordid);
-		for (RecordBevisiteds rbv : rbvs) {
-			rbv.setBevisitedChannel(StringUtils.join(pw, ","));;   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人通道' ,
-			rbv.setBevisitedFloor(StringUtils.join(elt, ","));;   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人楼层' ,
-			rbv.setBevisitedDoor(acce);;   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人门禁' ,
-			rbv.setBevisitedRoom("");;   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人房间号' ,
-			recordBevisitedsService.update(rbv);
-		}
+		RecordBevisiteds rbv=recordBevisitedsService.selectBevisitedByRecordId(recordid);
+		rbv.setBevisitedChannel(StringUtils.join(pw, ","));   // '被访人通道' ,
+		rbv.setBevisitedFloor(StringUtils.join(elt, ","));   // '被访人楼层' ,
+		rbv.setBevisitedDoor(acce);   // '被访人门禁' ,
+		rbv.setBevisitedRoom("");   // '被访人房间号' ,
+		recordBevisitedsService.update(rbv);
 		
-		//<script>alert('审核通过')</script>
-		return "";
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("status", true);
+		map.put("message", "审核通过");
+		return map;
 	} 
 
 }

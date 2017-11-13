@@ -30,6 +30,8 @@ public interface ElevatorService {
 	
 	int selectEGisE(String id);
 	
+	List<Elevator> selectByIds(String ids);
+	
 	
 
 }

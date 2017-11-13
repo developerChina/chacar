@@ -2,6 +2,7 @@ package org.core.service.webapp.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,9 @@ import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
 import org.core.domain.webapp.Passagewayj;
 import org.core.service.webapp.PJService;
+import org.core.util.AControlUtil;
 import org.core.util.GenId;
+import org.core.util.O2MoreOnlyMap;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,14 +37,12 @@ public class PJServiceImpl implements PJService {
 	@Override
 	@Transactional(readOnly=true)
 	public int selectPJG(String id) {
-		// TODO Auto-generated method stub
 		return pJDao.selectPJG(id);
 	}
 	//查询所有分组
 	@Override
 	@Transactional(readOnly=true)
 	public List<PassagewayGroup> selectAll() {
-		// TODO Auto-generated method stub
 		return pJDao.findPGAll();
 	}
 	//查询授权表并分页
@@ -75,24 +76,23 @@ public class PJServiceImpl implements PJService {
 			for (int i = 1; i < idss.length; i+=2) {
 				mypid=idss[i];
 			}
+			// 删除授权
+			GrantAuthorization(myempid,1);
 			pJDao.removePassagewayjByID(myempid,mypid);
 		}
 	}
 	//查自己
 	@Override
 	public Passagewayj selectPjByid(String id) {
-		// TODO Auto-generated method stub
 		return pJDao.selectPjByid(id);
 	}
 	//修改
 	@Override
 	public void updatePj(Passagewayj passagewayj) {
-		// TODO Auto-generated method stub
 		pJDao.updatePj(passagewayj);
 	}
 	@Override
 	public void savePJ(Passagewayj passagewayj) {
-		// TODO Auto-generated method stub
 		String uuid=GenId.UUID();
 		passagewayj.setPjid(uuid);
 		pJDao.savePJ(passagewayj);
@@ -137,10 +137,50 @@ public class PJServiceImpl implements PJService {
 						myPass.setPjempno(myAEmp.getCardno());
 						pJDao.savePJ(myPass);
 				}
-				
+			}
+			// 授权
+			GrantAuthorization(myempid,2);
+		}
+	}
+	/**
+	 * 公用 授权函数（电梯，门禁） 逻辑 查询 某个人-》权限 -》 某层 -》 某门禁
+	 * 
+	 * @param empids
+	 */
+	public void GrantAuthorization(String empid,int opt) {
+		if (empid != null && !"".equals(empid)) {
+			List<Passageway> la = pJDao.getGrantAuthorization(Integer.parseInt(empid));
+			O2MoreOnlyMap<String, String> moreTDMap = new O2MoreOnlyMap<>();// 某个人的“去重”后的所有  门禁 权限
+			for (Passageway ac : la) {
+				moreTDMap.put(ac.getControllerSN() + "," + ac.getControllerIP()+","+ac.getPjempno(), ac.getPtype());// 0:出  1：进
+			}
+			System.out.println("授权==dianti==" + moreTDMap.getAll());
+			InitTDGrant(moreTDMap,opt);
+		}
+	}
+	/**
+	 * {433104923,192.168.1.5,3918980220,14  -->  1}
+	 * @param moreMap
+	 * @param opt
+	 */
+	public void InitTDGrant(O2MoreOnlyMap<String,String> moreMap,int opt) {
+		int authority[] = { 0, 0, 0, 0 };
+		long cardno = 0;
+		String sn="",ip="";
+		if(moreMap !=null &&  moreMap.getSize()>0) {
+			for (int i = 0; i < moreMap.getSize(); i++) {
+				String[] key = moreMap.getkey(i).split(",");
+				sn=key[0];
+				ip=key[1];
+				cardno = Long.valueOf(key[2]);
+				for (Iterator<String> it = moreMap.getvalue(i).iterator(); it.hasNext();) {
+					authority[Integer.parseInt(it.next())] = opt==1?0:1;
+				}
+				//System.out.println("授权====" + authority[0]+"  "+ authority[1]+"  "+ authority[2]+"  "+ authority[3]);
+				AControlUtil.AddUserCard(Long.valueOf(sn),ip,Long.valueOf(cardno),(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31,authority);
+				authority[0]=0; authority[1]=0; authority[2]=0;authority[3]=0;
 			}
 		}
-		
 	}
 	
 	@Override
@@ -151,16 +191,10 @@ public class PJServiceImpl implements PJService {
 	
 	@Override
 	public Passageway selecPbypid(String Danpid) {
-		// TODO Auto-generated method stub
 		return passagewayDao.selectBypassagewayID(Integer.parseInt(Danpid));
 	}
 	@Override
 	public Employee selectempbyid(String myempid) {
-		// TODO Auto-generated method stub
 		return employeeDao.selectById(Integer.parseInt(myempid));
 	}
-
-	
-	
-	
 }

@@ -47,7 +47,7 @@ public class RecordBevisitedsServiceImpl implements RecordBevisitedsService{
 		return dao.selectByPage(entity);
 	}
 	@Override
-	public List<RecordBevisiteds> selectBevisitedByRecordId(String recordid) {
+	public RecordBevisiteds selectBevisitedByRecordId(String recordid) {
 		return dao.selectBevisitedByRecordId(recordid);		
 	}
 	@Override

@@ -84,7 +84,7 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	<form action="${ctx }/passagewayGroup/addpassagewayGroup" method="get" id="addPgroup"> 
+    	<form action="${ctx }/passagewayGroup/addpassagewayGroup" method="post" id="addPgroup"> 
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<input type="hidden" name="flag" value="2"/>
@@ -114,7 +114,7 @@
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="button" id="addPtoPG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="addPtoPG" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;"></td></tr>
 		  </table>
 		  </form>
 	</td>

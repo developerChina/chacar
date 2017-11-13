@@ -66,4 +66,14 @@ public class RecordVisitorsServiceImpl implements RecordVisitorsService{
 		return dao.selectRecordInfoBycardID_status(cardid,status);
 	}
 
+	@Override
+	public List<RecordVisitors> selectVisitorByRID_Statuts_audit(String recordid, int status, int audit) {
+		return dao.selectVisitorByRID_Statuts_audit(recordid,status,audit);
+	}
+
+	@Override
+	public List<RecordVisitors> selectRecordInfoBycardID_status_audit(String cardid, int status, int audit) {
+		return dao.selectRecordInfoBycardID_status_audit(cardid,status,audit);
+	}
+
 }
