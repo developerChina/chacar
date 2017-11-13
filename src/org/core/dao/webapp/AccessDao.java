@@ -1,7 +1,7 @@
 package org.core.dao.webapp;
 
 import static org.core.util.GlobleConstants.ACCESSTABLE;
-
+import static org.core.util.GlobleConstants.MiddletoAGTABLE;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.AccessDynaSqlProvider;
 import org.core.domain.webapp.Access;
+import org.core.domain.webapp.MiddletoAG;
 
 public interface AccessDao {
 	// 动态查询
@@ -33,4 +34,10 @@ public interface AccessDao {
 	//根据id模糊查询
 	@SelectProvider(method = "selectAccessGroupByid", type = AccessDynaSqlProvider.class)
 	int selectAccessGroupByid(String id);
+	//添加时候的验证
+	@SelectProvider(method = "getList", type = AccessDynaSqlProvider.class)
+	List<Access> getList(Access access);
+	@Select("select * from "+MiddletoAGTABLE+" where accessid= #{id}")
+	List<MiddletoAG> selectMiddletoAGTABLE(Integer id);
+	
 }

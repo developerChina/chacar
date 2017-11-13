@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.core.dao.webapp.AccessDao;
 import org.core.domain.webapp.Access;
+import org.core.domain.webapp.MiddletoAG;
 import org.core.service.webapp.AccessService;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,13 @@ public class AccessServiceImpl implements AccessService{
 	//删除
 	@Override
 	public void removeAccessById(Integer id) {
-		// TODO Auto-generated method stub
-		accessDao.deleteBypassagewayID(id);
+		List<MiddletoAG> delList = accessDao.selectMiddletoAGTABLE(id);
+		if(delList.size()>0){
+			
+		}else{
+			accessDao.deleteBypassagewayID(id);
+		}
+		
 	}
 	//更新
 	@Override
@@ -64,5 +70,19 @@ public class AccessServiceImpl implements AccessService{
 	public int selectAccessGroupByid(String id) {
 		return accessDao.selectAccessGroupByid(id);
 	}
+	//添加时候的验证
+	@Override
+	public List<Access> getList(Access access) {
+		
+		return accessDao.getList(access);
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 }

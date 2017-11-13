@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -20,11 +20,10 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-	<script type="text/javascript">
-	
+<script type="text/javascript">
+
 	$(function(){
-    	/** 通道表单提交 */
-		$("#accessForm").submit(function(){
+		$("#add").click(function(){
 			var accessname = $("#accessname");
 			var csn = $("#csn");
 			var cip = $("#cip");
@@ -43,20 +42,40 @@
 			}else if($.trim(acno.val()) == ""){
 				msg = "门禁编号不能为空！";
 				acno.focus();
-			}else if($.trim(floorno.val()) == ""){
+			}else if($.trim(acno.val()) >4){
+				msg = "门禁编号不能大于4！";
+				acno.focus();
+			}
+			else if($.trim(floorno.val()) == ""){
 				msg = "楼层编号不能为空！";
 				floorno.focus();
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
 				return false;
-			}else{
-				return true;
 			}
-			$("#accessForm").submit();
-		});
+			
+			$.ajax({
+				  type: 'post',
+				  url: '${ctx}/floor/addValidate',
+				  data: {
+					  "csn":csn.val(),
+					  "cip":cip.val(),
+					  "fno":floorno.val(),
+					  "cno":acno.val()
+				  },
+				  success: function(data){
+					if(data.status){
+						$("#accessForm").submit();
+				  	}else{
+				  		alert(data.message);
+				  	}
+				  }
+				  
+			});
+		 })
     });
-		
+	
 
 	</script>
 </head>
@@ -75,27 +94,27 @@
     	 <form action="${ctx}/floor/addAccess" id="accessForm" method="post">
     	 	<!-- 隐藏表单，flag表示添加标记 -->
     	 	<input type="hidden" name="flag" value="2">
-			<input type="hidden" name="id" value="${access.accessid }">
+			<input type="hidden" name="id" value="${access.accessid}">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">门禁名称：<input type="text" name="accessname" id="accessname" size="20" /></td>
-		    			<td class="font3 fftd">控制器SN：<input type="text" name="csn" id="csn" size="20" /></td>
+		    			<td class="font3 fftd">门禁名称:<input type="text" name="accessname" id="accessname" size="20" /></td>
+		    			<td class="font3 fftd">控制器SN:<input type="text" name="csn" id="csn" size="20" /></td>
 		    		</tr>
 		    			
 		    		<tr>
 		    			<td class="font3 fftd">控制器IP:<input name="cip" id="cip" size="20" /></td>
-		    			<td class="font3 fftd">门禁编号:<input name="acno" id="acno" size="20" /></td>
+		    			<td class="font3 fftd">门禁编号:<input name="acno" placeholder="门禁编号1-4数字" onkeyup="value=value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="5" id="acno" size="20"  /></td>
 		    		</tr>
 		    		<tr>
-		    			<td class="font3 fftd">楼层编号:<input name="floorno" id="floorno" size="20" /></td>
+		    			<td class="font3 fftd">楼层编号:<input name="floorno" placeholder="数字文本框" id="floorno" size="20" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="5"/></td>
 		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="添加 ">&nbsp;&nbsp;<input type="reset" value="返回 " onclick="javascript:window.history.back(-1);"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="add" value="&nbsp;&nbsp;添加 &nbsp;&nbsp;">&nbsp;&nbsp;<input type="reset" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;" onclick="javascript:window.history.back(-1);"></td></tr>
 		  </table>
 		 </form>
 	</td>

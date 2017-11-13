@@ -3,7 +3,7 @@ package org.core.dao.webapp;
 import static org.core.util.GlobleConstants.ACCESSGROUPTABLE;
 import static org.core.util.GlobleConstants.MiddletoAGTABLE;
 import static org.core.util.GlobleConstants.ACCESSTABLE;
-
+import static org.core.util.GlobleConstants.ACCESSJTABLE;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.AccessGroupSqlProvider;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
+import org.core.domain.webapp.Accessj;
 import org.core.domain.webapp.MiddletoAG;
 public interface AccessGroupDao {
 	/*
@@ -60,6 +61,9 @@ public interface AccessGroupDao {
 	
 	@Delete(" delete from "+MiddletoAGTABLE+" where agroupid = #{myagid} ")
 	void upDelMiddletoAG(String myagid);
+	
+	@Select(" select * from "+ACCESSJTABLE+" where ajgroupid=#{id}")
+	List<Accessj> getAJlist(String id);
 	
 	
 	

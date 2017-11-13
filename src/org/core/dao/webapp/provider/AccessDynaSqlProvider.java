@@ -111,4 +111,31 @@ public class AccessDynaSqlProvider {
 			}.toString();
 		}
 
+		
+		
+		
+		public String getList(Access access){
+			return new SQL(){
+				{
+					SELECT("*");
+					FROM(ACCESSTABLE);
+					if(access.getCip()!= null && !access.getCip().equals("")){
+						WHERE(" cip = #{cip} ");
+					}
+					if(access.getCsn()!=null && !access.getCsn().equals("")){
+						WHERE(" csn = #{csn} ");
+					}
+					
+				}
+			}.toString();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

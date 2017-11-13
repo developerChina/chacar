@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>楼层管理</title>
+	<title>门禁管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -56,8 +56,8 @@
 		 			   
 		 			   $.ligerDialog.confirm("确定删除吗？","删除门禁",function(r){
 		 				   if(r){
-		 					   // alert("删除："+ids.get());
-		 					   // 发送请求
+		 					    //alert("删除："+ids.get());
+		 					   // 发送请求 async: false
 		 					   window.location = "${ctx }/floor/removeAccess?ids=" + ids.get();
 		 				   }
 		 			   });
@@ -94,9 +94,9 @@
 					    <td class="font3">
 					    	门禁名称：<input type="text" name="accessname">
 					    	控制器IP:<input type="text" name="cip">
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="添加门禁"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;&nbsp;
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加门禁&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
