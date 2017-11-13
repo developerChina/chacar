@@ -118,7 +118,7 @@ public class PrintAllController {
 				String door=rb.getBevisitedDoor();
 				Access mj=accessService.findAccessById(Integer.parseInt(door));
 				
-				VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
+				//VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
 			}
 			
 		}
