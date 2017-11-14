@@ -44,14 +44,14 @@
 		 		   /** 获取到用户选中的复选框  */
 		 		   var checkedBoxs = boxs.filter(":checked");
 		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error(" 请选择一个需要删除的通道！");
+		 			   $.ligerDialog.error(" 请选择一个需要删除的授权！");
 		 		   }else{
 		 			   /** 得到用户选中的所有的需要删除的ids */
 		 			   var ids = checkedBoxs.map(function(){
 		 				   return this.value;
 		 			   })
 		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除通道",function(r){
+		 			   $.ligerDialog.confirm("确认要删除吗?","删除通道授权",function(r){
 		 				   if(r){
 		 					    //alert("删除："+ids.get());
 		 					    $("#remove").submit();
@@ -94,7 +94,8 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	通道授权名：<input type="text" name="pjname">&nbsp;
+					    	通道授权名:<input type="text" name="pjname">&nbsp;
+					    	通道名称:<input type="text" name="pganame">&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delpj" type="button" value="&nbsp;&nbsp;删除通道授权&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="addpj" type="button" value="&nbsp;&nbsp;添加通道授权&nbsp;&nbsp;"/>&nbsp;
@@ -119,7 +120,7 @@
 			  <td>通道组</td>
 			  <td>通道</td>
 			  <td>员工</td>
-			  <td align="center">操作</td>
+			 <!--  <td align="center">操作</td> -->
 			</tr>
 			
 			<c:forEach items="${requestScope.passagewayjs}" var="pp" varStatus="stat">
@@ -134,11 +135,11 @@
 					 	${pp.pass.passagewayName}
 					 </td>
 					 <td>${pp.pjEmployee.name}</td>
-					  <td align="center" width="40px;">
+					 <%--  <td align="center" width="40px;">
  					       <a href="${ctx}/PassagewayJurisdiction/updetaPj?flag=1&id=${passageway.pjid}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
-					  </td>
+					  </td> --%>
 				</tr>
 			</c:forEach>
 		  </table>

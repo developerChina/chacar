@@ -92,10 +92,10 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	电梯组名：<input type="text" name="egname">&nbsp;&nbsp;
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="deleg" type="button" value="删除电梯分组"/>&nbsp;&nbsp;
-					    	<input id="addeg" type="button" value="添加电梯分组"/>
+					    	电梯组名：<input type="text" name="egname">
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="deleg" type="button" value="&nbsp;&nbsp;删除电梯分组&nbsp;&nbsp;"/>
+					    	<input id="addeg" type="button" value="&nbsp;&nbsp;添加电梯分组&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

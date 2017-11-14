@@ -93,9 +93,9 @@
 					    <td class="font3">
 					    	通道名：<input type="text" name="passagewayName">
 					    	控制器IP：<input type="text" name="ControllerIP">
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;
-					    	<input id="delete" type="button" value="删除"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="添加通道"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加通道&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -125,7 +125,7 @@
 					 <td>${passageway.passagewayName }</td>
 					  <td>${passageway.controllerSN }</td>
 					  <td>${passageway.controllerIP }</td>
-					  <td>${passageway.passagewayID}</td>
+					  <td>${passageway.pno}</td>
 					  <td><c:if test="${passageway.ptype==1}">进入通道</c:if>
 					  	  <c:if test="${passageway.ptype==0}">离开通道</c:if>
 					  	</td>

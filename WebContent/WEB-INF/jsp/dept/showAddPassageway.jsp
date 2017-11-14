@@ -73,12 +73,8 @@
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">通道名称：<input type="text" name="passagewayName" id="passagewayName" size="20" /></td>
-		    			<td class="font3 fftd">控制器SN：<input type="text" name="ControllerSN" id="ControllerSN" size="20" /></td>
-		    		</tr>
-		    			
-		    		<tr>
-		    			<td class="font3 fftd">控制器IP:<input name="ControllerIP" id="ControllerIP" size="20" /></td>
+		    			<td class="font3 fftd">通道名称:<input type="text" name="passagewayName" id="passagewayName" size="20" /></td>
+		    			<td class="font3 fftd">控制器SN:<input type="text" name="ControllerSN" id="ControllerSN" size="20" /></td>
 		    			<td class="font3 fftd">通道类型:
 		    			<select name="ptype">
 					<option disabled="disabled">-请选择通道类型-</option>
@@ -86,14 +82,18 @@
 					<option value="0" selected = "selected">离开通道</option>
 					</select>
 						</td>
+		    		</tr>
 		    			
+		    		<tr>
+		    			<td class="font3 fftd">控制器IP:<input name="ControllerIP" id="ControllerIP" size="20" /></td>
+		    			<td class="font3 fftd">通道编号:<input name="pno" id="pno" size="20" /></td>
 		    		</tr>
 		    		
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="添加 ">&nbsp;&nbsp;<input type="reset" value="返回 " onclick="javascript:window.history.back(-1);"></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp; ">&nbsp;<input type="reset" value="&nbsp;&nbsp;返回&nbsp;&nbsp; " onclick="javascript:window.history.back(-1);"></td></tr>
 		  </table>
 		 </form>
 	</td>

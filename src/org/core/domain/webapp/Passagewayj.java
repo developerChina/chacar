@@ -14,6 +14,10 @@ public class Passagewayj implements Serializable{
 	private String pjgroupid;
 	private String passagewayjid;
 	private String pjempno;
+	
+	//模糊查询用到的字段
+	private String pganame;
+	
 	/*
 	 *  授权里的通道分组集合
 	 */
@@ -86,6 +90,12 @@ public class Passagewayj implements Serializable{
 	}
 	public void setPass(Passageway pass) {
 		this.pass = pass;
+	}
+	public String getPganame() {
+		return pganame;
+	}
+	public void setPganame(String pganame) {
+		this.pganame = pganame;
 	}
 	
 	

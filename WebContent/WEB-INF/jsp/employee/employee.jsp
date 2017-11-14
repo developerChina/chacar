@@ -120,7 +120,7 @@
 					    			<option value="2">女</option>
 					    		</select>
 					    	手机：<input type="text" name="phone">
-					    	所属部门：<select  name="dept_id" style="width:100px;">
+					    	所属部门：&nbsp;<select  name="dept_id" style="width:100px;">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
 					    				<option value="${dept.id }">${dept.name }</option>

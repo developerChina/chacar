@@ -90,9 +90,9 @@
 								<input type="hidden" id="cardID" name="cardID" value="">
 								身份号码&nbsp;&nbsp;<span id="cardID-span" class="underline ID"></span>
 							</p>
-							<p>联系电话&nbsp;&nbsp;<input type="text" class="text" id="telephone" name="telephone" style="width: 200px"/></p>
-							<p>工作单位&nbsp;&nbsp;<input type="text" class="text" id="company" name="company" style="width: 400px"/></p>
-							<p>访问事由&nbsp;&nbsp;<input type="text" class="text" id="visitReason" name="visitReason" style="width: 400px"/></p>
+							<p>联系电话&nbsp;&nbsp;<input type="text" class="text" id="telephone" name="telephone" style="width: 350px"/></p>
+							<p>工作单位&nbsp;&nbsp;<input type="text" class="text" id="company" name="company" style="width: 350px"/></p>
+							<p>访问事由&nbsp;&nbsp;<input type="text" class="text" id="visitReason" name="visitReason" style="width: 350px"/></p>
 						</div>
 					</div>
 					<div class="right fl">

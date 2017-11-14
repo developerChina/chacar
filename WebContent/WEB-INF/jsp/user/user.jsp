@@ -61,6 +61,11 @@
 	 	   $("#add").click(function(){
 	 		   window.location = "${ctx }/user/addUser?flag=1";
 	 	   })
+	 	   $("#checkAll").click(function(){
+	    		// this是checkAll  this.checked是true
+	    		// 所有数据行的选中状态与全选的状态一致
+	    		boxs.attr("checked",this.checked);
+	    	})
 	 })
 	</script>
 </head>
@@ -88,9 +93,9 @@
 					    <td class="font3">
 					    	用户名：<input type="text" name="username">
 					    	用户状态：<input type="text" name="status">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加用户"/>
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加用户&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

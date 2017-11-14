@@ -1,10 +1,11 @@
-package org.core.service.webapp.impl;
+﻿package org.core.service.webapp.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.core.dao.webapp.PassagewayDao;
+import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
 import org.core.service.webapp.PassagewayService;
 import org.core.util.tag.PageModel;
@@ -40,7 +41,13 @@ public class PassagewayServiceImpl implements PassagewayService {
 	@Override
 	public void removePassagewayById(Integer id) {
 		// TODO Auto-generated method stub
-		passagewayDao.deleteBypassagewayID(id);
+		List<MiddletoPG>  mPG = passagewayDao.selectMiddle(id);
+		if(mPG.size()>0){
+			
+		}else{
+			passagewayDao.deleteBypassagewayID(id);
+		}
+	
 	}
 	//更新
 	@Override
@@ -62,10 +69,9 @@ public class PassagewayServiceImpl implements PassagewayService {
 		passagewayDao.save(passageway);
 		
 	}
-	@Override
+	
+@Override
 	public List<Passageway> selectByIds(String ids) {
 		return passagewayDao.selectByIds(ids);
 	}
-	
-
 	}

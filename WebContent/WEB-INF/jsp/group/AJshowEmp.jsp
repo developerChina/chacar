@@ -51,14 +51,14 @@
 			 				   return this.value;
 			 			   })
 			 			   
-			 			   $.ligerDialog.confirm("确认要授权吗?","授权 ",function(r){
-			 				   if(r){
+			 			   /* $.ligerDialog.confirm("确认要授权吗?","授权 ",function(r){
+			 				   if(r){}
+			 			   }); */
 			 					    //alert("删除："+ids.get());
 			 					   // 发送请求
 			 					   //$("#addEgroup").submit();
 			 					   window.location ="${ctx}/AccessJurisdiction/shouAJG?flag=1&ids="+ids.get(); 
-			 				   }
-			 			   });
+			 				
 			 		   }
 		    	})
 		   
@@ -100,8 +100,8 @@
 					    				<option value="${job.id }">${job.name }</option>
 					    			</c:forEach>
 					    		</select>
-					    	<input type="submit" value="搜索"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					    	<input type="button" id="bdsq" value="绑定授权（门禁）"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input type="button" id="bdsq" value="&nbsp;&nbsp;绑定授权（门禁）&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

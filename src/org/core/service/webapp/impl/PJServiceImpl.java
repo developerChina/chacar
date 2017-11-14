@@ -48,6 +48,16 @@ public class PJServiceImpl implements PJService {
 	//查询授权表并分页
 	@Override
 	public List<Passagewayj> selectPJ(Passagewayj passagewayj, PageModel pageModel) {
+		String vague = passagewayj.getPganame();
+		if(vague!=null&& !"".equals(vague)){
+			List<Passageway>  vagueList = pJDao.getPlist(vague);
+			String myids="";
+			for (Passageway passageway : vagueList) {
+				myids+=passageway.getPassagewayID()+",";
+			}
+			myids = myids.substring(0,myids.length() - 1);
+			passagewayj.setPganame(myids);
+		}
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> gy = new HashMap<>();
 		gy.put("passagewayj", passagewayj);

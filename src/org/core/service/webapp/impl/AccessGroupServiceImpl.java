@@ -8,6 +8,7 @@ import java.util.Map;
 import org.core.dao.webapp.AccessGroupDao;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
+import org.core.domain.webapp.Accessj;
 import org.core.domain.webapp.MiddletoAG;
 import org.core.service.webapp.AccessGroupService;
 import org.core.util.GenId;
@@ -49,9 +50,13 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			//删除
 			@Override
 			public void removeAccessGroupById(String id) {
-				accessGroupDao.deleteByagID(id);
-				accessGroupDao.deleteAgMiddleByagID(id);
-				
+				List<Accessj> delAjList = accessGroupDao.getAJlist(id);
+				if(delAjList.size()>0){
+					
+				}else{
+					accessGroupDao.deleteByagID(id);
+					accessGroupDao.deleteAgMiddleByagID(id);
+				}
 			}
 			//查询所有门禁
 			@Override

@@ -66,4 +66,8 @@ public interface AJDao {
 	void updateTotleAuthorization(TotleAuthorization totleAuthorization);
 	@Select(" select * from " + TotleAuthTABLE + " where userids = #{userids}")
 	TotleAuthorization selectTotleAuthorizationByid(String userids);
+	
+	//门禁名称的模糊查询
+		@Select(" select * from "+ACCESSTABLE+" where accessname LIKE CONCAT('%',#{vague},'%')")
+		List<Access> getPlist(String vague);
 }

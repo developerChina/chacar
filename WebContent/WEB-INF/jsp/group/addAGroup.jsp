@@ -79,7 +79,7 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：门禁管理  &gt; 添加门禁</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：门禁分组管理  &gt; 添加门禁分组</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
@@ -99,12 +99,14 @@
 		    			<!-- TD 表格BEGIN  -->
 		    			<table width="100%" border="0" cellpadding="5" cellspacing="0" style="border:#c2c6cc 0px solid; border-collapse:collapse;">
 					    <tr >
-					    	<td>请选择你的门禁：&nbsp;
+					    	<td>请选择你的门禁：
 						  全选：<input type="checkbox" name="checkAll" id="checkAll">
 						  <br>
 						  <c:forEach items="${requestScope.agAccesss}" var="Ale" varStatus="stat">
-								 ${Ale.accessname}:
-								<input type="checkbox" name="ids" id="box_${stat.index}" value="${Ale.accessid}"><br>
+								<input type="checkbox" name="ids" id="box_${stat.index}" value="${Ale.accessid}">${Ale.accessname}
+								<c:if test="${stat.count % 5 == 0}">
+								<br>
+								</c:if>
 						</c:forEach>
 						</td>
 						</tr>
@@ -118,7 +120,7 @@
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="button" id="addAtoAG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="addAtoAG" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;"></td></tr>
 		  </table>
 		 </form>
 	</td>

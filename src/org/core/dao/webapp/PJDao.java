@@ -1,6 +1,7 @@
 package org.core.dao.webapp;
 import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
 import static org.core.util.GlobleConstants.PASSAGEWAYJTABLE;
+import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +40,8 @@ public interface PJDao {
 	Passageway selecPbypid(String Danpid);
 	@Select("select * from  passagewayj_info aj , passageway_info ac where aj.pjempid=#{empid} and  ac.passagewayID=aj.passagewayjid")
 	List<Passageway> getGrantAuthorization(int empid);
+	
+	//通道名称模糊查询
+		@Select(" select * from "+PASSAGEWAYTABLE+" where passagewayName LIKE CONCAT('%',#{vague},'%')")
+		List<Passageway> getPlist(String vague);
 }

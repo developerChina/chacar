@@ -82,14 +82,14 @@
 		    			
 		    		<tr>
 		    			<td class="font3 fftd">登录名：<input name="loginname" id="loginname" size="20" value="${user.loginname }"/></td>
-		    			<td class="font3 fftd">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input name="password" id="password" size="20" value="${user.password }"/></td>
+		    			<td class="font3 fftd">密码：<input name="password" id="password" size="20" value="${user.password }"/></td>
 		    		</tr>
 		    		
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="修改 ">&nbsp;&nbsp;<input type="reset" value="取消 "></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;修改 &nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;返回 &nbsp;"></td></tr>
 		  </table>
 		 </form>
 	</td>

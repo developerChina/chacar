@@ -68,6 +68,16 @@ public class AJServiceImpl implements AJService {
 	// 查询授权并分页
 	@Override
 	public List<Accessj> selectAJ(Accessj accessj, PageModel pageModel) {
+		String vague = accessj.getPganame();
+		if(vague!=null&& !"".equals(vague)){
+			List<Access>  vagueList = aJDao.getPlist(vague);
+			String myids="";
+			for (Access access : vagueList) {
+				myids+=access.getAccessid()+",";
+			}
+			myids = myids.substring(0,myids.length() - 1);
+			accessj.setPganame(myids);
+		}
 		/** 当前需要分页的总数据条数 */
 		Map<String, Object> gy = new HashMap<>();
 		gy.put("accessj", accessj);

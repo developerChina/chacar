@@ -127,7 +127,7 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="button" id="addEtoEG" value="添加">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="返回"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="addEtoEG" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;"></td></tr>
 		  </table>
 		 </form>
 	</td>

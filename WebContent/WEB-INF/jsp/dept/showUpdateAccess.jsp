@@ -23,8 +23,7 @@
 	<script type="text/javascript">
 	
 	$(function(){
-    	/** 通道表单提交 */
-		$("#accessForm").submit(function(){
+		$("#upA").click(function(){
 			var accessname = $("#accessname");
 			var csn = $("#csn");
 			var cip = $("#cip");
@@ -43,18 +42,39 @@
 			}else if($.trim(acno.val()) == ""){
 				msg = "门禁编号不能为空！";
 				acno.focus();
-			}else if($.trim(floorno.val()) == ""){
+			}else if($.trim(acno.val()) >4){
+				msg = "门禁编号不能大于4！";
+				acno.focus();
+			}
+			else if($.trim(floorno.val()) == ""){
 				msg = "楼层编号不能为空！";
 				floorno.focus();
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
 				return false;
-			}else{
-				return true;
 			}
-			$("#accessForm").submit();
-		});
+			
+			$.ajax({
+				  type: 'post',
+				  url: '${ctx}/floor/addValidate',
+				  data: {
+					  "csn":csn.val(),
+					  "cip":cip.val(),
+					  "fno":floorno.val(),
+					  "cno":acno.val()
+				  },
+				  success: function(data){
+					if(data.status){
+						$("#accessForm").submit();
+				  	}else{
+				  		alert(data.message);
+				  	}
+				  }
+				  
+			});
+		 })
+		 
     });
 		
 
@@ -80,8 +100,8 @@
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">门禁名称：<input type="text" name="accessname" id="accessname" size="20" value="${access.accessname }"/></td>
-		    			<td class="font3 fftd">控制器SN：<input type="text" name="csn" id="csn" size="20" value="${access.csn }"/></td>
+		    			<td class="font3 fftd">门禁名称:<input type="text" name="accessname" id="accessname" size="20" value="${access.accessname}"/></td>
+		    			<td class="font3 fftd">控制器SN:<input type="text" name="csn" id="csn" size="20" value="${access.csn }"/></td>
 		    		</tr>
 		    			
 		    		<tr>
@@ -95,7 +115,7 @@
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="修改 ">&nbsp;&nbsp;<input type="reset" value="返回 " onclick="javascript:window.history.back(-1);"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="upA" value="&nbsp;&nbsp;修改 &nbsp;&nbsp;">&nbsp;&nbsp;<input type="reset" value="&nbsp;&nbsp;返回&nbsp;&nbsp; " onclick="javascript:window.history.back(-1);"></td></tr>
 		  </table>
 		 </form>
 	</td>

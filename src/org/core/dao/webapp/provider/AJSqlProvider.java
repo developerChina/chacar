@@ -16,9 +16,12 @@ public class AJSqlProvider {
 				if(gy.get("accessj")!=null){
 					Accessj accessj=(Accessj) gy.get("accessj");
 					if(accessj.getAjname()!=null && !accessj.getAjname().equals("")){
-						WHERE(" ajname LIKE CONCAT('%',#{accessj.ajname},'%')");
+						WHERE("  ajname LIKE CONCAT('%',#{accessj.ajname},'%')");
 					}
+					if(accessj.getPganame()!=null && !accessj.getPganame().equals("")){
+						WHERE(" ajaccessid in ( "+ accessj.getPganame() +"  ) ");
 					}
+				}
 			}
 		}.toString();
 		if(gy.get("pageModel")!=null){
@@ -36,6 +39,9 @@ public class AJSqlProvider {
 					Accessj accessj = (Accessj)gy.get("accessj");
 					if(accessj.getAjname()!= null && !accessj.getAjname().equals("")){
 						WHERE(" ajname LIKE CONCAT('%',#{accessj.ajname},'%') ");
+					}
+					if(accessj.getPganame()!=null && !accessj.getPganame().equals("")){
+						WHERE(" ajaccessid in ( "+ accessj.getPganame() +"  ) ");
 					}
 					} 
 			}
