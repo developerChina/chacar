@@ -1,6 +1,7 @@
 package org.core.dao.visitor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
@@ -25,7 +26,10 @@ public interface VisitorInfoDao {
 	VisitorInfo selectById(String id);
 	
 	@SelectProvider(type=VisitorInfoProvider.class,method="selectByPage")
-	List<VisitorInfo> selectByPage(VisitorInfo entity);
+	List<VisitorInfo> selectByPage(Map<String, Object> params);
+	
+	@SelectProvider(type=VisitorInfoProvider.class,method="count")
+	int count(Map<String, Object> params);
 	
 	@Select("select * from "+VisitorInfo.tableName+" where cardID = #{cardID}")
 	VisitorInfo selectOneBycardID(String cardID);

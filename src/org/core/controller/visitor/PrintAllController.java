@@ -129,7 +129,7 @@ public class PrintAllController {
 		}
 		VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
 		
-		return null;
+		return true;
 	}
 	
 }

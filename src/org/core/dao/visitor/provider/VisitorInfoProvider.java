@@ -35,23 +35,40 @@ public class VisitorInfoProvider {
 			}
 		}.toString();
 	}
-
-	public String selectByPage(VisitorInfo entity) {
-		String sql = new SQL() {
+	
+	public String selectByPage(Map<String, Object> params) {
+		String sql =  new SQL(){
 			{
 				SELECT("*");
 				FROM(VisitorInfo.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,serialVersionUID");
-				for (Map.Entry<String, Object> entry : map.entrySet()) { 
-					WHERE(entry.getKey()+"="+"#{"+entry.getKey()+"}");
+				if(params.get("entity") != null){
+//					CarPark entity = (CarPark) params.get("entity");
+//					if(dept.getName() != null && !dept.getName().equals("")){
+//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
+//					}
 				}
 			}
 		}.toString();
-
-		/**
-		 * 分页后续再补 if(params.get("pageModel") != null){ sql += " limit
-		 * #{pageModel.firstLimitParam} , #{pageModel.pageSize} "; }
-		 */
+		
+		if(params.get("pageModel") != null){
+			sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
+		}
+		
+		return sql;
+	}
+	public String count(Map<String, Object> params) {
+		String sql =  new SQL(){
+			{
+				SELECT("count(*)");
+				FROM(VisitorInfo.tableName);
+				if(params.get("entity") != null){
+//					CarPark entity = (CarPark) params.get("entity");
+//					if(dept.getName() != null && !dept.getName().equals("")){
+//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
+//					}
+				}
+			}
+		}.toString();
 		return sql;
 	}
 
