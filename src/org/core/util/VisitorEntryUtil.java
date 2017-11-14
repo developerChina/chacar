@@ -34,8 +34,8 @@ public class VisitorEntryUtil {
 		O2MoreOnlyMap<Integer, String> moreDTMap = new O2MoreOnlyMap<>();// 某个人的“去重”后的所有 电梯  权限
 		O2MoreOnlyMap<String, Integer> moreMJMap = new O2MoreOnlyMap<>();// 某个人的“去重”后的所有  门禁 权限
 		for (Access ac : la) {
-			moreDTMap.put(ac.getFloorno(), ac.getCsn() + "," + ac.getCip() + "," + ac.getAjempno() + "," + ac.getAcno());
-			moreMJMap.put(ac.getCsn() + "," + ac.getCip() + "," + ac.getAjempno() + "," +ac.getFloorno(), ac.getAcno());
+			moreDTMap.put(ac.getFloorno(), ac.getCsn() + "," + ac.getCip() + "," + cardno + "," + ac.getAcno());
+			moreMJMap.put(ac.getCsn() + "," + ac.getCip() + "," + cardno + "," +ac.getFloorno(), ac.getAcno());
 		}
 		InitMJGrant(moreMJMap);
 		InitDTGrant(moreDTMap,dt);
