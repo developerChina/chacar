@@ -46,4 +46,8 @@ public interface RecordVisitorsDao {
 	@Select("select * from "+RecordVisitors.tableName+" where cardID = #{cardid} and visitStatus=#{status}  and isAudit=#{audit} ")
 	List<RecordVisitors> selectRecordInfoBycardID_status_audit(@Param("cardid")String cardid,@Param("status")int status,@Param("audit")int audit);
 
+	
+	@Select("select * from "+RecordVisitors.tableName+" where cardNo = #{cardNo} limit 1")
+	RecordVisitors selectVisitorByCardNo(String cardNo);
+	
 }

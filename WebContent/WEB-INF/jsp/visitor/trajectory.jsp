@@ -45,12 +45,12 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/user/selectUser">
+			  	<form name="empform" method="post" id="empform" action="${ctx}/visitor/trajectoryAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	用户名：<input type="text" name="username">
-					    	用户状态：<input type="text" name="status">
+					    	访客姓名：<input type="text" name="cardName">
+					    	访客身份证号：<input type="text" name="cardID">
 					    	<input type="submit" value="搜索"/>
 					    </td>
 					  </tr>
@@ -70,25 +70,20 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>访客名称</td>
 			  <td>访客身份证</td>
-			  <td>轨迹</td>
 			  <td>进出</td>
+			  <td>通过</td>
 			  <td>时间</td>
 			  <td>描述 </td>
-			  <td align="center">图形显示</td>
 			</tr>
-			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
+			<c:forEach items="${requestScope.trajectorys}" var="trajectory" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
-					 <td>${user.loginname }</td>
-					  <td>${user.password }</td>
-					  <td>${user.username }</td>
-					  <td>${user.status }</td>
-					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>
- 					  <td align="center" width="40px;">
- 					       <a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
-							   <img title="修改" src="${ctx}/images/update.gif"/>
-						   </a>
-					  </td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${trajectory.id}"></td>
+					 <td>${trajectory.recordVisitors.cardName }</td>
+					  <td>${trajectory.recordVisitors.cardID }</td>
+					  <td>${trajectory.ifvalid }</td>
+					  <td>${trajectory.optInOut }</td>
+					  <td>${trajectory.optDate }</td>
+					  <td>${trajectory.optDesc }</td>
 				</tr>
 			</c:forEach>
 		  </table>
@@ -102,7 +97,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/user/selectUser?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/visitor/trajectoryAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

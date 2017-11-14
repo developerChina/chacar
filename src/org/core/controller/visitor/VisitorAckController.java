@@ -5,12 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.core.domain.visitor.Trajectory;
 import org.core.domain.visitor.VisitorInfo;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Blacklist;
 import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.Reson;
+import org.core.service.record.TrajectoryService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.visitor.VisitorService;
 import org.core.service.webapp.AccessService;
@@ -48,7 +50,9 @@ public class VisitorAckController {
 	@Qualifier("accessService")
 	private AccessService accessService;//门禁
 	
-	
+	@Autowired
+	@Qualifier("trajectoryService")
+	private TrajectoryService trajectoryService;//访问轨迹
 	
 	@RequestMapping(value = "/visitor/forwardVisitorAck")
 	public ModelAndView forwardVisitorAck(HttpServletRequest request, HttpServletResponse response, ModelAndView mv,
@@ -260,11 +264,19 @@ public class VisitorAckController {
 	}
 
 	@RequestMapping(value = "/visitor/trajectoryAck")
-	public ModelAndView visitortrajectoryAck(HttpServletRequest request, HttpServletResponse response, ModelAndView mv,
-			String recordid) {
-		// 设置客户端跳转到查询请求
+	public ModelAndView visitortrajectoryAck(
+			Integer pageIndex, ModelAndView mv,
+			Trajectory trajectory,
+			HttpServletRequest request, 
+			HttpServletResponse response) {
+		PageModel pageModel = new PageModel();
+		if(pageIndex != null){
+			pageModel.setPageIndex(pageIndex);
+		}
+		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel);
+		mv.addObject("trajectorys", trajectorys);
+		mv.addObject("pageModel", pageModel);
 		mv.setViewName("visitor/trajectory");
-		// 返回ModelAndView
 		return mv;
 	}
 }
