@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/single-visitor.css" />
 		<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
+		<script src="${ctx}/scripts/jquery.timers-1.2.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div style="width: 0px;height: 0px;">
@@ -97,7 +98,7 @@
 					</div>
 					<div class="right fl">
 						<div>
-							<a href="#" onclick="newvisitor()"><img src="${ctx}/images/shuacard.png" alt=""/></a>
+							<a id="sfzgraph" href="#" onclick="newvisitor()"><img src="${ctx}/images/shuacard.png" alt=""/></a>
 						</div>
 						<div></div>
 						<div>
@@ -217,8 +218,15 @@
 			cardInfo["message"]=message;
 			return cardInfo;
 		}
-		 
+		$(function() {
+			 check();
+		}); 
 		
+		function check() {
+		   $('body').everyTime('1s','C',function(){
+			   $("#sfzgraph").trigger("click");
+			},0,true);
+		}
 		/**
 		*  新建访问人
 		*/	
@@ -255,7 +263,7 @@
 				});
 				
 			}else{
-				alert(cardInfo.message);
+				//alert(cardInfo.message);
 			}
 		}
 		
