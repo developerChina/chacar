@@ -1,5 +1,7 @@
 package org.core.controller.visitor;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,10 +15,12 @@ import org.core.util.GenId;
 import org.core.util.ImageUtils;
 import org.core.util.JsonUtils;
 import org.core.util.StringUtils;
+import org.core.util.tag.PageModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,6 +105,27 @@ public class SingleVisitorController {
 	public Object getVisitorBycardID(HttpServletRequest request,HttpServletResponse response,String cardid){
 		VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(cardid);
 		return visitorInfo;
+	}
+	
+	
+	/**
+	 * 访客列表查询
+	 * @param model
+	 * @param pageIndex
+	 * @param dept
+	 * @return
+	 */
+	@RequestMapping(value="/visitor/selectVisitor")
+	 public String selectDept(Model model,Integer pageIndex,
+			 @ModelAttribute VisitorInfo visitorInfo){
+		PageModel pageModel = new PageModel();
+		if(pageIndex != null){
+			pageModel.setPageIndex(pageIndex);
+		}
+		List<VisitorInfo> visitors=visitorInfoService.selectByPage(visitorInfo,pageModel);
+		model.addAttribute("visitors", visitors);
+		model.addAttribute("pageModel", pageModel);
+		return "visitor/visitors";
 	}
 	
 }

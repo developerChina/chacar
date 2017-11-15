@@ -1,12 +1,15 @@
 package org.core.service.visitor.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.core.dao.visitor.VisitorInfoDao;
 import org.core.domain.visitor.VisitorInfo;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.util.GenId;
 import org.core.util.StringUtils;
+import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -44,8 +47,16 @@ public class VisitorInfoServiceImpl implements VisitorInfoService{
 	}
 
 	@Override
-	public List<VisitorInfo> selectByPage(VisitorInfo entity) {
-		return dao.selectByPage(entity);
+	public List<VisitorInfo> selectByPage(VisitorInfo entity,PageModel pageModel) {
+		Map<String,Object> params = new HashMap<>();
+		params.put("entity", entity);
+		int recordCount = dao.count(params);
+		pageModel.setRecordCount(recordCount);
+		if(recordCount > 0){
+		    params.put("pageModel", pageModel);
+	    }
+		List<VisitorInfo> entitys = dao.selectByPage(params);
+		return entitys;
 	}
 
 	@Override

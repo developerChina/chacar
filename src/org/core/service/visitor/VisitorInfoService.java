@@ -3,6 +3,7 @@ package org.core.service.visitor;
 import java.util.List;
 
 import org.core.domain.visitor.VisitorInfo;
+import org.core.util.tag.PageModel;
 
 
 /**
@@ -30,7 +31,7 @@ public interface VisitorInfoService {
 	/**
 	 * 查询访客(page信息为空不分页)
 	 */
-	List<VisitorInfo> selectByPage(VisitorInfo entity);
+	List<VisitorInfo> selectByPage(VisitorInfo entity,PageModel pageModel);
 	/**
 	 * 根据省份证号查找访客
 	 * @param entity
