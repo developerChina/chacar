@@ -29,6 +29,12 @@
 					return true;
 				}
 			});
+	    	
+	    	$("#template").click(function(){
+	 		   var actionURL = $("#templateform").attr("action");
+	 	       $("#templateform").attr("action","${ctx}/employee/exportTemplate");
+	 	       $("#templateform").submit();
+	 	   })
 	    });
 	</script>
 </head>
@@ -41,6 +47,7 @@
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
+<form name="templateform" method="post" id="templateform"></form>
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>

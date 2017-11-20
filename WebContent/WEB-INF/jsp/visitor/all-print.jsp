@@ -7,22 +7,8 @@
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/print.css" />
 		<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
-		
-		<style type="text/css">
-	        .New_Button, .Edit_Button, .Delete_Button, .Update_Button, .Cancel_Button
-	        {
-	            font-size:11px;color:#1B3F91;font-family:Verdana;  
-	            margin-right:5px;
-	        }
-	        .actionIcons span
-	        {
-	            width:16px;
-	            height:16px;
-	            display:inline-block;
-	            background-position:50% 50%;
-	            cursor:pointer;
-	        }
-	    </style>
+		<link rel="stylesheet" href="${ctx}/css/sweet/sweetalert.css" />
+		<script src="${ctx}/js/sweetalert.min.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div style="width: 0px;height: 0px;">
@@ -190,18 +176,22 @@
 
      function printRecord(){
     	 
-    	 var cardid=$("#cardid").val();
-    	 if(cardid==''){
+    	 
+    	var cardid=$("#cardid").val();
+    	if(cardid==''){
        		alert("请登记身份证信息");
        		return;
         }
     	
-    	
-    	 
     	var bool=false;
     	var datagrid = mini.get("datagrid1");
    		datagrid.selectAll();
    		var nodes=datagrid.getSelecteds();
+   		
+   		if(nodes.length<=0){
+   			return;
+   		}
+   		
    		for (var i = 0; i < nodes.length; i++) {
              if(nodes[i].isAudit==1){
             	 bool=true;
@@ -222,53 +212,61 @@
    			alert("你的申请被拒绝，不能打印");
    			return;
    		}
-   		
     	 
-    	 
-    	 mini.prompt("请在右侧读取身份证信息", "",
- 	            function (action, value) {
- 	                if (action == "ok") {
- 	                	
- 	                	re = /[\u4E00-\u9FA5]/g; //测试中文字符的正则
- 	                	if (re.test(value)) //使用正则判断是否存在中文
- 	                	{
- 	                		alert("请勿手动输入");
- 	                 		return;
- 	                	}
- 	                	
- 	                	$("#cardno").val(value);
- 	                  	var cardno=$("#cardno").val();
- 	                 	 
-	                 	$.ajax({
-	                		  type: 'POST',
-	                		  url: '${ctx}/visitor/printRecordInfo',
-	                		  data: {"cardid":cardid,"cardno":cardno},
-	                		  success: function(data){
-	                			 findRecord($("#cardid").val());//刷新
-	                		  }
-	                	});
- 	                 	 
- 	                 	//获取打印数据
- 	             		var datagrid = mini.get("datagrid1");
- 	             		datagrid.selectAll();
- 	             		var nodes=datagrid.getSelecteds();
- 	             		for (var i = 0; i < nodes.length; i++) {
- 	                         if(nodes[i].isAudit==1){
- 	                         	printTicket(
- 	                     			$("#name").val(),
- 	                     			$("#phone").val(),
- 	                     			$("#company").val(),
- 	                     			nodes[i].bevisitedName,
- 	                     			nodes[i].deptName,
- 	                     			$("#date").val()
- 	                         	);
- 	                         }
- 	             		}
- 	                	
- 	                	
- 	                } 
- 	            }
- 	        );
+	   	 swal({
+	         title: "请在右侧读取身份证信息",
+	         text: "",
+	         type: "input",
+	         showCancelButton: true,
+	         closeOnConfirm: false,
+	         animation: "slide-from-top",
+	         inputPlaceholder: ""
+	     }, function(inputValue) {
+	         if (inputValue === false)
+	             return false;
+	         if (inputValue === "") {
+	             swal.showInputError("请输入!");
+	             return false
+	         }
+	          
+	        re = /[\u4E00-\u9FA5]/g; //测试中文字符的正则
+          	if (re.test(inputValue)) //使用正则判断是否存在中文
+          	{
+          		alert("请勿手动输入");
+           		return;
+          	}
+          	
+          	$("#cardno").val(inputValue);
+            var cardno=$("#cardno").val();
+           	 
+          	$.ajax({
+         		  type: 'POST',
+         		  url: '${ctx}/visitor/printRecordInfo',
+         		  data: {"cardid":cardid,"cardno":cardno},
+         		  success: function(data){
+         			 findRecord($("#cardid").val());//刷新
+         		  }
+         	});
+           	 
+           	//获取打印数据
+       		var datagrid = mini.get("datagrid1");
+       		datagrid.selectAll();
+       		var nodes=datagrid.getSelecteds();
+       		for (var i = 0; i < nodes.length; i++) {
+                   if(nodes[i].isAudit==1){
+                   	printTicket(
+               			$("#name").val(),
+               			$("#phone").val(),
+               			$("#company").val(),
+               			nodes[i].bevisitedName,
+               			nodes[i].deptName,
+               			$("#date").val()
+                   	);
+                   }
+       		}
+	         
+	         
+	     });
     	 
      }
      

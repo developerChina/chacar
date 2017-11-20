@@ -7,10 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
@@ -206,6 +215,129 @@ public class EmployeeController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/employee/exportTemplate")
+	public void exportTemplate(HttpServletRequest request,HttpServletResponse response){
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		this.ceateEmoloyee(workbook);
+		this.createDept(workbook);
+		this.createJob(workbook);
+		try {
+			String fileName="部门管理";
+			ExcelUtil.write(request, response, workbook, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	void ceateEmoloyee(HSSFWorkbook workbook){
+		HSSFSheet sheet = workbook.createSheet("员工信息");
+		sheet.setFitToPage(true);  
+	    sheet.setHorizontallyCenter(true);
+	    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+	    CellRangeAddress c = CellRangeAddress.valueOf("A1:V1");  
+		sheet.setAutoFilter(c);
+		//定义表格行索引
+        int index=0;
+       //添加头信息
+        String[] titles={"名称","身份证号","邮政编码","电话","手机","qq号码","邮箱","性别","政治面貌","生日","民族","学历","专业"," 爱好","备注","卡号","车牌号","地址","部门","职位","部门ID","职位ID"};
+        HSSFRow row_head = sheet.createRow(index++);
+        for (int i=0; i<titles.length;i++) {
+        	HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+	}
+	
+	
+	void createDept(HSSFWorkbook workbook){
+		HSSFSheet sheet = workbook.createSheet("部门信息");
+		sheet.setFitToPage(true);  
+	    sheet.setHorizontallyCenter(true);
+	    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+	    CellRangeAddress c = CellRangeAddress.valueOf("A1:D1");  
+		sheet.setAutoFilter(c);
+	    //设置列宽
+	    sheet.setColumnWidth(0, 3800);
+        sheet.setColumnWidth(1, 4600);		
+        sheet.setColumnWidth(2, 4800);
+        sheet.setColumnWidth(3, 4600);
+		//定义表格行索引
+        int index=0;
+        //添加头信息
+        String[] titles={"编码","名称","上级部门","描述"};
+        HSSFRow row_head = sheet.createRow(index++);
+        for (int i=0; i<titles.length;i++) {
+        	HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+		List<Dept> depts = hrmService.findAllDept();
+        //添加内容
+        for (Dept entity : depts) {
+        	HSSFRow row = sheet.createRow(index++);
+        	//编码
+        	HSSFCell cell0 = row.createCell(0);
+        	cell0.setCellValue(entity.getId());
+        	cell0.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//名称
+			HSSFCell cell1 = row.createCell(1);
+			cell1.setCellValue(entity.getName());
+			cell1.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//上级部门
+			HSSFCell cell2 = row.createCell(2);
+			if(entity.getDept()!=null){
+				cell2.setCellValue(entity.getDept().getName());
+			}
+			cell2.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//描述
+			HSSFCell cell3 = row.createCell(3);
+			cell3.setCellValue(entity.getRemark());
+			cell3.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+	}
+	
+	void createJob(HSSFWorkbook workbook){
+		HSSFSheet sheet = workbook.createSheet("职位信息");
+		sheet.setFitToPage(true);  
+	    sheet.setHorizontallyCenter(true);
+	    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+	    CellRangeAddress c = CellRangeAddress.valueOf("A1:C1");  
+		sheet.setAutoFilter(c);
+	    //设置列宽
+	    sheet.setColumnWidth(0, 3800);
+        sheet.setColumnWidth(1, 4600);		
+        sheet.setColumnWidth(2, 4800);
+		//定义表格行索引
+        int index=0;
+        
+        //添加头信息
+        String[] titles={"编码","名称","描述"};
+        HSSFRow row_head = sheet.createRow(index++);
+        for (int i=0; i<titles.length;i++) {
+        	HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+		List<Job> jobs = hrmService.findAllJob();
+        //添加内容
+        for (Job entity : jobs) {
+        	HSSFRow row = sheet.createRow(index++);
+        	//编码
+        	HSSFCell cell0 = row.createCell(0);
+        	cell0.setCellValue(entity.getId());
+        	cell0.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//名称
+			HSSFCell cell1 = row.createCell(1);
+			cell1.setCellValue(entity.getName());
+			cell1.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			//描述
+			HSSFCell cell2 = row.createCell(2);
+			cell2.setCellValue(entity.getRemark());
+			cell2.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+	}
 	
 	/**
 	 * 批量导入员工
@@ -248,12 +380,14 @@ public class EmployeeController {
 				   employee.setRemark(data.get(14));
 				   employee.setCardno(data.get(15));
 				   employee.setCarno(data.get(16));
+				   employee.setAddress(data.get(17));
 				   Dept dept=new Dept();
-				   dept.setId(Integer.parseInt(data.get(19)));
+				   dept.setId(Integer.parseInt(data.get(20)));
 				   employee.setDept(dept);
 				   Job job=new Job();
-				   job.setId(Integer.parseInt(data.get(20)));
+				   job.setId(Integer.parseInt(data.get(21)));
 				   employee.setJob(job);
+				   
 			   }
 			   
 			   hrmService.addEmployee(employee); 
