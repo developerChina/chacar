@@ -21,7 +21,7 @@ public interface CarParkDao {
 		
 	@SelectProvider(type=CarParkProvider.class,method="update")
 	void update(CarPark entity);
-	
+
 	@Select("select * from "+CarPark.tableName+" where id = #{id}")
 	CarPark selectById(int id);
 	

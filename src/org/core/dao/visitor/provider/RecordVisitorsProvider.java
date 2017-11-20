@@ -36,23 +36,19 @@ public class RecordVisitorsProvider {
 		}.toString();
 	}
 
-	public String selectByPage(RecordVisitors entity) {
+	public String selectByEntity(RecordVisitors entity) {
 		String sql = new SQL() {
 			{
 				SELECT("*");
 				FROM(RecordVisitors.tableName);
-				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,"tableName,serialVersionUID");
-				for (Map.Entry<String, Object> entry : map.entrySet()) { 
-					WHERE(entry.getKey()+"="+"#{"+entry.getKey()+"}");
-					System.out.println(entry.getValue());
+				if(entity.getCardName() != null && !entity.getCardName().equals("")){
+					WHERE(" cardName LIKE CONCAT ('%',#{cardName},'%') ");
+				}
+				if(entity.getCardID() != null && !entity.getCardID().equals("")){
+					WHERE(" cardID LIKE CONCAT ('%',#{cardID},'%') ");
 				}
 			}
 		}.toString();
-		System.out.println(sql);
-		/**
-		 * 分页后续再补 if(params.get("pageModel") != null){ sql += " limit
-		 * #{pageModel.firstLimitParam} , #{pageModel.pageSize} "; }
-		 */
 		return sql;
 	}
 

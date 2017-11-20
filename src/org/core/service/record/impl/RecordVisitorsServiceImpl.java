@@ -43,8 +43,8 @@ public class RecordVisitorsServiceImpl implements RecordVisitorsService{
 	}
 
 	@Override
-	public List<RecordVisitors> selectByPage(RecordVisitors entity) {
-		return dao.selectByPage(entity);
+	public List<RecordVisitors> selectByEntity(RecordVisitors entity) {
+		return dao.selectByEntity(entity);
 	}
 	
 	@Override

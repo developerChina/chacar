@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.visitor.VisitorInfo;
 import org.core.domain.webapp.Access;
@@ -12,6 +13,7 @@ import org.core.domain.webapp.Blacklist;
 import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.Reson;
+import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.TrajectoryService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.visitor.VisitorService;
@@ -19,6 +21,7 @@ import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,6 +43,9 @@ public class VisitorAckController {
 	@Autowired
 	@Qualifier("visitorInfoService")
 	private VisitorInfoService visitorInfoService;
+	@Autowired
+	@Qualifier("recordVisitorsService")
+	private RecordVisitorsService recordVisitorsService;
 	@Autowired
 	@Qualifier("passagewayService")
 	private PassagewayService passagewayService;// 通道
@@ -273,6 +279,27 @@ public class VisitorAckController {
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);
 		}
+		
+		
+		String cardName=request.getParameter("cardName");
+		String cardID=request.getParameter("cardID");
+		
+		if(StringUtils.isNotBlank(cardName) || StringUtils.isNotBlank(cardID)){
+			RecordVisitors entity=new RecordVisitors();
+			entity.setCardName(cardName);
+			entity.setCardID(cardID);
+			List<RecordVisitors> rs=recordVisitorsService.selectByEntity(entity);
+			StringBuffer cardNo=new StringBuffer();
+			if(rs.size()==1){
+				trajectory.setCardNo(rs.get(0).getCardNo());
+			}else{
+				for (RecordVisitors r : rs) {
+					cardNo.append(",'").append(r.getCardNo()).append("'");
+				}
+				trajectory.setCardNo(cardNo.toString().substring(1));
+			}
+		}
+		
 		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel);
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);

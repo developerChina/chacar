@@ -70,6 +70,7 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>访客名称</td>
 			  <td>访客身份证</td>
+			  <td>控制器</td>
 			  <td>进出</td>
 			  <td>通过</td>
 			  <td>时间</td>
@@ -80,6 +81,7 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${trajectory.id}"></td>
 					 <td>${trajectory.recordVisitors.cardName }</td>
 					  <td>${trajectory.recordVisitors.cardID }</td>
+					  <td>${trajectory.controllerSN }</td>
 					  <td>${trajectory.ifvalid }</td>
 					  <td>${trajectory.optInOut }</td>
 					  <td>${trajectory.optDate }</td>

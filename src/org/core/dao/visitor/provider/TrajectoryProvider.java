@@ -19,10 +19,15 @@ public class TrajectoryProvider {
 				FROM(Trajectory.tableName);
 				if(params.get("entity") != null){
 					Trajectory entity = (Trajectory) params.get("entity");
-					if(entity.getCardNo()!= null && "".equals(entity.getCardNo())){
-						WHERE(" cardNo = #{entity.cardNo} ");
+					if(entity.getCardNo()!= null && !"".equals(entity.getCardNo())){
+						if(entity.getCardNo().contains(",")){
+							WHERE(" cardNo in ( "+entity.getCardNo()+" )");
+						}else{
+							WHERE(" cardNo = #{entity.cardNo} ");
+						}
 					}
 				}
+				ORDER_BY("optDate desc");
 			}
 		}.toString();
 		
@@ -40,7 +45,11 @@ public class TrajectoryProvider {
 				if(params.get("entity") != null){
 					Trajectory entity = (Trajectory) params.get("entity");
 					if(entity.getCardNo()!= null && "".equals(entity.getCardNo())){
-						WHERE(" cardNo = #{entity.cardNo} ");
+						if(entity.getCardNo().contains(",")){
+							WHERE(" cardNo in ( "+entity.getCardNo()+" )");
+						}else{
+							WHERE(" cardNo = #{entity.cardNo} ");
+						}
 					}
 				}
 			}

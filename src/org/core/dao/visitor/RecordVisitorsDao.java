@@ -25,8 +25,8 @@ public interface RecordVisitorsDao {
 	@Select("select * from "+RecordVisitors.tableName+" where recordVID = #{id}")
 	RecordVisitors selectById(String id);
 	
-	@SelectProvider(type=RecordVisitorsProvider.class,method="selectByPage")
-	List<RecordVisitors> selectByPage(RecordVisitors entity);
+	@SelectProvider(type=RecordVisitorsProvider.class,method="selectByEntity")
+	List<RecordVisitors> selectByEntity(RecordVisitors entity);
 
 	@Select("select * from "+RecordVisitors.tableName+" where recordID = #{recordid}")
 	List<RecordVisitors> selectVisitorByRecordId(String recordid);

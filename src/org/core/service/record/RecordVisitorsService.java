@@ -28,9 +28,9 @@ public interface RecordVisitorsService {
 	RecordVisitors selectById(String id);
 	
 	/**
-	 * 查询来访记录访客列表(page信息为空不分页)
+	 * 查询来访记录访客列表
 	 */
-	List<RecordVisitors> selectByPage(RecordVisitors entity);
+	List<RecordVisitors> selectByEntity(RecordVisitors entity);
 
 	/**
 	 * 根据记录id查询来访记录访客列表
