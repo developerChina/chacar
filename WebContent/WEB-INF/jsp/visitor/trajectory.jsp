@@ -23,7 +23,18 @@
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
     
 	<script type="text/javascript">
-		$(function(){
+	$(function(){
+		    /** 获取上一次选中的部门数据 */
+	 	    var boxs  = $("input[type='checkbox'][id^='box_']");
+	 	    /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
+	    	$("tr[id^='data_']").hover(function(){
+	    		$(this).css("backgroundColor","#eeccff");
+	    	},function(){
+	    		$(this).css("backgroundColor","#ffffff");
+	    	})
+	    	$("#checkAll").click(function(){
+	    		boxs.attr("checked",this.checked);
+	    	})
 	 })
 	</script>
 </head>
