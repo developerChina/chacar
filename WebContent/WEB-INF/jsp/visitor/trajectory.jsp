@@ -75,6 +75,7 @@
 			  <td>通过</td>
 			  <td>时间</td>
 			  <td>描述 </td>
+			  <td>图片</td>
 			</tr>
 			<c:forEach items="${requestScope.trajectorys}" var="trajectory" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
@@ -86,6 +87,13 @@
 					  <td>${trajectory.optInOut }</td>
 					  <td>${trajectory.optDate }</td>
 					  <td>${trajectory.optDesc }</td>
+					  <td>
+					     <c:if test="${trajectory.recordVisitors.photo1!=null && trajectory.recordVisitors.photo1!='' }">
+					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.photo1 }">
+						  <img width="80px;" height="60px;" src="${imgurl}${trajectory.recordVisitors.photo1 }">
+						  </a>
+					     </c:if>
+					  </td>
 				</tr>
 			</c:forEach>
 		  </table>

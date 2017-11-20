@@ -21,6 +21,7 @@ import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
+import org.core.util.ImageUtils;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -303,6 +304,7 @@ public class VisitorAckController {
 		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel);
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);
+		mv.addObject("imgurl", ImageUtils.imgurl);
 		mv.setViewName("visitor/trajectory");
 		return mv;
 	}
