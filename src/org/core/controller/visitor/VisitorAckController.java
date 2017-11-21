@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.visitor.VisitorInfo;
@@ -13,6 +14,7 @@ import org.core.domain.webapp.Blacklist;
 import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.Reson;
+import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.TrajectoryService;
 import org.core.service.visitor.VisitorInfoService;
@@ -48,6 +50,9 @@ public class VisitorAckController {
 	@Qualifier("recordVisitorsService")
 	private RecordVisitorsService recordVisitorsService;
 	@Autowired
+	@Qualifier("recordBevisitedsService")
+	private RecordBevisitedsService recordBevisitedsService;
+	@Autowired
 	@Qualifier("passagewayService")
 	private PassagewayService passagewayService;// 通道
 	@Autowired
@@ -66,19 +71,33 @@ public class VisitorAckController {
 			String recordid) {
 		// 添加访问记录id
 		mv.addObject("recordid", recordid);
-		PageModel pageModel=new PageModel();
-		pageModel.setPageIndex(1);
-		pageModel.setRecordCount(Integer.MAX_VALUE);
-		pageModel.setPageSize(Integer.MAX_VALUE);
+		
+		
+		RecordBevisiteds rbv=recordBevisitedsService.selectBevisitedByRecordId(recordid);
+		
 		//添加通道
-		List<Passageway> pws=passagewayService.findPassageway(new Passageway(), pageModel);
+		List<Passageway> pws=passagewayService.selectAccessByCardNo(rbv.getBevisitedCardNo());
 		mv.addObject("pws", pws);
-		//添加电梯
-		List<Elevator> elts=elevatorService.findElevator(new Elevator(), pageModel);
-		mv.addObject("elts", elts);
+		
 		//添加楼层
-		List<Access> acces=accessService.findAccess(new Access(), pageModel);
+		List<Access> acces=accessService.selectAccessByCardNo(rbv.getBevisitedCardNo());
 		mv.addObject("acces", acces);
+		
+		if(acces.size()>0){
+			//添加电梯
+			PageModel pageModel=new PageModel();
+			pageModel.setPageIndex(1);
+			pageModel.setRecordCount(Integer.MAX_VALUE);
+			pageModel.setPageSize(Integer.MAX_VALUE);
+			List<Elevator> elts=elevatorService.findElevator(new Elevator(), pageModel);
+			mv.addObject("elts", elts);
+		}
+		
+		if(acces.size()>0 || pws.size()>0){
+			mv.addObject("isShow", "yes");
+		}
+		
+		
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/visitor-ack");
 		// 返回ModelAndView

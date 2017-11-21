@@ -12,6 +12,8 @@ import org.core.dao.webapp.provider.PassagewayDynaSqlProvider;
 import org.core.domain.webapp.MiddletoPG;
 import org.core.domain.webapp.Passageway;
 import static org.core.util.GlobleConstants.MIDDLETOPGTABLE;
+import static org.core.util.GlobleConstants.PASSAGEWAYJTABLE;
+
 public interface PassagewayDao {
 		// 动态查询
 		@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectWhitGy")
@@ -36,6 +38,8 @@ public interface PassagewayDao {
 		List<MiddletoPG> selectMiddle(Integer id);
 @SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectByIds")
 		List<Passageway> selectByIds(String ids);
-		
+
+		@Select("SELECT * from "+PASSAGEWAYTABLE+" where passagewayID in (SELECT DISTINCT passagewayjid from "+PASSAGEWAYJTABLE+" where pjempno= #{cardNo} ) ORDER BY ptype ")
+		List<Passageway> selectAccessByCardNo(String cardNo);
 		
 }

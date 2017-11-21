@@ -11,6 +11,7 @@ public class RecordBevisiteds implements Serializable{
 	private String recordBVID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录被访人员列表ID' ,
 	private String recordID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录ID' ,
 	private String bevisitedID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人ID' ,
+	private String bevisitedCardNo;    //varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人卡号' ,
 	private String bevisitedName;   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
 	private String deptID;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
 	private String deptName;   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门名称' ,
@@ -39,6 +40,12 @@ public class RecordBevisiteds implements Serializable{
 	}
 	public void setBevisitedID(String bevisitedID) {
 		this.bevisitedID = bevisitedID;
+	}
+	public String getBevisitedCardNo() {
+		return bevisitedCardNo;
+	}
+	public void setBevisitedCardNo(String bevisitedCardNo) {
+		this.bevisitedCardNo = bevisitedCardNo;
 	}
 	public String getBevisitedName() {
 		return bevisitedName;

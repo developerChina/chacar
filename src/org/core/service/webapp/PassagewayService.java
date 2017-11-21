@@ -25,4 +25,11 @@ public interface PassagewayService {
 	 */
 	List<Passageway> selectByIds(String ids);
 	
+	/**
+	 * 根据卡号获取授权通道
+	 * @param bevisitedCardNo
+	 * @return
+	 */
+	List<Passageway> selectAccessByCardNo(String cardNo);
+	
 }

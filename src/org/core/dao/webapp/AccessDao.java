@@ -2,9 +2,9 @@ package org.core.dao.webapp;
 
 import static org.core.util.GlobleConstants.ACCESSTABLE;
 import static org.core.util.GlobleConstants.MiddletoAGTABLE;
+import static org.core.util.GlobleConstants.ACCESSJTABLE;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -39,5 +39,8 @@ public interface AccessDao {
 	List<Access> getList(Access access);
 	@Select("select * from "+MiddletoAGTABLE+" where accessid= #{id}")
 	List<MiddletoAG> selectMiddletoAGTABLE(Integer id);
+	
+	@Select("SELECT * from "+ACCESSTABLE+" where accessid in ( SELECT DISTINCT ajaccessid from "+ACCESSJTABLE+" where  ajempno=#{cardNo} ) order by floorno, acno")
+	List<Access> selectAccessByCardNo(String cardNo);
 	
 }

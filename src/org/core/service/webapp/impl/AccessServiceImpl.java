@@ -76,13 +76,9 @@ public class AccessServiceImpl implements AccessService{
 		
 		return accessDao.getList(access);
 	}
-
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public List<Access> selectAccessByCardNo(String cardNo) {
+		return accessDao.selectAccessByCardNo(cardNo);
+	}
 	
 }

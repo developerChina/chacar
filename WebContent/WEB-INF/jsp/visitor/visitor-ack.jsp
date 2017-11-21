@@ -72,7 +72,9 @@
 									</select>
 							  	</div>
 						 </label>
-						<button class="block" onclick="auditRecord()">确认</button>
+						 <c:if test="${isShow=='yes'}">
+						 	<button class="block" onclick="auditRecord()">确认</button>
+						 </c:if>
 					</form>
 				</div>
 			</article>

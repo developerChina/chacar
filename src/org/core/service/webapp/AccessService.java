@@ -21,6 +21,13 @@ public interface AccessService {
 		int selectAccessGroupByid(String id);
 	//添加时候的验证
 		List<Access> getList(Access access);
+		
+		/**
+		 * 根据卡号获取授权门禁
+		 * @param bevisitedCardNo
+		 * @return
+		 */
+		List<Access> selectAccessByCardNo(String cardNo);
 
 
 

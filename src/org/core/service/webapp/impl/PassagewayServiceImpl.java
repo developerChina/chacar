@@ -74,4 +74,10 @@ public class PassagewayServiceImpl implements PassagewayService {
 	public List<Passageway> selectByIds(String ids) {
 		return passagewayDao.selectByIds(ids);
 	}
+
+	@Override
+	public List<Passageway> selectAccessByCardNo(String cardNo) {
+		return passagewayDao.selectAccessByCardNo(cardNo);
+	}
+	
 	}

@@ -135,6 +135,7 @@ public class BeisitedController {
 		RecordBevisiteds recordBevisiteds=new RecordBevisiteds();
 		recordBevisiteds.setRecordID(recordid);   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '访问记录ID' ,
 		recordBevisiteds.setBevisitedID(employee.getId()+"");   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人ID' ,
+		recordBevisiteds.setBevisitedCardNo(employee.getCardno());	//varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人卡号' ,
 		recordBevisiteds.setBevisitedName(employee.getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
 		recordBevisiteds.setDeptID(employee.getDept().getId()+"");   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
 		recordBevisiteds.setDeptName(employee.getDept().getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
