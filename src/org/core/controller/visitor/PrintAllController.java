@@ -22,7 +22,6 @@ import org.core.service.webapp.PassagewayService;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
 import org.core.util.HttpClientUtil;
-import org.core.util.HttpRequest;
 import org.core.util.VisitorEntryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -143,10 +142,12 @@ public class PrintAllController {
 		String bevisitedName=request.getParameter("bevisitedName");
 		String dept=request.getParameter("dept");
 		String visitDate=request.getParameter("visitDate");
+		
+		String serIp=request.getParameter("serIp");
 	
 		String params="cardName="+cardName+"&bevisitedName="+bevisitedName+"&telephone="+telephone+"&dept="+dept+"&unit="+unit+"&visitDate="+visitDate;
 		
-		HttpClientUtil.doGet("http://192.168.1.110:8756?"+params);
+		HttpClientUtil.doGet("http://"+serIp+"?"+params);
 	
 		return true;
 	}

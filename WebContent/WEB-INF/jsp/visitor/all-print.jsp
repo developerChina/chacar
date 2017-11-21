@@ -267,7 +267,7 @@
                   	$.ajax({
                		  type: 'POST',
                		  url: '${ctx}/visitor/mySelfPrint',
-               		  data: {"cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
+               		  data: {"serIp":"192.168.1.110:8756","cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
                		  success: function(data){
                			 
                		  }
