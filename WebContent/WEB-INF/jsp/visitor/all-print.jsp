@@ -254,6 +254,7 @@
        		var nodes=datagrid.getSelecteds();
        		for (var i = 0; i < nodes.length; i++) {
                    if(nodes[i].isAudit==1){
+                   	/**
                    	printTicket(
                			$("#name").val(),
                			$("#phone").val(),
@@ -262,7 +263,16 @@
                			nodes[i].deptName,
                			$("#date").val()
                    	);
-                   }
+                   	*/
+                  	$.ajax({
+               		  type: 'POST',
+               		  url: '${ctx}/visitor/mySelfPrint',
+               		  data: {"serIp":"192.168.1.110:8756","cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
+               		  success: function(data){
+               			 
+               		  }
+               	});
+              }
        		}
 	         
 	         
