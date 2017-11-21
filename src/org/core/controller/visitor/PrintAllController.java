@@ -21,6 +21,7 @@ import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
+import org.core.util.StringUtils;
 import org.core.util.VisitorEntryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -118,13 +119,19 @@ public class PrintAllController {
 				RecordBevisiteds rb=recordBevisitedsService.selectBevisitedByRecordId(rv.getRecordID());
 				//通道授权
 				String channels=rb.getBevisitedChannel();
-				td.addAll(passagewayService.selectByIds(channels));
+				if(StringUtils.isNotBlank(channels)){
+					td.addAll(passagewayService.selectByIds(channels));
+				}
 				//梯控授权
 				String floors=rb.getBevisitedFloor();
-				dt.addAll(elevatorService.selectByIds(floors));
+				if(StringUtils.isNotBlank(floors)){
+					dt.addAll(elevatorService.selectByIds(floors));
+				}
 				//门禁授权
 				String door=rb.getBevisitedDoor();
-				mj.add(accessService.findAccessById(Integer.parseInt(door)));
+				if(StringUtils.isNotBlank(door)){
+					mj.add(accessService.findAccessById(Integer.parseInt(door)));
+				}
 			}
 		}
 		VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
