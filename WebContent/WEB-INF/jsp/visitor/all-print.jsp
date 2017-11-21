@@ -239,6 +239,14 @@
           	$("#cardno").val(inputValue);
             var cardno=$("#cardno").val();
            	 
+            //自动关闭
+            swal({
+			  title: "",
+			  text: "",
+			  timer: 0,
+			  showConfirmButton: false
+			});
+            
           	$.ajax({
          		  type: 'POST',
          		  url: '${ctx}/visitor/printRecordInfo',
