@@ -115,10 +115,10 @@
 		  <tr><td id="navbg7" class="left_nav_closed" ><div class="font1">定位系统</div></td></tr>
 		  <tr valign="top" id="submenu7" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">客户管理</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">用户管理</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">分组管理</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">设备管理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Client/LocationClientAck"  target="main">客户管理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/LUserAck"  target="main">用户管理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/GroupAck"  target="main">分组管理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/LocationVehicel/LocationVehicelAck"  target="main">设备管理</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/illegal" target="main">车辆违规办理</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">位置信息服务</a></img></p>
 		      
