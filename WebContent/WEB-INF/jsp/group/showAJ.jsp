@@ -76,7 +76,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="man_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：门禁授权管理 &gt; 门禁授权查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：门禁授权管理 &gt; 门禁授权查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
