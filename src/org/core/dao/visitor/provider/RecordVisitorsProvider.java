@@ -1,7 +1,9 @@
 package org.core.dao.visitor.provider;
 
+import java.util.Date;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.util.BeanUtil;;
@@ -51,5 +53,20 @@ public class RecordVisitorsProvider {
 		}.toString();
 		return sql;
 	}
+	
+	public String selectCountByStatus(@Param("whereStatus")String whereStatus,@Param("startDate")Date startDate,@Param("endDate")Date endDate) {
+		return "SELECT count(DISTINCT(cardID)) from record_visitors where visitStatus "+whereStatus+" and inDate BETWEEN #{startDate} AND #{endDate}";
+	}
 
+	public String selectCountByStatusGtDate(@Param("whereStatus")String whereStatus,@Param("startDate")Date startDate) {
+		return "SELECT count(DISTINCT(cardID)) from record_visitors where visitStatus "+whereStatus+" and inDate >= #{startDate} ";
+	}
+	
+	public String selectCountByStatusLtDate(@Param("whereStatus")String whereStatus,@Param("endDate")Date endDate) {
+		return "SELECT count(DISTINCT(cardID)) from record_visitors where visitStatus "+whereStatus+" and inDate <= #{endDate} ";
+	}
+	
+	public String selectCountByStatusEqDate(@Param("whereStatus")String whereStatus,@Param("date")Date date) {
+		return "SELECT count(DISTINCT(cardID)) from record_visitors where visitStatus "+whereStatus+" and DATE_FORMAT(inDate,'%Y-%m-%d') = DATE_FORMAT(#{date},'%Y-%m-%d') ";
+	}
 }

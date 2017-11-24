@@ -22,6 +22,7 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
+	<link href="${ctx}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet" />
     
 	<script type="text/javascript">
 	$(function(){
@@ -46,6 +47,11 @@
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
 		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：访客轨迹 &gt; 访客轨迹查询</td>
+		<td class="main_locbg font2" align="right">
+		访问总人数：<font face="arial" size="5" color="blank">${all}</font>
+		&nbsp;&nbsp;正在访问人数：<font face="arial" size="5" color="red">${ing}</font>
+		&nbsp;&nbsp;已访问完人数：<font face="arial" size="5" color="blue">${ed}</font>
+		</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -63,8 +69,8 @@
 					    <td class="font3">
 					    	访客姓名：<input type="text" name="cardName" size="20">
 					    	访客身份证号：<input type="text" name="cardID" size="20">
-					    	访问时间:<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
-									name="sDate" size="20"/>—<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+					    	访问时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+									name="sDate" size="20"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
 									name="eDate" size="20"/>
 					    	<input type="submit" value="搜索"/>
 					    </td>
@@ -86,6 +92,7 @@
 			  <td>访客名称</td>
 			  <td>访客身份证</td>
 			  <td>控制器</td>
+			  <td>被访人</td>
 			  <td>时间</td>
 			  <td>证件照片</td>
 			  <td>现场照片</td>
@@ -96,6 +103,11 @@
 					 <td>${trajectory.recordVisitors.cardName }</td>
 					  <td>${trajectory.recordVisitors.cardID }</td>
 					  <td>${trajectory.controllerDesc }</td>
+					  <td>
+						<c:forEach items="${trajectory.employees }" var="employe" varStatus="stat">
+							${employe.name }<br/>
+						</c:forEach>
+					  </td>
 					  <td>${trajectory.optDate }</td>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.cardPhoto!=null && trajectory.recordVisitors.cardPhoto!='' }">

@@ -21,6 +21,7 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
+	<link href="${ctx}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript">
 	var json={ "vehicleType":{"result":true, 
 		"topics":[{"id":1,"use":"其他"},
@@ -263,7 +264,7 @@
 		    	<table>
 	<tr>
 		<td class="font3 fftd">车牌号码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="carName" id="carName" size="20"/></td>
-		<td class="font3 fftd">过期时间：&nbsp;<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});"name="overduetime" id="overduetime" size="20"/>&nbsp;&nbsp;</td>
+		<td class="font3 fftd">过期时间：&nbsp;<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});"name="overduetime" id="overduetime" size="20"/>&nbsp;&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="font3 fftd">设备ID：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="gprs" id="gprs" size="20"/></td>

@@ -1,5 +1,6 @@
 package org.core.dao.visitor;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -46,8 +47,18 @@ public interface RecordVisitorsDao {
 	@Select("select * from "+RecordVisitors.tableName+" where cardID = #{cardid} and visitStatus=#{status}  and isAudit=#{audit} ")
 	List<RecordVisitors> selectRecordInfoBycardID_status_audit(@Param("cardid")String cardid,@Param("status")int status,@Param("audit")int audit);
 
-	
 	@Select("select * from "+RecordVisitors.tableName+" where cardNo = #{cardNo} limit 1")
 	RecordVisitors selectVisitorByCardNo(String cardNo);
+
+	@SelectProvider(type=RecordVisitorsProvider.class,method="selectCountByStatus")
+	int selectCountByStatus(@Param("whereStatus")String whereStatus,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
+	@SelectProvider(type=RecordVisitorsProvider.class,method="selectCountByStatusGtDate")
+	int selectCountByStatusGtDate(@Param("whereStatus")String whereStatus,@Param("startDate")Date startDate);
+	
+	@SelectProvider(type=RecordVisitorsProvider.class,method="selectCountByStatusLtDate")
+	int selectCountByStatusLtDate(@Param("whereStatus")String whereStatus,@Param("endDate")Date endDate);
+	
+	@SelectProvider(type=RecordVisitorsProvider.class,method="selectCountByStatusEqDate")
+	int selectCountByStatusEqDate(@Param("whereStatus")String whereStatus,@Param("date")Date date);
 }

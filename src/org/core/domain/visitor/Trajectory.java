@@ -1,6 +1,9 @@
 package org.core.domain.visitor;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.core.domain.webapp.Employee;
 /**
  * table="trajectory" <br/>
  * 访问轨迹记录
@@ -21,7 +24,8 @@ public class Trajectory implements Serializable{
 	private RecordVisitors recordVisitors; //根据cardno查询出访问人的信息
 	//表外字段
 	private String controllerDesc; //控制器描述
-	
+	//表外字段
+	private List<Employee> employees; //查询当前被访问人的信息
 	
 	public String getId() {
 		return id;
@@ -82,5 +86,11 @@ public class Trajectory implements Serializable{
 	}
 	public void setControllerDesc(String controllerDesc) {
 		this.controllerDesc = controllerDesc;
+	}
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 }

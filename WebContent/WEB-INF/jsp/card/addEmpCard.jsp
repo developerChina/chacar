@@ -21,6 +21,7 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
+	<link href="${ctx}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet" />
 	<script type="text/javascript">
 	 $(function(){
 	    	/**表单提交 */
@@ -101,7 +102,7 @@
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd">卡&nbsp;&nbsp;&nbsp;&nbsp;号：<input type="text" name="cardno" id="cardno" size="20"/></td>
-		    			<td class="font3 fftd">有&nbsp;效&nbsp;期：<input type="text" name="validate" id="validate" size="20"  cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
+		    			<td class="font3 fftd">有&nbsp;效&nbsp;期：<input type="text" name="validate" id="validate" size="20"  class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd">通&nbsp;&nbsp;&nbsp;&nbsp;道：<input type="text" name="channel" id="channel" size="20"/></td>

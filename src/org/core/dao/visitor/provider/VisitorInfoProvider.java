@@ -4,7 +4,8 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.visitor.VisitorInfo;
-import org.core.util.BeanUtil;;
+import org.core.util.BeanUtil;
+import org.core.util.StringUtils;;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -42,10 +43,13 @@ public class VisitorInfoProvider {
 				SELECT("*");
 				FROM(VisitorInfo.tableName);
 				if(params.get("entity") != null){
-//					CarPark entity = (CarPark) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					VisitorInfo entity = (VisitorInfo) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getCardName())){
+						WHERE("  cardName LIKE CONCAT ('%',#{entity.cardName},'%') ");
+					}
+					if(StringUtils.isNotBlank(entity.getCardID())){
+						WHERE("  cardID LIKE CONCAT ('%',#{entity.cardID},'%') ");
+					}
 				}
 			}
 		}.toString();
@@ -62,10 +66,13 @@ public class VisitorInfoProvider {
 				SELECT("count(*)");
 				FROM(VisitorInfo.tableName);
 				if(params.get("entity") != null){
-//					CarPark entity = (CarPark) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					VisitorInfo entity = (VisitorInfo) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getCardName())){
+						WHERE("  cardName LIKE CONCAT ('%',#{entity.cardName},'%') ");
+					}
+					if(StringUtils.isNotBlank(entity.getCardID())){
+						WHERE("  cardID LIKE CONCAT ('%',#{entity.cardID},'%') ");
+					}
 				}
 			}
 		}.toString();

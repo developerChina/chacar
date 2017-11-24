@@ -25,7 +25,6 @@ import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
 import org.core.util.DateUtil;
-import org.core.util.ImageUtils;
 import org.core.util.PropUtil;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
@@ -342,6 +341,9 @@ public class VisitorAckController {
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);
 		mv.addObject("imgurl", PropUtil.getSysValue("imgurl"));
+		mv.addObject("all", recordVisitorsService.selectCountByStatus("in(1,2,3,4,5)",startDate,endDate));
+		mv.addObject("ing", recordVisitorsService.selectCountByStatus("=3",startDate,endDate));
+		mv.addObject("ed", recordVisitorsService.selectCountByStatus(">3",startDate,endDate));
 		mv.setViewName("visitor/trajectory");
 		return mv;
 	}

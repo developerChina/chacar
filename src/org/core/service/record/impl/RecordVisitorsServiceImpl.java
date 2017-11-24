@@ -1,5 +1,6 @@
 package org.core.service.record.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.core.dao.visitor.RecordVisitorsDao;
@@ -74,6 +75,21 @@ public class RecordVisitorsServiceImpl implements RecordVisitorsService{
 	@Override
 	public List<RecordVisitors> selectRecordInfoBycardID_status_audit(String cardid, int status, int audit) {
 		return dao.selectRecordInfoBycardID_status_audit(cardid,status,audit);
+	}
+
+	@Override
+	public int selectCountByStatus(String whereStatus, Date startDate, Date endDate) {
+		if(startDate!=null&&endDate!=null){
+			return dao.selectCountByStatus(whereStatus,startDate,endDate);
+		}else{
+			if(startDate!=null){
+				return dao.selectCountByStatusGtDate(whereStatus, startDate);
+			}else if(endDate!=null){
+				return dao.selectCountByStatusLtDate(whereStatus, endDate);
+			}else{
+				return dao.selectCountByStatusEqDate(whereStatus, new Date());
+			}
+		}
 	}
 
 }

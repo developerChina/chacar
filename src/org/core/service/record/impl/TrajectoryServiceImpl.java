@@ -9,11 +9,14 @@ import org.core.dao.visitor.TrajectoryDao;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Elevator;
+import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Passageway;
+import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.TrajectoryService;
 import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
+import org.core.util.DateUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +41,9 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 	@Autowired
 	@Qualifier("accessService")
 	private AccessService accessService;//门禁
+	@Autowired
+	@Qualifier("recordBevisitedsService")
+	private RecordBevisitedsService recordBevisitedsService;//被访人
 	@Override
 	public List<Trajectory> selectByPage(Trajectory entity, PageModel pageModel,Date startDate,Date endDate) {
 		/** 当前需要分页的总数据条数  */
@@ -52,6 +58,7 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 	    }
 		List<Trajectory> entitys = dao.selectByPage(params);
 		for (Trajectory trajectory : entitys) {
+			//设置控制器描述
 			String sn=trajectory.getControllerSN();
 			int no=Integer.parseInt(trajectory.getDoorNo());
 			StringBuffer controllerDesc=new StringBuffer();
@@ -68,6 +75,9 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 				controllerDesc.append(access.getAccessname());
 			}
 			trajectory.setControllerDesc(controllerDesc.toString());
+			//设置被访问信息
+			List<Employee> employees=recordBevisitedsService.selectBycardNo(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
+			trajectory.setEmployees(employees);
 		}
 		return entitys;
 	}

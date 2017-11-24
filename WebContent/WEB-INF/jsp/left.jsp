@@ -63,10 +63,8 @@
 		    <td class="left_nav_bgshw" height="30">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/blackAck" target="main">黑名单</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/reasonAck" target="main">拜访事由</a></img></p>
-			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访客查询</a></img></p>
-			   <!-- 
+			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/trajectoryAck" target="main">访问查询</a></img></p>
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/visitor/selectVisitor" target="main">访客信息</a></img></p>
-			  -->
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>

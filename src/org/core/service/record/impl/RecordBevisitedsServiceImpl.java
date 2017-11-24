@@ -1,9 +1,11 @@
 package org.core.service.record.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.core.dao.visitor.RecordBevisitedsDao;
 import org.core.domain.visitor.RecordBevisiteds;
+import org.core.domain.webapp.Employee;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.util.GenId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,8 @@ public class RecordBevisitedsServiceImpl implements RecordBevisitedsService{
 	public void deleteByRecordID(String recordid) {
 		dao.deleteByRecordID(recordid);
 	}
-
+	@Override
+	public List<Employee> selectBycardNo(String cardNo, Date optDate) {
+		return dao.selectBycardNo(cardNo,optDate);
+	}
 }

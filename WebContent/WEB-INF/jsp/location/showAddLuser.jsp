@@ -21,6 +21,7 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
+	<link href="${ctx}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet" />
 	
 	<script type="text/javascript">
 	
@@ -136,7 +137,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">过期&nbsp;时间：&nbsp;
 		    			<input name="overduetime" id="mytime" type="text"  size="20" 
-		    			cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
+		    			class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
 		    		</tr>
 		    	</table>
 		    </td></tr>
