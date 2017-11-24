@@ -39,13 +39,15 @@ public class EmployeeDynaSqlProvider {
 					if(employee.getCardId() != null && !employee.getCardId().equals("") ){
 						WHERE(" card_id LIKE CONCAT ('%',#{employee.cardId},'%') ");
 					}
+					if(employee.getCarstatus() != null && employee.getCarstatus() != -1 ){
+						WHERE(" carstatus = #{employee.carstatus} ");
+					}
 					if(employee.getSex()!= null && employee.getSex() != 0){
 						WHERE("sex = #{employee.sex}");
 					}
 				}
 			}
 		}.toString();
-		
 		if(params.get("pageModel") != null){
 			sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
 		}
@@ -74,6 +76,9 @@ public class EmployeeDynaSqlProvider {
 					}
 					if(employee.getCardId() != null && !employee.getCardId().equals("") ){
 						WHERE(" card_id LIKE CONCAT ('%',#{employee.cardId},'%') ");
+					}
+					if(employee.getCarstatus() != null && !employee.getCarstatus().equals("") ){
+						WHERE(" carstatus = #{employee.carstatus} ");
 					}
 					if(employee.getSex()!= null && employee.getSex() != 0){
 						WHERE("sex = #{employee.sex}");
@@ -223,6 +228,9 @@ public class EmployeeDynaSqlProvider {
 				}
 				if(employee.getCarno()!= null){
 					SET(" carno = #{carno} ");
+				}
+				if(employee.getCarstatus()!= null){
+					SET(" carstatus = #{carstatus} ");
 				}
 				WHERE(" id = #{id} ");
 			}

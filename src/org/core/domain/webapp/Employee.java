@@ -35,6 +35,7 @@ public class Employee implements java.io.Serializable{
 	private String remark;				// 备注
 	private java.util.Date createDate;	// 建档日期
 	private String cardno;				//员工卡号
+	private Integer carstatus;          //员工卡号状态
 	private String carno;				//员工车牌号
 	
 	// 无参数构造器
@@ -175,6 +176,13 @@ public class Employee implements java.io.Serializable{
 	}
 	public void setCarno(String carno) {
 		this.carno = carno;
+	}
+	
+	public Integer getCarstatus() {
+		return carstatus;
+	}
+	public void setCarstatus(Integer carstatus) {
+		this.carstatus = carstatus;
 	}
 	@Override
 	public String toString() {
