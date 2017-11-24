@@ -101,15 +101,15 @@
 					  <td>${trajectory.optDesc }</td>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.cardPhoto!=null && trajectory.recordVisitors.cardPhoto!='' }">
-					     <a target="_blank" href="${imgurl}${cardPhoto}${trajectory.recordVisitors.cardPhoto }">
-						  <img width="80px;" height="60px;" src="${imgurl}${cardPhoto}${trajectory.recordVisitors.cardPhoto }">
+					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.cardPhoto }">
+						  <img width="80px;" height="60px;" src="${imgurl}${trajectory.recordVisitors.cardPhoto }">
 						  </a>
 					     </c:if>
 					  </td>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.photo1!=null && trajectory.recordVisitors.photo1!='' }">
-					     <a target="_blank" href="${imgurl}${photo1}${trajectory.recordVisitors.photo1 }">
-						  <img width="80px;" height="60px;" src="${imgurl}${photo1}${trajectory.recordVisitors.photo1 }">
+					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.photo1 }">
+						  <img width="80px;" height="60px;" src="${imgurl}${trajectory.recordVisitors.photo1 }">
 						  </a>
 					     </c:if>
 					  </td>

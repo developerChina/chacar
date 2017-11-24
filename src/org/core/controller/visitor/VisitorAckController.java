@@ -342,8 +342,6 @@ public class VisitorAckController {
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);
 		mv.addObject("imgurl", PropUtil.getSysValue("imgurl"));
-		mv.addObject("cardPhoto", ImageUtils.cardPhoto);
-		mv.addObject("photo1", ImageUtils.photo1);
 		mv.setViewName("visitor/trajectory");
 		return mv;
 	}

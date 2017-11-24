@@ -14,8 +14,8 @@ public class PropUtil {
 	public static Properties getPropertiesFile(String path){
 		Properties prop = new Properties();  
 		try {
-			InputStream in = ClassLoader.getSystemResourceAsStream(path);
-			prop.load(in);
+			InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream(path);
+			prop.load(inStream);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
@@ -38,4 +38,7 @@ public class PropUtil {
 		return getSys().getProperty(key);
 	}
 	 
+	public static void main(String[] args) {
+		System.out.println(getSysValue("imgurl"));
+	}
 }
