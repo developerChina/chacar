@@ -24,7 +24,6 @@ public class ElevatorServiceImpl implements ElevatorService {
 	@Autowired
 	private ElevatorDao elevatorDao;
 	
-	
 	/*****************电梯接口实现*************************************/
 	
 	/**
@@ -48,8 +47,6 @@ public class ElevatorServiceImpl implements ElevatorService {
 		return elevators;
 	}
 
-
-	
 	/**
 	 * ElevatorServiceImpl接口removeUserById方法实现
 	 * @see { ElevatorService }
@@ -59,7 +56,6 @@ public class ElevatorServiceImpl implements ElevatorService {
 		// TODO Auto-generated method stub
 		elevatorDao.deleteById(id);
 	}
-
 
 	/**
 	 * ElevatorServiceImpl接口addElevator方法实现
@@ -71,7 +67,6 @@ public class ElevatorServiceImpl implements ElevatorService {
 		elevatorDao.save(elevator);
 	}
 
-
 	@Transactional(readOnly=true)
 	@Override
 	public Elevator findElevatorById(Integer elevatorID) {
@@ -79,15 +74,11 @@ public class ElevatorServiceImpl implements ElevatorService {
 		return elevatorDao.selectById(elevatorID);
 	}
 
-
-
 	@Override
 	public void modifyElevator(Elevator elevator) {
 		// TODO Auto-generated method stub
 		elevatorDao.update(elevator);
 	}
-
-
 
 	@Override
 	public int selectEGisE(String id) {
@@ -95,23 +86,14 @@ public class ElevatorServiceImpl implements ElevatorService {
 		return elevatorDao.selectEGisE(id);
 	}
 
-
-
 	@Override
 	public List<Elevator> selectByIds(String ids) {
 		return elevatorDao.selectByIds(ids);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public List<Elevator> selectBySN(String sn) {
+		return elevatorDao.selectBySN(sn);
+	}
 	
 }

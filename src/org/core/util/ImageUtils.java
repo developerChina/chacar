@@ -13,7 +13,6 @@ public class ImageUtils {
 	
 	public static String cardPhoto="cardPhoto/";
 	public static String photo1="photo1/";
-	public static String imgurl="http://localhost:8080/chacar/";
 	/**
 	 * @Description: 将base64编码字符串转换为图片
 	 * @Author: 

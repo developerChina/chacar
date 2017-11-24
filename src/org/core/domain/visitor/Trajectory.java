@@ -19,6 +19,9 @@ public class Trajectory implements Serializable{
 	
 	//表外字段
 	private RecordVisitors recordVisitors; //根据cardno查询出访问人的信息
+	//表外字段
+	private String controllerDesc; //控制器描述
+	
 	
 	public String getId() {
 		return id;
@@ -73,5 +76,11 @@ public class Trajectory implements Serializable{
 	}
 	public void setRecordVisitors(RecordVisitors recordVisitors) {
 		this.recordVisitors = recordVisitors;
+	}
+	public String getControllerDesc() {
+		return controllerDesc;
+	}
+	public void setControllerDesc(String controllerDesc) {
+		this.controllerDesc = controllerDesc;
 	}
 }

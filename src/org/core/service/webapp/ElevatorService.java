@@ -33,5 +33,9 @@ public interface ElevatorService {
 	List<Elevator> selectByIds(String ids);
 	
 	
-
+	/**
+	 * 根据SN和No
+	 * @return
+	 */
+	List<Elevator> selectBySN(String sn);
 }

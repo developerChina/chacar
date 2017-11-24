@@ -1,5 +1,6 @@
 package org.core.dao.visitor.provider;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
@@ -18,6 +19,7 @@ public class TrajectoryProvider {
 				SELECT("*");
 				FROM(Trajectory.tableName);
 				if(params.get("entity") != null){
+					
 					Trajectory entity = (Trajectory) params.get("entity");
 					if(entity.getCardNo()!= null && !"".equals(entity.getCardNo())){
 						if(entity.getCardNo().contains(",")){
@@ -25,6 +27,15 @@ public class TrajectoryProvider {
 						}else{
 							WHERE(" cardNo = #{entity.cardNo} ");
 						}
+					}
+					
+					Date startDate = (Date) params.get("startDate");
+					Date endDate = (Date) params.get("endDate");
+					if(startDate!=null&&endDate!=null){
+						WHERE(" optDate  BETWEEN #{startDate} AND #{endDate} ");
+					}else{
+						if(startDate!=null){ WHERE(" optDate >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" optDate <= #{endDate}  "); }
 					}
 				}
 				ORDER_BY("optDate desc");
@@ -43,6 +54,7 @@ public class TrajectoryProvider {
 				SELECT("count(*)");
 				FROM(Trajectory.tableName);
 				if(params.get("entity") != null){
+					
 					Trajectory entity = (Trajectory) params.get("entity");
 					if(entity.getCardNo()!= null && "".equals(entity.getCardNo())){
 						if(entity.getCardNo().contains(",")){
@@ -50,6 +62,15 @@ public class TrajectoryProvider {
 						}else{
 							WHERE(" cardNo = #{entity.cardNo} ");
 						}
+					}
+					
+					Date startDate = (Date) params.get("startDate");
+					Date endDate = (Date) params.get("endDate");
+					if(startDate!=null&&endDate!=null){
+						WHERE(" optDate  BETWEEN #{startDate} AND #{endDate} ");
+					}else{
+						if(startDate!=null){ WHERE(" optDate >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" optDate <= #{endDate}  "); }
 					}
 				}
 			}

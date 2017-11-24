@@ -1,5 +1,6 @@
 package org.core.controller.visitor;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,8 @@ import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
-import org.core.util.ImageUtils;
+import org.core.util.DateUtil;
+import org.core.util.PropUtil;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -320,10 +322,25 @@ public class VisitorAckController {
 			}
 		}
 		
-		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel);
+		String sDate=request.getParameter("sDate");
+		Date startDate=null;
+		try {
+			startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd HH:mm:ss");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String eDate=request.getParameter("eDate");
+		Date endDate=null;
+		try {
+			endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd HH:mm:ss");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel,startDate,endDate);
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);
-		mv.addObject("imgurl", ImageUtils.imgurl);
+		mv.addObject("imgurl", PropUtil.getSysValue("imgurl"));
 		mv.setViewName("visitor/trajectory");
 		return mv;
 	}

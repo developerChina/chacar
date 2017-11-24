@@ -41,9 +41,7 @@ public interface ElevatorDao {
 	@SelectProvider(type=ElevatorDynaSqlProvider.class,method="selectByIds")
 	List<Elevator> selectByIds(String ids);
 
-	
-	
-	
-	
+	@Select("select * from "+ELEVATORTABLE+" where controllerSN = #{sn}")
+	List<Elevator> selectBySN(String sn);
 	
 }

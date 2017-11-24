@@ -27,9 +27,13 @@ public interface PassagewayService {
 	
 	/**
 	 * 根据卡号获取授权通道
-	 * @param bevisitedCardNo
-	 * @return
 	 */
 	List<Passageway> selectAccessByCardNo(String cardNo);
+	
+	
+	/**
+	 * 根据SN和No
+	 */
+	List<Passageway> selectBySN_No(String sn,int no);
 	
 }

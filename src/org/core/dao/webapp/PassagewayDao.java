@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.PassagewayDynaSqlProvider;
@@ -36,10 +37,13 @@ public interface PassagewayDao {
 		//删除的判断
 		@Select("select * from "+MIDDLETOPGTABLE+" where passagewayid = #{id}")
 		List<MiddletoPG> selectMiddle(Integer id);
-@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectByIds")
+		@SelectProvider(type=PassagewayDynaSqlProvider.class,method="selectByIds")
 		List<Passageway> selectByIds(String ids);
 
 		@Select("SELECT * from "+PASSAGEWAYTABLE+" where passagewayID in (SELECT DISTINCT passagewayjid from "+PASSAGEWAYJTABLE+" where pjempno= #{cardNo} ) ORDER BY ptype ")
 		List<Passageway> selectAccessByCardNo(String cardNo);
+		
+		@Select("select * from "+PASSAGEWAYTABLE+" where ControllerSN = #{sn} and pno=#{no}")
+		List<Passageway> selectBySN_No(@Param("sn")String sn, @Param("no")int no);
 		
 }

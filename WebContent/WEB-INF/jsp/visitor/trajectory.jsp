@@ -21,6 +21,7 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
     
 	<script type="text/javascript">
 	$(function(){
@@ -60,8 +61,11 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	访客姓名：<input type="text" name="cardName">
-					    	访客身份证号：<input type="text" name="cardID">
+					    	访客姓名：<input type="text" name="cardName" size="20">
+					    	访客身份证号：<input type="text" name="cardID" size="20">
+					    	访问时间:<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+									name="sDate" size="20"/>—<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+									name="eDate" size="20"/>
 					    	<input type="submit" value="搜索"/>
 					    </td>
 					  </tr>
@@ -82,22 +86,26 @@
 			  <td>访客名称</td>
 			  <td>访客身份证</td>
 			  <td>控制器</td>
-			  <td>进出</td>
-			  <td>通过</td>
 			  <td>时间</td>
 			  <td>描述 </td>
-			  <td>图片</td>
+			  <td>证件照片</td>
+			  <td>现场照片</td>
 			</tr>
 			<c:forEach items="${requestScope.trajectorys}" var="trajectory" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${trajectory.id}"></td>
 					 <td>${trajectory.recordVisitors.cardName }</td>
 					  <td>${trajectory.recordVisitors.cardID }</td>
-					  <td>${trajectory.controllerSN }</td>
+					  <td>${trajectory.controllerDesc }</td>
 					  <td>${trajectory.ifvalid }</td>
-					  <td>${trajectory.optInOut }</td>
-					  <td>${trajectory.optDate }</td>
 					  <td>${trajectory.optDesc }</td>
+					  <td>
+					     <c:if test="${trajectory.recordVisitors.cardPhoto!=null && trajectory.recordVisitors.cardPhoto!='' }">
+					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.cardPhoto }">
+						  <img width="80px;" height="60px;" src="${imgurl}${trajectory.recordVisitors.cardPhoto }">
+						  </a>
+					     </c:if>
+					  </td>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.photo1!=null && trajectory.recordVisitors.photo1!='' }">
 					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.photo1 }">

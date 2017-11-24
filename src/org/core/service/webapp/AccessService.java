@@ -24,13 +24,15 @@ public interface AccessService {
 		
 		/**
 		 * 根据卡号获取授权门禁
-		 * @param bevisitedCardNo
 		 * @return
 		 */
 		List<Access> selectAccessByCardNo(String cardNo);
 
 
-
+		/**
+		 * 根据SN和No
+		 */
+		List<Access> selectBySN_No(String sn,int no);
 
 
 }

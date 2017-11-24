@@ -1,14 +1,22 @@
 package org.core.service.record.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.core.dao.visitor.TrajectoryDao;
 import org.core.domain.visitor.Trajectory;
+import org.core.domain.webapp.Access;
+import org.core.domain.webapp.Elevator;
+import org.core.domain.webapp.Passageway;
 import org.core.service.record.TrajectoryService;
+import org.core.service.webapp.AccessService;
+import org.core.service.webapp.ElevatorService;
+import org.core.service.webapp.PassagewayService;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,18 +29,46 @@ import org.springframework.transaction.annotation.Transactional;
 public class TrajectoryServiceImpl implements TrajectoryService{
 	@Autowired
 	private TrajectoryDao dao;
-	
+	@Autowired
+	@Qualifier("passagewayService")
+	private PassagewayService passagewayService;// 通道
+	@Autowired
+	@Qualifier("elevatorService")
+	private ElevatorService elevatorService;//电梯
+	@Autowired
+	@Qualifier("accessService")
+	private AccessService accessService;//门禁
 	@Override
-	public List<Trajectory> selectByPage(Trajectory entity, PageModel pageModel) {
+	public List<Trajectory> selectByPage(Trajectory entity, PageModel pageModel,Date startDate,Date endDate) {
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
 		int recordCount = dao.count(params);
 		pageModel.setRecordCount(recordCount);
 		if(recordCount > 0){
 		    params.put("pageModel", pageModel);
 	    }
 		List<Trajectory> entitys = dao.selectByPage(params);
+		for (Trajectory trajectory : entitys) {
+			String sn=trajectory.getControllerSN();
+			int no=Integer.parseInt(trajectory.getDoorNo());
+			StringBuffer controllerDesc=new StringBuffer();
+			List<Passageway> ways=passagewayService.selectBySN_No(sn, no);
+			for (Passageway passageway : ways) {
+				controllerDesc.append(passageway.getPassagewayName());
+			}
+			List<Elevator> elts=elevatorService.selectBySN(sn);
+			for (Elevator elevator : elts) {
+				controllerDesc.append(elevator.getElevatorName());
+			}
+			List<Access> as=accessService.selectBySN_No(sn, no);
+			for (Access access : as) {
+				controllerDesc.append(access.getAccessname());
+			}
+			trajectory.setControllerDesc(controllerDesc.toString());
+		}
 		return entitys;
 	}
 

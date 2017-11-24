@@ -238,21 +238,21 @@
           	
           	$("#cardno").val(inputValue);
             var cardno=$("#cardno").val();
-           	 
-            //自动关闭
-            swal({
-			  title: "",
-			  text: "",
-			  timer: 0,
-			  showConfirmButton: false
-			});
-            
-          	$.ajax({
+          	
+            $.ajax({
          		  type: 'POST',
          		  url: '${ctx}/visitor/printRecordInfo',
          		  data: {"cardid":cardid,"cardno":cardno},
          		  success: function(data){
-         			 findRecord($("#cardid").val());//刷新
+         			//自动关闭
+       	            swal({
+       				  title: "",
+       				  text: "",
+       				  timer: 0,
+       				  showConfirmButton: false
+       				});
+         			findRecord($("#cardid").val());//刷新
+         			$("#cardid").val('');
          		  }
          	});
            	 
