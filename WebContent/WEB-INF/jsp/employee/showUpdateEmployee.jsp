@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -25,7 +26,6 @@
 		// 控制文档加载完成以后 选中性别 
 		$("#sex").val("${employee.sex}");
 		$("#job_id").val("${employee.job.id}");
-		$("#birthday").val("${employee.birthday}");
     	/** 员工表单提交 */
 		$("#employeeForm").submit(function(){
 			var msg = "";
@@ -152,7 +152,8 @@
 			<tr>
 				<td class="font3 fftd">
 					出生日期：<input cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="birthday" id="birthday" size="40" value="${employee.birthday }" />&nbsp;&nbsp;
+					name="birthday" id="birthday" size="40" value="<fmt:formatDate value='${employee.birthday }' pattern='yyyy-MM-dd' />" />
+					&nbsp;&nbsp;
 					民&nbsp;&nbsp;&nbsp;&nbsp;族：<input name="race" id="race" size="20" value="${employee.race }"/>
 				</td>
 			</tr>
