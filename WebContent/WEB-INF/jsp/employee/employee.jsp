@@ -73,7 +73,47 @@
 		 		   window.location = "${ctx }/employee/importEmployeePage";
 		 	   }) 
 		 	  
-		 	   
+		 	   $("#bingd").click(function(){
+	    		   /** 获取到用户选中的复选框  */
+	    		   var checkedBoxs = boxs.filter(":checked");
+	    		   if(checkedBoxs.length < 1){
+	    			   $.ligerDialog.error("请选择一个需要要绑定的员工！");
+	    		   }else{
+	    			   /** 得到用户选中的所有的需要删除的ids */
+	    			   var ids = checkedBoxs.map(function(){
+	    				   return this.value;
+	    			   })
+	    			   
+      			 	   $.ajax({
+	    	         		  type: 'POST',
+	    	         		  url: '${ctx}/employee/bingdEmployee?flag=1&ids='+ids.get(),
+	    	         		  success: function(data){
+	    	         			 alert(data);
+	    	         		  }
+	    	         	});
+	    		   }
+	    	   })
+ 
+             $("#unbingd").click(function(){
+	    		   /** 获取到用户选中的复选框  */
+	    		   var checkedBoxs = boxs.filter(":checked");
+	    		   if(checkedBoxs.length < 1){
+	    			   $.ligerDialog.error("请选择一个需要要绑定的员工！");
+	    		   }else{
+	    			   /** 得到用户选中的所有的需要删除的ids */
+	    			   var ids = checkedBoxs.map(function(){
+	    				   return this.value;
+	    			   })
+	    			   
+      			 	   $.ajax({
+	    	         		  type: 'POST',
+	    	         		  url: '${ctx}/employee/bingdEmployee?flag=0&ids='+ids.get(),
+	    	         		  success: function(data){
+	    	         			 alert(data);
+	    	         		  }
+	    	         	});
+	    		   }
+	    	   })
 	       })
 	       
 	</script>
@@ -109,27 +149,31 @@
 					    		</select>
 					    	姓名：<input type="text" name="name">
 					    	身份证号码：<input type="text" name="cardId" maxlength="18">
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加&nbsp;"/>
+					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
 					    </td>
 					  </tr>
+					  <tr><td class="font3"><hr></td></tr>
 					  <tr>
 					    <td class="font3">
-					    	性别：
-					    		<select name="sex" style="width:143px;">
-					    			<option value="0">--请选择性别--</option>
-					    			<option value="1">男</option>
-					    			<option value="2">女</option>
+					    	卡状态：
+					    		<select name="carstatus" style="width:130px;">
+					    			<option value="-1">--请选择--</option>
+					    			<option value="1">已授权</option>
+					    			<option value="0">未授权</option>
 					    		</select>
 					    	手机：<input type="text" name="phone">
-					    	所属部门：&nbsp;<select  name="dept_id" style="width:100px;">
+					    	所属部门：&nbsp;<select  name="dept_id" style="width:166px;">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
 					    				<option value="${dept.id }">${dept.name }</option>
 					    			</c:forEach>
 							</select>&nbsp;
-					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
-					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
-					    	<input id="add" type="button" value="&nbsp;添加员工&nbsp;"/>
-					    	<input id="import" type="button" value="&nbsp;批量导入&nbsp;"/>
+					    	
+					    	<input id="bingd" type="button" value="&nbsp;绑定权限  &nbsp;"/>
+					    	<input id="unbingd" type="button" value="&nbsp;解除绑定 &nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -147,9 +191,9 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
-			  <td>性别</td>
 			  <td>手机号码</td>
 			  <td>员工卡号</td>
+			  <td>卡授权状态</td>
 			  <td>邮箱</td>
 			  <td>职位</td>
 			  <td>学历</td>
@@ -164,20 +208,21 @@
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 				  <td>${employee.name }</td>
-				  <td>
-			        <c:choose>
-			        	<c:when test="${employee.sex == 1 }">男</c:when>
-			        	<c:otherwise>女</c:otherwise>
-			        </c:choose>
-				  </td>
 				  <td>${employee.phone }</td>
 				  <td>${employee.cardno }</td>
+				  <td>
+			        <c:choose>
+			        	<c:when test="${employee.carstatus == 1 }">已授权</c:when>
+			        	<c:otherwise>未授权</c:otherwise>
+			        </c:choose>
+				  </td>
 				  <td>${employee.email }</td>
 				  <td>${employee.job.name  }</td>
 				  <td>${employee.education }</td>
 				  <td>${employee.cardId }</td>
 				  <td>${employee.dept.name }</td>
 				  <td>${employee.carno }</td>
+				  
 				  <td>${employee.address }</td>
 				  <td>
 				  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
