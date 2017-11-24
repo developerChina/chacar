@@ -309,7 +309,7 @@ public class EmployeeController {
 		this.createDept(workbook);
 		this.createJob(workbook);
 		try {
-			String fileName = "部门管理";
+			String fileName="员工导入模板";
 			ExcelUtil.write(request, response, workbook, fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
