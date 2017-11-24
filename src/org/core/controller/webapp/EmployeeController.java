@@ -150,11 +150,11 @@ public class EmployeeController {
 			authority[1]=1;
 			authority[2]=1;
 			authority[3]=1;
-			lay[0]=1;
-			lay[1]=1;
-			lay[2]=1;
-			lay[3]=1;
-			lay[4]=1;
+			lay[0]=255;
+			lay[1]=255;
+			lay[2]=255;
+			lay[3]=255;
+			lay[4]=255;
 		}
 		for(Access ac:agAccesss) {
 		   AControlUtil.AddUserCard(Long.valueOf(ac.getCsn()), ac.getCip(), Long.valueOf(cardno), (byte) 0x20, (byte) 0x29, (byte) 0x12,
