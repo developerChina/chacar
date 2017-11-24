@@ -87,7 +87,6 @@
 			  <td>访客身份证</td>
 			  <td>控制器</td>
 			  <td>时间</td>
-			  <td>描述 </td>
 			  <td>证件照片</td>
 			  <td>现场照片</td>
 			</tr>
@@ -97,8 +96,7 @@
 					 <td>${trajectory.recordVisitors.cardName }</td>
 					  <td>${trajectory.recordVisitors.cardID }</td>
 					  <td>${trajectory.controllerDesc }</td>
-					  <td>${trajectory.ifvalid }</td>
-					  <td>${trajectory.optDesc }</td>
+					  <td>${trajectory.optDate }</td>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.cardPhoto!=null && trajectory.recordVisitors.cardPhoto!='' }">
 					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.cardPhoto }">
