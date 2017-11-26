@@ -219,11 +219,11 @@
 			return cardInfo;
 		}
 		$(function() {
-			 check();
+			 //check();
 		}); 
 		
 		function check() {
-		   $('body').everyTime('1s','C',function(){
+		  $('body').everyTime('1s','C',function(){
 			   $("#sfzgraph").trigger("click");
 			},0,true);
 		}
@@ -334,6 +334,12 @@
 			$("#visitReason").val("${modle.visitReason}"); 
 			
 		}
+		
+		$(document).ready(function(){
+		     $(document).bind("contextmenu",function(e){
+		         return false;
+		     });
+		 });
 		
 	</script>
 </html>

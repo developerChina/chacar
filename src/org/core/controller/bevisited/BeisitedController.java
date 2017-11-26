@@ -57,10 +57,12 @@ public class BeisitedController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping(value="/bevisited/getBevisitedTree")
+	@RequestMapping(value="/bevisited/getEmployeees")
 	@ResponseBody		
-	public Object getBevisitedTree(HttpServletRequest request, HttpServletResponse response){
-		List<Map<String, Object>> list=bevisitedInfoService.getBevisitedTree();
+	public Object getEmployeees(HttpServletRequest request, HttpServletResponse response){
+		String name=request.getParameter("name");
+     	String telphone=request.getParameter("telphone");
+		List<Map<String, Object>> list=hrmService.getEmployeees(name,telphone);
 		return list;
 	}
 	
@@ -88,7 +90,7 @@ public class BeisitedController {
 			}
 		}
 		//保存记录被访人
-		Employee employee= hrmService.findEmployeeById(Integer.parseInt(id.split("_")[1]));
+		Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
 		RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 		recordBevisitedsService.save(recordBevisiteds);
 		//调用短信接口
@@ -115,7 +117,7 @@ public class BeisitedController {
 			recordVisitor.setVisitStatus(1);
 			recordVisitorsService.save(recordVisitor);
 			//根据电话号码保存记录被访人
-			Employee employee= hrmService.findEmployeeById(Integer.parseInt(id.split("_")[1]));
+			Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
 			RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 			recordBevisitedsService.save(recordBevisiteds);
 			returnString=returnString+auditUrl+recordid+"<br/>";

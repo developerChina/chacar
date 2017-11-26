@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -70,5 +71,19 @@ public interface EmployeeDao {
 	// 动态修改员工
 	@SelectProvider(type=EmployeeDynaSqlProvider.class,method="updateEmployee")
 	void update(Employee employee);
+
+	
+	@Select("select * from "+EMPLOYEETABLE+" where name = #{name} or phone = #{phone}")
+	@Results({
+		@Result(id=true,column="id",property="id"),
+		@Result(column="CARD_ID",property="cardId"),
+		@Result(column="POST_CODE",property="postCode"),
+		@Result(column="QQ_NUM",property="qqNum"),
+		@Result(column="BIRTHDAY",property="birthday",javaType=java.util.Date.class),
+		@Result(column="CREATE_DATE",property="createDate",javaType=java.util.Date.class),
+		@Result(column="DEPT_ID",property="dept",one=@One(select="org.core.dao.webapp.DeptDao.selectById",fetchType=FetchType.EAGER)),
+		@Result(column="JOB_ID",property="job",one=@One(select="org.core.dao.webapp.JobDao.selectById",fetchType=FetchType.EAGER))
+	})
+	List<Employee> getEmployeees(@Param("name")String name, @Param("phone")String phone);
 
 }

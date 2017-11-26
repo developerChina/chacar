@@ -1,6 +1,7 @@
 package org.core.service.webapp;
 
 import java.util.List;
+import java.util.Map;
 
 import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Employee;
@@ -158,5 +159,14 @@ public interface HrmService {
 	 * @param dept 部门对象
 	 * */
 	void modifyJob(Job job);
+	
+	
+	/**
+	 * 根据用户名或电话查找员工
+	 * @param name
+	 * @param telphone
+	 * @return
+	 */
+	List<Map<String, Object>> getEmployeees(String name, String phone);
 	
 }

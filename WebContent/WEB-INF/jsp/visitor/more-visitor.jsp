@@ -335,6 +335,13 @@
             var s = '<span class="icon-remove" title="删除记录" onclick="delRow('+uid+')"></span>';
             return s;
         }
+        
+        
+        $(document).ready(function(){
+   	     $(document).bind("contextmenu",function(e){
+   	         return false;
+   	     });
+   	    });
         </script>  
     
 </html>
