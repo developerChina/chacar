@@ -319,5 +319,11 @@
     	 TSCObj.ActiveXprintlabel ("1","1");
     	 TSCObj.ActiveXcloseport();		 
      }
+     
+     $(document).ready(function(){
+   	     $(document).bind("contextmenu",function(e){
+   	         return false;
+   	     });
+   	 });
 	</script>
 </html>

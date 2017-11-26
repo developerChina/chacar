@@ -33,7 +33,7 @@ public interface BevisitedInfoService {
 	List<BevisitedInfo> selectByPage(BevisitedInfo entity);
 
 	/**
-	 * 获取被访人和部门树关系
+	 * 获取被访人和部门树关系（旧表）
 	 * @return
 	 */
 	List<Map<String, Object>> getBevisitedTree_Old();
@@ -43,7 +43,7 @@ public interface BevisitedInfoService {
 	 * @return
 	 */
 	List<Map<String, Object>> getBevisitedTree();
-
+	
 	/**
 	 * 根据手机号获取被访问
 	 * @return

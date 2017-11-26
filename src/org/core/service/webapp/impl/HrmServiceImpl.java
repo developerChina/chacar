@@ -1,5 +1,6 @@
 package org.core.service.webapp.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -320,6 +321,30 @@ public class HrmServiceImpl implements HrmService{
 	public void modifyJob(Job job) {
 		jobDao.update(job);
 		
+	}
+
+	@Override
+	public List<Map<String, Object>> getEmployeees(String name, String phone) {
+		List<Map<String, Object>> listMap=new ArrayList<>();
+		List<Employee> list=employeeDao.getEmployeees(name,phone);
+		for (Employee employee : list) {
+			Map<String, Object> map=new HashMap<>();
+			map.put("id", employee.getId());
+			map.put("dept", employee.getDept().getName());
+			map.put("job", employee.getJob().getName());
+			map.put("name", employee.getName());
+			map.put("phone", hidePhonePart(employee.getPhone()));
+			listMap.add(map);
+		}
+		return listMap;
+	}
+
+	private String hidePhonePart(String phone) {
+		if(phone.length()>7){
+			return phone.substring(0,3)+"****"+phone.substring(7);
+		}else{
+			return phone;
+		}
 	}
 
 }
