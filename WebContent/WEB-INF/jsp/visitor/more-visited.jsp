@@ -127,7 +127,10 @@
 	     function search(){
 	    	 var telphone = mini.get("telphone").getValue();
 	    	 var name = mini.get("name").getValue();
-	    	 grid.load({name:name,telphone:telphone})
+	    	 grid.load(
+	    			 {name:name,telphone:telphone},
+	    			 function() {grid.selectAll();}
+	    			 );
 	     }
         $(document).ready(function(){
       	     $(document).bind("contextmenu",function(e){

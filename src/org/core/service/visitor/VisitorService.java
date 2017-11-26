@@ -16,13 +16,11 @@ public interface VisitorService {
 	
 	void addBlacklist(Blacklist blacklist);
 
-	
-
 	//查询访客
 	List<VisitorInfo> selectByPage(PageModel pageModel, VisitorInfo entity);
 
 	
-
+	List<Blacklist> selectBlackByCardId(String cardid);
 	
 	
 }

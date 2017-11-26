@@ -164,9 +164,11 @@ public class ExcelUtil {
 	        Map<Integer, String> map=new HashMap<Integer, String>();
 	        while (j < colNum) {
 	        	Cell cell=row.getCell(j);
-	        	cell.setCellType(HSSFCell.CELL_TYPE_STRING);  
-                String content = cell.getStringCellValue();
-	        	map.put(Integer.valueOf(j), content);
+	        	if(cell!=null){
+	        		cell.setCellType(HSSFCell.CELL_TYPE_STRING);  
+	                String content = cell.getStringCellValue();
+		        	map.put(Integer.valueOf(j), content);	
+	        	}
 	        	j++;
             }
 	        list.add(map);

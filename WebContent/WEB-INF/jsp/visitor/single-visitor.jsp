@@ -137,7 +137,20 @@
 				return;
 			}
 			
-			$('#single-visitor-form').submit();
+			//黑名单和正在访问校验
+			$.ajax({
+			  type: 'POST',
+			  url: '${ctx}/visitor/validateSingleVisitor',
+			  data: {"cardid":cardid},
+			  success: function(data){
+				   if(data.status){
+					   $('#single-visitor-form').submit(); 
+				   }else{
+					   alert(data.message);
+				   }
+			  }
+			});
+			
 		}
 		
 		/**

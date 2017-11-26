@@ -327,7 +327,22 @@
             }
             var json = mini.encode(datas);
             $("#recordVisitors").val(json);
-            $('#more-visitor-form').submit();
+            
+            
+          //黑名单和正在访问校验
+			$.ajax({
+			  type: 'POST',
+			  url: '${ctx}/visitor/validateMoreVisitor',
+			  data: {"recordVisitors": $("#recordVisitors").val()},
+			  success: function(data){
+				   if(data.status){
+					   $('#more-visitor-form').submit();
+				   }else{
+					   alert(data.message);
+				   }
+			  }
+			});
+            
         }
         
         function onActionRenderer(e) {

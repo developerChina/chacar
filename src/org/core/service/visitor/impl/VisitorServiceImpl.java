@@ -88,8 +88,9 @@ public class VisitorServiceImpl implements VisitorService {
 		
 	}
 
-	
-	
-	
+	@Override
+	public List<Blacklist> selectBlackByCardId(String cardid) {
+		return visitorDao.selectBlackByCardId(cardid);
+	}
 	
 }

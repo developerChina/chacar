@@ -1,6 +1,7 @@
 package org.core.controller.visitor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.VisitorInfo;
+import org.core.domain.webapp.Blacklist;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
+import org.core.service.visitor.VisitorService;
 import org.core.util.GenId;
 import org.core.util.ImageUtils;
 import org.core.util.JsonUtils;
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -40,6 +44,9 @@ public class MoreVisitorController {
 	@Autowired
 	@Qualifier("recordBevisitedsService")
 	private RecordBevisitedsService recordBevisitedsService;
+	@Autowired
+	@Qualifier("visitorService")
+	private VisitorService visitorService;
 	/**
 	 * 多访客登记信息
 	 * @param mv
@@ -59,7 +66,7 @@ public class MoreVisitorController {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	@RequestMapping(value="/visitor/forwardMoreVisited")
-	 public ModelAndView forwardMoreVisited(HttpServletRequest request,HttpServletResponse response,ModelAndView mv,String recordVisitors){
+	public ModelAndView forwardMoreVisited(HttpServletRequest request,HttpServletResponse response,ModelAndView mv,String recordVisitors){
 		//格式化提交被访人数据
 		List<Map> rvs=JsonUtils.parse(recordVisitors, List.class);
 		List<RecordVisitors> list=new ArrayList<>();
@@ -102,4 +109,43 @@ public class MoreVisitorController {
 	}
 	
 
+	/**
+	 * 根据身份证号码校验访客登记
+	 * @param cardid
+	 * @return
+	 */
+	@RequestMapping(value="/visitor/validateMoreVisitor")
+	@ResponseBody
+	public Object validateMoreVisitor(HttpServletRequest request,HttpServletResponse response,String recordVisitors){
+		//格式化提交被访人数据
+		List<Map> rvs=JsonUtils.parse(recordVisitors, List.class);
+		List<RecordVisitors> list=new ArrayList<>();
+		String message="";
+		boolean bool=true;
+		for (Map rv : rvs) {		
+			String cardid= rv.get("cardID")!=null?rv.get("cardID").toString():"";
+			String cardName=rv.get("cardName")!=null?rv.get("cardName").toString():"";
+			//查询黑名单
+			List<Blacklist> blacklist=visitorService.selectBlackByCardId(cardid);
+			//查询正在访问
+			List<RecordVisitors> rvings=recordVisitorsService.selectRecordInfoBycardID_status(cardid, 3);
+			if(blacklist.size()>0){
+				bool=false;
+				message=message+cardName+"已经上黑名单。";
+			}
+			
+			if(rvings.size()>0){
+				bool=false;
+				message=message+cardName+"上次访问没有正常签离。";
+			}
+			
+		}
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("status", bool);
+		map.put("message", message);
+		return map;
+		
+	}
+	
+	
 }

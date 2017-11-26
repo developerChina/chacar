@@ -47,6 +47,7 @@
 				            <table style="width:100%;">
 				                <tr>
 					                <td style="width:100%;">
+					                 <div id="ids"></div>
 				                    </td>
 				                    <td style="white-space:nowrap;">
 				                        <input id="telphone" class="mini-textbox" emptyText="手机号" style="width:150px;" onBlur="search"/>
@@ -59,10 +60,10 @@
 				    </div>
 				    <div id="datagrid1" class="mini-datagrid" style="width:800px;height:280px;" 
 				        url="${ctx}/bevisited/getEmployeees" idField="id" 
-				        allowCellEdit="true" allowCellSelect="true" multiSelect="true" 
+				        allowCellEdit="true" allowCellSelect="true"  multiSelect="true" 
 				        editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
 				        <div property="columns">
-				            <div type="checkboxcolumn" width="20"></div>
+				            <div type="checkcolumn" width="20"></div>
 					    	<div field="id" visible="false">员工id</div>
 					        <div field="dept" width="50">部门</div>
 					        <div field="job" width="80">职位</div>
@@ -128,7 +129,40 @@
 	     function search(){
 	    	 var telphone = mini.get("telphone").getValue();
 	    	 var name = mini.get("name").getValue();
-	    	 grid.load({name:name,telphone:telphone})
+	    	 $.ajax({
+				  type: 'POST',
+				  url: '${ctx}/bevisited/getEmployeees',
+				  data: {name:name,telphone:telphone},
+				  success: function(datas){
+					  for (i = 0; i < datas.length; i++) {
+						  //判断是否添加
+						  var data=datas[i];
+						  if(isAdd(data)){
+							  grid.addRow(data);
+							  grid.setSelected(data); 
+						  }else{
+							  console.info("存在")
+						  }
+					  }
+				  }
+				});
+	     }
+	     
+	     function isAdd(data){
+	    	var selecteds=grid.getSelecteds();
+	    	grid.selectAll();
+	    	var selectedAll=grid.getSelecteds();
+	    	var bool=true;
+	    	for (i = 0; i < selectedAll.length; i++) {
+				 if(selectedAll[i].id==data.id){
+					 bool= false;
+				 }
+			}
+	    	grid.deselectAll();
+	    	for (var j = 0; j < selecteds.length; j++) {
+	    		grid.setSelected(selecteds[j]);
+			}
+	        return bool;
 	     }
 	     
 	     $(document).ready(function(){
