@@ -145,12 +145,26 @@ public class VisitorAckController {
 		return mv;
 	}
 
-	// 1_2.取消拉黑
+	// 1_2.1取消拉黑batchDelete
 	@RequestMapping(value = " /visitor/cancelblack")
 	public ModelAndView cancelBlack(@ModelAttribute Blacklist blacklist, ModelAndView mv) {
 		int id = blacklist.getBlacklistID();
 		// 执行取消黑名单
 		visitorService.remove(id);
+
+		// 设置客户端跳转到查询请求
+		mv.setViewName("redirect:/visitor/blackAck");
+		// 返回ModelAndView
+		return mv;
+	}
+	// 1_2.2批量取消拉黑	
+	@RequestMapping(value = " /visitor/batchDelete")
+	public ModelAndView delBlacklist(
+			String ids,
+			ModelAndView mv) {
+		
+		// 执行取消黑名单
+		visitorService.removeByids(ids);
 
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/visitor/blackAck");
