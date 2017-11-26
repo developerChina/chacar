@@ -35,7 +35,12 @@
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
 		    	
-		    	
+		    	 /** 给全选按钮绑定点击事件  */
+		    	$("#checkAll").click(function(){
+		    		// this是checkAll  this.checked是true
+		    		// 所有数据行的选中状态与全选的状态一致
+		    		boxs.attr("checked",this.checked);
+		    	})
 		 	   /** 删除员工绑定点击事件 */
 		 	   $("#delete").click(function(){
 		 		   /** 获取到用户选中的复选框  */
@@ -89,17 +94,17 @@
 					    	事由内容：<input type="text" name="content">
 					    	拜访时长:
 		    			<select name="rtime">
-					<option disabled="disabled">-请选择拜访时长-</option>
-					<option value="1" selected="selected">10分钟以下</option>
+					<option disabled="disabled" selected="selected">-请选择拜访时长-</option>
+					<option value="1" >10分钟以下</option>
 					<option value="0">10——30分钟</option>
 					<option value="2">30——40分钟</option>
 					<option value="3">40——60分钟</option>
 					<option value="4">1小时以上</option>
 					</select>
 						
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加事由"/>
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加事由&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -132,7 +137,7 @@
 					  	</td>
 					  <td align="center" width="40px;">
  					       <a href="${ctx}/visitor/updateReson?flag=1&rid=${reson.rid}">
-							   <img title="修改" src="${ctx}/images/update.gif"/>
+							   <img title="&nbsp;&nbsp;修改&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td>
 				</tr>
