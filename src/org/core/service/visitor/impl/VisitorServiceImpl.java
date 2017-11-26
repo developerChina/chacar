@@ -77,6 +77,17 @@ public class VisitorServiceImpl implements VisitorService {
 		
 	}
 
+
+	@Override
+	public void removeByids(String ids) {
+		
+		String[] idArray = ids.split(",");
+		for (String id : idArray) {
+			visitorDao.remove(Integer.parseInt(id));
+		}
+		
+	}
+
 	
 	
 	

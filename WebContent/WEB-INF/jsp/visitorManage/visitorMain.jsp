@@ -66,6 +66,7 @@
 		 			   
 		 			   $.ligerDialog.confirm("确认要移除吗?","移除黑名单 ",function(r){
 		 				   if(r){
+		 					   //alert(ids.get())
 		 					   window.location = "${ctx}/visitor/batchDelete?ids=" + ids.get();
 		 				   }
 		 			   });
@@ -146,9 +147,10 @@
 					  <td>${black.company}</td>
 					  <td>${black.idNumber }</td>
 					  <td>${black.reason}</td>
- 					  <td align="center" width="40px;">
+ 					  <td align="center">
  					       <a href="javascript:myblack(${black.blacklistID})">
-							   <img title="&nbsp;&nbsp;取消拉黑&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
+							  <%--  <img title="&nbsp;&nbsp;取消拉黑&nbsp;&nbsp;" src="${ctx}/images/update.gif"/> --%>
+						   			取消拉黑
 						   </a>
 					  </td>
 				</tr>
