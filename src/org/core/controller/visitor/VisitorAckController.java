@@ -361,7 +361,7 @@ public class VisitorAckController {
 		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel,startDate,endDate);
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);
-		mv.addObject("imgurl", PropUtil.getSysValue("imgurl"));
+		mv.addObject("imgurl", PropUtil.getSysValue("serverPath")+request.getContextPath()+"/");
 		mv.addObject("all", recordVisitorsService.selectCountByStatus("in(1,2,3,4,5)",startDate,endDate));
 		mv.addObject("ing", recordVisitorsService.selectCountByStatus("=3",startDate,endDate));
 		mv.addObject("ed", recordVisitorsService.selectCountByStatus(">3",startDate,endDate));

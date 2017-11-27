@@ -19,6 +19,7 @@ import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.webapp.HrmService;
 import org.core.util.JsonUtils;
+import org.core.util.PropUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,8 +51,6 @@ public class BeisitedController {
 	@Qualifier("hrmService")
 	private HrmService hrmService;
 	
-	//审核地址
-	String  auditUrl="http://localhost:8080/chacar/visitor/forwardVisitorAck?recordid=";
 	/**
 	 * 查询部门和被访人树
 	 * @param mv
@@ -96,7 +95,7 @@ public class BeisitedController {
 		RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 		recordBevisitedsService.save(recordBevisiteds);
 		//调用短信接口
-		return auditUrl+recordid;
+		return getAudiUrl(request)+recordid;
 	}
 	
 	/**
@@ -126,7 +125,7 @@ public class BeisitedController {
 			Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
 			RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 			recordBevisitedsService.save(recordBevisiteds);
-			returnString=returnString+auditUrl+recordid+"<br/>";
+			returnString=returnString+getAudiUrl(request)+recordid+"<br/>";
 		}
 		//调用短信接口
 		return returnString;
@@ -168,7 +167,6 @@ public class BeisitedController {
 	@RequestMapping(value="/bevisited/sendSingleMessage_old")
 	@ResponseBody
 	public Object sendSingleMessage_old(HttpServletRequest request, HttpServletResponse response,String recordVisitors,String tel){
-		
 		//保存记录
 		VisitorRecord visitorRecord=new VisitorRecord();
 		String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
@@ -191,7 +189,7 @@ public class BeisitedController {
 		recordBevisiteds.setRecordID(recordid);
 		recordBevisitedsService.save(recordBevisiteds);
 		//调用短信接口
-		return auditUrl+recordid;
+		return getAudiUrl(request)+recordid;
 	}
 	
 	/**
@@ -219,10 +217,14 @@ public class BeisitedController {
 			BeanUtils.copyProperties(bevisitedInfo, recordBevisited);
 			recordBevisited.setRecordID(recordid);
 			recordBevisitedsService.save(recordBevisited);
-			returnString=returnString+auditUrl+recordid+"<br/>";
+			returnString=returnString+getAudiUrl(request)+recordid+"<br/>";
 		}
 		//调用短信接口
 		return returnString;
 		
+	}
+	
+	private String getAudiUrl(HttpServletRequest request){
+		return PropUtil.getSysValue("serverPath")+request.getContextPath()+"/visitor/forwardVisitorAck?recordid=";
 	}
 }
