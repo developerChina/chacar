@@ -16,4 +16,7 @@ public interface ResonService {
 		Reson findResonById(Integer rid);
 		//添加通道
 		void addReson(Reson reson);
+		
+		//查询所有访问事由
+		List<Reson> findAll();
 }

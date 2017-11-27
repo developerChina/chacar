@@ -91,9 +91,9 @@
 								<input type="hidden" id="cardID" name="cardID" value="">
 								身份号码&nbsp;&nbsp;<span id="cardID-span" class="underline ID"></span>
 							</p>
-							<p>联系电话&nbsp;&nbsp;<input type="text" class="text" id="telephone" name="telephone" style="width: 350px"/></p>
-							<p>工作单位&nbsp;&nbsp;<input type="text" class="text" id="company" name="company" style="width: 350px"/></p>
-							<p>访问事由&nbsp;&nbsp;<input type="text" class="text" id="visitReason" name="visitReason" style="width: 350px"/></p>
+							<p>联系电话&nbsp;&nbsp;<input type="text" class="text" id="telephone" name="telephone" style="width:350px"/></p>
+							<p>工作单位&nbsp;&nbsp;<input type="text" class="text" id="company" name="company" style="width:350px"/></p>
+							<p>访问事由&nbsp;&nbsp;<input id="visitReason" name="visitReason" class="mini-combobox" style="width:350px" data="resons" valueField	="content" textField="content"/></p>
 						</div>
 					</div>
 					<div class="right fl">
@@ -117,6 +117,9 @@
 		</form>
 	</body>
 	<script type="text/javascript">
+	
+	    var resons = ${resonStr};
+	    
 		/**
 		* 创建访问记录(保存或者更新访客)
 		*/
@@ -312,40 +315,6 @@
 				capCtrl.stop();
 				$("#capctrl-div").hide();
 			}
-		}
-		
-		function init(){
-			if("${modle}"==''){
-				return;
-			}
-			$("#recordVID").val("${modle.recordVID}");
-			$("#recordID").val("${recordid}");
-			if("${modle.cardPhoto}"!=''){
-				$("#cardPhoto").val("${modle.cardPhoto}");
-				$("#cardPhoto-img").attr("src", "data:image/png;base64,"+"${modle.cardPhoto}");
-			}
-				$("#photo1").val("${modle.photo1}");
-				$("#photo1-img").attr("src", "data:image/png;base64,"+"${modle.photo1}");
-		   
-			$("#cardName").val("${modle.cardName}");
-			$("#cardName-span").html("${modle.cardName}");
-			
-			$("#cardSex").val("${modle.cardSex}");
-			$("#cardSex-span").html("${modle.cardSex}");
-			
-			$("#cardNation").val("${modle.cardNation}");
-			$("#cardNation-span").html("${modle.cardNation}");
-			 
-			$("#cardID").val("${modle.cardID}");
-			$("#cardID-span").html("${modle.cardID}");
-			
-			$("#cardAddress").val("${modle.cardAddress}");
-			$("#cardAddress-span").html("${modle.cardAddress}");
-			
-			$("#telephone").val("${modle.telephone}"); 
-			$("#company").val("${modle.company}"); 
-			$("#visitReason").val("${modle.visitReason}"); 
-			
 		}
 		
 		$(document).ready(function(){

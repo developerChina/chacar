@@ -31,4 +31,7 @@ public interface ResonDao {
 	@SelectProvider(method = "insertReson", type = ResonDynaSqlProvid.class)
 	void save(Reson reson);
 	
+	@Select("select * from "+RESONTABLE)
+	List<Reson> findAll();
+	
 }

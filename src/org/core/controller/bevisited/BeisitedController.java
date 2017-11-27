@@ -86,6 +86,8 @@ public class BeisitedController {
 				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(rv.get("cardID").toString());
 				BeanUtils.copyProperties(visitorInfo, recordVisitor);
 				recordVisitor.setRecordID(recordid);
+				recordVisitor.setVisitStatus(1);
+				recordVisitor.setVisitReason(rv.get("visitReason")!=null?rv.get("visitReason").toString():"");
 				recordVisitorsService.save(recordVisitor);
 			}
 		}
@@ -113,9 +115,13 @@ public class BeisitedController {
 			VisitorRecord visitorRecord=new VisitorRecord();
 			String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
 			//保存记录访客
-			recordVisitor.setRecordID(recordid);
-			recordVisitor.setVisitStatus(1);
-			recordVisitorsService.save(recordVisitor);
+			if(recordVisitor.getCardID()!=null){
+				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(recordVisitor.getCardID());
+				recordVisitor.setRecordID(recordid);
+				recordVisitor.setVisitStatus(1);
+				recordVisitor.setVisitorID(visitorInfo.getVisitorID());
+				recordVisitorsService.save(recordVisitor);
+			}
 			//根据电话号码保存记录被访人
 			Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
 			RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);

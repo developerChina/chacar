@@ -114,7 +114,7 @@
 	             
 	            $.ajax({
 				  type: 'POST',
-				  url: '${ctx}/bevisited/sendMoreMessage',
+				  url: '${ctx}/bevisited/sendSingleMessage',
 				  data: {"recordVisitors":$("#recordVisitors").val(),"id":node.id},
 				  success: function(data){
 					  $("#contextDiv").html(data);

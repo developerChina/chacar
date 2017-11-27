@@ -47,10 +47,11 @@
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
 		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：访客轨迹 &gt; 访客轨迹查询</td>
-		<td class="main_locbg font2" align="right">
-		访问总人数：<font face="arial" size="5" color="blank">${all}</font>
-		&nbsp;&nbsp;正在访问人数：<font face="arial" size="5" color="red">${ing}</font>
-		&nbsp;&nbsp;已访问完人数：<font face="arial" size="5" color="blue">${ed}</font>
+		<td class="main_locbg font2" height="32" align="right">
+		访问总人数：${all} 
+		&nbsp;&nbsp;正在访问人数：${ing} 
+		&nbsp;&nbsp;已访问完人数：${ed} 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>

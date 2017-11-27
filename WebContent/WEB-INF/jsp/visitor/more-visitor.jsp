@@ -72,8 +72,8 @@
 				                <input property="editor" class="mini-textbox" style="width:100%;"/>
 				              </div>
 				              <div field="visitReason" width="200" headerAlign="center">访问事由
-				                <input property="editor" class="mini-textbox" style="width:100%;"/>
-				              </div>                                            
+				                <input property="editor" class="mini-combobox" style="width:100%;" data="resons" valueField	="content" textField="content" />  
+				              </div>  
 					      </div>
 					  </div>
 					</div>
@@ -130,6 +130,9 @@
 	</body>
 	
 	<script type="text/javascript">
+	
+		var resons = ${resonStr};
+	
         mini.parse();
         var grid = mini.get("datagrid1");
 

@@ -59,4 +59,9 @@ public class ResonServiceImpl implements ResonService {
 		resonDao.save(reson);
 	}
 
+	@Override
+	public List<Reson> findAll() {
+		return resonDao.findAll();
+	}
+
 }

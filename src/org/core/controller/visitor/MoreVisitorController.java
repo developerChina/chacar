@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.VisitorInfo;
 import org.core.domain.webapp.Blacklist;
+import org.core.domain.webapp.Reson;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.visitor.VisitorService;
+import org.core.service.webapp.ResonService;
 import org.core.util.GenId;
 import org.core.util.ImageUtils;
 import org.core.util.JsonUtils;
@@ -46,7 +48,13 @@ public class MoreVisitorController {
 	private RecordBevisitedsService recordBevisitedsService;
 	@Autowired
 	@Qualifier("visitorService")
-	private VisitorService visitorService;
+	private VisitorService visitorService;//黑名单
+	/**
+	 * 访问事由
+	 */
+	@Autowired
+	@Qualifier("resonService")
+	private ResonService resonService;
 	/**
 	 * 多访客登记信息
 	 * @param mv
@@ -54,6 +62,9 @@ public class MoreVisitorController {
 	 */
 	@RequestMapping(value="/visitor/forwardMoreVisitor")
 	 public ModelAndView forwardMoreVisitor(HttpServletRequest request,HttpServletResponse response,ModelAndView mv){
+		//访问事由
+		List<Reson> resons=resonService.findAll();
+		mv.addObject("resonStr", JsonUtils.toJson(resons));
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/more-visitor");
 		// 返回ModelAndView
@@ -114,12 +125,12 @@ public class MoreVisitorController {
 	 * @param cardid
 	 * @return
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/visitor/validateMoreVisitor")
 	@ResponseBody
 	public Object validateMoreVisitor(HttpServletRequest request,HttpServletResponse response,String recordVisitors){
 		//格式化提交被访人数据
 		List<Map> rvs=JsonUtils.parse(recordVisitors, List.class);
-		List<RecordVisitors> list=new ArrayList<>();
 		String message="";
 		boolean bool=true;
 		for (Map rv : rvs) {		
