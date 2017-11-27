@@ -212,8 +212,8 @@
 				  <td>${employee.cardno }</td>
 				  <td>
 			        <c:choose>
-			        	<c:when test="${employee.carstatus == 1 }">已授权</c:when>
-			        	<c:otherwise>未授权</c:otherwise>
+			        	<c:when test="${employee.carstatus == 1 }"><font color="green">已授权</font></c:when>
+			        	<c:otherwise><font color="red">未授权</font></c:otherwise>
 			        </c:choose>
 				  </td>
 				  <td>${employee.email }</td>
