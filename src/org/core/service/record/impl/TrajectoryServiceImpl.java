@@ -76,8 +76,10 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 			}
 			trajectory.setControllerDesc(controllerDesc.toString());
 			//设置被访问信息
-			List<Employee> employees=recordBevisitedsService.selectBycardNo(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
-			trajectory.setEmployees(employees);
+			if(trajectory.getRecordVisitors()!=null){
+				List<Employee> employees=recordBevisitedsService.selectBycardNo(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
+				trajectory.setEmployees(employees);
+			}
 		}
 		return entitys;
 	}
