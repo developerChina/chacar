@@ -57,7 +57,7 @@
 					  <div id="datagrid1" class="mini-datagrid" style="width:471px;height:271px;" idField="cardID" showPager="false" allowSortColumn="false" frozenStartColumn="0" frozenEndColumn="2">
 					      <div property="columns">
 					      	  <div type="checkcolumn"></div>
-					          <div cellCls="actionIcons" name="action" width="40" headerAlign="center" align="center" renderer="onActionRenderer">#</div>
+					          <div cellCls="actionIcons" name="action" width="40" headerAlign="center" align="center" renderer="onActionRenderer">操作</div>
 					          <div field="cardName" width="80" headerAlign="center">姓名</div>                
 					          <div field="cardSex" width="60" headerAlign="center">性别</div>
 					          <div field="cardNation" width="60" headerAlign="center">民族</div>
