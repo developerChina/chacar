@@ -71,6 +71,13 @@ public class VisitorAckController {
 	@RequestMapping(value = "/visitor/forwardVisitorAck")
 	public ModelAndView forwardVisitorAck(HttpServletRequest request, HttpServletResponse response, ModelAndView mv,
 			String recordid) {
+		//短信申请
+		if("11111111".equals(recordid)) {
+			// 设置客户端跳转到查询请求
+			mv.setViewName("visitor/visitor-sq");
+			// 返回ModelAndView
+			return mv;
+		}
 		// 添加访问记录id
 		mv.addObject("recordid", recordid);
 		
