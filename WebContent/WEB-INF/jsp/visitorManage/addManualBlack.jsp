@@ -24,7 +24,7 @@
 	
 	$(function(){
     	/** 员工表单提交 */
-		$("#elevatorForm").submit(function(){
+		$("#blackManualForm").submit(function(){
 			var elevatorName = $("#elevatorName");
 			var floorNumber = $("#floorNumber");
 			var controllerSN = $("#controllerSN");

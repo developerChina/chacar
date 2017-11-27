@@ -92,9 +92,9 @@
 					    <td class="font3">
 					    	用户名：<input type="text" name="username">
 					    	用户状态：<input type="text" name="status">
-					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
-					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
-					    	<input id="add" type="button" value="&nbsp;授权&nbsp;"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="add" type="button" value="&nbsp;&nbsp;授权&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

@@ -93,9 +93,9 @@
 					    <td class="font3">
 					    	用户名：<input type="text" name="username">
 					    	用户状态：<input type="text" name="status">
-					    	<input type="submit" value="搜索"/>
-					    	<input id="delete" type="button" value="删除"/>
-					    	<input id="add" type="button" value="添加"/>
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

@@ -25,7 +25,6 @@ import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
 import org.core.util.DateUtil;
-import org.core.util.ImageUtils;
 import org.core.util.PropUtil;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
@@ -146,12 +145,26 @@ public class VisitorAckController {
 		return mv;
 	}
 
-	// 1_2.取消拉黑
+	// 1_2.1取消拉黑batchDelete
 	@RequestMapping(value = " /visitor/cancelblack")
 	public ModelAndView cancelBlack(@ModelAttribute Blacklist blacklist, ModelAndView mv) {
 		int id = blacklist.getBlacklistID();
 		// 执行取消黑名单
 		visitorService.remove(id);
+
+		// 设置客户端跳转到查询请求
+		mv.setViewName("redirect:/visitor/blackAck");
+		// 返回ModelAndView
+		return mv;
+	}
+	// 1_2.2批量取消拉黑	
+	@RequestMapping(value = " /visitor/batchDelete")
+	public ModelAndView delBlacklist(
+			String ids,
+			ModelAndView mv) {
+		
+		// 执行取消黑名单
+		visitorService.removeByids(ids);
 
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/visitor/blackAck");
@@ -342,6 +355,9 @@ public class VisitorAckController {
 		mv.addObject("trajectorys", trajectorys);
 		mv.addObject("pageModel", pageModel);
 		mv.addObject("imgurl", PropUtil.getSysValue("imgurl"));
+		mv.addObject("all", recordVisitorsService.selectCountByStatus("in(1,2,3,4,5)",startDate,endDate));
+		mv.addObject("ing", recordVisitorsService.selectCountByStatus("=3",startDate,endDate));
+		mv.addObject("ed", recordVisitorsService.selectCountByStatus(">3",startDate,endDate));
 		mv.setViewName("visitor/trajectory");
 		return mv;
 	}

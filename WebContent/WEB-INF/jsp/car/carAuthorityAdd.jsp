@@ -20,8 +20,8 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-	
 	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
+	<link href="${ctx}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet" />
 	
 	<script type="text/javascript">
 	
@@ -107,13 +107,13 @@
 		    			</td>
 	    			</tr>
 	    			<tr>
-		    			<td class="font3 fftd">有效期：<input type="text" name="validate" id="validate" size="20"  cssClass="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
+		    			<td class="font3 fftd">有效期：<input type="text" name="validate" id="validate" size="20"  class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
 		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;授权&nbsp;">&nbsp;&nbsp;<input type="reset" value="&nbsp;取消&nbsp; "></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;授权&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		 </form>
 	</td>

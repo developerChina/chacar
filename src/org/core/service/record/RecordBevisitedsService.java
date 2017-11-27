@@ -1,8 +1,10 @@
 package org.core.service.record;
 
+import java.util.Date;
 import java.util.List;
 
 import org.core.domain.visitor.RecordBevisiteds;
+import org.core.domain.webapp.Employee;
 
 
 /**
@@ -40,5 +42,13 @@ public interface RecordBevisitedsService {
 	 * 删除所有记录id的被访人			
 	 */
 	void deleteByRecordID(String recordid);
+
+	/**
+	 * 获取一天内，一个卡号下的被访问人
+	 * @param cardNo
+	 * @param optDate
+	 * @return
+	 */
+	List<Employee> selectBycardNo(String cardNo, Date optDate);	
 
 }

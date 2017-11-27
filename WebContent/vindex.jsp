@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="${ctx}/css/visitor/common.css" />
 		<link rel="stylesheet" href="${ctx}/css/visitor/index.css" />
 		<link href="${ctx}/images/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+		<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="wrap">
@@ -32,4 +33,11 @@
 			</div>
 		</div>
 	</body>
+	<script type="text/javascript">
+	 $(document).ready(function(){
+	     $(document).bind("contextmenu",function(e){
+	         return false;
+	     });
+	 });
+	</script>
 </html>

@@ -1,5 +1,6 @@
 package org.core.service.record;
 
+import java.util.Date;
 import java.util.List;
 
 import org.core.domain.visitor.RecordVisitors;
@@ -62,6 +63,15 @@ public interface RecordVisitorsService {
 	 * 根据身份证ID和记录单状态 ,审核状态
 	 * <br/>查询来访记录访客列表
 	 */
-	List<RecordVisitors> selectRecordInfoBycardID_status_audit(String cardid, int status,int audit);	
-	
+	List<RecordVisitors> selectRecordInfoBycardID_status_audit(String cardid, int status,int audit);
+
+	/**
+	 * 根据状态查询时间段内的访问人数
+	 * @param string
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	int selectCountByStatus(String whereStatus, Date startDate, Date endDate);
+
 }

@@ -73,7 +73,8 @@
 					    <td class="font3">
 					    	人员姓名：<input type="text" name="cardName">
 					    	单位名称：<input type="text" name="company">
-					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/><input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;">
+					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					    	<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;">
 					    </td>
 					  </tr>
 					</table>
@@ -91,7 +92,7 @@
 	    <td height="20">
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
-			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
+			  <!-- <td><input type="checkbox" name="checkAll" id="checkAll"></td> -->
 			  <td>访客姓名</td>
 			  <td>单位</td>
 			  <td>身份证号</td>
@@ -99,14 +100,15 @@
 			</tr>
 			<c:forEach items="${requestScope.selectByPage}" var="myblack" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${myblack.visitorID}"></td>
+					<%-- <td><input type="checkbox" id="box_${stat.index}" value="${myblack.visitorID}"></td> --%>
 					 <td>${myblack.cardName}</td>
 					  <td>${myblack.company}</td>
 					  <td>${myblack.cardID }</td>
 					  
- 					  <td align="center" width="40px;">
+ 					  <td align="center">
  					       <a href='javascript:void(0)' onclick="blacka('${myblack.visitorID}')">
-							   <img title="&nbsp;&nbsp;将其拉黑&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
+							   <%-- <img title="&nbsp;&nbsp;将其拉黑&nbsp;&nbsp;" src="${ctx}/images/update.gif"/> --%>
+							   	拉黑
 						   </a>
 					  </td>
 				</tr>

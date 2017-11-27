@@ -72,8 +72,9 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	部门名称：<input type="text" name="name">
-					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
+					    	姓名：<input type="text" name="cardName">
+					    	身份证：<input type="text" name="cardID">
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

@@ -45,22 +45,34 @@
 						<span class="fl"></span>
 						<span>拜访对象</span>
 					</div>
-					 <div id="treegrid1" class="mini-treegrid" style="width:800px;height:280px;"     
-					    url="${ctx}/bevisited/getBevisitedTree" showTreeIcon="true" 
-					    treeColumn="taskname" idField="id" parentField="pid" resultAsTree="false"
-					    showRadioButton="true" showFolderCheckBox="false" expandOnLoad="true" onbeforenodeselect="onBeforeNodeSelect" >
-					    <div property="columns">
-					        <div type="indexcolumn" width="50">编号</div>
-					        <div field="id" visible="false">资源id</div>
-					        <div name="taskname" field="name" width="150">资源名称</div>
-					        <div field="door" width="100">门禁</div>
-					        <div field="floor" width="50">楼层</div>
-					        <div field="room" width="100">房间</div>
-					        <div field="channel" width="100">通道</div>
-					        <div field="pname" width="pname">上级资源</div>
-					        <div field="status" width="50">状态</div>
-					    </div>
-					</div>
+					 <div style="width:800px;">
+				        <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
+				            <table style="width:100%;">
+				                <tr>
+					                <td style="width:100%;">
+				                    </td>
+				                    <td style="white-space:nowrap;">
+				                        <input id="telphone" class="mini-textbox" emptyText="手机号" style="width:150px;" onBlur="search"/>
+				                        <input id="name" class="mini-textbox" emptyText="姓名" style="width:150px;" onBlur="search"/>    
+				                        <a class="mini-button" iconCls="icon-search" onclick="search()">查询</a>
+				                    </td>
+				                </tr>
+				            </table>           
+				        </div>
+				    </div>
+				    <div id="datagrid1" class="mini-datagrid" style="width:800px;height:280px;" 
+				        url="${ctx}/bevisited/getEmployeees" idField="id" 
+				        allowCellEdit="true" allowCellSelect="true" 
+				        editNextOnEnterKey="true"  editNextRowCell="true" showPager="false">
+				        <div property="columns">
+				            <div type="checkcolumn" width="20"></div>
+					    	<div field="id" visible="false">员工id</div>
+					        <div field="dept" width="50">部门</div>
+					        <div field="job" width="80">职位</div>
+					        <div field="name" width="80" >姓名</div>
+					        <div field="phone" width="100">手机</div>                      
+				        </div>
+				    </div>
 					<input type="hidden" id="recordVisitors" name="recordVisitors" value="${recordVisitors}">
 				</div>
 				<div class="btnArea clearfix">
@@ -85,40 +97,46 @@
 		
 		<script type="text/javascript">
     	
-    	 function sendMessage() {
-    		 var tree = mini.get("treegrid1");
-             var node = tree.getSelectedNode();
-             console.info(node)
-             if(node==undefined || node==''){
-            	 alert('请选择您要拜访的人');
-            	 return; 
-             }
-             if(node.tel==undefined || node.tel==''){
-            	 alert(node.name+'没有维护电话不能访问');
-            	 return; 
-             }
-             
-           //异步发送短信 alert("${recordid}-"+node.tel);
-            $.ajax({
-			  type: 'POST',
-			  url: '${ctx}/bevisited/sendSingleMessage',
-			  data: {"recordVisitors":$("#recordVisitors").val(),"id":node.id},
-			  success: function(data){
-				  $("#contextDiv").html(data);
-				  document.getElementById('popDiv').style.display='block';
-				  //window.location.href='${ctx}/vindex.jsp';
-			  }
-			});
-            
-         }
-    	 //禁止选择父类
-    	 function onBeforeNodeSelect(e) {
-             var tree = e.sender;
-             var node = e.node;
-             if (tree.hasChildren(node)) {
-                 e.cancel = true;
-             }
-         }
+    	    mini.parse();
+	    	var grid = mini.get("datagrid1");
+	        grid.load();
+	        
+	    	function sendMessage() {
+	             var node = grid.getSelected ();
+	             if(node==undefined || node==''){
+	            	 alert('请选择您要拜访的人');
+	            	 return; 
+	             }
+	             if(node.phone==undefined || node.phone==''){
+	            	 alert(node.name+'没有维护电话不能访问');
+	            	 return; 
+	             }
+	             
+	            $.ajax({
+				  type: 'POST',
+				  url: '${ctx}/bevisited/sendMoreMessage',
+				  data: {"recordVisitors":$("#recordVisitors").val(),"id":node.id},
+				  success: function(data){
+					  $("#contextDiv").html(data);
+					  document.getElementById('popDiv').style.display='block';
+					  //window.location.href='${ctx}/vindex.jsp'; 
+				  }
+				});
+	      }
+	    
+	     function search(){
+	    	 var telphone = mini.get("telphone").getValue();
+	    	 var name = mini.get("name").getValue();
+	    	 grid.load(
+	    			 {name:name,telphone:telphone},
+	    			 function() {grid.selectAll();}
+	    			 );
+	     }
+        $(document).ready(function(){
+      	     $(document).bind("contextmenu",function(e){
+      	         return false;
+      	     });
+    	 });
     	</script>
 	</body>
 </html>

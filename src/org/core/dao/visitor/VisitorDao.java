@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.visitor.provider.BlacklistDynaSqlProvider;
 import org.core.domain.visitor.VisitorInfo;
@@ -34,6 +35,9 @@ public interface VisitorDao {
 	Integer entityCount(Map<String, Object> params);
 	@SelectProvider(type=BlacklistDynaSqlProvider.class,method="myselectByPage")
 	List<VisitorInfo> myselectByPage(Map<String, Object> params);
+	
+	@Select("select * from "+BLACKLISTTABLE+" where idNumber = #{cardid}")
+	List<Blacklist> selectBlackByCardId(String cardid);
 	
 	
 	

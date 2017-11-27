@@ -1,16 +1,20 @@
 package org.core.controller.visitor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.VisitorInfo;
+import org.core.domain.webapp.Blacklist;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
+import org.core.service.visitor.VisitorService;
 import org.core.util.GenId;
 import org.core.util.ImageUtils;
 import org.core.util.JsonUtils;
@@ -44,6 +48,9 @@ public class SingleVisitorController {
 	@Qualifier("recordBevisitedsService")
 	private RecordBevisitedsService recordBevisitedsService;
 	
+	@Autowired
+	@Qualifier("visitorService")
+	private VisitorService visitorService;
 	/**		
 	 * 单访客登记
 	 * @param mv
@@ -94,6 +101,36 @@ public class SingleVisitorController {
 		//返回ModelAndView
 		return mv;
 	}
+	
+	/**
+	 * 根据身份证号码校验访客登记
+	 * @param cardid
+	 * @return
+	 */
+	@RequestMapping(value="/visitor/validateSingleVisitor")
+	@ResponseBody
+	public Object validateSingleVisitor(HttpServletRequest request,HttpServletResponse response,String cardid){
+		//查询黑名单
+		List<Blacklist> blacklist=visitorService.selectBlackByCardId(cardid);
+		//查询正在访问
+		List<RecordVisitors> recordVisitors=recordVisitorsService.selectRecordInfoBycardID_status(cardid, 3);
+		boolean bool=true;
+		String message="";
+		if(blacklist.size()>0){
+			bool=false;
+			message=message+"你已经上黑名单。";
+		}
+		
+		if(recordVisitors.size()>0){
+			bool=false;
+			message=message+"你上次访问没有正常签离。";
+		}
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("status", bool);
+		map.put("message", message);
+		return map;
+	}
+	
 	
 	/**
 	 * 根据身份证号码查找对应访客信息
