@@ -23,6 +23,16 @@ public class SendSmsUtil {
     //产品域名,开发者无需替换
     static final String domain = "dysmsapi.aliyuncs.com";
 
+    
+    public static SendSmsResponse sendSms(String PhoneNumbers,String TemplateParam) throws ClientException {
+    	 String accessKeyId = "LTAILulq86lFDuW3";//yourAccessKeyId
+ 	     String accessKeySecret = "lJa085SgzDXFRZqf3XJymmN2LGYt2v";//yourAccessKeySecret 
+  	     String SignName="E访通";
+ 	     String TemplateCode="SMS_104740018";
+ 	     String OutId="yourOutId";
+ 	    return  sendSms(accessKeyId,accessKeySecret,PhoneNumbers,SignName,TemplateCode,TemplateParam, OutId);
+    }
+    
     public static SendSmsResponse sendSms(String accessKeyId,String accessKeySecret
     		,String PhoneNumbers,String SignName,String TemplateCode,String TemplateParam,String OutId
     		) throws ClientException {

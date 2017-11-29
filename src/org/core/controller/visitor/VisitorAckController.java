@@ -72,7 +72,7 @@ public class VisitorAckController {
 	public ModelAndView forwardVisitorAck(HttpServletRequest request, HttpServletResponse response, ModelAndView mv,
 			String recordid) {
 		//短信申请
-		if("11111111".equals(recordid)) {
+		if("11111111".equals(recordid) || recordid==null || "".equals(recordid)|| recordid.length()<31) {
 			// 设置客户端跳转到查询请求
 			mv.setViewName("visitor/visitor-sq");
 			// 返回ModelAndView

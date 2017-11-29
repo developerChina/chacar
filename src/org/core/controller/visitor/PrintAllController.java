@@ -23,6 +23,7 @@ import org.core.util.DateStyle;
 import org.core.util.DateUtil;
 import org.core.util.StringUtils;
 import org.core.util.HttpClientUtil;
+import org.core.util.SendSmsUtil;
 import org.core.util.VisitorEntryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +31,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.aliyuncs.exceptions.ClientException;
 
 /**
  * 打印
@@ -156,6 +159,27 @@ public class PrintAllController {
 		
 		HttpClientUtil.doGet("http://"+serIp+"?"+params);
 	
+		return true;
+	}
+	@RequestMapping(value = "/visitor/smsServerSend")
+	@ResponseBody
+	public Object smsServerSend(HttpServletRequest request,HttpServletResponse response) {
+		String phoneNumbers=request.getParameter("phoneNumbers");
+		String templateParam=request.getParameter("templateParam");
+		try {
+			SendSmsUtil.sendSms(phoneNumbers, templateParam);
+		} catch (ClientException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	@RequestMapping(value = "/visitor/smsClientSend")
+	@ResponseBody
+	public Object smsClientSend(HttpServletRequest request,HttpServletResponse response) {
+		String phoneNumbers=request.getParameter("phoneNumbers");
+		String templateParam=request.getParameter("templateParam");
+		String serIp="192.168.1.110:8080";
+		HttpClientUtil.doGet("http://"+serIp+"?"+phoneNumbers);
 		return true;
 	}
 }
