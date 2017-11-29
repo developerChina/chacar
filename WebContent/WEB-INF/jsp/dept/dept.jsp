@@ -142,7 +142,7 @@
 	    <td width="10%" rowspan="2">
 	        <ul id="tree1" class="mini-tree" url="${ctx}/dept/selectAllDept"
 	        showTreeIcon="true" textField="name" idField="id" parentField="pid" resultAsTree="false" 
-	        showArrow="true" expandOnNodeClick="true" expandOnLoad="false">
+	        showArrow="true" expandOnNodeClick="true" expandOnLoad="1">
 	    	</ul>
 	    </td>
 	    <td height="20">
