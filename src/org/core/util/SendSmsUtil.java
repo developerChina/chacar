@@ -28,11 +28,8 @@ public class SendSmsUtil {
     	 String accessKeyId = "LTAILulq86lFDuW3";//yourAccessKeyId
  	     String accessKeySecret = "lJa085SgzDXFRZqf3XJymmN2LGYt2v";//yourAccessKeySecret 
   	     String SignName="E访通";
- 	     String TemplateCode="SMS_114395041";
+ 	     String TemplateCode="SMS_114395185";
  	     String OutId="yourOutId";
-// 	     String visitedName_=visitedName+"您好:";
-// 	     String visitorName_=visitorName+"在";
-// 	     String visitorDate_=visitorDate+" 将要拜访您，确认请点击以下链接    http://113.204.202.89:8080/chacar/visitor/forwardVisitorAck?recordid=";
   	     String TemplateParam="{\"visitedName\":\""+visitedName+" \", \"visitorName\":\""+visitorName+"\",\"visitorDate\":\""+visitorDate+"\",\"recordid\":\""+recordid+"\"}";
  	     System.out.println(TemplateParam);
  	    return  sendSms(accessKeyId,accessKeySecret,phoneNumbers,SignName,TemplateCode,TemplateParam, OutId);
@@ -91,7 +88,7 @@ public class SendSmsUtil {
 //        System.out.println("RequestId=" + response.getRequestId());
 //        System.out.println("BizId=" + response.getBizId());
 		//String visitedName,String visitorName,String visitorDate,String recordid,String phoneNumbers
-		SendSmsResponse response = sendSms("边俊明","孙俊虎","2017-10-17","22222222","18510515186");
+		SendSmsResponse response = sendSms("边俊明","孙俊虎","2017-10-17","33333333","18510515186");
       System.out.println("短信接口返回的数据----------------");
       System.out.println("Code=" + response.getCode());
       System.out.println("Message=" + response.getMessage());

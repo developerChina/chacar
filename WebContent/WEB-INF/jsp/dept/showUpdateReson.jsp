@@ -69,7 +69,7 @@
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">修改内容：<input type="text" name="content" id="content" size="20" value="${reson.content}"/></td>
-		    			<td class="font3 fftd">选择时长:
+		    			<!-- <td class="font3 fftd">选择时长:
 					<select name="rtime" id="rtime" style="width:143px;">
 					<option disabled="disabled">-请选择拜访时长-</option>
 					<option value="1">10分钟以下</option>
@@ -78,13 +78,13 @@
 					<option value="3">40——60分钟</option>
 					<option value="4">一小时以上</option>
 					</select>
-					</td>
+					</td> -->
 		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="修改 ">&nbsp;&nbsp;<input type="reset" value="返回 " onclick="javascript:window.history.back(-1);"></td></tr>
+			<tr><td align="center" class="fftd"><input type="submit" value="修改 ">&nbsp;&nbsp;<input type="reset" value="返回 " onclick="javascript:window.history.back(-1);"></td></tr>
 		  </table>
 		 </form>
 	</td>

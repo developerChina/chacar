@@ -55,7 +55,7 @@
 				return false;
 			}
 			
-			$.ajax({
+			/* $.ajax({
 				  type: 'post',
 				  url: '${ctx}/floor/addValidate',
 				  data: {
@@ -72,9 +72,10 @@
 				  	}
 				  }
 				  
-			});
-		 })
-		 
+			});*/
+			$("#accessForm").submit();
+		 }) 
+			
     });
 		
 
@@ -106,10 +107,10 @@
 		    			
 		    		<tr>
 		    			<td class="font3 fftd">控制器IP:<input name="cip" id="cip" size="20" value="${access.cip }"/></td>
-		    			<td class="font3 fftd">门禁编号:<input name="acno" id="acno" size="20" value="${access.acno}" /></td>
+		    			<td class="font3 fftd">门禁编号:<input type="hidden" name="acno" id="acno" size="20" value="${access.acno}" />${access.acno}</td>
 		    		</tr>
 		    		<tr>
-		    			<td class="font3 fftd">楼层编号:<input name="floorno" id="floorno" size="20" value="${access.floorno}" /></td>
+		    			<td class="font3 fftd">楼层编号:<input type="hidden" name="floorno" id="floorno" size="20" value="${access.floorno}" />${access.floorno}</td>
 		    		</tr>
 		    	</table>
 		    </td></tr>

@@ -21,9 +21,9 @@ public class ResonDynaSqlProvid {
 					if(reson.getContent()!=null && !reson.getContent().equals("")){
 						WHERE("content LIKE CONCAT('%',#{reson.content},'%')");
 					}
-					if(reson.getRtime()!=null && !reson.getRtime().equals("")){
+					/*if(reson.getRtime()!=null && !reson.getRtime().equals("")){
 						WHERE("rtime LIKE CONCAT('%',#{reson.rtime},'%')");
-					}
+					}*/
 				}
 			}
 		}.toString();
@@ -43,9 +43,9 @@ public class ResonDynaSqlProvid {
 					if(reson.getContent()!= null && !reson.getContent().equals("")){
 						WHERE(" content LIKE CONCAT('%',#{reson.content},'%') ");
 					}
-					if(reson.getRtime()!=null && !reson.getRtime().equals("")){
+					/*if(reson.getRtime()!=null && !reson.getRtime().equals("")){
 						WHERE(" rtime LIKE CONCAT('%',#{reson.rtime},'%')");
-					}
+					}*/
 				} 
 			}
 		}.toString();
@@ -59,9 +59,9 @@ public class ResonDynaSqlProvid {
 				if(reson.getContent()!= null){
 					SET(" content = #{content} ");
 				}
-				if(reson.getRtime()!=null){
+			/*	if(reson.getRtime()!=null){
 					SET(" rtime = #{rtime}");
-				}
+				}*/
 				WHERE(" rid = #{rid} ");
 			}
 		}.toString();
@@ -75,9 +75,9 @@ public class ResonDynaSqlProvid {
 					if(reson.getContent() !=null && !reson.getContent().equals(""));{
 						VALUES("content","#{content}");
 					}
-					if(reson.getRtime()!=null && !reson.getRtime().equals("")){
+					/*if(reson.getRtime()!=null && !reson.getRtime().equals("")){
 						VALUES("rtime","#{rtime}");
-					}
+					}*/
 				}
 			}.toString();
 		}

@@ -25,6 +25,12 @@
 	<script type="text/javascript">
 		$(function(){
 
+			/** 给全选按钮绑定点击事件  */
+	    	$("#checkAll").click(function(){
+	    		// this是checkAll  this.checked是true
+	    		// 所有数据行的选中状态与全选的状态一致
+	    		boxs.attr("checked",this.checked);
+	    	})
 		 	   /** 获取上一次选中的部门数据 */
 		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
 		 	   
@@ -92,7 +98,7 @@
 					  <tr>
 					    <td class="font3">
 					    	事由内容：<input type="text" name="content">
-					    	拜访时长:
+					    	<!-- 拜访时长:
 		    			<select name="rtime">
 					<option disabled="disabled" selected="selected">-请选择拜访时长-</option>
 					<option value="1" >10分钟以下</option>
@@ -100,7 +106,7 @@
 					<option value="2">30——40分钟</option>
 					<option value="3">40——60分钟</option>
 					<option value="4">1小时以上</option>
-					</select>
+					</select> -->
 						
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
@@ -122,19 +128,19 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>访问事由</td>
-			  <td>访问时长</td>
+			<!--   <td>访问时长</td> -->
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.resons}" var="reson" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${reson.rid}"></td>
 					 <td>${reson.content }</td>
-					 <td> <c:if test="${reson.rtime==1}">10分钟以下</c:if>
+					<%--  <td> <c:if test="${reson.rtime==1}">10分钟以下</c:if>
 					  	  <c:if test="${reson.rtime==0}">10——30分钟</c:if>
 					  	   <c:if test="${reson.rtime==2}">30——40分钟</c:if>
 					  	    <c:if test="${reson.rtime==3}">40——60分钟</c:if>
 					  	     <c:if test="${reson.rtime==4}">1小时以上</c:if>
-					  	</td>
+					  	</td> --%>
 					  <td align="center" width="40px;">
  					       <a href="${ctx}/visitor/updateReson?flag=1&rid=${reson.rid}">
 							   <img title="&nbsp;&nbsp;修改&nbsp;&nbsp;" src="${ctx}/images/update.gif"/>
