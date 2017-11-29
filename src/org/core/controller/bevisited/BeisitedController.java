@@ -83,10 +83,12 @@ public class BeisitedController {
 		String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
 		//保存记录访客
 		List<Map> rvs=JsonUtils.parse(recordVisitors.replaceAll("\'", "\""), List.class);
+		String visitorNames="";//访客名
 		for (Map rv : rvs) {
 			if(rv.get("cardID")!=null){
 				RecordVisitors recordVisitor= new RecordVisitors();
 				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(rv.get("cardID").toString());
+				visitorNames=visitorNames+","+visitorInfo.getCardName();
 				BeanUtils.copyProperties(visitorInfo, recordVisitor);
 				recordVisitor.setRecordID(recordid);
 				recordVisitor.setVisitStatus(1);
@@ -94,12 +96,16 @@ public class BeisitedController {
 				recordVisitorsService.save(recordVisitor);
 			}
 		}
+		
+		if(visitorNames.contains(",")) {
+			visitorNames.substring(1);
+		}
 		//保存记录被访人
 		Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
 		RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 		recordBevisitedsService.save(recordBevisiteds);
 		//调用短信接口
-		sendAudiSMS(recordBevisiteds.getBevisitedName(), employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
+		sendAudiSMS(visitorNames, employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
 		
 		return getAudiUrl(request)+recordid;
 	}
@@ -119,9 +125,11 @@ public class BeisitedController {
 			//保存记录
 			VisitorRecord visitorRecord=new VisitorRecord();
 			String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
+			String visitorNames="";//访客名
 			//保存记录访客
 			if(recordVisitor.getCardID()!=null){
 				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(recordVisitor.getCardID());
+				visitorNames=visitorInfo.getCardName();
 				recordVisitor.setRecordID(recordid);
 				recordVisitor.setVisitStatus(1);
 				recordVisitor.setVisitorID(visitorInfo.getVisitorID());
@@ -133,7 +141,7 @@ public class BeisitedController {
 			recordBevisitedsService.save(recordBevisiteds);
 			
 			//发送验证短信
-			sendAudiSMS(recordBevisiteds.getBevisitedName(), employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
+			sendAudiSMS(visitorNames, employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
 			
 			returnString=returnString+getAudiUrl(request)+recordid+"<br/>";
 		}
