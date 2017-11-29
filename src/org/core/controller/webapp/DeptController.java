@@ -20,12 +20,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.core.domain.webapp.Dept;
-import org.core.domain.webapp.Employee;
-import org.core.domain.webapp.Job;
 import org.core.service.webapp.HrmService;
-import org.core.util.DateStyle;
-import org.core.util.DateUtil;
 import org.core.util.ExcelUtil;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -242,7 +239,7 @@ public class DeptController {
 	}
 
 	/**
-	 * 批量导入员工页面
+	 * 批量导入部门页面
 	 */
 	@RequestMapping(value = "/dept/importDeptPage")
 	public ModelAndView importDeptPage(ModelAndView mv) {
@@ -251,11 +248,11 @@ public class DeptController {
 	}
 	
 	/**
-	 * 批量导入员工
+	 * 批量导入部门
 	 */
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/dept/importDept")
-	public ModelAndView importEmployee(ModelAndView mv,
+	public ModelAndView importDept(ModelAndView mv,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		Map<String, Object> map = new HashMap<>();
 		try {
@@ -265,11 +262,15 @@ public class DeptController {
 			Row row = sheet.getRow(0);
 			int colNum = row.getPhysicalNumberOfCells();
 			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
-			// id 名称 详细信息
+			//名称
 			for (Map<Integer, String> data : list) {
+				Dept dept=new Dept();
 				for (Integer key : data.keySet()) {
-					Dept dept=new Dept();
-					dept.setId(Integer.parseInt(data.get(0)));
+					dept.setName(data.get(0));
+					dept.setRemark(data.get(0));
+				}
+				if(StringUtils.isNotBlank(dept.getName())){
+					hrmService.saveOrUpdateDept(dept);
 				}
 			}
 		} catch (IOException e1) {

@@ -1,9 +1,19 @@
 package org.core.controller.webapp;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.core.domain.webapp.Job;
 import org.core.service.webapp.HrmService;
+import org.core.util.ExcelUtil;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**   
@@ -120,4 +132,53 @@ public class JobController {
 		// 返回
 		return mv;
 	}
+	
+	
+	/**
+	 * 批量导入职位页面
+	 */
+	@RequestMapping(value = "/job/importJobPage")
+	public ModelAndView importJobPage(ModelAndView mv) {
+		mv.setViewName("job/jobImport");
+		return mv;
+	}
+	
+	/**
+	 * 批量导入职位
+	 */
+	@SuppressWarnings("unused")
+	@RequestMapping(value = "/job/importJob")
+	public ModelAndView importJob(ModelAndView mv,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			InputStream is = file.getInputStream();
+			Workbook workbook = new HSSFWorkbook(is);
+			Sheet sheet = workbook.getSheetAt(0);
+			Row row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
+			//名称
+			for (Map<Integer, String> data : list) {
+				Job job=new Job();
+				for (Integer key : data.keySet()) {
+					job.setName(data.get(0));
+					job.setRemark(data.get(0));
+				}
+				if(StringUtils.isNotBlank(job.getName())){
+					hrmService.saveOrUpdateJob(job);
+				}
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			map.put("status", false);
+			map.put("message", "成功导入0行数据");
+			map.put("exception", e1.getMessage());
+		}
+		mv.addObject("map", map);
+		mv.setViewName("upload/resultImport");
+		return mv;
+
+	}
+	
 }

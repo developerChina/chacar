@@ -67,6 +67,10 @@
 	 	   $("#add").click(function(){
 	 		   window.location = "${ctx }/job/addJob?flag=1";
 	 	   })
+	 	   
+	 	   $("#import").click(function(){
+		 		 window.location = "${ctx }/job/importJobPage";
+		 	})
 	    })
 	</script>
 </head>
@@ -96,6 +100,7 @@
 					    	 <input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加职位&nbsp;"/>
+					    	<input id="import" type="button" value="&nbsp; 导入 &nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

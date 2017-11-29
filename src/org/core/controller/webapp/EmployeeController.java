@@ -32,6 +32,7 @@ import org.core.util.DateStyle;
 import org.core.util.DateUtil;
 import org.core.util.ExcelUtil;
 import org.core.util.LadderControlUtil;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -327,7 +328,7 @@ public class EmployeeController {
 		int index = 0;
 		// 添加头信息
 		String[] titles = { "名称", "身份证号", "邮政编码", "电话", "手机", "qq号码", "邮箱", "性别", "政治面貌", "生日", "民族", "学历", "专业", " 爱好",
-				"备注", "卡号", "车牌号", "地址", "部门", "职位", "部门ID", "职位ID" };
+				"备注", "卡号", "车牌号", "地址", "部门", "职位"};
 		HSSFRow row_head = sheet.createRow(index++);
 		for (int i = 0; i < titles.length; i++) {
 			HSSFCell cell = row_head.createCell(i);
@@ -431,6 +432,18 @@ public class EmployeeController {
 	@RequestMapping(value = "/employee/importEmployee")
 	public ModelAndView importEmployee(ModelAndView mv,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
+		
+		List<Dept> depts=hrmService.findAllDept();
+		Map<String, Integer> map_dept=new HashMap<>();
+		for (Dept dept : depts) {
+			map_dept.put(dept.getName(), dept.getId());
+		}
+		List<Job> jobs=hrmService.findAllJob();
+		Map<String, Integer> map_job=new HashMap<>();
+		for (Job job : jobs) {
+			map_job.put(job.getName(), job.getId());
+		}
+		
 		Map<String, Object> map = new HashMap<>();
 		try {
 			InputStream is = file.getInputStream();
@@ -439,7 +452,7 @@ public class EmployeeController {
 			Row row = sheet.getRow(0);
 			int colNum = row.getPhysicalNumberOfCells();
 			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
-			// 名称,身份证号,邮政编码,电话,手机,qq号码,邮箱,性别,政治面貌,生日,民族,学历,专业,爱好,备注,卡号,车牌号,部门,职位,部门ID,职位ID
+			// 名称,身份证号,邮政编码,电话,手机,qq号码,邮箱,性别,政治面貌,生日,民族,学历,专业,爱好,备注,卡号,车牌号,部门,职位
 			for (Map<Integer, String> data : list) {
 				Employee employee = new Employee();
 				for (Integer key : data.keySet()) {
@@ -456,7 +469,7 @@ public class EmployeeController {
 						employee.setSex(1);
 					}
 					employee.setParty(data.get(8));
-					employee.setBirthday(DateUtil.StringToDate(data.get(9), DateStyle.YYYY_MM_DD));
+					employee.setBirthday(DateUtil.StringToDate(data.get(9), DateStyle.YYYY_MM_DD_EN));
 					employee.setRace(data.get(10));
 					employee.setEducation(data.get(11));
 					employee.setSpeciality(data.get(12));
@@ -465,17 +478,18 @@ public class EmployeeController {
 					employee.setCardno(data.get(15));
 					employee.setCarno(data.get(16));
 					employee.setAddress(data.get(17));
-					Dept dept = new Dept();
-					dept.setId(Integer.parseInt(data.get(20)));
-					employee.setDept(dept);
-					Job job = new Job();
-					job.setId(Integer.parseInt(data.get(21)));
-					employee.setJob(job);
-
+					if(StringUtils.isNotBlank(data.get(18))){
+						Dept dept = new Dept();
+						dept.setId(map_dept.get(data.get(18)));
+						employee.setDept(dept);	
+					}
+					if(StringUtils.isNotBlank(data.get(19))){
+						Job job = new Job();
+						job.setId(map_job.get(data.get(19)));
+						employee.setJob(job);
+					}
 				}
-
 				hrmService.addEmployee(employee);
-
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();

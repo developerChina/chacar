@@ -23,6 +23,9 @@ public interface JobDao {
 	@Select("select * from "+JOBTABLE+" where ID = #{id}")
 	Job selectById(int id);
 	
+	@Select("select * from "+JOBTABLE+" where name = #{name}")
+	Job selectByName(String name);
+	
 	@Select("select * from "+JOBTABLE+" ")
 	List<Job> selectAllJob();
 

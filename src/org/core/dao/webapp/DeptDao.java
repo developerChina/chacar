@@ -39,6 +39,9 @@ public interface DeptDao {
 	
 	@Select("select * from "+DEPTTABLE+" where ID = #{id}")
 	Dept selectById(int id);
+	
+	@Select("select * from "+DEPTTABLE+" where name = #{name}")
+	Dept selectByName(String name);
 
 	// 根据id删除部门
 	@Delete(" delete from "+DEPTTABLE+" where id = #{id} ")

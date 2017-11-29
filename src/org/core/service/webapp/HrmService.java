@@ -168,5 +168,17 @@ public interface HrmService {
 	 * @return
 	 */
 	List<Map<String, Object>> getEmployeees(String name, String phone);
+
+	/**
+	 * 修改或保存
+	 * @param dept
+	 */
+	void saveOrUpdateDept(Dept dept);
+
+	/**
+	 * 修改或保存
+	 * @param job
+	 */
+	void saveOrUpdateJob(Job job);
 	
 }

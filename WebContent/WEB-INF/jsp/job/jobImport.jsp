@@ -45,7 +45,7 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/dept/importDept" id="uploadForm" method="post" enctype="multipart/form-data" >
+    	 <form action="${ctx}/job/importJob" id="uploadForm" method="post" enctype="multipart/form-data" >
 		 	<!-- 隐藏表单，flag表示添加标记 -->
 	   	 	<input type="hidden" name="flag" value="2">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">

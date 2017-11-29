@@ -347,4 +347,24 @@ public class HrmServiceImpl implements HrmService{
 		}
 	}
 
+	@Override
+	public void saveOrUpdateDept(Dept dept) {
+		Dept exits=deptDao.selectByName(dept.getName());
+		if(exits!=null){
+			deptDao.update(dept);
+		}else{
+			deptDao.save(dept);
+		}
+	}
+
+	@Override
+	public void saveOrUpdateJob(Job job) {
+		 Job exits=jobDao.selectByName(job.getName());
+		 if(exits!=null){
+			 jobDao.update(job);
+		}else{
+			jobDao.save(job);
+		}
+	}
+
 }
