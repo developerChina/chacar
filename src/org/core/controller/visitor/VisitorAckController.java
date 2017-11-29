@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.visitor.VisitorInfo;
@@ -20,8 +19,11 @@ import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.TrajectoryService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.visitor.VisitorService;
+import org.core.service.webapp.AccessGroupService;
 import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
+import org.core.service.webapp.GroupService;
+import org.core.service.webapp.PassagewayGroupService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
 import org.core.util.DateUtil;
@@ -64,6 +66,18 @@ public class VisitorAckController {
 	@Qualifier("accessService")
 	private AccessService accessService;//门禁
 	
+	@Autowired 
+	@Qualifier("accessgroupService")
+	private AccessGroupService accessgroupService;
+	
+	@Autowired
+	@Qualifier("passagewayGroupService")
+	private PassagewayGroupService passagewayGroupService;
+	
+	@Autowired
+	@Qualifier("groupService")
+	private GroupService groupService;
+	
 	@Autowired
 	@Qualifier("trajectoryService")
 	private TrajectoryService trajectoryService;//访问轨迹
@@ -82,30 +96,37 @@ public class VisitorAckController {
 		mv.addObject("recordid", recordid);
 		
 		
-		RecordBevisiteds rbv=recordBevisitedsService.selectBevisitedByRecordId(recordid);
+//		RecordBevisiteds rbv=recordBevisitedsService.selectBevisitedByRecordId(recordid);
+//		//添加通道
+//		List<Passageway> pws=passagewayService.selectAccessByCardNo(rbv.getBevisitedCardNo());
+//		mv.addObject("pws", pws);
+//		//添加楼层
+//		List<Access> acces=accessService.selectAccessByCardNo(rbv.getBevisitedCardNo());
+//		mv.addObject("acces", acces);
+//		if(acces.size()>0){
+//			//添加电梯
+//			PageModel pageModel=new PageModel();
+//			pageModel.setPageIndex(1);
+//			pageModel.setRecordCount(Integer.MAX_VALUE);
+//			pageModel.setPageSize(Integer.MAX_VALUE);
+//			List<Elevator> elts=elevatorService.findElevator(new Elevator(), pageModel);
+//			mv.addObject("elts", elts);
+//		}
 		
-		//添加通道
-		List<Passageway> pws=passagewayService.selectAccessByCardNo(rbv.getBevisitedCardNo());
-		mv.addObject("pws", pws);
 		
-		//添加楼层
-		List<Access> acces=accessService.selectAccessByCardNo(rbv.getBevisitedCardNo());
-		mv.addObject("acces", acces);
+		//所有门禁
+		List<Access> agAccesss=accessgroupService.selectAGSubordinate();
+		mv.addObject("acces", agAccesss);
+		//所有通道
+		List<Passageway> passList=passagewayGroupService.selectPGSubordinate();
+		mv.addObject("pws", passList);
+		//所有电梯
+		List<Elevator> egElevators= groupService.selectEGSubordinate();
+		mv.addObject("elts", egElevators);
 		
-		if(acces.size()>0){
-			//添加电梯
-			PageModel pageModel=new PageModel();
-			pageModel.setPageIndex(1);
-			pageModel.setRecordCount(Integer.MAX_VALUE);
-			pageModel.setPageSize(Integer.MAX_VALUE);
-			List<Elevator> elts=elevatorService.findElevator(new Elevator(), pageModel);
-			mv.addObject("elts", elts);
-		}
-		
-		if(acces.size()>0 || pws.size()>0){
+		if(agAccesss.size()>0 || agAccesss.size()>0){
 			mv.addObject("isShow", "yes");
 		}
-		
 		
 		// 设置客户端跳转到查询请求
 		mv.setViewName("visitor/visitor-ack");
