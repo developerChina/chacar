@@ -39,6 +39,6 @@ public class PropUtil {
 	}
 	 
 	public static void main(String[] args) {
-		System.out.println(getSysValue("imgurl"));
+		System.out.println(getSysValue("serverPath"));
 	}
 }
