@@ -1,7 +1,10 @@
 package org.core.controller.webapp;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +15,16 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.Region;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.core.domain.webapp.Dept;
+import org.core.domain.webapp.Employee;
+import org.core.domain.webapp.Job;
 import org.core.service.webapp.HrmService;
+import org.core.util.DateStyle;
+import org.core.util.DateUtil;
 import org.core.util.ExcelUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +33,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**   
@@ -229,5 +241,47 @@ public class DeptController {
 		}
 	}
 
+	/**
+	 * 批量导入员工页面
+	 */
+	@RequestMapping(value = "/dept/importDeptPage")
+	public ModelAndView importDeptPage(ModelAndView mv) {
+		mv.setViewName("dept/deptImport");
+		return mv;
+	}
+	
+	/**
+	 * 批量导入员工
+	 */
+	@SuppressWarnings("unused")
+	@RequestMapping(value = "/dept/importDept")
+	public ModelAndView importEmployee(ModelAndView mv,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			InputStream is = file.getInputStream();
+			Workbook workbook = new HSSFWorkbook(is);
+			Sheet sheet = workbook.getSheetAt(0);
+			Row row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
+			// id 名称 详细信息
+			for (Map<Integer, String> data : list) {
+				for (Integer key : data.keySet()) {
+					Dept dept=new Dept();
+					dept.setId(Integer.parseInt(data.get(0)));
+				}
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			map.put("status", false);
+			map.put("message", "成功导入0行数据");
+			map.put("exception", e1.getMessage());
+		}
+		mv.addObject("map", map);
+		mv.setViewName("upload/resultImport");
+		return mv;
+
+	}
 	 
 }

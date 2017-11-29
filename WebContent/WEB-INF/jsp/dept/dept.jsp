@@ -85,6 +85,10 @@
 	 	       $("#deptform").submit();
 	 	   })
 	 	   
+	 	    $("#import").click(function(){
+		 		 window.location = "${ctx }/dept/importDeptPage";
+		 	})
+	 	   
 	 	   $("#export").click(function(){
 	 		   var actionURL = $("#deptform").attr("action");
 	 	       $("#deptform").attr("action","${ctx}/dept/exportExcel");
@@ -121,6 +125,7 @@
 					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加部门&nbsp;"/>
+					    	<input id="import" type="button" value="&nbsp; 导入 &nbsp;"/>
 					    	<input id="export" type="button" value="&nbsp; 导出 &nbsp;"/>
 					    </td>
 					  </tr>

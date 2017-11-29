@@ -117,9 +117,9 @@
 				  url: '${ctx}/bevisited/sendSingleMessage',
 				  data: {"recordVisitors":$("#recordVisitors").val(),"id":node.id},
 				  success: function(data){
-					  $("#contextDiv").html(data);
-					  document.getElementById('popDiv').style.display='block';
-					  //window.location.href='${ctx}/vindex.jsp'; 
+					  //$("#contextDiv").html(data);
+					  //document.getElementById('popDiv').style.display='block';
+					  window.location.href='${ctx}/vindex.jsp'; 
 				  }
 				});
 	      }

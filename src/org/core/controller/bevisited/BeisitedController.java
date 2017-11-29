@@ -1,5 +1,6 @@
 package org.core.controller.bevisited;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,9 @@ import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.webapp.HrmService;
+import org.core.util.DateStyle;
+import org.core.util.DateUtil;
+import org.core.util.HttpClientUtil;
 import org.core.util.JsonUtils;
 import org.core.util.PropUtil;
 import org.springframework.beans.BeanUtils;
@@ -95,6 +99,8 @@ public class BeisitedController {
 		RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 		recordBevisitedsService.save(recordBevisiteds);
 		//调用短信接口
+		sendAudiSMS(recordBevisiteds.getBevisitedName(), employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
+		
 		return getAudiUrl(request)+recordid;
 	}
 	
@@ -125,6 +131,10 @@ public class BeisitedController {
 			Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
 			RecordBevisiteds recordBevisiteds=emp2Bevisited(recordid, employee);
 			recordBevisitedsService.save(recordBevisiteds);
+			
+			//发送验证短信
+			sendAudiSMS(recordBevisiteds.getBevisitedName(), employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
+			
 			returnString=returnString+getAudiUrl(request)+recordid+"<br/>";
 		}
 		//调用短信接口
@@ -226,5 +236,22 @@ public class BeisitedController {
 	
 	private String getAudiUrl(HttpServletRequest request){
 		return PropUtil.getSysValue("serverPath")+request.getContextPath()+"/visitor/forwardVisitorAck?recordid=";
+	}
+	
+	/**
+	 * 发送授权短信
+	 * @param visitedName
+	 * @param visitorName
+	 * @param visitorDate
+	 * @param recordid
+	 * @param phoneNumbers
+	 */
+	private void sendAudiSMS(String visitedName,String visitorName,String visitorDate,String recordid,String phoneNumbers){
+		HttpClientUtil.doGet(PropUtil.getSysValue("smsPath")+
+				"?visitedName="+visitedName+
+				"&visitorName="+visitorName+
+				"&visitorDate="+visitorDate+
+				"&recordid="+recordid+
+				"&phoneNumbers="+phoneNumbers);
 	}
 }
