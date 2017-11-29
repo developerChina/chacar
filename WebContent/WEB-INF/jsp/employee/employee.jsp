@@ -194,13 +194,11 @@
 			  <td>手机号码</td>
 			  <td>员工卡号</td>
 			  <td>卡授权状态</td>
-			  <td>邮箱</td>
 			  <td>职位</td>
 			  <td>学历</td>
 			  <td>身份证号码</td>
 			  <td>部门</td>
 			  <td>车牌号码</td>
-			  <td>联系地址</td>
 			  <td>建档日期</td>
 			  <td align="center">操作</td>
 			</tr>
@@ -216,14 +214,11 @@
 			        	<c:otherwise><font color="red">未授权</font></c:otherwise>
 			        </c:choose>
 				  </td>
-				  <td>${employee.email }</td>
 				  <td>${employee.job.name  }</td>
 				  <td>${employee.education }</td>
 				  <td>${employee.cardId }</td>
 				  <td>${employee.dept.name }</td>
 				  <td>${employee.carno }</td>
-				  
-				  <td>${employee.address }</td>
 				  <td>
 				  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
 				  </td>

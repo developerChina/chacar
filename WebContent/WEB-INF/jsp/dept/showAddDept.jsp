@@ -78,7 +78,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">父级部门：
 		    			<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/dept/selectAllDept" multiSelect="false"
-		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="3" size="20" />
+		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="1" size="20" style="width:150px;"/>
     					</td>
 		    			<td class="font3 fftd">部门名称：<input type="text" name="name" id="name" size="20"/></td>
 		    			<td class="font3 fftd">详细描述：<input type="text" name="remark" id="remark" size="20"/></td>

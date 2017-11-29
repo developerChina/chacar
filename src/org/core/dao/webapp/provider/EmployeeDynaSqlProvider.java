@@ -77,7 +77,7 @@ public class EmployeeDynaSqlProvider {
 					if(employee.getCardId() != null && !employee.getCardId().equals("") ){
 						WHERE(" card_id LIKE CONCAT ('%',#{employee.cardId},'%') ");
 					}
-					if(employee.getCarstatus() != null && !employee.getCarstatus().equals("") ){
+					if(employee.getCarstatus() != null && employee.getCarstatus() != -1 ){
 						WHERE(" carstatus = #{employee.carstatus} ");
 					}
 					if(employee.getSex()!= null && employee.getSex() != 0){
