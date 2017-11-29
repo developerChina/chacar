@@ -54,14 +54,14 @@
 				</div>
 				<div class="bottom clearfix">
 					<div class="fl left">
-					  <div id="datagrid1" class="mini-datagrid" style="width:471px;height:271px;" idField="cardID" showPager="false" allowSortColumn="false" frozenStartColumn="0" frozenEndColumn="2">
+					  <div id="datagrid1" class="mini-datagrid" style="width:671px;height:271px;" idField="cardID" showPager="false" allowSortColumn="false" frozenStartColumn="0" frozenEndColumn="2">
 					      <div property="columns">
 					      	  <div type="checkcolumn"></div>
 					          <div cellCls="actionIcons" name="action" width="40" headerAlign="center" align="center" renderer="onActionRenderer">操作</div>
 					          <div field="cardName" width="80" headerAlign="center">姓名</div>                
-					          <div field="cardSex" width="60" headerAlign="center">性别</div>
-					          <div field="cardNation" width="60" headerAlign="center">民族</div>
-					          <div field="cardID" width="200">省份证号码</div>
+					          <div field="cardSex" width="60" visible="false">性别</div>
+					          <div field="cardNation" width="60" visible="false">民族</div>
+					          <div field="cardID" width="124">身份证号码</div>
 					          <div field="cardAddress" visible="false">住址</div>
 					          <div field="cardPhoto" visible="false">证件照片</div>
 					          <div field="photo1" visible="false">拍照照片</div>
@@ -71,7 +71,7 @@
 				              <div field="company" width="150" headerAlign="center">工作单位
 				                <input property="editor" class="mini-textbox" style="width:100%;"/>
 				              </div>
-				              <div field="visitReason" width="200" headerAlign="center">访问事由
+				              <div field="visitReason" width="100" headerAlign="center">访问事由
 				                <input property="editor" class="mini-combobox" style="width:100%;" data="resons" valueField	="content" textField="content" />  
 				              </div>  
 					      </div>
@@ -82,8 +82,8 @@
 							<img id="cardPhoto-img" src="${ctx}/images/photoOne.png" alt="" />
 							<p>证件照片</p>
 						</div>
-						<div class="fl">
-							<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
+						<div class="fl" style="width:246px;height:212px">
+							<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" style="width:240px;height:180px"/>
 							<p>拍照照片</p>
 						</div>
 						<div id="capctrl-div" style="position: absolute;display: none">

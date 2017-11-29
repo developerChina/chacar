@@ -18,7 +18,7 @@
 	background: url(images/single-logo.png) no-repeat 4% center;
 }
 .content{
-	width: 950px;
+	width: 1200px;
 	height: 450px;
 	box-sizing: border-box;
 	position: absolute;
@@ -60,7 +60,7 @@
 	margin: 5px 0 0 20px;
 }
 .left{
-	width: 470px;
+	width: 670px;
 	height: 270px;
 	border: 1px solid #c7d8ec;
 	margin-right: 30px;

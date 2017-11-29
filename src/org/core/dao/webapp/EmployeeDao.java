@@ -84,6 +84,33 @@ public interface EmployeeDao {
 		@Result(column="DEPT_ID",property="dept",one=@One(select="org.core.dao.webapp.DeptDao.selectById",fetchType=FetchType.EAGER)),
 		@Result(column="JOB_ID",property="job",one=@One(select="org.core.dao.webapp.JobDao.selectById",fetchType=FetchType.EAGER))
 	})
-	List<Employee> getEmployeees(@Param("name")String name, @Param("phone")String phone);
+	List<Employee> getEmployeeesBy_name_phone(@Param("name")String name, @Param("phone")String phone);
+	
+	
+	@Select("select * from "+EMPLOYEETABLE+" where name = #{name} ")
+	@Results({
+		@Result(id=true,column="id",property="id"),
+		@Result(column="CARD_ID",property="cardId"),
+		@Result(column="POST_CODE",property="postCode"),
+		@Result(column="QQ_NUM",property="qqNum"),
+		@Result(column="BIRTHDAY",property="birthday",javaType=java.util.Date.class),
+		@Result(column="CREATE_DATE",property="createDate",javaType=java.util.Date.class),
+		@Result(column="DEPT_ID",property="dept",one=@One(select="org.core.dao.webapp.DeptDao.selectById",fetchType=FetchType.EAGER)),
+		@Result(column="JOB_ID",property="job",one=@One(select="org.core.dao.webapp.JobDao.selectById",fetchType=FetchType.EAGER))
+	})
+	List<Employee> getEmployeeesBy_name(String name);
+	
+	@Select("select * from "+EMPLOYEETABLE+" where phone = #{phone}")
+	@Results({
+		@Result(id=true,column="id",property="id"),
+		@Result(column="CARD_ID",property="cardId"),
+		@Result(column="POST_CODE",property="postCode"),
+		@Result(column="QQ_NUM",property="qqNum"),
+		@Result(column="BIRTHDAY",property="birthday",javaType=java.util.Date.class),
+		@Result(column="CREATE_DATE",property="createDate",javaType=java.util.Date.class),
+		@Result(column="DEPT_ID",property="dept",one=@One(select="org.core.dao.webapp.DeptDao.selectById",fetchType=FetchType.EAGER)),
+		@Result(column="JOB_ID",property="job",one=@One(select="org.core.dao.webapp.JobDao.selectById",fetchType=FetchType.EAGER))
+	})
+	List<Employee> getEmployeeesBy_phone(String phone);
 
 }

@@ -14,6 +14,7 @@ import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
 import org.core.domain.webapp.User;
 import org.core.service.webapp.HrmService;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -326,7 +327,19 @@ public class HrmServiceImpl implements HrmService{
 	@Override
 	public List<Map<String, Object>> getEmployeees(String name, String phone) {
 		List<Map<String, Object>> listMap=new ArrayList<>();
-		List<Employee> list=employeeDao.getEmployeees(name,phone);
+		List<Employee> list=new ArrayList<>();
+		
+		if(StringUtils.isNotBlank("name") && StringUtils.isNotBlank("phone")){
+			list=employeeDao.getEmployeeesBy_name_phone(name,phone);
+		}else{
+			if(StringUtils.isNotBlank("name")){
+				list=employeeDao.getEmployeeesBy_name(name);
+			}
+			if(StringUtils.isNotBlank("phone")){
+				list=employeeDao.getEmployeeesBy_phone(phone);
+			}
+		}
+				
 		for (Employee employee : list) {
 			Map<String, Object> map=new HashMap<>();
 			map.put("id", employee.getId());

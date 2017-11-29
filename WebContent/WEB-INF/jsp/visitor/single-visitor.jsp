@@ -62,12 +62,13 @@
 								<input type="hidden" id="cardPhoto" name="cardPhoto" value="">
 								<p>证件照片</p>
 							</div>
-							<div class="fl">
-								<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
+							<div class="fl" style="width:246px;height:212px"> 
+								<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" style="width:240px;height:180px"/>
 								<input type="hidden" id="photo1" name="photo1" value="">
 								<p>拍照照片</p>
 							</div>
 						</div>
+						
 						<div class="infoArea">
 							<p class="clearfix">
 								<span class="fl">
