@@ -164,22 +164,17 @@ public class PrintAllController {
 	@RequestMapping(value = "/visitor/smsServerSend")
 	@ResponseBody
 	public Object smsServerSend(HttpServletRequest request,HttpServletResponse response) {
+		String visitedName=request.getParameter("visitedName");
+		String visitorName=request.getParameter("visitorName");
+		String visitorDate=request.getParameter("visitorDate");
+		String recordid=request.getParameter("recordid");
 		String phoneNumbers=request.getParameter("phoneNumbers");
-		String templateParam=request.getParameter("templateParam");
+		System.out.println("======================");
 		try {
-			SendSmsUtil.sendSms(phoneNumbers, templateParam);
+			SendSmsUtil.sendSms(visitedName,visitorName,visitorDate,recordid,phoneNumbers);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
-		return true;
-	}
-	@RequestMapping(value = "/visitor/smsClientSend")
-	@ResponseBody
-	public Object smsClientSend(HttpServletRequest request,HttpServletResponse response) {
-		String phoneNumbers=request.getParameter("phoneNumbers");
-		String templateParam=request.getParameter("templateParam");
-		String serIp="192.168.1.110:8080";
-		HttpClientUtil.doGet("http://"+serIp+"?"+phoneNumbers);
 		return true;
 	}
 }
