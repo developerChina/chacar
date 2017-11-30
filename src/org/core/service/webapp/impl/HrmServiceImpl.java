@@ -329,13 +329,13 @@ public class HrmServiceImpl implements HrmService{
 		List<Map<String, Object>> listMap=new ArrayList<>();
 		List<Employee> list=new ArrayList<>();
 		
-		if(StringUtils.isNotBlank("name") && StringUtils.isNotBlank("phone")){
+		if(StringUtils.isNotBlank(name) && StringUtils.isNotBlank(phone)){
 			list=employeeDao.getEmployeeesBy_name_phone(name,phone);
 		}else{
-			if(StringUtils.isNotBlank("name")){
+			if(StringUtils.isNotBlank(name)){
 				list=employeeDao.getEmployeeesBy_name(name);
 			}
-			if(StringUtils.isNotBlank("phone")){
+			if(StringUtils.isNotBlank(phone)){
 				list=employeeDao.getEmployeeesBy_phone(phone);
 			}
 		}

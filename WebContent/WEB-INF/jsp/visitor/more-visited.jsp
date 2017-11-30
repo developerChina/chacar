@@ -55,6 +55,7 @@
 				                        <input id="telphone" class="mini-textbox" emptyText="手机号" style="width:150px;" onBlur="search"/>
 				                        <input id="name" class="mini-textbox" emptyText="姓名" style="width:150px;" onBlur="search"/>    
 				                        <a class="mini-button" iconCls="icon-search" onclick="search()">查询</a>
+				                        <a class="mini-button" iconCls="icon-cancel" onclick="clear()">清空</a>
 				                    </td>
 				                </tr>
 				            </table>           
@@ -131,6 +132,10 @@
 	    			 {name:name,telphone:telphone},
 	    			 function() {grid.selectAll();}
 	    			 );
+	     }
+	     function clear(){
+	    	 mini.get("telphone").setValue('');
+	    	 mini.get("name").setValue('');
 	     }
         $(document).ready(function(){
       	     $(document).bind("contextmenu",function(e){

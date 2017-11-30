@@ -53,6 +53,7 @@
 				                        <input id="telphone" class="mini-textbox" emptyText="手机号" style="width:150px;" onBlur="search"/>
 				                        <input id="name" class="mini-textbox" emptyText="姓名" style="width:150px;" onBlur="search"/>    
 				                        <a class="mini-button" iconCls="icon-search" onclick="search()">查询</a>
+				                        <a class="mini-button" iconCls="icon-cancel" onclick="clear()">清空</a>
 				                    </td>
 				                </tr>
 				            </table>           
@@ -134,9 +135,9 @@
 				  url: '${ctx}/bevisited/getEmployeees',
 				  data: {name:name,telphone:telphone},
 				  success: function(datas){
-					  for (i = 0; i < datas.length; i++) {
+					  for (x = 0; x < datas.length; x++) {
 						  //判断是否添加
-						  var data=datas[i];
+						  var data=datas[x];
 						  if(isAdd(data)){
 							  grid.addRow(data);
 							  grid.setSelected(data); 
@@ -146,6 +147,11 @@
 					  }
 				  }
 				});
+	     }
+	     
+	     function clear(){
+	    	 mini.get("telphone").setValue('');
+	    	 mini.get("name").setValue('');
 	     }
 	     
 	     function isAdd(data){
