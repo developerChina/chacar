@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>车辆分类</title>
+	<title>停车场管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -113,7 +113,9 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>车场名称</td>
 			  <td>编号</td>
+			  <!-- 
 			  <td>车位数</td>
+			   -->
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.parks}" var="park" varStatus="stat">
@@ -121,7 +123,9 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${park.id}"></td>
 					 <td>${park.name }</td>
 					  <td>${park.no }</td>
+					  <!-- 
 					  <td>${park.num }</td>
+					   -->
  					  <td align="center" width="40px;">
  					       <a href="${ctx}/car/updatecarPark?flag=1&id=${park.id}">
 							   <img title="修改" src="${ctx}/images/update.gif"/>

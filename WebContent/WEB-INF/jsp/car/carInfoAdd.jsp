@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-	<title>添加车场</title>
+	<title>添加车辆</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -25,18 +25,14 @@
 	$(function(){
 		$("#entityForm").submit(function(){
 			var name = $("#name");
-			var no = $("#no");
-			var num = $("#num");
+			var carno = $("#carno");
 			var msg = "";
 			if ($.trim(name.val()) == ""){
-				msg = "车场名称不能为空！";
+				msg = "车主姓名不能为空！";
 				name.focus();
 			}else if ($.trim(no.val()) == ""){
-				msg = "车场编号不能为空！";
+				msg = "车牌号不能为空！";
 				no.focus();
-			}else if ($.trim(num.val()) == ""){
-				msg = "车位总数不能为空！";
-				num.focus();
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
@@ -56,26 +52,22 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车场管理  &gt; 添加车场</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆管理  &gt; 添加车辆</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/car/addcarPark" id="entityForm" method="post">
+    	 <form action="${ctx}/car/addcarInfo" id="entityForm" method="post">
     	 <!-- 隐藏表单，flag表示添加标记 -->
     	 <input type="hidden" name="flag" value="2">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">车场名称：<input type="text" name="name" id="name" size="20"/></td>
-		    			<td class="font3 fftd">车场编号：<input type="text" name="no" id="no" size="20"/></td>
-		    			<!-- 
-		    			<td class="font3 fftd">车位总数：<input type="number" name="num" id="num" size="20" /></td>
-		    			 -->
-		    			 <input type="hidden" name="num" id="num" size="20" value="0"/>
+		    			<td class="font3 fftd">车主姓名：<input type="text" name="name" id="name" size="20"/></td>
+		    			<td class="font3 fftd">车牌号：<input type="text" name="carno" id="carno" size="20"/></td>
 		    		</tr>
 		    	</table>
 		    </td></tr>

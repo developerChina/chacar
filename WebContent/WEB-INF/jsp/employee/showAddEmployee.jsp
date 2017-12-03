@@ -179,7 +179,7 @@
 			<tr><td class="main_tdbor"></td></tr>
 			<td class="font3 fftd">
 					员工卡号：<input name="cardno" id="cardno" size="40"/>
-					&nbsp;车&nbsp;牌&nbsp;号：&nbsp;<input name="carno" id="carno" size="20"/>
+					<!--&nbsp;车&nbsp;牌&nbsp;号：&nbsp;<input name="carno" id="carno" size="20"/> -->
 			</td>
 			<tr><td class="main_tdbor"></td></tr>
 			

@@ -3,20 +3,18 @@ package org.core.dao.car.provider;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.core.domain.car.CarAuthority;
+import org.core.domain.car.CarInfo;
 import org.core.util.BeanUtil;
 
 /**
  * @Description: 动态SQL语句提供类
  */
-public class CarAuthorityProvider {	
-
-	private String exceptFields="tableName,id,carDistinguish,carPark";
-	
-	public String save(CarAuthority entity) {
+public class CarInfoProvider {	
+	private String exceptFields="tableName,id";
+	public String save(CarInfo entity) {
 		return new SQL() {
 			{
-				INSERT_INTO(CarAuthority.tableName);
+				INSERT_INTO(CarInfo.tableName);
 				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
@@ -25,10 +23,10 @@ public class CarAuthorityProvider {
 		}.toString();
 	}
 
-	public String update(CarAuthority entity) {
+	public String update(CarInfo entity) {
 		return new SQL() {
 			{
-				UPDATE(CarAuthority.tableName);
+				UPDATE(CarInfo.tableName);
 				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					SET(entry.getKey()+"="+"#{"+entry.getKey()+"}");
@@ -42,9 +40,12 @@ public class CarAuthorityProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("*");
-				FROM(CarAuthority.tableName);
+				FROM(CarInfo.tableName);
 				if(params.get("entity") != null){
-					CarAuthority entity = (CarAuthority) params.get("entity");
+					CarInfo entity = (CarInfo) params.get("entity");
+					if(entity.getName() != null && !entity.getName().equals("")){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
 						WHERE("  carno LIKE CONCAT ('%',#{entity.carno},'%') ");
 					}
@@ -62,9 +63,12 @@ public class CarAuthorityProvider {
 		String sql =  new SQL(){
 			{
 				SELECT("count(*)");
-				FROM(CarAuthority.tableName);
+				FROM(CarInfo.tableName);
 				if(params.get("entity") != null){
-					CarAuthority entity = (CarAuthority) params.get("entity");
+					CarInfo entity = (CarInfo) params.get("entity");
+					if(entity.getName() != null && !entity.getName().equals("")){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
 						WHERE("  carno LIKE CONCAT ('%',#{entity.carno},'%') ");
 					}
@@ -73,5 +77,5 @@ public class CarAuthorityProvider {
 		}.toString();
 		return sql;
 	}
-
+	
 }

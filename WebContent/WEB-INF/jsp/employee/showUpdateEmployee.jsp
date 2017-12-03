@@ -190,7 +190,7 @@
 			<tr><td class="main_tdbor"></td></tr>
 			<td class="font3 fftd">
 					员工卡号：<input name="cardno" id="cardno" size="40" value="${employee.cardno }"/>
-					&nbsp;车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/>
+					<!--&nbsp;车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/> -->
 			</td>
 			<tr><td class="main_tdbor"></td></tr>
 			

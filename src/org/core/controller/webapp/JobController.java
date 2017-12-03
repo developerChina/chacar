@@ -162,8 +162,8 @@ public class JobController {
 			for (Map<Integer, String> data : list) {
 				Job job=new Job();
 				for (Integer key : data.keySet()) {
-					job.setName(data.get(0));
-					job.setRemark(data.get(0));
+					job.setName(data.get(7));
+					job.setRemark(data.get(7));
 				}
 				if(StringUtils.isNotBlank(job.getName())){
 					hrmService.saveOrUpdateJob(job);

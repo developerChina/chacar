@@ -1,25 +1,40 @@
 package org.core.controller.car;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.core.domain.car.CarAuthority;
 import org.core.domain.car.CarDistinguish;
+import org.core.domain.car.CarInfo;
 import org.core.domain.car.CarPark;
 import org.core.domain.car.CarPassageway;
 import org.core.service.car.CarAuthorityService;
 import org.core.service.car.CarDistinguishService;
+import org.core.service.car.CarInfoService;
 import org.core.service.car.CarParkService;
 import org.core.service.car.CarPassagewayService;
+import org.core.util.ExcelUtil;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -40,6 +55,10 @@ public class CarController {
 	@Autowired
 	@Qualifier("carAuthorityService")
 	private CarAuthorityService carAuthorityService;
+	
+	@Autowired
+	@Qualifier("carInfoService")
+	private CarInfoService carInfoService;
 	
 	/**
 	 * 车场管理
@@ -284,7 +303,10 @@ public class CarController {
 	@ResponseBody		
 	public Object selectByParkid(HttpServletRequest request, HttpServletResponse response){
 		String packid=request.getParameter("packid");
-		List<CarPassageway> ways=carPassagewayService.selectByParkid(Integer.parseInt(packid));
+		List<CarPassageway> ways=new ArrayList<>();
+		if(StringUtils.isNotBlank(packid)){
+			ways=carPassagewayService.selectByParkid(Integer.parseInt(packid));
+		}
 		return ways;
 	}
 	
@@ -312,21 +334,36 @@ public class CarController {
 	 */
 	@RequestMapping(value="/car/addcarAuthority")
 	public ModelAndView addcarAuthority(
+			Integer pageIndex,
 			 String flag,
 			 @ModelAttribute CarAuthority carAuthority,
+			 @ModelAttribute CarInfo carInfo,
 			 ModelAndView mv,
 			 HttpServletRequest request,
 			 HttpServletResponse response){
+		
 		if(flag.equals("1")){
+			//添加车辆列表
+			PageModel pageModel = new PageModel();
+			if(pageIndex != null){
+				pageModel.setPageIndex(pageIndex);
+			}
+			List<CarInfo> cars = carInfoService.selectByPage(carInfo, pageModel);
+			mv.addObject("cars", cars);
+			mv.addObject("pageModel", pageModel);
 			//添加停车场
 			List<CarPark> parks=carParkService.selectAll();
 			mv.addObject("parks", parks);
 			mv.setViewName("car/carAuthorityAdd");
 		}else{
+			String carnos=request.getParameter("carnos");
 			String[] passageway_ids=request.getParameterValues("passageway_ids");
 			for (String  passageway_id : passageway_ids) {
-				carAuthority.setPassageway_id(Integer.parseInt(passageway_id));
-				carAuthorityService.saveOrUpdate(carAuthority); 
+				for (String carno : carnos.split(",")) {
+					carAuthority.setCarno(carno);
+					carAuthority.setPassageway_id(Integer.parseInt(passageway_id));
+					carAuthorityService.saveOrUpdate(carAuthority); 
+				}
 			}
 			mv.setViewName("redirect:/car/carAuthority");
 		}
@@ -368,4 +405,122 @@ public class CarController {
 		mv.setViewName("redirect:/car/carAuthority");
 		return mv;
 	}
+	
+	
+	
+	
+	/**
+	 * 车辆管理
+	 */
+	@RequestMapping(value="/car/carInfo")
+	 public ModelAndView carInfo(Integer pageIndex,ModelAndView mv,@ModelAttribute CarInfo carInfo){
+		PageModel pageModel = new PageModel();
+		if(pageIndex != null){
+			pageModel.setPageIndex(pageIndex);
+		}
+		List<CarInfo> cars = carInfoService.selectByPage(carInfo, pageModel);
+		mv.addObject("cars", cars);
+		mv.addObject("pageModel", pageModel);
+		mv.setViewName("car/carInfo");
+		return mv;
+	}
+	/**
+	 * 车辆添加
+	 */
+	@RequestMapping(value="/car/addcarInfo")
+	public ModelAndView addcarInfo(
+			 String flag,
+			 @ModelAttribute CarInfo carInfo,
+			 ModelAndView mv,
+			 HttpServletRequest request,
+			 HttpServletResponse response){
+		if(flag.equals("1")){
+			mv.setViewName("car/carInfoAdd");
+		}else{
+			carInfoService.save(carInfo); 
+			mv.setViewName("redirect:/car/carInfo");
+		}
+		return mv;
+	}
+	/**
+	 * 车辆修改
+	 */
+	@RequestMapping(value="/car/updatecarInfo")
+	public ModelAndView updatecarInfo(
+			 String flag,
+			 @ModelAttribute CarInfo carInfo,
+			 ModelAndView mv,
+			 HttpServletRequest request,
+			 HttpServletResponse response){
+		if(flag.equals("1")){
+			CarInfo target = carInfoService.selectById(carInfo.getId());
+			mv.addObject("car", target);
+			mv.setViewName("car/carInfoUpdate");
+		}else{
+			carInfoService.update(carInfo);
+			mv.setViewName("redirect:/car/carInfo");
+		}
+		return mv;
+	}
+	/**
+	 * 车辆删除
+	 */
+	@RequestMapping(value="/car/deletecarInfo")
+	 public ModelAndView deletecarInfo(String ids,ModelAndView mv){
+		String[] idArray = ids.split(",");
+		for(String id : idArray){
+			carInfoService.deleteById(Integer.parseInt(id));
+		}
+		mv.setViewName("redirect:/car/carInfo");
+		return mv;
+	}
+	
+	/**
+	 * 批量导入部门页面
+	 */
+	@RequestMapping(value = "/car/importcarPage")
+	public ModelAndView importcarPage(ModelAndView mv) {
+		mv.setViewName("car/carImport");
+		return mv;
+	}
+	
+	/**
+	 * 批量导入部门
+	 */
+	@SuppressWarnings("unused")
+	@RequestMapping(value = "/car/importcar")
+	public ModelAndView importcar(ModelAndView mv,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			InputStream is = file.getInputStream();
+			Workbook workbook = new HSSFWorkbook(is);
+			Sheet sheet = workbook.getSheetAt(0);
+			Row row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
+			//名称
+			for (Map<Integer, String> data : list) {
+				CarInfo car=new CarInfo();
+				for (Integer key : data.keySet()) {
+					car.setName(data.get(1));
+					car.setCarno(data.get(2));
+				}
+				if(StringUtils.isNotBlank(car.getCarno())){
+					carInfoService.saveOrUpdateDept(car);
+				}
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			map.put("status", false);
+			map.put("message", "成功导入0行数据");
+			map.put("exception", e1.getMessage());
+		}
+		mv.addObject("map", map);
+		mv.setViewName("upload/resultImport");
+		return mv;
+	}
+	
+	
+	
 }

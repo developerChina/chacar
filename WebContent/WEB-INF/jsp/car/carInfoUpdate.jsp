@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-	<title>添加车辆授权</title>
+	<title>修改车辆</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -20,25 +20,19 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
-	<link href="${ctx}/js/My97DatePicker/skin/WdatePicker.css" type="text/css" rel="stylesheet" />
-	
 	<script type="text/javascript">
 	
 	$(function(){
 		$("#entityForm").submit(function(){
+			var name = $("#name");
 			var carno = $("#carno");
-			var passageway_ids = "";
-            $("input[name='passageway_ids']:checkbox").each(function(){ 
-                if($(this).attr("checked")){
-                	passageway_ids += $(this).val()+","
-                }
-            })
 			var msg = "";
-			if ($.trim(carno.val()) == ""){
+			if ($.trim(name.val()) == ""){
+				msg = "车主姓名不能为空！";
+				name.focus();
+			}else if ($.trim(no.val()) == ""){
 				msg = "车牌号不能为空！";
-			}else if ($.trim(passageway_ids) == ""){
-				msg = "出入口不能为空！";
+				no.focus();
 			}
 			if (msg != ""){
 				$.ligerDialog.error(msg);
@@ -48,21 +42,6 @@
 			}
 			$("#entityForm").submit();
 		});
-		
-		
-		$('#park').change(function(){ 
-			$.post(
-				"${ctx}/car/selectByParkid",
-				{packid:$(this).children('option:selected').val()},
-				function(ways){
-					$("#passageway_div").html("");
-					for (var i = 0; i < ways.length; i++) {
-						$("#passageway_div").append("<p><input type='checkbox' name='passageway_ids' value='"+ways[i].id+"' checked />&nbsp;&nbsp;"+ways[i].name+"</p><br/>");
-					}
-				}
-			);
-		}) 
-		
     });
 		
 
@@ -73,47 +52,29 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆授权管理  &gt; 添加车辆授权</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆管理  &gt; 修改车辆</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/car/addcarAuthority" id="entityForm" method="post">
+    	 <form action="${ctx}/car/updatecarInfo" id="entityForm" method="post">
     	 <!-- 隐藏表单，flag表示添加标记 -->
     	 <input type="hidden" name="flag" value="2">
+    	 <input type="hidden" name="id" value="${car.id }">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">车牌号：<input type="text" name="carno" id="carno" size="20"/></td>
-	    			</tr>
-	    			<tr>
-		    			<td class="font3 fftd">
-			    			停车场：
-			    			<select name="park" id="park" style="width:143px;">
-				    			<option value="">--请选择--</option>
-				    			<c:forEach items="${parks}" var="park">
-				    				<option value="${park.id }">${park.name }</option>
-				    			</c:forEach>
-				    		</select>
-				    	</td>
-			    	</tr>
-	    			<tr>
-		    			<td class="font3 fftd">
-		    				<p>出入口</p><br/>
-		    				<div id="passageway_div"></div>
-		    			</td>
-	    			</tr>
-	    			<tr>
-		    			<td class="font3 fftd">有效期：<input type="text" name="validate" id="validate" size="20"  class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" /></td>
+		    			<td class="font3 fftd">车主姓名：<input type="text" name="name" id="name" size="20" value="${car.name }"/></td>
+		    			<td class="font3 fftd">车牌号：<input type="text" name="carno" id="carno" size="20" value="${car.carno }"/></td>
 		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;授权&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		 </form>
 	</td>

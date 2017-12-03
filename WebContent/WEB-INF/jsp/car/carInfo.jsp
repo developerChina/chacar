@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>车辆授权管理</title>
+	<title>车辆管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -23,49 +23,53 @@
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
     
 	<script type="text/javascript">
-		$(function(){
-			/** 获取上一次选中的部门数据 */
-		 	   var boxs  = $("input[type='checkbox'][id^='box_']");
-		 	   
-		 	  /** 给全选按钮绑定点击事件  */
-		      $("#checkAll").click(function(){
-	    		 // this是checkAll  this.checked是true
-	    		 // 所有数据行的选中状态与全选的状态一致
-	    		 boxs.attr("checked",this.checked);
-		      })
-			      
-		 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
-		    	$("tr[id^='data_']").hover(function(){
-		    		$(this).css("backgroundColor","#eeccff");
-		    	},function(){
-		    		$(this).css("backgroundColor","#ffffff");
-		    	})
-		    	
-		    	
-		 	   /** 删除员工绑定点击事件 */
-		 	   $("#delete").click(function(){
-		 		   /** 获取到选中的复选框  */
-		 		   var checkedBoxs = boxs.filter(":checked");
-		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error("请选择一个需要删除的车辆授权！");
-		 		   }else{
-		 			   /** 得到选中的所有的需要删除的ids */
-		 			   var ids = checkedBoxs.map(function(){
-		 				   return this.value;
-		 			   })
-		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除车辆授权",function(r){
-		 				   if(r){
-		 					   window.location = "${ctx }/car/deletecarAuthority?ids=" + ids.get();
-		 				   }
-		 			   });
-		 		   }
-		 	   })
-		 	   /** 添加员工绑定点击事件 */
-		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/car/addcarAuthority?flag=1";
-		 	   })	
-	  })
+	 $(function(){
+		 /** 获取上一次选中的部门数据 */
+	 	   var boxs  = $("input[type='checkbox'][id^='box_']");
+	 	   
+	 	  /** 给全选按钮绑定点击事件  */
+	      $("#checkAll").click(function(){
+    		 // this是checkAll  this.checked是true
+    		 // 所有数据行的选中状态与全选的状态一致
+    		 boxs.attr("checked",this.checked);
+	      })
+		      
+	 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
+	    	$("tr[id^='data_']").hover(function(){
+	    		$(this).css("backgroundColor","#eeccff");
+	    	},function(){
+	    		$(this).css("backgroundColor","#ffffff");
+	    	})
+	    	
+	    	
+	 	   /** 删除员工绑定点击事件 */
+	 	   $("#delete").click(function(){
+	 		   /** 获取到选中的复选框  */
+	 		   var checkedBoxs = boxs.filter(":checked");
+	 		   if(checkedBoxs.length < 1){
+	 			   $.ligerDialog.error("请选择一个需要删除的车辆！");
+	 		   }else{
+	 			   /** 得到选中的所有的需要删除的ids */
+	 			   var ids = checkedBoxs.map(function(){
+	 				   return this.value;
+	 			   })
+	 			   
+	 			   $.ligerDialog.confirm("确认要删除吗?","删除车辆",function(r){
+	 				   if(r){
+	 					   window.location = "${ctx }/car/deletecarInfo?ids=" + ids.get();
+	 				   }
+	 			   });
+	 		   }
+	 	   })
+	 	   /** 添加员工绑定点击事件 */
+	 	   $("#add").click(function(){
+	 		   window.location = "${ctx }/car/addcarInfo?flag=1";
+	 	   })
+	 	   /** 导入车辆 */
+	 	  $("#import").click(function(){
+	 		   window.location = "${ctx }/car/importcarPage";
+	 	  }) 
+	 })
 	</script>
 </head>
 <body>
@@ -74,7 +78,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆授权 &gt; 车辆授权查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆管理 &gt; 车辆查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -86,14 +90,16 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/car/carAuthority">
+			  	<form name="carform" method="post" id="carform" action="${ctx}/car/carInfo">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
+					    	车主姓名：<input type="text" name="name">
 					    	车牌号：<input type="text" name="carno">
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
-					    	<input id="add" type="button" value="&nbsp;&nbsp;授权&nbsp;&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;"/>
+					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -110,14 +116,26 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>车牌号码</td>
-			  <td>所属车场</td>
+			  <td>车主姓名</td>
+			  <td>车牌号</td>
+			  <!-- 
+			  <td>车位数</td>
+			   -->
+			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.authoritys}" var="authority" varStatus="stat">
+			<c:forEach items="${requestScope.cars}" var="car" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${authority.id}"></td>
-					 <td>${authority.carno }</td>
-					  <td>${authority.carPark.name }</td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${car.id}"></td>
+					 <td>${car.name }</td>
+					  <td>${car.carno }</td>
+					  <!-- 
+					  <td>${park.num }</td>
+					   -->
+ 					  <td align="center" width="40px;">
+ 					       <a href="${ctx}/car/updatecarInfo?flag=1&id=${car.id}">
+							   <img title="修改" src="${ctx}/images/update.gif"/>
+						   </a>
+					  </td>
 				</tr>
 			</c:forEach>
 		  </table>
@@ -131,7 +149,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/car/carAuthority?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/car/carInfo?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

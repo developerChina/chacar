@@ -73,7 +73,8 @@
 		    		<tr>
 		    			<td class="font3 fftd">车场名称：<input type="text" name="name" id="name" size="20" value="${park.name }"/></td>
 		    			<td class="font3 fftd">车场编号：<input type="text" name="no" id="no" size="20" value="${park.no }"/></td>
-		    			<td class="font3 fftd">车位总数：<input type="number" name="num" id="num" size="20" value="${park.num }"/></td>
+		    			<!-- <td class="font3 fftd">车位总数：<input type="number" name="num" id="num" size="20" value="${park.num }"/></td> --> 
+		    			<input type="hidden" name="num" id="num" size="20" value="0"/>
 		    		</tr>
 		    	</table>
 		    </td></tr>

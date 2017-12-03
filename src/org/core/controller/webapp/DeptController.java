@@ -266,8 +266,8 @@ public class DeptController {
 			for (Map<Integer, String> data : list) {
 				Dept dept=new Dept();
 				for (Integer key : data.keySet()) {
-					dept.setName(data.get(0));
-					dept.setRemark(data.get(0));
+					dept.setName(data.get(6));
+					dept.setRemark(data.get(6));
 				}
 				if(StringUtils.isNotBlank(dept.getName())){
 					hrmService.saveOrUpdateDept(dept);
@@ -282,7 +282,6 @@ public class DeptController {
 		mv.addObject("map", map);
 		mv.setViewName("upload/resultImport");
 		return mv;
-
 	}
 	 
 }

@@ -198,7 +198,9 @@
 			  <td>学历</td>
 			  <td>身份证号码</td>
 			  <td>部门</td>
+			  <!-- 
 			  <td>车牌号码</td>
+			   -->
 			  <td>建档日期</td>
 			  <td align="center">操作</td>
 			</tr>
@@ -219,9 +221,11 @@
 				  <td>${employee.cardId }</td>
 				  <td>${employee.dept.name }</td>
 				  <td>${employee.carno }</td>
+				  <!--
 				  <td>
 				  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
 				  </td>
+				  -->
 				  <td align="center" width="40px;">
 				      <a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
 						<img title="修改" src="${ctx}/images/update.gif"/>
