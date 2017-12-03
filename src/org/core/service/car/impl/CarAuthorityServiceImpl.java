@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.core.dao.car.CarAuthorityDao;
+import org.core.dao.car.CarInfoDao;
 import org.core.dao.car.CarParkDao;
 import org.core.dao.car.CarPassagewayDao;
 import org.core.domain.car.CarAuthority;
+import org.core.domain.car.CarInfo;
 import org.core.domain.car.CarPark;
 import org.core.domain.car.CarPassageway;
 import org.core.service.car.CarAuthorityService;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,8 @@ public class CarAuthorityServiceImpl implements CarAuthorityService{
 	private CarParkDao parkdao;
 	@Autowired
 	private CarPassagewayDao passagewaydao;
+	@Autowired
+	private CarInfoDao carInfodao;
 	@Override
 	public String save(CarAuthority entity) {
 		dao.save(entity);
@@ -71,6 +76,10 @@ public class CarAuthorityServiceImpl implements CarAuthorityService{
 			if(carPassageway!=null){
 				CarPark carPark=parkdao.selectById(carPassageway.getPark_id());
 				carAuthority.setCarPark(carPark);//设置停车场
+			}
+			if(StringUtils.isNotBlank(carAuthority.getCarno())){
+				CarInfo carInfo=carInfodao.selectByCarno(carAuthority.getCarno());
+				carAuthority.setName(carInfo.getName());
 			}
 		}
 		return entitys;

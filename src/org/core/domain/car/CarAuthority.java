@@ -20,6 +20,7 @@ public class CarAuthority implements java.io.Serializable{
 	////表外字段
 	private CarPassageway carPassageway; //出入口实体 （表外字段）
 	private CarPark carPark; //停车场实体 （表外字段）
+	private String name;    //车主姓名 （表外字段）
 	public int getId() {
 		return id;
 	}
@@ -55,6 +56,12 @@ public class CarAuthority implements java.io.Serializable{
 	}
 	public void setCarPark(CarPark carPark) {
 		this.carPark = carPark;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	 
 }

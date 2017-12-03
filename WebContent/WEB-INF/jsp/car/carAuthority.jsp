@@ -110,14 +110,16 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
+			  <td>车主姓名</td>
 			  <td>车牌号码</td>
 			  <td>所属车场</td>
 			</tr>
 			<c:forEach items="${requestScope.authoritys}" var="authority" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${authority.id}"></td>
+					 <td>${authority.name }</td>
 					 <td>${authority.carno }</td>
-					  <td>${authority.carPark.name }</td>
+					 <td>${authority.carPark.name }</td>
 				</tr>
 			</c:forEach>
 		  </table>
