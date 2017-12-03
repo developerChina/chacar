@@ -255,9 +255,10 @@ public class BeisitedController {
 	 * @param phoneNumbers
 	 */
 	private void sendAudiSMS(String visitedName,String visitorName,String visitorDate,String recordid,String phoneNumbers){
+		//发送外网程序错误，需要把访问人和被访问人对调
 		HttpClientUtil.doGet(PropUtil.getSysValue("smsPath")+
-				"?visitedName="+visitedName+
-				"&visitorName="+visitorName+
+				"?visitedName="+visitorName+
+				"&visitorName="+visitedName+
 				"&visitorDate="+visitorDate+
 				"&recordid="+recordid+
 				"&phoneNumbers="+phoneNumbers);
