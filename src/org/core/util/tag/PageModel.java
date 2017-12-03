@@ -11,7 +11,7 @@ public class PageModel {
 	/** 当前页面 */
 	private int pageIndex ;
 	/** 每页分多少条数据   */
-	private int pageSize = GlobleConstants.PAGE_DEFAULT_SIZE = 4000;
+	private int pageSize = GlobleConstants.PAGE_DEFAULT_SIZE = 10;
 	
 	/** 总页数  */
 	private int totalSize;
