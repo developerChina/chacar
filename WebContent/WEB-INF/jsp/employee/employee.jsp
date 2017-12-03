@@ -220,12 +220,12 @@
 				  <td>${employee.education }</td>
 				  <td>${employee.cardId }</td>
 				  <td>${employee.dept.name }</td>
-				  <td>${employee.carno }</td>
 				  <!--
+				  <td>${employee.carno }</td>
+				  -->
 				  <td>
 				  	<f:formatDate value="${employee.createDate}" type="date" dateStyle="long"/> 
 				  </td>
-				  -->
 				  <td align="center" width="40px;">
 				      <a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
 						<img title="修改" src="${ctx}/images/update.gif"/>
