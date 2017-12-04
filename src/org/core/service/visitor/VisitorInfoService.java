@@ -33,7 +33,7 @@ public interface VisitorInfoService {
 	 */
 	List<VisitorInfo> selectByPage(VisitorInfo entity,PageModel pageModel);
 	/**
-	 * 根据省份证号查找访客
+	 * 根据身份证号查找访客
 	 * @param entity
 	 * @return
 	 */

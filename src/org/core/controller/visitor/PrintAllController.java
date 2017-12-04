@@ -88,7 +88,7 @@ public class PrintAllController {
 	}
 	
 	/**
-	 *  根据省份证号码获取单据信息，并且打印
+	 *  根据身份证号码获取单据信息，并且打印
 	 * @param request
 	 * @param response
 	 * @return

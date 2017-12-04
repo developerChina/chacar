@@ -28,7 +28,7 @@
 				<div class="bottom clearfix">
 					<div class="fl left">
 						<input type="hidden" id="cardno" title='身份证物理卡号'/>
-						<input type="hidden" id="cardid" title='省份证号'/>
+						<input type="hidden" id="cardid" title='身份证号'/>
 						<input type="hidden" id="name" title='访客姓名'/>
 						<input type="hidden" id="phone" title='访客电话'/>
 						<input type="hidden" id="company" title='工作单位'/>
@@ -137,7 +137,7 @@
 	
 	function findRecord(cardid){
 		if(cardid==undefined || cardid==''){
-	       	 alert('请扫描省份证');
+	       	 alert('请扫描身份证');
 	       	 return; 
         }
 		$.ajax({
