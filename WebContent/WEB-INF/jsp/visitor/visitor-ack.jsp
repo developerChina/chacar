@@ -3,27 +3,28 @@
 <!-- HTML5文件 -->
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-<title>短信确认</title>
-<link rel="stylesheet" href="${ctx}/layout/agile/css/agile.layout.css">
-<link rel="stylesheet" href="${ctx}/layout/third/flat/flat.component.css">
-<link rel="stylesheet" href="${ctx}/layout/third/flat/flat.color.css">
-<link rel="stylesheet" href="${ctx}/layout/third/flat/iconline.css">
-<link rel="stylesheet" href="${ctx}/layout/third/flat/iconform.css">
-<script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
-</head>
-<body>
-	<div id="section_container">
-		<section id="form_section" data-role="section" class="active">
-			<header>
-				<div class="titlebar">
-					<h1>访客确认</h1>
-				</div>
-			</header>
-			<article data-role="article" id="border_article" class="active" data-scroll="verticle" style="top: 40px; bottom: 0px;">
-				<div class="scroller">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<title>短信确认</title>
+		<link rel="stylesheet" href="${ctx}/layout/agile/css/agile.layout.css">
+		<link rel="stylesheet" href="${ctx}/layout/third/flat/flat.component.css">
+		<link rel="stylesheet" href="${ctx}/layout/third/flat/flat.color.css">
+		<link rel="stylesheet" href="${ctx}/layout/third/flat/iconline.css">
+		<link rel="stylesheet" href="${ctx}/layout/third/flat/iconform.css">
+		<link rel="stylesheet" href="${ctx}/layout/third/seedsui/plugin/seedsui/seedsui.min.css">
+		<script type="text/javascript" src="${ctx}/scripts/boot.js" ></script>
+	</head>
+	<body>
+		<div id="section_container">
+			<section id="index_section" data-role="section" class="active">
+				<header>
+		            <div class="titlebar">
+		                <h1 class="text-center">访客确认</h1>
+		            </div>
+		        </header>
+				<article data-role="article" id="index_article" class="active" style="top:44px;bottom:54px;">
+
 					<form autocomplete="off" class="form-group form-square" id="autidForm" action="${ctx}/visitor/auditRecord" method="post">
 						<input type="hidden" id="recordid" name="recordid" value="${recordid }">
 						<label class="label-left" style="height: 40px;">是否同意</label> 
@@ -73,38 +74,43 @@
 									</select>
 							  	</div>
 						 </label>
-						 <c:if test="${isShow=='yes'}">
-						 	<button class="block" onclick="auditRecord()">确认</button>
-						 </c:if>
 						 
-						 
-						  <br/><br/><br/><br/><br/><br/><br/>
 						 
 					</form>
-				</div>
-			</article>
-		</section>
+				</article>
+				<footer>
+					<ul class="menubar">
+		                <li class="tab active" data-role="tab" href="#index_article" data-toggle="article">
+		                   <c:if test="${isShow=='yes'}">
+						 	<button class="block" onclick="auditRecord()">确认</button>
+						   </c:if>
+		                </li>
+		            </ul>
+				</footer>
+			</section>
+		</div>
+
 		<script type="text/javascript">
-			function auditRecord(){
-				$('#autidForm').submit();
-			}
+		
+		function auditRecord(){
+			$('#autidForm').submit();
+		}
+		
+		console.info("${pws}");
+		console.info("${elts}");
+		console.info("${acces}");
+		
+		console.info("${fn:length(pws)}");
+		
+		$(function(){
+			$("#pw_left_lable").height(40*parseInt("${fn:length(pws)}"));
+			$("#pw_right_lable").height(40*parseInt("${fn:length(pws)}"));
 			
-			console.info("${pws}");
-			console.info("${elts}");
-			console.info("${acces}");
+			$("#elt_left_lable").height(40*parseInt("${fn:length(elts)}"));
+			$("#elt_right_lable").height(40*parseInt("${fn:length(elts)}"));
 			
-			console.info("${fn:length(pws)}");
-			
-			$(function(){
-				$("#pw_left_lable").height(40*parseInt("${fn:length(pws)}"));
-				$("#pw_right_lable").height(40*parseInt("${fn:length(pws)}"));
-				
-				$("#elt_left_lable").height(40*parseInt("${fn:length(elts)}"));
-				$("#elt_right_lable").height(40*parseInt("${fn:length(elts)}"));
-				
-		    })
-		    
+	    })
+		 
 		</script>
-	</div>
-</body>
+	</body>
 </html>
