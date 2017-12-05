@@ -79,12 +79,12 @@
 					</form>
 				</article>
 				<footer>
-					<ul class="menubar">
-		                <li class="tab active" data-role="tab" href="#index_article" data-toggle="article">
-		                   <c:if test="${isShow=='yes'}">
-						 	<button class="block" onclick="auditRecord()">确认</button>
-						   </c:if>
+					<ul class="menubar reverse">
+						<c:if test="${isShow=='yes'}">
+		                <li class="tab active" data-role="tab" data-toggle="article" onclick="auditRecord()">
+						 	<label class="tab-label">确认</label>
 		                </li>
+		                </c:if>
 		            </ul>
 				</footer>
 			</section>
