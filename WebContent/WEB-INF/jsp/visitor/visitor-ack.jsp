@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- HTML5文件 -->
 <!DOCTYPE html>
 <html>
@@ -40,30 +41,30 @@
 						 <label class="label-right" style="height: 80px;">
 						    <input id="auditContent" name="auditContent" value="${auditContent}" type="text" />
 						</label>
-						<label class="label-left" for="user" style="height: 80px;">访客通道</label>
-						 <label class="label-right" style="height: 80px;" id="pws_lable">
+						<label class="label-left" for="user" id="pw_left_lable">访客通道</label>
+						 <label class="label-right" id="pw_right_lable">
 						   <c:forEach items="${pws}" var="pw" varStatus="stat">
 							<a href="#" data-role="checkbox">
 						    	<input type="hidden" name="pw" value="${pw.passagewayID}"/>
 					    		<input type="checkbox" checked disabled/>
 					  			<label for="baskball" class="black">${pw.passagewayName}</label>
-					  		</a>
+					  		</a><br/>
 						   </c:forEach>
 						</label>
 						
-						<label class="label-left" for="user" style="height: 80px;">访客电梯</label>
-						 <label class="label-right" style="height: 80px;" id="elts_lable">
+						<label class="label-left" for="user" id="elt_left_lable">访客电梯</label>
+						 <label class="label-right" id="elt_right_lable">
 						   <c:forEach items="${elts}" var="elt" varStatus="stat">
 							<a href="#" data-role="checkbox">
 						    	<input type="hidden" name="elt" value="${elt.elevatorID }"/>
 					    		<input type="checkbox" checked disabled/>
 					  			<label for="baskball" class="black">${elt.elevatorName }</label>
-					  		</a>
+					  		</a><br/>
 						   </c:forEach>
 						</label>
 						
-						<label class="label-left" for="user" style="height: 80px;">访客门禁</label>
-						 <label class="label-right" style="height: 80px;" id="acces_lable">
+						<label class="label-left" for="user" style="height: 60px;">访客门禁</label>
+						 <label class="label-right" style="height: 60px;">
 							 <div data-role="select" class="card">
 									<select name="acce" placeholder="选择门禁">
 									  	<c:forEach items="${acces}" var="acce" varStatus="stat">
@@ -75,6 +76,10 @@
 						 <c:if test="${isShow=='yes'}">
 						 	<button class="block" onclick="auditRecord()">确认</button>
 						 </c:if>
+						 
+						 
+						  <br/><br/><br/><br/><br/><br/><br/>
+						 
 					</form>
 				</div>
 			</article>
@@ -88,9 +93,17 @@
 			console.info("${elts}");
 			console.info("${acces}");
 			
-			var pws=JSON.stringify("${pws}");
-			console.info(pws.length);
+			console.info("${fn:length(pws)}");
 			
+			$(function(){
+				$("#pw_left_lable").height(40*parseInt("${fn:length(pws)}"));
+				$("#pw_right_lable").height(40*parseInt("${fn:length(pws)}"));
+				
+				$("#elt_left_lable").height(40*parseInt("${fn:length(elts)}"));
+				$("#elt_right_lable").height(40*parseInt("${fn:length(elts)}"));
+				
+		    })
+		    
 		</script>
 	</div>
 </body>
