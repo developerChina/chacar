@@ -75,11 +75,15 @@ public class CarAuthorityServiceImpl implements CarAuthorityService{
 			carAuthority.setCarPassageway(carPassageway);//设置出入口
 			if(carPassageway!=null){
 				CarPark carPark=parkdao.selectById(carPassageway.getPark_id());
-				carAuthority.setCarPark(carPark);//设置停车场
+				if(carPark!=null){
+					carAuthority.setCarPark(carPark);//设置停车场
+				}
 			}
 			if(StringUtils.isNotBlank(carAuthority.getCarno())){
 				CarInfo carInfo=carInfodao.selectByCarno(carAuthority.getCarno());
-				carAuthority.setName(carInfo.getName());
+				if(carInfo!=null){
+					carAuthority.setName(carInfo.getName());//设置车主
+				}
 			}
 		}
 		return entitys;
