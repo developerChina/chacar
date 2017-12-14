@@ -162,6 +162,10 @@ public class ExcelUtil {
 	        row = sheet.getRow(i);
 	        int j = 0;
 	        Map<Integer, String> map=new HashMap<Integer, String>();
+	        //删除execl物理空行（第一列为空认为读取excel完成）
+	        if(StringUtils.isBlank(row.getCell(0).getStringCellValue())){
+	        	break;
+	        }
 	        while (j < colNum) {
 	        	Cell cell=row.getCell(j);
 	        	if(cell!=null){
