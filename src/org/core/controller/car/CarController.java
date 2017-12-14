@@ -492,6 +492,8 @@ public class CarController {
 	public ModelAndView importcar(ModelAndView mv,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		Map<String, Object> map = new HashMap<>();
+		//执行excel的行索引
+		int excelRowIndex=0;
 		try {
 			InputStream is = file.getInputStream();
 			Workbook workbook = new HSSFWorkbook(is);
@@ -509,12 +511,15 @@ public class CarController {
 				if(StringUtils.isNotBlank(car.getCarno())){
 					carInfoService.saveOrUpdateDept(car);
 				}
+				excelRowIndex++;
 			}
+			map.put("status", true);
+			map.put("message", "成功导入"+list.size()+"行数据");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			map.put("status", false);
-			map.put("message", "成功导入0行数据");
-			map.put("exception", e1.getMessage());
+			map.put("message", "成功导入"+excelRowIndex+"行数据");
+			map.put("exception", "导入第"+(excelRowIndex+1)+"行数据出错："+e1.getMessage());
 		}
 		mv.addObject("map", map);
 		mv.setViewName("upload/resultImport");
