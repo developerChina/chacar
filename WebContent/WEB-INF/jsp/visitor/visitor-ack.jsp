@@ -42,6 +42,7 @@
 						 <label class="label-right" style="height: 80px;">
 						    <input id="auditContent" name="auditContent" value="${auditContent}" type="text" />
 						</label>
+						<div style="display:none;">
 						<label class="label-left" for="user" id="pw_left_lable">访客通道</label>
 						 <label class="label-right" id="pw_right_lable">
 						   <c:forEach items="${pws}" var="pw" varStatus="stat">
@@ -74,7 +75,18 @@
 									</select>
 							  	</div>
 						 </label>
+						 </div>
 						 
+						 <label class="label-left" for="user" style="height: 60px;">访问楼层</label>
+						 <label class="label-right" style="height: 60px;">
+							 <div data-role="select" class="card">
+									<select name="group" placeholder="选择楼层">
+									  	<c:forEach items="${groups}" var="group" varStatus="stat">
+									  		<option value="${group.agid }">${group.agname }</option>	
+									   </c:forEach>
+									</select>
+							  	</div>
+						 </label>
 						 
 					</form>
 				</article>

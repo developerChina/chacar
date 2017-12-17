@@ -136,6 +136,12 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 			}
 			
 			
+			@Override
+			public List<AccessGroup> findAccessGroupAll() {
+				return accessGroupDao.findAccessGroupAll();
+			}
+			
+			
 			
 			
 			

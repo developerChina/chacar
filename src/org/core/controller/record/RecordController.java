@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
+import org.core.domain.webapp.Access;
+import org.core.domain.webapp.AccessGroup;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
+import org.core.service.webapp.AccessGroupService;
 import org.core.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +37,9 @@ public class RecordController {
 	@Autowired
 	@Qualifier("recordBevisitedsService")
 	private RecordBevisitedsService recordBevisitedsService;
+	@Autowired 
+	@Qualifier("accessgroupService")
+	private AccessGroupService accessgroupService;
 	/**
 	 * 根据记录ID查询记录访客
 	 * @param mv
@@ -74,6 +80,7 @@ public class RecordController {
 		String [] pw=request.getParameterValues("pw");
 		String [] elt=request.getParameterValues("elt");
 		String acce=request.getParameter("acce");
+		String group=request.getParameter("group");
 		
 		List<RecordVisitors> rvs=recordVisitorsService.selectVisitorByRecordId(recordid);
 		for (RecordVisitors rv : rvs) {
@@ -84,16 +91,26 @@ public class RecordController {
 		}
 		
 		RecordBevisiteds rbv=recordBevisitedsService.selectBevisitedByRecordId(recordid);
-		rbv.setBevisitedChannel(StringUtils.join(pw, ","));   // '被访人通道' ,
-		rbv.setBevisitedFloor(StringUtils.join(elt, ","));   // '被访人楼层' ,
-		rbv.setBevisitedDoor(acce);   // '被访人门禁' ,
-		rbv.setBevisitedRoom("");   // '被访人房间号' ,
-		recordBevisitedsService.update(rbv);
-		
-		
 		Map<String, Object> map=new HashMap<>();
-		map.put("status", true);
-		map.put("message", "审核通过");
+		if(rbv!=null){
+			rbv.setBevisitedChannel(StringUtils.join(pw, ","));   // '被访人通道' ,
+			List<Access> saveaccesss = accessgroupService.getAccessById(group);
+			if(saveaccesss!=null && saveaccesss.size()>0){
+				rbv.setBevisitedFloor(StringUtils.join(elt, ","));   // '被访人楼层' ,
+				String doors="";
+				for (Access access : saveaccesss) {
+					doors=doors+","+access.getAccessid();
+				}
+				rbv.setBevisitedDoor(doors.substring(1));   // '被访人门禁' ,
+			}
+			rbv.setBevisitedRoom("");   // '被访人房间号' ,
+			recordBevisitedsService.update(rbv);
+			map.put("status", true);
+			map.put("message", "审核通过");
+		}else{
+			map.put("status", false);
+			map.put("message", "审核记录不存在");
+		}
 		return map;
 	} 
 

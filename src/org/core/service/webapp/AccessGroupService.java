@@ -27,4 +27,6 @@ public interface AccessGroupService {
 	
 	List<Access> getAbyGroupid(String selectids);
 	
+	List<AccessGroup> findAccessGroupAll();
+	
 }

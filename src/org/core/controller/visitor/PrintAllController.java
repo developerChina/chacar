@@ -134,7 +134,9 @@ public class PrintAllController {
 				//门禁授权
 				String door=rb.getBevisitedDoor();
 				if(StringUtils.isNotBlank(door)){
-					mj.add(accessService.findAccessById(Integer.parseInt(door)));
+					for (String d : door.split(",")) {
+						mj.add(accessService.findAccessById(Integer.parseInt(d)));
+					}
 				}
 			}
 		}
