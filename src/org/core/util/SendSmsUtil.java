@@ -88,7 +88,7 @@ public class SendSmsUtil {
 //        System.out.println("RequestId=" + response.getRequestId());
 //        System.out.println("BizId=" + response.getBizId());
 		//String visitedName,String visitorName,String visitorDate,String recordid,String phoneNumbers
-		SendSmsResponse response = sendSms("边俊明","孙俊虎","2017-10-17","33333333","18510515186");
+		SendSmsResponse response = sendSms("边俊明","孙俊虎","2017-10-17","33333333","13723382349");
       System.out.println("短信接口返回的数据----------------");
       System.out.println("Code=" + response.getCode());
       System.out.println("Message=" + response.getMessage());

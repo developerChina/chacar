@@ -237,6 +237,42 @@ public class DeptController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value = "/dept/exportTemplate")
+	public void exportTemplate(HttpServletRequest request, HttpServletResponse response) {
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		this.createDept(workbook);
+		try {
+			String fileName="部门导入模板";
+			ExcelUtil.write(request, response, workbook, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	void createDept(HSSFWorkbook workbook) {
+		HSSFSheet sheet = workbook.createSheet("部门信息");
+		sheet.setFitToPage(true);
+		sheet.setHorizontallyCenter(true);
+		// 里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+		CellRangeAddress c = CellRangeAddress.valueOf("A1:C1");
+		sheet.setAutoFilter(c);
+		// 设置列宽
+		sheet.setColumnWidth(0, 3800);
+		sheet.setColumnWidth(1, 4600);
+		sheet.setColumnWidth(2, 6800);
+		// 定义表格行索引
+		int index = 0;
+		// 添加头信息
+		String[] titles = {"部门", "上级部门", "描述"};
+		HSSFRow row_head = sheet.createRow(index++);
+		for (int i = 0; i < titles.length; i++) {
+			HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+	}
 
 	/**
 	 * 批量导入部门页面
@@ -255,6 +291,11 @@ public class DeptController {
 	public ModelAndView importDept(ModelAndView mv,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		Map<String, Object> map = new HashMap<>();
+		List<Dept> depts=hrmService.findAllDept();
+		Map<String, Integer> map_dept=new HashMap<>();
+		for (Dept dept : depts) {
+			map_dept.put(dept.getName(), dept.getId());
+		}
 		//执行excel的行索引
 		int excelRowIndex=0;
 		try {
@@ -269,7 +310,25 @@ public class DeptController {
 				Dept dept=new Dept();
 				for (Integer key : data.keySet()) {
 					dept.setName(data.get(0));
-					dept.setRemark(data.get(1));
+					if(StringUtils.isNotBlank(data.get(1))){
+						if(map_dept.get(data.get(1))!=null){
+							dept.setPid(map_dept.get(data.get(1)));
+						}else{
+							//新建上级部门
+							Dept deptNew=new Dept();
+							deptNew.setName(data.get(1));
+							deptNew.setPid(0);
+							hrmService.addDept(deptNew);
+							//重新添加部门Map
+							List<Dept> deptsNew=hrmService.findAllDept();
+							map_dept.clear();
+							for (Dept d : deptsNew) {
+								map_dept.put(d.getName(), d.getId());
+							}
+							dept.setPid(map_dept.get(data.get(1)));
+						}
+					}
+					dept.setRemark(data.get(2));
 				}
 				if(StringUtils.isNotBlank(dept.getName())){
 					hrmService.saveOrUpdateDept(dept);
