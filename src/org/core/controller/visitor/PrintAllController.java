@@ -13,17 +13,19 @@ import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Elevator;
+import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Passageway;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
+import org.core.service.webapp.HrmService;
 import org.core.service.webapp.PassagewayService;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
-import org.core.util.StringUtils;
 import org.core.util.HttpClientUtil;
 import org.core.util.SendSmsUtil;
+import org.core.util.StringUtils;
 import org.core.util.VisitorEntryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,6 +57,10 @@ public class PrintAllController {
 	@Autowired
 	@Qualifier("accessService")
 	private AccessService accessService;//门禁
+	
+	@Autowired
+	@Qualifier("hrmService")
+	private HrmService hrmService;
 	
 	@RequestMapping(value="/visitor/forwardAllPrint")
 	 public ModelAndView forwardAllPrint(HttpServletRequest request,HttpServletResponse response,ModelAndView mv){
@@ -117,10 +123,11 @@ public class PrintAllController {
 		List<Passageway> td=new ArrayList<>();
 		List<Elevator> dt=new ArrayList<>();
 		List<Access> mj=new ArrayList<>();
+		RecordBevisiteds rb=null;
 		for (RecordVisitors rv : rvss) {
 			//发送权限
 			if(rv.getIsAudit()==1){
-				RecordBevisiteds rb=recordBevisitedsService.selectBevisitedByRecordId(rv.getRecordID());
+				rb=recordBevisitedsService.selectBevisitedByRecordId(rv.getRecordID());
 				//通道授权
 				String channels=rb.getBevisitedChannel();
 				if(StringUtils.isNotBlank(channels)){
@@ -140,8 +147,17 @@ public class PrintAllController {
 				}
 			}
 		}
-		VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
-		
+		System.out.println("1111111111:"+mj.toString());
+		System.out.println("2222222222:"+dt.toString());
+		System.out.println("3333333333:"+td.toString());
+		if(rb!=null) {
+			List<Employee> emps=hrmService.findEmployeeByCardNo_carstatus(rb.getBevisitedCardNo(),1);
+			if(emps!=null&&emps.size()>0) {
+				System.out.println("===員工卡號，不予賦權 請員工自重 ");
+			}else {
+				VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
+			}
+		}
 		return true;
 	}
 	
