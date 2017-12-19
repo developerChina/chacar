@@ -327,8 +327,7 @@ public class EmployeeController {
 		// 定义表格行索引
 		int index = 0;
 		// 添加头信息
-		String[] titles = { "名称", "身份证号", "邮政编码", "电话", "手机", "qq号码", "邮箱", "性别", "政治面貌", "生日", "民族", "学历", "专业", " 爱好",
-				"备注", "卡号", "车牌号", "地址", "部门", "职位"};
+		String[] titles = { "姓名","身份证号","卡号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业"," 爱好","备注","车牌号","地址"};
 		HSSFRow row_head = sheet.createRow(index++);
 		for (int i = 0; i < titles.length; i++) {
 			HSSFCell cell = row_head.createCell(i);
@@ -444,6 +443,9 @@ public class EmployeeController {
 			map_job.put(job.getName(), job.getId());
 		}
 		
+		//执行excel的行索引
+		int excelRowIndex=0;
+		
 		Map<String, Object> map = new HashMap<>();
 		try {
 			InputStream is = file.getInputStream();
@@ -452,50 +454,55 @@ public class EmployeeController {
 			Row row = sheet.getRow(0);
 			int colNum = row.getPhysicalNumberOfCells();
 			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
-			// 名称,身份证号,邮政编码,电话,手机,qq号码,邮箱,性别,政治面貌,生日,民族,学历,专业,爱好,备注,卡号,车牌号,部门,职位
+			// "姓名","身份证号","卡号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业"," 爱好","备注","车牌号","地址"
 			for (Map<Integer, String> data : list) {
 				Employee employee = new Employee();
 				for (Integer key : data.keySet()) {
 					employee.setName(data.get(0));
 					employee.setCardId(data.get(1));
-					employee.setPostCode(data.get(2));
-					employee.setTel(data.get(3));
-					employee.setPhone(data.get(4));
-					employee.setQqNum(data.get(5));
-					employee.setEmail(data.get(6));
-					if ("女".equals(data.get(7))) {
+					employee.setCardno(data.get(2));
+					if ("女".equals(data.get(3))) {
 						employee.setSex(0);
 					} else {
 						employee.setSex(1);
 					}
-					employee.setParty(data.get(8));
-					employee.setBirthday(DateUtil.StringToDate(data.get(9), DateStyle.YYYY_MM_DD_EN));
-					employee.setRace(data.get(10));
-					employee.setEducation(data.get(11));
-					employee.setSpeciality(data.get(12));
-					employee.setHobby(data.get(13));
-					employee.setRemark(data.get(14));
-					employee.setCardno(data.get(15));
-					employee.setCarno(data.get(16));
-					employee.setAddress(data.get(17));
-					if(StringUtils.isNotBlank(data.get(18))){
+					employee.setPhone(data.get(4));
+					if(StringUtils.isNotBlank(data.get(5))){
 						Dept dept = new Dept();
-						dept.setId(map_dept.get(data.get(18)));
+						dept.setId(map_dept.get(data.get(5)));
 						employee.setDept(dept);	
 					}
-					if(StringUtils.isNotBlank(data.get(19))){
+					if(StringUtils.isNotBlank(data.get(6))){
 						Job job = new Job();
-						job.setId(map_job.get(data.get(19)));
+						job.setId(map_job.get(data.get(6)));
 						employee.setJob(job);
 					}
+					if(StringUtils.isNotBlank(data.get(7))){
+						employee.setBirthday(DateUtil.StringToDate(data.get(7), DateStyle.YYYY_MM_DD_EN));
+					}
+					employee.setPostCode(data.get(8));
+					employee.setTel(data.get(9));
+					employee.setQqNum(data.get(10));
+					employee.setEmail(data.get(11));
+					employee.setParty(data.get(12));
+					employee.setRace(data.get(13));
+					employee.setEducation(data.get(14));
+					employee.setSpeciality(data.get(15));
+					employee.setHobby(data.get(16));
+					employee.setRemark(data.get(17));
+					employee.setCarno(data.get(18));
+					employee.setAddress(data.get(19));
 				}
 				hrmService.addEmployee(employee);
+				excelRowIndex++;
 			}
+			map.put("status", true);
+			map.put("message", "成功导入"+list.size()+"行数据");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			map.put("status", false);
-			map.put("message", "成功导入0行数据");
-			map.put("exception", e1.getMessage());
+			map.put("message", "成功导入"+excelRowIndex+"行数据");
+			map.put("exception", "导入第"+(excelRowIndex+1)+"行数据出错："+e1.getMessage());
 		}
 		mv.addObject("map", map);
 		mv.setViewName("upload/resultImport");

@@ -64,6 +64,9 @@ public interface AccessGroupDao {
 	
 	@Select(" select * from "+ACCESSJTABLE+" where ajgroupid=#{id}")
 	List<Accessj> getAJlist(String id);
+
+	@Select(" select * from "+ACCESSGROUPTABLE+" where 1=1")
+	List<AccessGroup> findAccessGroupAll();
 	
 	
 	

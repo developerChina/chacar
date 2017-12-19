@@ -10,6 +10,7 @@ import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.visitor.VisitorInfo;
 import org.core.domain.webapp.Access;
+import org.core.domain.webapp.AccessGroup;
 import org.core.domain.webapp.Blacklist;
 import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Passageway;
@@ -114,15 +115,18 @@ public class VisitorAckController {
 //		}
 		
 		
-		//所有门禁
-		List<Access> agAccesss=accessgroupService.selectAGSubordinate();
-		mv.addObject("acces", agAccesss);
 		//所有通道
 		List<Passageway> passList=passagewayGroupService.selectPGSubordinate();
 		mv.addObject("pws", passList);
+		//所有门禁
+		List<Access> agAccesss=accessgroupService.selectAGSubordinate();
+		mv.addObject("acces", agAccesss);
 		//所有电梯
 		List<Elevator> egElevators= groupService.selectEGSubordinate();
 		mv.addObject("elts", egElevators);
+		//所有门禁分组
+		List<AccessGroup> groups = accessgroupService.findAccessGroupAll();
+		mv.addObject("groups", groups);
 		
 		if(agAccesss.size()>0 || agAccesss.size()>0){
 			mv.addObject("isShow", "yes");

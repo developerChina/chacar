@@ -1,5 +1,9 @@
 package org.core.controller.bevisited;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +26,7 @@ import org.core.service.webapp.HrmService;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
 import org.core.util.HttpClientUtil;
+import org.core.util.HttpKit;
 import org.core.util.JsonUtils;
 import org.core.util.PropUtil;
 import org.springframework.beans.BeanUtils;
@@ -256,11 +261,15 @@ public class BeisitedController {
 	 */
 	private void sendAudiSMS(String visitedName,String visitorName,String visitorDate,String recordid,String phoneNumbers){
 		//发送外网程序错误，需要把访问人和被访问人对调
-		HttpClientUtil.doGet(PropUtil.getSysValue("smsPath")+
-				"?visitedName="+visitorName+
-				"&visitorName="+visitedName+
-				"&visitorDate="+visitorDate+
-				"&recordid="+recordid+
-				"&phoneNumbers="+phoneNumbers);
+		try {
+			HttpKit.post(PropUtil.getSysValue("smsPath"), 
+					"visitedName="+visitorName+
+					"&visitorName="+visitedName+
+					"&visitorDate="+visitorDate+
+					"&recordid="+recordid+
+					"&phoneNumbers="+phoneNumbers,false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

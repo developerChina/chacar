@@ -29,6 +29,12 @@
 					return true;
 				}
 			});
+	    	
+	    	$("#template").click(function(){
+		 		   var actionURL = $("#templateform").attr("action");
+		 	       $("#templateform").attr("action","${ctx}/dept/exportTemplate");
+		 	       $("#templateform").submit();
+		    })
 	    });
 	</script>
 </head>
@@ -50,6 +56,11 @@
 	   	 	<input type="hidden" name="flag" value="2">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 			<tr><td class="main_tdbor"></td></tr>
+			<tr>
+				<td class="font3 fftd">
+					 <input type="button" name="template" id="template" value="&nbsp; 下载模板  &nbsp;"/>
+				</td>
+			</tr>
 			<tr><td class="main_tdbor"></td></tr>
 			<tr>
 				<td class="font3 fftd">
