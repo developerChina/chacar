@@ -343,10 +343,10 @@ public class HrmServiceImpl implements HrmService{
 		for (Employee employee : list) {
 			Map<String, Object> map=new HashMap<>();
 			map.put("id", employee.getId());
-			map.put("dept", employee.getDept().getName());
-			map.put("job", employee.getJob().getName());
+			if(employee.getDept()!=null){map.put("dept", employee.getDept().getName());}
+			if(employee.getJob()!=null){map.put("job", employee.getJob().getName());}
 			map.put("name", employee.getName());
-			map.put("phone", hidePhonePart(employee.getPhone()));
+			if(StringUtils.isNotBlank(employee.getPhone())){map.put("phone", hidePhonePart(employee.getPhone()));}
 			listMap.add(map);
 		}
 		return listMap;
