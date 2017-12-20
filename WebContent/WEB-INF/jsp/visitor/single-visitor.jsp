@@ -248,8 +248,8 @@
 		*  新建访问人
 		*/	
 		function newvisitor(){
-			var cardInfo=readIDCard_test();//硬件测试用例
-			//var cardInfo=readIDCard();
+			//var cardInfo=readIDCard_test();//硬件测试用例
+			var cardInfo=readIDCard();
 			if(cardInfo.state){
 				$("#cardPhoto").val(cardInfo.message.photobuf);
 				$("#cardPhoto-img").attr("src", "data:image/png;base64,"+cardInfo.message.photobuf);
