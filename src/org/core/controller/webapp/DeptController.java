@@ -317,7 +317,6 @@ public class DeptController {
 							//新建上级部门
 							Dept deptNew=new Dept();
 							deptNew.setName(data.get(1));
-							deptNew.setPid(0);
 							hrmService.addDept(deptNew);
 							//重新添加部门Map
 							List<Dept> deptsNew=hrmService.findAllDept();

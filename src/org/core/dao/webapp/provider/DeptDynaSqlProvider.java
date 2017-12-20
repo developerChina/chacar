@@ -25,6 +25,9 @@ public class DeptDynaSqlProvider {
 					if(dept.getName() != null && !dept.getName().equals("")){
 						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
 					}
+					if(null!=dept.getPid()){
+						WHERE(" pid = #{dept.pid} ");
+					}
 				}
 			}
 		}.toString();
@@ -45,6 +48,9 @@ public class DeptDynaSqlProvider {
 					Dept dept = (Dept) params.get("dept");
 					if(dept.getName() != null && !dept.getName().equals("")){
 						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
+					}
+					if(null!=dept.getPid()){
+						WHERE(" pid = #{dept.pid} ");
 					}
 				}
 			}

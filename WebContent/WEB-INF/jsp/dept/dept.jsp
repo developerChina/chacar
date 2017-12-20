@@ -121,6 +121,8 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
+					               上级部门：<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/dept/selectAllDept" multiSelect="false"
+		    			    textField="name" valueField="id" parentField="pid" expandOnLoad="false" size="20" style="width:150px;"/>
 					    	部门名称：<input type="text" name="name">
 					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
@@ -142,7 +144,7 @@
 	    <td width="10%" rowspan="2">
 	        <ul id="tree1" class="mini-tree" url="${ctx}/dept/selectAllDept"
 	        showTreeIcon="true" textField="name" idField="id" parentField="pid" resultAsTree="false" 
-	        showArrow="true" expandOnNodeClick="true" expandOnLoad="0">
+	        showArrow="true" expandOnNodeClick="true" expandOnLoad="false">
 	    	</ul>
 	    </td>
 	    <td height="20">
