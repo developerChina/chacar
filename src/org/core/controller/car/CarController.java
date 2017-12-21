@@ -437,7 +437,7 @@ public class CarController {
 		if(flag.equals("1")){
 			mv.setViewName("car/carInfoAdd");
 		}else{
-			carInfoService.save(carInfo); 
+			carInfoService.saveOrUpdateDept(carInfo); 
 			mv.setViewName("redirect:/car/carInfo");
 		}
 		return mv;
@@ -457,7 +457,7 @@ public class CarController {
 			mv.addObject("car", target);
 			mv.setViewName("car/carInfoUpdate");
 		}else{
-			carInfoService.update(carInfo);
+			carInfoService.saveOrUpdateDept(carInfo);
 			mv.setViewName("redirect:/car/carInfo");
 		}
 		return mv;
@@ -476,7 +476,7 @@ public class CarController {
 	}
 	
 	/**
-	 * 批量导入部门页面
+	 * 批量导入车辆页面
 	 */
 	@RequestMapping(value = "/car/importcarPage")
 	public ModelAndView importcarPage(ModelAndView mv) {
@@ -485,7 +485,7 @@ public class CarController {
 	}
 	
 	/**
-	 * 批量导入部门
+	 * 批量导入车辆
 	 */
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/car/importcar")
