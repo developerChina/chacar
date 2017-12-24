@@ -129,8 +129,15 @@
 		  <tr valign="top" id="submenu8" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/lineup/configLineUp" target="main">排队服务</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/notice/selectNotice" target="main">排队叫号规划</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/notice/selectNotice" target="main">排队叫号规划</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
+			
+			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p>
+			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingV/VipAck" target="main">VIP队列维护</a></img></p>
+			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/HistoryAck" target="main">历史统计</a></img></p>
+			
+			
+			
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
