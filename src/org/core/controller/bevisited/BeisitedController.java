@@ -1,9 +1,5 @@
 package org.core.controller.bevisited;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +21,6 @@ import org.core.service.visitor.VisitorInfoService;
 import org.core.service.webapp.HrmService;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
-import org.core.util.HttpClientUtil;
 import org.core.util.HttpKit;
 import org.core.util.JsonUtils;
 import org.core.util.PropUtil;
@@ -167,9 +162,13 @@ public class BeisitedController {
 		recordBevisiteds.setBevisitedID(employee.getId()+"");   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人ID' ,
 		recordBevisiteds.setBevisitedCardNo(employee.getCardno());	//varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人卡号' ,
 		recordBevisiteds.setBevisitedName(employee.getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
-		recordBevisiteds.setDeptID(employee.getDept().getId()+"");   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
-		recordBevisiteds.setDeptName(employee.getDept().getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
-		recordBevisiteds.setBevisitedPosition(employee.getJob().getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人职位' ,
+		if(employee.getDept()!=null){
+			recordBevisiteds.setDeptID(employee.getDept().getId()+"");   // varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人部门ID' ,
+			recordBevisiteds.setDeptName(employee.getDept().getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人姓名' ,
+		}
+		if(employee.getJob()!=null){
+			recordBevisiteds.setBevisitedPosition(employee.getJob().getName());   // varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人职位' ,
+		}
 		recordBevisiteds.setBevisitedStatus("0");   // tinyint(4) NOT NULL DEFAULT 0 COMMENT '被访人状态（0=正常，1=离职.......）' ,
 		recordBevisiteds.setBevisitedTel(employee.getPhone());   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人手机号码' ,
 		recordBevisiteds.setBevisitedDoor("");   // varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '被访人门禁' ,

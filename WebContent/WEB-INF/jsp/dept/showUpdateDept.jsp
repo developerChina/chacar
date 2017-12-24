@@ -67,7 +67,7 @@
   </tr>
 </table>
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
-  <tr valign="top">
+  <tr valign="middle">
     <td>
     	 <form action="${ctx}/dept/updateDept" id="deptForm" method="post">
     	 	<!-- 隐藏表单，flag表示添加标记 -->
@@ -76,17 +76,16 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
-		    		<tr>
+		    		<tr style="height:200px;">
 		    			<td class="font3 fftd">父级部门：
 		    			
 		    			<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/dept/selectAllDept" multiSelect="false"
-		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="1" size="20" value="${dept.pid }" style="width:150px;"/>
+		    			 textField="name" valueField="id" parentField="pid" expandOnLoad="false" size="20" value="${dept.pid }" style="width:150px;"/>
     					
     					</td>
 		    			<td class="font3 fftd">部门名称：<input type="text" name="name" id="name" size="20" value="${dept.name }"/></td>
 		    			<td class="font3 fftd">详细描述：<input type="text" name="remark" id="remark" size="20" value="${dept.remark }"/></td>
 		    		</tr>
-		    			
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>

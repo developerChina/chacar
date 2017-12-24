@@ -37,7 +37,9 @@ public class VisitorEntryUtil {
 			moreDTMap.put(ac.getFloorno(), ac.getCsn() + "," + ac.getCip() + "," + cardno + "," + ac.getAcno());
 			moreMJMap.put(ac.getCsn() + "," + ac.getCip() + "," + cardno + "," +ac.getFloorno(), ac.getAcno());
 		}
+		System.out.println("44444444444:"+moreMJMap.getAll().toString());
 		InitMJGrant(moreMJMap);
+		System.out.println("55555555555:"+moreDTMap.getAll().toString());
 		InitDTGrant(moreDTMap,dt);
 	}
 	public static void InitMJGrant(O2MoreOnlyMap<String,Integer> moreMap) {
@@ -85,11 +87,14 @@ public class VisitorEntryUtil {
 					if(cardno!=0) break;
 				}
 			}
+			System.out.println("666666666:"+layOne);
+			System.out.println("777777777:"+dt.toString());
 			GrantDianTi(layOne, layTwo, layThree, layFour, layFive, cardno,dt);
 		}
 	}
 	public static void GrantDianTi(int layOne, int layTwo, int layThree, int layFour, int layFive, Long cardno,List<Elevator> elevators) {
 		for (Elevator el : elevators) {
+			System.out.println("88888888:"+cardno+"---------"+layOne);
 			LadderControlUtil.LadderControlUserCard(Long.valueOf(el.getControllerSN()), el.getControllerIP(), cardno, 1,
 					(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31, layOne, layTwo, layThree, layFour, layFive);
 		}

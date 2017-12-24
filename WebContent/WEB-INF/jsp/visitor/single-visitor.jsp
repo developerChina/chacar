@@ -236,7 +236,7 @@
 			return cardInfo;
 		}
 		$(function() {
-			 check();
+			 //check();
 		}); 
 		
 		function check() {

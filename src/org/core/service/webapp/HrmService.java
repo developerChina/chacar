@@ -180,5 +180,10 @@ public interface HrmService {
 	 * @param job
 	 */
 	void saveOrUpdateJob(Job job);
+
+	/**
+	 * 查詢物理卡員工
+	 */
+	List<Employee> findEmployeeByCardNo_carstatus(String cardNo, int carstatus);
 	
 }

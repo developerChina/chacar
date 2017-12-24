@@ -113,4 +113,7 @@ public interface EmployeeDao {
 	})
 	List<Employee> getEmployeeesBy_phone(String phone);
 
+	@Select("select * from "+EMPLOYEETABLE+" where icno = #{cardNo} and carstatus= #{carstatus}")
+	List<Employee> findEmployeeByCardNo_carstatus(@Param("cardNo")String cardNo, @Param("carstatus")int carstatus);
+
 }
