@@ -1,9 +1,13 @@
 package org.core.controller.queuing;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
+import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
 import org.core.service.queuing.QueuingService;
 import org.core.util.tag.PageModel;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -24,12 +29,85 @@ public class QueuingConteoller {
 	private QueuingService queuingService;
 
 	@RequestMapping(value = "/queuingI/islandIndex")
-	public ModelAndView islandIndex(Integer pageIndex, @ModelAttribute Island island, ModelAndView mv) {
+	public ModelAndView islandIndex(Integer no, ModelAndView mv) {
+		if(no!=null){
+			Island island=queuingService.selectByNo(no);
+			if(island!=null){
+				mv.addObject("island", island);
+			}else{
+				island=new Island();
+				island.setIname("卸货岛不存在");
+				mv.addObject("island", island);
+			}
+		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("island/island");
 		// 返回ModelAndView
 		return mv;
 	}
+	@RequestMapping(value = "/queuingI/addQueue")
+	@ResponseBody		
+	public Object addQueue(@ModelAttribute Ordinary ordinary,Integer isadd) {
+		Map<String, Object> map=new HashMap<>();
+		//判断卸货岛是否存在
+		Island island=queuingService.selectByNo(ordinary.getIsland_no());
+		if(island!=null){
+			//判断车辆是否入场
+			if(1==1){
+				if(isadd!=0){
+					//判断是否添加
+					Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
+					if(maxo!=null){
+						ordinary.setQueue_number(maxo.getQueue_number()+1);
+					}else{
+						ordinary.setQueue_number(1);
+					}
+					ordinary.setRemarks("普通号");
+					queuingService.addO(ordinary);
+				}
+				//查询车辆排队信息
+				List<Object> returnList=new ArrayList<>();
+				boolean isLoopOrdinary=true;//是否循环普通队列
+				int waiting=0;
+				List<QueuingVip> vips=queuingService.selectVAll(ordinary.getIsland_no());
+				for (QueuingVip vip : vips) {
+					if(!ordinary.getCar_code().equals(vip.getCar_code())){
+						returnList.add(vip);
+						waiting++;
+					}else{
+						returnList.add(vip);
+						isLoopOrdinary=false;
+						break;
+					}
+				}
+				List<Ordinary> os=queuingService.selectOAll(ordinary.getIsland_no());
+				if(isLoopOrdinary){
+					for (Ordinary o : os) {
+						if(!ordinary.getCar_code().equals(o.getCar_code())){
+							returnList.add(o);
+							waiting++;
+						}else{
+							returnList.add(o);
+							break;
+						}
+					}
+				}
+				
+				map.put("status", true);
+				map.put("waiting", waiting);
+				map.put("all", vips.size()+os.size());
+				map.put("list", returnList);
+			}else{
+				map.put("status", false);
+				map.put("message", "车辆没有入场不能查询或排队");
+			}
+		}else{
+			map.put("status", false);
+			map.put("message", "卸货岛不存在");
+		}
+		return map;
+	}
+	
 
 	// 排队叫号操作 控制器
 	// 1-->卸货岛查询带分页

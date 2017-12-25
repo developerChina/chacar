@@ -24,7 +24,7 @@
 
 <body ontouchstart>
 	<header class="ui-header ui-header-positive ui-border-b">
-		<h1>北京长安取号系统(分装1号卸货岛)</h1>
+		<h1>北京长安取号系统(${island.iname })</h1>
 	</header>
 	<section class="ui-container">
 		<section id="table">
@@ -44,16 +44,14 @@
 									<li class="input_pp"><span></span></li>
 								</ul>
 							</div>
-
 						</div>
-
 						<div id="jp_pro"></div>
 					</div>
 					<div class="ui-flex ui-flex-pack-center">
 						<div class="demo-block">
 							<div class="ui-btn-wrap">
 								<button id="btn1" class="ui-btn ui-btn-primary">取号</button>
-								<button class="ui-btn ui-btn-danger">查询</button>
+								<button id="btn2" class="ui-btn ui-btn-danger">查询</button>
 							</div>
 						</div>
 					</div>
@@ -62,9 +60,9 @@
 			</div>
 
 			<div class="demo-item">
-				<p class="demo-desc">总排队：30 &nbsp;&nbsp;&nbsp;&nbsp; 等待人数：10</p>
+				<p class="demo-desc">总排队：<span id="all"></span> &nbsp;&nbsp;&nbsp;&nbsp; 等待人数：<span id="waiting"></span></p>
 				<div class="demo-block">
-					<table class="ui-table ui-border">
+					<table class="ui-table ui-border" id="list">
 						<thead>
 							<tr>
 								<th>状态</th>
@@ -74,6 +72,7 @@
 							</tr>
 						</thead>
 						<tbody>
+							<!--  
 							<tr style="color:green">
 								<td>当前</td>
 								<td>2</td>
@@ -92,6 +91,7 @@
 								<td>京N3G8B0</td>
 								<td>普通号</td>
 							</tr>
+							-->
 						</tbody>
 					</table>
 				</div>
@@ -101,10 +101,101 @@
 	<!-- /.ui-container-->
 	<script>
 	$(function(){
-        $("#btn1").click(function(){
-        	
-		})
+		
+		$("#btn1").click(function(){
+	         var carno=new String(getCarNo());
+	         if(carno.length!=7){
+	        	 layer.open({
+					content: '请录入完整车牌',
+					skin: 'msg',
+					time: 1
+				 });
+				 return 
+	         }else{
+	        	 //加入队列，查询排队情况
+	        	 var no=${island.no};
+	        	 $.post("${ctx}/queuingI/addQueue",{island_no:no,car_code:carno.toString(),isadd:0},
+	        			 function(obj){
+	        				 if(obj.status){
+	        					 $("#all").html(obj.all);
+	        					 $("#waiting").html(obj.waiting);
+	        					 var tbody=$("#list").find("tbody");
+	        					 tbody.empty();
+	        					 loopQueue(tbody,obj.list);
+	        				 }else{
+	        					 layer.open({
+	        							content: obj.message,
+	        							skin: 'msg',
+	        							time: 1
+	        						 }); 
+	        				 }
+		        	     });
+	         }
+		});
+		
+		$("#btn2").click(function(){
+			 var carno=new String(getCarNo());
+			 if(carno.length!=7){
+	        	 layer.open({
+					content: '请录入完整车牌',
+					skin: 'msg',
+					time: 1
+				 });
+				 return 
+	         }else{
+	        	//查询排队情况
+	        	 var no=${island.no};
+	        	 $.post("${ctx}/queuingI/addQueue",{island_no:no,car_code:carno.toString(),isadd:1},
+	        			 function(obj){
+			        		 if(obj.status){
+			        			 $("#all").html(obj.all);
+	        					 $("#waiting").html(obj.waiting);
+	        					 var tbody=$("#list").find("tbody");
+	        					 tbody.empty();
+	        					 loopQueue(tbody,obj.list);
+		    				 }else{
+		    					 layer.open({
+	        							content: obj.message,
+	        							skin: 'msg',
+	        							time: 1
+	        						 });
+		    				 }
+		        	     });
+	         }
+		});
 	})
+	
+	function loopQueue(tbody,list){
+		var carno=new String(getCarNo());
+		for (i = 0; i < list.length; i++) {
+			if(i==0){
+				tbody.append("<tr style='color:green'>"+
+						"<td>当前</td>"+
+						"<td>"+list[i].queue_number+"</td>"+
+						"<td>"+list[i].car_code+"</td>"+
+						"<td>"+list[i].remarks+"</td>"+
+					"</tr>")
+			}else if(carno.toString()==list[i].car_code){
+				tbody.append("<tr style='color:red'>"+
+						"<td>自己</td>"+
+						"<td>"+list[i].queue_number+"</td>"+
+						"<td>"+list[i].car_code+"</td>"+
+						"<td>"+list[i].remarks+"</td>"+
+					"</tr>")
+			}else{
+				tbody.append("<tr>"+
+						"<td>等待</td>"+
+						"<td>"+list[i].queue_number+"</td>"+
+						"<td>"+list[i].car_code+"</td>"+
+						"<td>"+list[i].remarks+"</td>"+
+					"</tr>")
+			}
+		 }
+	}
+	
+	function getCarNo(){
+		return $(".car_input").attr("data-pai");
+	}
 	</script>
 </body>
 </html>

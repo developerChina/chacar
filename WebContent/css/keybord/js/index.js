@@ -43,7 +43,7 @@ var next=0;
 	
 	function choosekey(obj,jj){	
 		if(jj==29){
-			alert("车牌："+$(".car_input").attr("data-pai"));
+			//alert("车牌："+$(".car_input").attr("data-pai"));
 			layer.closeAll();
 		}else if(jj==37){
 			if($(".ppHas").length==0){
@@ -58,12 +58,10 @@ var next=0;
 			if(next<1){
 				next=0;
 			}
-			console.log(next);
 		}else{
 			if(next>5){
 				return
 			}
-			console.log(next);
 			for(var i = 0; i<$(".input_pp").length;i++){
 				if(next==0 & jj<10 & $(".input_pp:eq("+next+")").hasClass("input_zim")){
 					layer.open({
@@ -97,7 +95,7 @@ var next=0;
        $(".ppHas").removeClass("ppHas");
 	   next=0;
 	}	
-	function trimStr(str){return str.replace(/(^\s*)|(\s*$)/g,"");}
+	function trimStr(str){return str.replace(/\s/g,'');}
 	function getpai(){
 		var pai=trimStr($(".car_input").text());
 		$(".car_input").attr("data-pai",pai);

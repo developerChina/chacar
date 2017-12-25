@@ -85,7 +85,21 @@ public interface QueuingDao {
 	
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="addO")
 	void addO(Ordinary ordinary);
+	
+	@Select(" select * from "+Ordinary.tableName+" where island_no= #{landid} order by queue_number desc limit 1")
+	Ordinary selectMaxOByLand(int landid);
 
+	@Select(" select * from "+Ordinary.tableName+" where car_code= #{carno} ")
+	Ordinary selectOBycarno(String carno);
+	
+	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landid} order by queue_number")
+	List<QueuingVip> selectVAll(int landid);
+
+	@Select(" select * from "+QueuingVip.tableName+" where car_code= #{carno} ")
+	QueuingVip selectVBycarno(String car_code);
+
+	@Select("select * from "+Ordinary.tableName+" where island_no= #{landid} order by queue_number")
+	List<Ordinary> selectOAll(int landid);
 	
 
 	
