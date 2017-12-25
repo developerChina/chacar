@@ -16,5 +16,7 @@ public class LocationConstants {
 		public static final String VEHICELGROUPTABLE="vehicelgroup";
 		//设备外接设备中间表
 		public static final String WAIJIETABLE="waijie";
+		//定位仪维护表常量
+		public static final String LOCATOR="logis_locator";
 
 }
