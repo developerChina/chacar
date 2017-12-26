@@ -171,5 +171,8 @@ public interface QueuingDao {
 	
 	@Select("select * from "+QueuingVip.tableName+" where queue_number >= #{arg0} and island_no = #{arg1}")
 	List<QueuingVip> selectVIByQI(int qAfter, int iAfter);
+//根据车牌号查普通表 有值就删除了它
+	@Delete(" delete from "+Ordinary.tableName+" where car_code = #{car_code} ")
+	void delByCar_code(String car_code);
 
 }

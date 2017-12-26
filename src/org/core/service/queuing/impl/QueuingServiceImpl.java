@@ -102,10 +102,6 @@ public class QueuingServiceImpl implements QueuingService {
 			//System.out.println(nos); 1,2,3
 			queuingVip.setVagueiname(nos);
 		}
-		
-		
-		
-		
 		Map<String,Object> params = new HashMap<>();
 		params.put("queuingVip", queuingVip);
 		int recordCount = queuingDao.countV(params);
@@ -128,21 +124,28 @@ public class QueuingServiceImpl implements QueuingService {
 	}
 	
 	
-	
-	
-	
+	//之前想法1添加前判断 如果普通表里也有 说明自己拍过队将普通表里的删除
+	//删除的条件是 卸货岛编号和车牌号 
+	//一个车牌能同时排好几个卸货岛吗
+	//vip添加
 	@Override
 	public void addV(QueuingVip queuingVip) {
-		//1添加前判断 如果普通表里也有 说明自己拍过队将普通表里的删除
-			//删除的条件是 卸货岛编号和车牌号 
-			//一个车牌能同时排好几个卸货岛吗
-		//2排序
+		//判断 根据车牌号查vip表  
+		QueuingVip exv=queuingDao.selectVBycarno(queuingVip.getCar_code());
+		if(exv==null){
+			//根据车牌号查普通表 有值就删除了它
+			Ordinary exo=queuingDao.selectOBycarno(queuingVip.getCar_code());
+			  if(exo!=null){
+				  queuingDao.delByCar_code(queuingVip.getCar_code());
+			  }
+			//2排序
+			 int max =vipAddSort(queuingVip.getIsland_no());
+			 queuingVip.setQueue_number(max);
+			//3执行添加
+			queuingDao.addV(queuingVip);
+		}
+			
 		
-		 int max =vipAddSort(queuingVip.getIsland_no());
-		 queuingVip.setQueue_number(max);
-		 
-		//3执行添加
-		queuingDao.addV(queuingVip);
 	}
 
 	@Override
@@ -188,8 +191,6 @@ public class QueuingServiceImpl implements QueuingService {
 			//System.out.println(nos); 1,2,3
 			history.setVagueiname(nos);
 		}
-		
-		
 		Map<String,Object> params = new HashMap<>();
 		params.put("history", history);
 		int recordCount = queuingDao.countH(params);
@@ -220,7 +221,7 @@ public class QueuingServiceImpl implements QueuingService {
 	public void addO(Ordinary ordinary) {
 		Ordinary exo=queuingDao.selectOBycarno(ordinary.getCar_code());
 		QueuingVip exv=queuingDao.selectVBycarno(ordinary.getCar_code());
-		if(exo!=null&&exv!=null){
+		if(exo==null&&exv==null){
 			queuingDao.addO(ordinary);
 		}
 	}
@@ -371,8 +372,6 @@ public class QueuingServiceImpl implements QueuingService {
 				//System.out.println(nos); 1,2,3
 				ordinary.setVagueiname(nos);
 			}
-			
-			
 			Map<String,Object> params = new HashMap<>();
 			params.put("ordinary", ordinary);
 			int recordCount = queuingDao.countO(params);
@@ -405,11 +404,8 @@ public class QueuingServiceImpl implements QueuingService {
 		//修改
 		@Override
 		public void UpdO(Ordinary ordinary) {
-			
-			ordUpdSort(ordinary);
-			
+				ordUpdSort(ordinary);
 		}
-		
 
 		//添加时排序
 			/*
@@ -561,12 +557,16 @@ public class QueuingServiceImpl implements QueuingService {
 		}
 	}
 		//总控平台的添加普通列表
+			//判断 根据车牌号查俩张表  都为空才执行
 		@Override
 		public void addConteollerO(Ordinary ordinary) {
 			
-			 int max =ordAddSort(ordinary.getIsland_no());
-			 ordinary.setQueue_number(max);
-			 
-			queuingDao.addO(ordinary);
+			Ordinary exo=queuingDao.selectOBycarno(ordinary.getCar_code());
+			QueuingVip exv=queuingDao.selectVBycarno(ordinary.getCar_code());
+			if(exo==null&&exv==null){
+				int max =ordAddSort(ordinary.getIsland_no());
+			 	ordinary.setQueue_number(max);
+			 	queuingDao.addO(ordinary);
+			}
 		}
 }
