@@ -162,10 +162,10 @@ public interface QueuingDao {
 	
 
 	@Select("select max(queue_number) from "+QueuingVip.tableName+" where island_no = #{no} ")
-	String getQueueMaxs(Integer no);
+	String getQueueMaxsByno(Integer no);
 	
 	@Select("select max(queue_number) from "+QueuingVip.tableName+" where island_no = #{no} ")
-	int getQueueMaxi(Integer no);
+	int getQueueMaxiByno(Integer no);
 
 	
 	@Select("select * from "+QueuingVip.tableName+" where queue_number >= #{arg0} and island_no = #{arg1}")

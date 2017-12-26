@@ -230,11 +230,11 @@ public class QueuingServiceImpl implements QueuingService {
 	
 	//添加时排序
 	public int vipAddSort(int no){
-		String maxstring = queuingDao.getQueueMaxs(no);
+		String maxstring = queuingDao.getQueueMaxsByno(no);
 		if(maxstring==null){
 			return 1;
 		}else{
-			int maxint = queuingDao.getQueueMaxi(no);
+			int maxint = queuingDao.getQueueMaxiByno(no);
 			return maxint+1;
 		}
 	}
@@ -284,7 +284,7 @@ public class QueuingServiceImpl implements QueuingService {
 			if(IFront==IAfter){
 				//判断位置改变了没有 1没变 2变了
 				//之前表最大值
-				int maxint = queuingDao.getQueueMaxi(IFront);
+				int maxint = queuingDao.getQueueMaxiByno(IFront);
 				if(QAfter==QFront){
 						queuingDao.UpdV(queuingVip);
 				}else{
@@ -318,14 +318,14 @@ public class QueuingServiceImpl implements QueuingService {
 	//2--->岛变
 	if(IFront!=IAfter){
 		//当前岛有没有排队 
-		String maxstring = queuingDao.getQueueMaxs(IAfter);
+		String maxstring = queuingDao.getQueueMaxsByno(IAfter);
 			//1没有排队  新添一个 删掉以前的 保证一条
 		if(maxstring==null){
 			addV(queuingVip);
 			delVip(queuingVip.getId());
 		}else{
 			//2有排队 插队 条件：修改之后的岛号 位置
-			int maxint = queuingDao.getQueueMaxi(IAfter);
+			int maxint = queuingDao.getQueueMaxiByno(IAfter);
 			if(QAfter>maxint){
 				queuingVip.setQueue_number(maxint+1);
 				queuingDao.UpdV(queuingVip);
