@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+     
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -39,8 +39,8 @@
 			document.getElementById("remarksColor").style.color="green";
 			document.getElementById("remarksColor").innerText="√";
 		}else{
-			document.getElementById("remarksColor").style.color="red";
-			document.getElementById("remarksColor").innerText="*必填";
+			document.getElementById("remarksColor").style.color="green";
+			document.getElementById("remarksColor").innerText="*选填";
 		}
 	}
 	
@@ -62,16 +62,16 @@
 		$("#OrdinaryAddForm").submit(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
-			var remarks = $("#remarks");
+			/* var remarks = $("#remarks"); */
 			
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
-			}else if ($.trim(remarks.val()) == ""){
+			}/* else if ($.trim(remarks.val()) == ""){
 				msg = "请填写备注！";
-			}
+			} */
 			
 			if (msg != ""){
 				
@@ -108,7 +108,7 @@
 
 		    		<tr>
 		    		<td class="font3 fftd">车牌号：</td>
-		    		<td><input name="car_code" id="car_code" type="text"  size="20" onblur="car_codeControl()"></td>
+		    		<td><input name="car_code" id="car_code" style="width: 580px; height: 30px" type="text"  size="20" onblur="car_codeControl()"></td>
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    		
@@ -121,7 +121,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">选择卸货岛：</td>
 		    			<td>
-		    				<select name="island_no" id="island_no" >
+		    				<select name="island_no" id="island_no" style="width: 580px; height: 30px" >
 								<option disabled="disabled" selected="selected">-请选择卸货岛-</option>
 								<c:forEach items="${requestScope.AddVgetI}" var="avi" varStatus="stat">
 								<option value="${avi.no}" >${avi.iname}</option>
@@ -135,9 +135,9 @@
 		    		<tr>
 		    		<td class="font3 fftd">备注：</td>
 		    		<td>
-		    		<textarea name="remarks" id="remarks" style="width: 180px; height: 80px" onblur="remarksControl()"></textarea>
+		    		<textarea name="remarks" id="remarks" style="width: 580px; height: 180px" onblur="remarksControl()"></textarea>
 		    		</td>
-		    		<td><font id="remarksColor" color="red">*必填&nbsp;</font></td>
+		    		<td><font id="remarksColor" color="green">*选填&nbsp;</font></td>
 		    		</tr>
 		    		
 		    	</table>

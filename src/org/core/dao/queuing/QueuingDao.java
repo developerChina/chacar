@@ -18,7 +18,7 @@ public interface QueuingDao {
 //卸货岛
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="countI")
 	int countI(Map<String, Object> params);
-	
+	 
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="pageSelectI")
 	List<Island> pageSelectI(Map<String, Object> params);
 	
@@ -119,6 +119,7 @@ public interface QueuingDao {
 	@Select("select max(queue_number) from "+Ordinary.tableName+" where island_no = #{no} ")
 	int getQueueOMaxi(int no);
 	
+	
 	@Select("select * from "+Ordinary.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
 	List<Ordinary> OselectListBybig(int queue_number, int island_no);
 
@@ -156,13 +157,16 @@ public interface QueuingDao {
 	
 
 	@Select("select max(queue_number) from "+QueuingVip.tableName+" where island_no = #{no} ")
-	String getQueueMaxs(Integer no);
+	String getQueueMaxsByno(Integer no);
 	
 	@Select("select max(queue_number) from "+QueuingVip.tableName+" where island_no = #{no} ")
-	int getQueueMaxi(Integer no);
+	int getQueueMaxiByno(Integer no);
 
 	
 	@Select("select * from "+QueuingVip.tableName+" where queue_number >= #{arg0} and island_no = #{arg1}")
 	List<QueuingVip> selectVIByQI(int qAfter, int iAfter);
+//根据车牌号查普通表 有值就删除了它
+	@Delete(" delete from "+Ordinary.tableName+" where car_code = #{car_code} ")
+	void delByCar_code(String car_code);
 
 }

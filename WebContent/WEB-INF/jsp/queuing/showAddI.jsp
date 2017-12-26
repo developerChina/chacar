@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -27,15 +26,16 @@
 	
 	function myQrCode(){ 
 		  $("#qrcode").html("");
+		  var uri="http://192.168.1.128:8080/chacar/queuingI/islandIndex?no="+$("#no").val();
 		  var myqrcode = $("#qrcode").qrcode(
 				  {
 				   render: "canvas",
 				   width:  $("#mywidth").val(),
 				   height:  $("#myheight").val(),
-				   text: $("#no").val()+$("#qrcodeTxt").val()
+				   text: uri
 				  });
-		  var canvas=myqrcode.find('canvas').get(0);
-		  $('#imgOne').attr('src',canvas.toDataURL('image/jpg'))
+		 /*  var canvas=myqrcode.find('canvas').get(0);
+		  $('#imgOne').attr('src',canvas.toDataURL('image/jpg')) */
 	  }
 	
 	  
@@ -164,6 +164,14 @@
 		    			<td><input name="no" id="no" type="number"  size="20" onblur="noControl()"/>
 		    			</td>
 		    			<td><font id="noColor" color="red">*必填&nbsp;</font></td>
+		    			<td rowspan="4" class="font3 fftd">
+                                                                           长：<input type="text"  id="mywidth" size="5" value="120"/>
+		    			         宽：<input type="text"  id="myheight" size="5" value="120"/>
+		    			    <br/><br/>
+ 		    			    <div id="qrcode" style="width:120px;height:120px;"></div>
+ 		    			    <br/>
+ 		    			    <input type="button" onclick="myQrCode()" value="&nbsp;&nbsp;生成二维码&nbsp;&nbsp;">
+                       </td>
 		    		</tr>
 		    	
 		    		<tr>
@@ -194,26 +202,7 @@
 		    			</td>
 		    			<td><font id="small_screenipColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
-		    		
-		    		<tr>
-		    			<td>
-		    				<input type="button" onclick="myQrCode()" value="&nbsp;&nbsp;生成二维码&nbsp;&nbsp;">
-		    			</td>
-		    			<td class="font3 fftd">
-		    			<input type="hidden"  id="mywidth" size="5" value="328"/>
-		    			<input type="hidden"  id="myheight" size="5" value="328"/> 
-		    			<input type="hidden" id="qrcodeTxt" size="45" value="${pageContext.request.contextPath}http://127.0.0.1:8080/chacar/lineup/forwardLineUp"/>
-		    			    
-		    			 
-		    			      <div id="qrcode"></div>
-		    			</td>
-		    			<td> 
-		    			<img id='imgOne' name="photo" style='border:1px solid red;'/> 
-		    			</td>
-		    		</tr>
-		    		
 		    	</table>
-		    	
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>

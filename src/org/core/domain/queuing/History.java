@@ -1,5 +1,5 @@
 package org.core.domain.queuing;
-
+ 
 import java.util.Date;
 
 /**
@@ -9,7 +9,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class History implements java.io.Serializable {
 	public static final String tableName = "logis_history";
-
+	
 	private String id; 	 				//int(11) 		     历史数据的统计表的主键
 	private int island_no; 	 			//int(11) 		     卸货岛编号
 	private String car_code;  			//varchar(50)     历史表的车牌

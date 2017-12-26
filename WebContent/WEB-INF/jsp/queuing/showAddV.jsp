@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+   
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -111,7 +111,7 @@
 
 		    		<tr>
 		    		<td class="font3 fftd">车牌号：</td>
-		    		<td><input name="car_code" id="car_code" type="text"  size="20" onblur="car_codeControl()"></td>
+		    		<td><input name="car_code" id="car_code" style="width: 580px; height: 30px" type="text"  size="20" onblur="car_codeControl()"></td>
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    		
@@ -124,7 +124,7 @@
 		    		<tr>
 		    			<td class="font3 fftd">选择卸货岛：</td>
 		    			<td>
-		    				<select name="island_no" id="island_no" >
+		    				<select name="island_no" id="island_no" style="width: 580px; height: 30px" >
 								<option disabled="disabled" selected="selected">-请选择卸货岛-</option>
 								<c:forEach items="${requestScope.AddVgetI}" var="avi" varStatus="stat">
 								<option value="${avi.no}" >${avi.iname}</option>
@@ -138,7 +138,7 @@
 		    		<tr>
 		    		<td class="font3 fftd">添加原因：</td>
 		    		<td>
-		    		<textarea name="remarks" id="remarks" style="width: 180px; height: 80px" onblur="remarksControl()"></textarea>
+		    		<textarea name="remarks" id="remarks" style="width: 580px; height: 180px" onblur="remarksControl()"></textarea>
 		    		</td>
 		    		<td><font id="remarksColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>

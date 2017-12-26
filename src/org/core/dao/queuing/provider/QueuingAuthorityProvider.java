@@ -12,9 +12,9 @@ import org.core.util.BeanUtil;
 public class QueuingAuthorityProvider {
 
 	private String exceptFields="tableName,vpartsI,opartsI,hpartsI,vagueiname";
-	
+	 
 /*
-	卸货岛
+	卸货岛 
 */	
 	public String countI(Map<String, Object> params) {
 		String sql =  new SQL(){

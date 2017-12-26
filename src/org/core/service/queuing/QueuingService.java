@@ -1,5 +1,5 @@
 package org.core.service.queuing;
-
+ 
 import java.util.List;
 
 import org.core.domain.queuing.History;
@@ -47,6 +47,7 @@ public interface QueuingService {
 	void addH(History history);
 	//往数据库中	普通队列表里写数据
 	void addO(Ordinary ordinary);
+	
 	Ordinary selectMaxOByLand(int landid);
 	Ordinary selectOBycarno(String carno);
 
@@ -63,6 +64,8 @@ public interface QueuingService {
 	Ordinary updateOSel(Integer id);
 
 	void UpdO(Ordinary ordinary);
+
+	void addConteollerO(Ordinary ordinary);
 	
 
 	
