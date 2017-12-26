@@ -27,14 +27,14 @@
     function deleteVip(a){
     	$.ligerDialog.confirm("确认要撤销此VIP队列吗?","撤销VIP队列 ",function(r){
 			   if(r){
-				   window.location = "${ctx}/queuingV/delVipAck?vid=" + a;
+				   window.location = "${ctx}/queuingV/delVipAck?id=" + a;
 			   }
 		   });
     }
     
     function updateIsland(a){
     	
-	window.location = "${ctx}/queuingV/updateVipAck?flag=1&vid=" + a;
+	window.location = "${ctx}/queuingV/updateVipAck?flag=1&id=" + a;
 			
     }
 

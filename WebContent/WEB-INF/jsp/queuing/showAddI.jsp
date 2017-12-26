@@ -20,7 +20,28 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="${ctx }/js/jquery.qrcode.min.js"></script>
+	
+	
 	<script type="text/javascript">
+	
+	function myQrCode(){ 
+		  $("#qrcode").html("");
+		  var myqrcode = $("#qrcode").qrcode(
+				  {
+				   render: "canvas",
+				   width:  $("#mywidth").val(),
+				   height:  $("#myheight").val(),
+				   text: $("#no").val()+$("#qrcodeTxt").val()
+				  });
+		  var canvas=myqrcode.find('canvas').get(0);
+		  $('#imgOne').attr('src',canvas.toDataURL('image/jpg'))
+	  }
+	
+	  
+	   
+	
+	
 	
 	/* 卸货岛编号光标移开事件 */
 	function noControl(){
@@ -174,6 +195,22 @@
 		    			<td><font id="small_screenipColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    		
+		    		<tr>
+		    			<td>
+		    				<input type="button" onclick="myQrCode()" value="&nbsp;&nbsp;生成二维码&nbsp;&nbsp;">
+		    			</td>
+		    			<td class="font3 fftd">
+		    			<input type="hidden"  id="mywidth" size="5" value="328"/>
+		    			<input type="hidden"  id="myheight" size="5" value="328"/> 
+		    			<input type="hidden" id="qrcodeTxt" size="45" value="${pageContext.request.contextPath}http://127.0.0.1:8080/chacar/lineup/forwardLineUp"/>
+		    			    
+		    			 
+		    			      <div id="qrcode"></div>
+		    			</td>
+		    			<td> 
+		    			<img id='imgOne' name="photo" style='border:1px solid red;'/> 
+		    			</td>
+		    		</tr>
 		    		
 		    	</table>
 		    	

@@ -11,7 +11,7 @@ import org.core.util.BeanUtil;
 
 public class QueuingAuthorityProvider {
 
-	private String exceptFields="tableName,id,vpartsI,hpartsI,vagueiname";
+	private String exceptFields="tableName,id,vpartsI,opartsI,hpartsI,vagueiname";
 	
 /*
 	卸货岛
@@ -218,7 +218,7 @@ public class QueuingAuthorityProvider {
 		public String addO(Ordinary entity) {
 			return new SQL() {
 				{
-					INSERT_INTO(History.tableName);
+					INSERT_INTO(Ordinary.tableName);
 					Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 					for (Map.Entry<String, Object> entry : map.entrySet()) { 
 						VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
@@ -230,10 +230,60 @@ public class QueuingAuthorityProvider {
 		
 		
 		
+//普通表
+		public String countO(Map<String, Object> params) {
+			String sql =  new SQL(){
+				{
+					SELECT("count(*)");
+					FROM(Ordinary.tableName);
+					if(params.get("ordinary") != null){
+						Ordinary ordinary = (Ordinary) params.get("ordinary");
+						if(ordinary.getCar_code() != null && !ordinary.getCar_code().equals("")){
+							WHERE(" car_code LIKE CONCAT('%',#{history.car_code},'%') ");				
+						}
+						if(ordinary.getVagueiname() != null && !ordinary.getVagueiname().equals("")){
+							WHERE(" island_no in ("+ ordinary.getVagueiname() +" ) ");				
+						}
+					}
+				}
+			}.toString();
+			return sql;
+			}
+			public String pageSelectO(Map<String, Object> params) {
+			String sql =  new SQL(){
+				{
+					SELECT("*");
+					FROM(Ordinary.tableName);
+					if(params.get("ordinary") != null){
+						Ordinary ordinary = (Ordinary) params.get("ordinary");
+						if(ordinary.getCar_code() != null && !ordinary.getCar_code().equals("")){
+							WHERE(" car_code LIKE CONCAT('%',#{history.car_code},'%') ");				
+						}
+						if(ordinary.getVagueiname() != null && !ordinary.getVagueiname().equals("")){
+							WHERE(" island_no in ("+ ordinary.getVagueiname() +" ) ");				
+						}
+					}
+				}
+			}.toString();
+			if(params.get("pageModel") != null){
+				sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
+			}
+			return sql;
+			}
 		
 		
-		
-		
+			public String UpdO(Ordinary entity) {
+				return new SQL() {
+					{
+						UPDATE(Ordinary.tableName);
+						Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
+						for (Map.Entry<String, Object> entry : map.entrySet()) { 
+							SET(entry.getKey()+"="+"#{"+entry.getKey()+"}");
+						}
+						WHERE(" id = #{id} ");
+					}
+				}.toString();
+			}
 		
 		
 	

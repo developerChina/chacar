@@ -6,7 +6,7 @@ package org.core.domain.queuing;
 @SuppressWarnings("serial")
 public class Island implements java.io.Serializable{
 	public static final String tableName = "logis_island";
-		
+	
 	private int id;  					//int(11)  		卸货岛的主键id
 	private int no;  					//int(11)  		卸货岛的编号
 	private String iname;  				//varchar(50) 	卸货岛的名称

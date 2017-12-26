@@ -18,6 +18,11 @@ public class Ordinary implements java.io.Serializable {
 	private Date goout_time; 		//Date				驶出时间
 	private String remarks;  		//varchar(50) 		备注
 	
+	
+	//表外字段
+	private String vagueiname;		//模糊查询
+	private Island opartsI;			//卸货岛实体
+	
 	public int getId() {
 		return id;
 	}
@@ -59,6 +64,18 @@ public class Ordinary implements java.io.Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getVagueiname() {
+		return vagueiname;
+	}
+	public void setVagueiname(String vagueiname) {
+		this.vagueiname = vagueiname;
+	}
+	public Island getOpartsI() {
+		return opartsI;
+	}
+	public void setOpartsI(Island opartsI) {
+		this.opartsI = opartsI;
 	}
 	
 

@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>排队叫号系统-历史记录管理</title>
+	<title>排队叫号系统-普通队列管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -24,17 +24,17 @@
 
 <script type="text/javascript">
 
-    function deleteIsland(a){
-    	$.ligerDialog.confirm("确认要删除吗?","删除排队叫号系统卸货岛 ",function(r){
+    function deleteVip(a){
+    	$.ligerDialog.confirm("确认要撤销此普通队列吗?","撤销普通队列 ",function(r){
 			   if(r){
-				   window.location = "${ctx}/queuingI/delIslandAck?no=" + a;
+				   window.location = "${ctx}/queuingO/delOAck?id=" + a;
 			   }
 		   });
     }
     
     function updateIsland(a){
     	
-	window.location = "${ctx}/queuingI/updateIslandAck?flag=1&no=" + a;
+	window.location = "${ctx}/queuingO/updOrdinaryAck?flag=1&id=" + a;
 			
     }
 
@@ -46,9 +46,9 @@
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
 		    	
-		 	   /** 给添加卸货岛绑定点击事件 */
+		 	   /** 给添加Vip队列绑定点击事件 */
 		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/queuingI/IslandAdd?flag=1";
+		 		   window.location = "${ctx }/queuingO/OrdinaryAdd?flag=1";
 		 	   })
 		 	   
 	 })
@@ -61,7 +61,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：排队叫号系统-历史记录管理 &gt; 历史记录查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：排队叫号系统-普通队列管理 &gt; 普通队列查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -73,24 +73,14 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="Historyform" method="post" id="Historyform" action="${ctx}/queuingH/HistoryAck">
+			  	<form name="Islandform" method="post" id="Islandform" action="${ctx}/queuingO/OrdinaryAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	卸货岛:<input type="text" name="car_code">&nbsp;&nbsp;
+					    	卸货岛:<input type="text" name="vagueiname">
 					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
-					    	<!-- 选择查看日期:
-					    	<select name="rtype" id="rtype">
-								<option disabled="disabled" selected="selected">-请选择要查看日期-</option>
-								<option value="1" >一星期以内的</option>
-								<option value="2" >一个月以内的</option>
-								<option value="3" >三个月以内的</option>
-								<option value="3" >半年以内的</option>
-								<option value="3" >一年以内的</option>
-								<option value="3" >一年以上的</option>
-							</select>&nbsp;&nbsp; -->
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="&nbsp;&nbsp;导出历史记录&nbsp;&nbsp;"/>&nbsp;&nbsp; 
+					    	<input id="add" type="button" value="&nbsp;&nbsp;新增普通队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
 					  </tr>
 					</table>
@@ -106,25 +96,21 @@
 	    <td height="20">
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
-		      <td>序号</td>
 			  <td>卸货岛名称</td>
-			  <td>车牌号码</td>
-			  <td>驶入时间</td>
-			  <td>驶出时间</td>
-			  <td>操作时间</td>
+			  <td>普通队列车牌</td>
+			  <td>当前排序位置</td>
 			  <td>备注</td>
-			  <td>操作员</td>
+			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.pageListH}" var="ph" varStatus="stat">
+			<c:forEach items="${requestScope.pageListO}" var="po" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					  <td>${stat.count}</td>
-					  <td>${ph.island_no}</td>
-					  <td>${ph.car_code}</td>
-					  <td>${ph.comein_time}</td>
-					  <td>${ph.goout_time}</td>
-					  <td>A-B</td>
-					  <td>${ph.remarks}</td>
-					  <td>${ph.empname}</td>
+					  <td>${po.opartsI.iname}</td>
+					  <td>${po.car_code}</td>
+					  <td>${po.queue_number}</td>
+					  <td>${po.remarks}</td>
+ 					  <td align="center">
+ 					  <a href="javascript:void(0)" onclick="deleteVip('${po.id}')">撤销</a>/<a href="javascript:void(0)" onclick="updateIsland('${po.id}')">修改</a>
+					  </td>
 				</tr>
 			</c:forEach>
 		  </table>
@@ -138,7 +124,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/queuingH/HistoryAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/queuingO/OrdinaryAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>
