@@ -47,12 +47,6 @@ public interface QueuingDao {
 	@Select("select * from "+Island.tableName)
 	List<Island> AddVgetI();
 	
-	@Select("select max(queue_number) from "+QueuingVip.tableName)
-	String getQueueMaxs();
-	
-	@Select("select max(queue_number) from "+QueuingVip.tableName)
-	int getQueueMaxi();
-	
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="addV")
 	void addV(QueuingVip queuingVip);
 	

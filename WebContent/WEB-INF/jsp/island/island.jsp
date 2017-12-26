@@ -122,6 +122,11 @@
 	        					 var tbody=$("#list").find("tbody");
 	        					 tbody.empty();
 	        					 loopQueue(tbody,obj.list);
+	        					 layer.open({
+	        							content: "取号成功",
+	        							skin: 'msg',
+	        							time: 1
+	        						 });
 	        				 }else{
 	        					 layer.open({
 	        							content: obj.message,

@@ -88,7 +88,7 @@ public class BeisitedController {
 			if(rv.get("cardID")!=null){
 				RecordVisitors recordVisitor= new RecordVisitors();
 				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(rv.get("cardID").toString());
-				visitorNames=visitorNames+","+visitorInfo.getCardName();
+				visitorNames=visitorNames+","+"[来访人:"+recordVisitor.getCardName()+",公司:"+recordVisitor.getCompany()+",事由:"+recordVisitor.getVisitReason()+"]";
 				BeanUtils.copyProperties(visitorInfo, recordVisitor);
 				recordVisitor.setRecordID(recordid);
 				recordVisitor.setVisitStatus(1);
@@ -125,11 +125,11 @@ public class BeisitedController {
 			//保存记录
 			VisitorRecord visitorRecord=new VisitorRecord();
 			String recordid =visitorRecordService.saveOrUpdate(visitorRecord);
-			String visitorNames="";//访客名
+			String visitor="";//访客名
 			//保存记录访客
 			if(recordVisitor.getCardID()!=null){
 				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(recordVisitor.getCardID());
-				visitorNames=visitorInfo.getCardName();
+				visitor="[来访人:"+recordVisitor.getCardName()+",公司:"+recordVisitor.getCompany()+",事由:"+recordVisitor.getVisitReason()+"]";
 				recordVisitor.setRecordID(recordid);
 				recordVisitor.setVisitStatus(1);
 				recordVisitor.setVisitorID(visitorInfo.getVisitorID());
@@ -141,7 +141,7 @@ public class BeisitedController {
 			recordBevisitedsService.save(recordBevisiteds);
 			
 			//发送验证短信
-			sendAudiSMS(visitorNames, employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
+			sendAudiSMS(visitor, employee.getName(), DateUtil.DateToString(new Date(), DateStyle.YYYY_MM_DD), recordid, employee.getPhone());
 			
 			returnString=returnString+getAudiUrl(request)+recordid+"<br/>";
 		}

@@ -220,7 +220,7 @@ public class QueuingServiceImpl implements QueuingService {
 	public void addO(Ordinary ordinary) {
 		Ordinary exo=queuingDao.selectOBycarno(ordinary.getCar_code());
 		QueuingVip exv=queuingDao.selectVBycarno(ordinary.getCar_code());
-		if(exo!=null&&exv!=null){
+		if(exo==null&&exv==null){
 			queuingDao.addO(ordinary);
 		}
 	}

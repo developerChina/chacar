@@ -54,7 +54,7 @@ public class QueuingConteoller {
 		if(island!=null){
 			//判断车辆是否入场
 			if(1==1){
-				if(isadd!=0){
+				if(isadd==0){
 					//判断是否添加
 					Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
 					if(maxo!=null){
