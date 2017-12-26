@@ -114,15 +114,16 @@
 		  <tr><td id="navbg7" class="left_nav_closed" ><div class="font1">定位系统</div></td></tr>
 		  <tr valign="top" id="submenu7" style="display: none">
 		    <td class="left_nav_bgshw tdbtmline" height="50">
-		     <!--  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Client/LocationClientAck"  target="main">客户管理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Client/LocationClientAck"  target="main">客户管理</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/LUserAck"  target="main">用户管理</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/GroupAck"  target="main">分组管理</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/LocationVehicel/LocationVehicelAck"  target="main">设备管理</a></img></p>
-		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">位置信息服务</a></img></p> -->
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">位置信息服务</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Locator/selectLocator"  target="main">定位仪管理</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Locator/selectLocator"  target="main">车辆绑定查询</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Locator/selectLocator"  target="main">车辆进出口查询</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/illegal" target="main">车辆违规办理</a></img></p>
+		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/location/login"  target="main">位置信息服务</a></img></p>
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>
@@ -133,13 +134,10 @@
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/lineup/configLineUp" target="main">排队服务</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/notice/selectNotice" target="main">排队叫号规划</a></img></p>
 		      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="dept/addDept?flag=1" target="main">绑定授权</a></img></p>
-			
 			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p>
 			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingV/VipAck" target="main">VIP队列维护</a></img></p>
+			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingO/OrdinaryAck" target="main">普通队列维护</a></img></p>
 			<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/HistoryAck" target="main">历史统计</a></img></p>
-			
-			
-			
 			</td>
 		  </tr>
 		  <tr><td height="2"></td></tr>

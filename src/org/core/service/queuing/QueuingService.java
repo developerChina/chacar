@@ -55,7 +55,14 @@ public interface QueuingService {
 	List<Ordinary> selectOAll(int landid);
 
 	
+//普通队列首页
+	List<Ordinary> selectOByPage(Ordinary ordinary, PageModel pageModel);
 
+	void delOrdinary(Integer id);
+
+	Ordinary updateOSel(Integer id);
+
+	void UpdO(Ordinary ordinary);
 	
 
 	

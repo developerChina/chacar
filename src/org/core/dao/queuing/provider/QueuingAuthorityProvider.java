@@ -11,7 +11,7 @@ import org.core.util.BeanUtil;
 
 public class QueuingAuthorityProvider {
 
-	private String exceptFields="tableName,id,vpartsI,opartsI,hpartsI,vagueiname";
+	private String exceptFields="tableName,vpartsI,opartsI,hpartsI,vagueiname";
 	
 /*
 	卸货岛

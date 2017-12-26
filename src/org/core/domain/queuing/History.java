@@ -10,7 +10,7 @@ import java.util.Date;
 public class History implements java.io.Serializable {
 	public static final String tableName = "logis_history";
 
-	private int id; 	 				//int(11) 		     历史数据的统计表的主键
+	private String id; 	 				//int(11) 		     历史数据的统计表的主键
 	private int island_no; 	 			//int(11) 		     卸货岛编号
 	private String car_code;  			//varchar(50)     历史表的车牌
 	private Date comein_time; 			//date    		    驶入时间
@@ -23,10 +23,10 @@ public class History implements java.io.Serializable {
 	private Island hpartsI;				//卸货岛实体
 	private String vagueiname;			//卸货岛名称用来模糊查询
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getIsland_no() {

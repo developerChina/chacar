@@ -12,6 +12,7 @@ import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
+import org.apache.ibatis.annotations.Update;
 
 public interface QueuingDao {
 //卸货岛
@@ -58,8 +59,8 @@ public interface QueuingDao {
 	@Delete(" delete from "+QueuingVip.tableName+" where id = #{id} ")
 	void delVip(Integer id);
 	
-	@Select("select * from "+QueuingVip.tableName+" where queue_number > #{queue_number}")
-	List<QueuingVip> selectListBybig(int queue_number);
+	@Select("select * from "+QueuingVip.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
+	List<QueuingVip> selectListBybig(int queue_number, int island_no);
 	
 	@Select("select * from "+QueuingVip.tableName+" where id = #{id}")
 	QueuingVip updateVSel(Integer id);
@@ -101,18 +102,73 @@ public interface QueuingDao {
 	@Select("select * from "+Ordinary.tableName+" where island_no= #{landid} order by queue_number")
 	List<Ordinary> selectOAll(int landid);
 	
+//普通队列表
+	
+	@SelectProvider(type=QueuingAuthorityProvider.class,method="countO")
+	int countO(Map<String, Object> params);
+
+	@SelectProvider(type=QueuingAuthorityProvider.class,method="pageSelectO")
+	List<Ordinary> pageSelectO(Map<String, Object> params);
+	    
+	@Delete(" delete from "+Ordinary.tableName+" where id = #{id} ")
+	void delOrdinary(Integer id);
+
+	@Select("select * from "+Ordinary.tableName+" where id = #{id}")
+	Ordinary updateOSel(Integer id);
+
+	@SelectProvider(type=QueuingAuthorityProvider.class,method="UpdO")
+	void UpdO(Ordinary ordinary);
+//根据岛号查的 先String 后int
+	@Select("select max(queue_number) from "+Ordinary.tableName+" where island_no = #{no} ")
+	String getQueueOMaxs(int no);
+	
+	@Select("select max(queue_number) from "+Ordinary.tableName+" where island_no = #{no} ")
+	int getQueueOMaxi(int no);
+	
+	@Select("select * from "+Ordinary.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
+	List<Ordinary> OselectListBybig(int queue_number, int island_no);
+
+	@Update("update "+Ordinary.tableName+" set queue_number = #{arg0} where id=#{arg1}")
+	void updateOQByid(int man, int id);
+
+	@Select("select * from "+Ordinary.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
+	List<Ordinary> selectOrdByQI(int qFront, int iFront);
+
+	@Update("update "+Ordinary.tableName+" set queue_number = #{arg0} where id=#{arg1}")
+	void updOrdQByid(int man, int id);
+
+	@Select("select * from "+Ordinary.tableName+" where queue_number < #{arg0} and queue_number >= #{arg2} and island_no = #{arg1}")
+	List<Ordinary> selectOrdAByQI(int qFront, int iFront, int qAfter);
+
+	@Select("select * from "+Ordinary.tableName+" where queue_number >= #{arg0} and island_no = #{arg1}")
+	List<Ordinary> selectOrdIByQI(int qAfter, int iAfter);
+
+//vip重新排序的之前的不要了
+	
+	@Select("select * from "+QueuingVip.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
+	List<QueuingVip> selectVipByQI(int qFront, int iFront);
+
+	@Update("update "+QueuingVip.tableName+" set queue_number = #{arg0} where id=#{arg1}")
+	void updateQByid(int man, int id);
+
+	@Select("select * from "+QueuingVip.tableName+" where queue_number < #{arg0} and queue_number >= #{arg2} and island_no = #{arg1}")
+	List<QueuingVip> selListByetc(int qFront, int iFront, int qAfter);
+	
 
 	
-
-
+	@Select("select * from "+QueuingVip.tableName+" where queue_number > #{arg0} and queue_number <= #{arg2} and island_no = #{arg1}")
+	List<QueuingVip> selListBymax(int queue_number, int island_no, int number);
 	
-
-	
-
 	
 
+	@Select("select max(queue_number) from "+QueuingVip.tableName+" where island_no = #{no} ")
+	String getQueueMaxs(Integer no);
 	
+	@Select("select max(queue_number) from "+QueuingVip.tableName+" where island_no = #{no} ")
+	int getQueueMaxi(Integer no);
+
 	
-	
+	@Select("select * from "+QueuingVip.tableName+" where queue_number >= #{arg0} and island_no = #{arg1}")
+	List<QueuingVip> selectVIByQI(int qAfter, int iAfter);
 
 }
