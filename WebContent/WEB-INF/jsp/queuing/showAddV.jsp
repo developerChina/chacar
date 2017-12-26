@@ -45,12 +45,11 @@
 	}
 	
 	
-
+	
 	
 	
 	
 	$(function(){
-		
 		$('#island_no').change(function(){
 			var rtypeid=$(this).children('option:selected').val()
 			if(rtypeid!=""){
@@ -58,11 +57,8 @@
 				document.getElementById("island_noColor").innerText="√";
 			}
 		});
-		
-		
-		
     	/* VIP队列添加提交 事件  */
-		$("#VipAddForm").submit(function(){
+		$("#add").click(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
 			var remarks = $("#remarks");
@@ -80,11 +76,23 @@
 				
 				$.ligerDialog.error(msg);
 				return false;
-			}else{
-				
-				return true;
 			}
-			$("#VipAddForm").submit();
+			$.ajax({
+				  type: 'post',
+				  url: '${ctx}/queuingAdd/addValidate',
+				  data: {
+					  "car_code":car_code.val(),
+					  "flag":1
+				  },
+				  success: function(data){
+					if(data.status){
+						$("#VipAddForm").submit();
+				  	}else{
+				  		alert(data.message);
+				  	}
+				  }
+			
+				})
 		});
     });
 	
@@ -144,10 +152,10 @@
 		    		</tr>
 		    		
 		    	</table>
-		    	
+		    
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="add" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		  
 		 </form>

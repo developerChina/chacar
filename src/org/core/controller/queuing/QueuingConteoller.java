@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
@@ -381,4 +384,31 @@ public class QueuingConteoller {
 	// 返回ModelAndView
 		return mv;
 	}
+	//友好提示
+		@ResponseBody
+		@RequestMapping(value="/queuingAdd/addValidate")
+		public Object addValidate(HttpServletRequest request,
+				 HttpServletResponse response){
+			
+			String car_code = request.getParameter("car_code");
+			
+			String judge = request.getParameter("flag");
+			System.out.println(judge+car_code);
+			Map<String,Object> map = new HashMap<>();
+			
+			String flag = queuingService.addValidate(car_code,judge);
+				
+				System.out.println(flag);
+				if(!"".equals(flag)){
+					map.put("status", false);
+					map.put("message", flag);
+				}else{
+					map.put("status", true);
+					map.put("message", "验证通过");
+				}
+				
+			return map;
+		}
+		
+		
 }

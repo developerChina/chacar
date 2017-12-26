@@ -569,4 +569,42 @@ public class QueuingServiceImpl implements QueuingService {
 			 	queuingDao.addO(ordinary);
 			}
 		}
+//添加验证的友好提示
+		@Override
+		public String addValidate(String car_code,String judge) {
+			String result="";
+			//vip表
+			if(judge.equals("1")){
+				QueuingVip exv=queuingDao.selectVBycarno(car_code);
+				if(exv==null){
+					//没有这个车牌
+					result="";
+				}else{
+					//有这个车牌
+					result="此车已经在当前队列里，请勿重复排队";
+				}
+			}
+			//普通表
+			if(judge.equals("2")){
+				Ordinary exo=queuingDao.selectOBycarno(car_code);
+				if(exo==null){
+					QueuingVip exv=queuingDao.selectVBycarno(car_code);
+					//没有这个车牌
+					if(exv==null){
+						result="";
+					}else{
+						result="此车已经在VIP队列里，请勿重复排队";
+					}
+					
+				}else{
+					//有这个车牌
+					result="此车已经在当前队列里，请勿重复排队";
+				}
+			}
+			return result;
+		}
+		
+		
+		
+		
 }
