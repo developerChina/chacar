@@ -560,4 +560,13 @@ public class QueuingServiceImpl implements QueuingService {
 			}
 		}
 	}
+		//总控平台的添加普通列表
+		@Override
+		public void addConteollerO(Ordinary ordinary) {
+			
+			 int max =ordAddSort(ordinary.getIsland_no());
+			 ordinary.setQueue_number(max);
+			 
+			queuingDao.addO(ordinary);
+		}
 }
