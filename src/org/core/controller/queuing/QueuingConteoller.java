@@ -329,7 +329,7 @@ public class QueuingConteoller {
 				mv.setViewName("/queuing/showAddO");
 			}else{
 				//执行添加
-				queuingService.addO(ordinary);
+				queuingService.addConteollerO(ordinary);
 				mv.setViewName("redirect:/queuingO/OrdinaryAck");
 			}
 			return mv;
