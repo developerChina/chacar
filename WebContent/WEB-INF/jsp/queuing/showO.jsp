@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html> 
 <head>
-	<title>排队叫号系统-VIP队列管理</title>
+	<title>排队叫号系统-普通队列管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -25,16 +25,16 @@
 <script type="text/javascript">
 
     function deleteVip(a){
-    	$.ligerDialog.confirm("确认要撤销此VIP队列吗?","撤销VIP队列 ",function(r){
+    	$.ligerDialog.confirm("确认要撤销此普通队列吗?","撤销普通队列 ",function(r){
 			   if(r){
-				   window.location = "${ctx}/queuingV/delVipAck?id=" + a;
+				   window.location = "${ctx}/queuingO/delOAck?id=" + a;
 			   }
 		   });
     }
     
     function updateIsland(a){
     	
-	window.location = "${ctx}/queuingV/updateVipAck?flag=1&id=" + a;
+	window.location = "${ctx}/queuingO/updOrdinaryAck?flag=1&id=" + a;
 			
     }
 
@@ -48,7 +48,7 @@
 		    	
 		 	   /** 给添加Vip队列绑定点击事件 */
 		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/queuingV/VipAdd?flag=1";
+		 		   window.location = "${ctx }/queuingO/OrdinaryAdd?flag=1";
 		 	   })
 		 	   
 	 })
@@ -61,7 +61,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：排队叫号系统-VIP队列管理 &gt; VIP队列查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：排队叫号系统-普通队列管理 &gt; 普通队列查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -73,14 +73,14 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="Islandform" method="post" id="Islandform" action="${ctx}/queuingV/VipAck">
+			  	<form name="Islandform" method="post" id="Islandform" action="${ctx}/queuingO/OrdinaryAck">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
 					    	卸货岛:<input type="text" name="vagueiname">
 					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="&nbsp;&nbsp;新增VIP队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
+					    	<input id="add" type="button" value="&nbsp;&nbsp;新增普通队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
 					  </tr>
 					</table>
@@ -97,19 +97,19 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td>卸货岛名称</td>
-			  <td>VIP车牌</td>
+			  <td>普通队列车牌</td>
 			  <td>当前排序位置</td>
-			  <td>排列原因</td>
+			  <td>备注</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.pageListV}" var="pv" varStatus="stat">
+			<c:forEach items="${requestScope.pageListO}" var="po" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					  <td>${pv.vpartsI.iname}</td>
-					  <td>${pv.car_code}</td>
-					  <td>${pv.queue_number}</td>
-					  <td>${pv.remarks}</td>
+					  <td>${po.opartsI.iname}</td>
+					  <td>${po.car_code}</td>
+					  <td>${po.queue_number}</td>
+					  <td>${po.remarks}</td>
  					  <td align="center">
- 					  <a href="javascript:void(0)" onclick="deleteVip('${pv.id}')">撤销</a>/<a href="javascript:void(0)" onclick="updateIsland('${pv.id}')">修改</a>
+ 					  <a href="javascript:void(0)" onclick="deleteVip('${po.id}')">撤销</a>/<a href="javascript:void(0)" onclick="updateIsland('${po.id}')">修改</a>
 					  </td>
 				</tr>
 			</c:forEach>
@@ -124,7 +124,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/queuingV/VipAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/queuingO/OrdinaryAck?pageIndex={0}"/>
 		  </td>
 	  </tr>
 	</table>

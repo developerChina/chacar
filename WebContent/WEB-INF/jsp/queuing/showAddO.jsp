@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+     
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html> 
+<html>
 	<head>
-	<title>添加VIP队列</title>
+	<title>添加普通队列</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -21,25 +21,6 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script type="text/javascript">
-	//页面加载事件
-	
-	window.onload=function(){
-		$("#island_no").val("${updateV.island_no}");
-		
-		document.getElementById("island_noColor").style.color="green";
-		document.getElementById("island_noColor").innerText="√";
-		
-		document.getElementById("car_codeColor").style.color="green";
-		document.getElementById("car_codeColor").innerText="√";
-		
-		document.getElementById("remarksColor").style.color="green";
-		document.getElementById("remarksColor").innerText="√";
-		
-		document.getElementById("queue_numberColor").style.color="green";
-		document.getElementById("queue_numberColor").innerText="√";
-	}
-	
-	
 	
 	function car_codeControl(){
 		var car_code = $("#car_code").val();
@@ -52,7 +33,6 @@
 		}
 	}
 	
-	
 	function remarksControl(){
 		var remarks = $("#remarks").val();
 		if ($.trim(remarks)!=""){
@@ -63,19 +43,6 @@
 			document.getElementById("remarksColor").innerText="*必填";
 		}
 	}
-	
-	function queue_numberControl(){
-		var queue_number = $("#queue_number").val();
-		if ($.trim(queue_number)!=""){
-			document.getElementById("queue_numberColor").style.color="green";
-			document.getElementById("queue_numberColor").innerText="√";
-		}else{
-			document.getElementById("queue_numberColor").style.color="red";
-			document.getElementById("queue_numberColor").innerText="*必填";
-		}
-	}
-	
-	
 	
 	
 	
@@ -90,24 +57,20 @@
 		});
 		
 		
+		
     	/* VIP队列添加提交 事件  */
-		$("#VipUpdForm").submit(function(){
+		$("#OrdinaryAddForm").submit(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
 			var remarks = $("#remarks");
-			var queue_number = $("#queue_number");
 			
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
-			}else if ($.trim(queue_number.val()) == ""){
-				msg = "请填写排队位置！";
-			}else if ($.trim(queue_number.val()) <= 0){
-				msg = "请正确填写排队位置！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
 			}else if ($.trim(remarks.val()) == ""){
-				msg = "请填写原因！";
+				msg = "请填写备注！";
 			}
 			
 			if (msg != ""){
@@ -118,7 +81,7 @@
 				
 				return true;
 			}
-			$("#VipUpdForm").submit();
+			$("#OrdinaryAddForm").submit();
 		});
     });
 	
@@ -136,33 +99,29 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/queuingV/updateVipAck" id="VipUpdForm" method="post">
+    	 <form action="${ctx}/queuingO/OrdinaryAdd" id="OrdinaryAddForm" method="post">
     	 	<!-- 隐藏表单，flag表示添加标记 -->
     	 	<input type="hidden" name="flag" value="2">
-    	 	<input type="hidden" name="id" value="${updateV.id}">
-    	 	
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
 
 		    		<tr>
 		    		<td class="font3 fftd">车牌号：</td>
-		    		<td><input name="car_code" id="car_code" value="${updateV.car_code}" type="text"  size="20" onblur="car_codeControl()"></td>
+		    		<td><input name="car_code" id="car_code" type="text"  size="20" onblur="car_codeControl()"></td>
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
-		    	
-		    	
-		    		<tr>
-		    		<td class="font3 fftd">当前位置：</td>
-		    		<td><input name="queue_number" id="queue_number" value="${updateV.queue_number}" type="number"  size="20" onblur="queue_numberControl()"></td>
+		    		
+		    		<%-- <tr>
+		    		<td class="font3 fftd">排号位置：</td>
+		    		<td><input name="queue_number" id="queue_number" value="${maxnum}" type="number"  size="20" onblur="queue_numberControl()"></td>
 		    		<td><font id="queue_numberColor" color="red">*必填&nbsp;</font></td>
-		    		</tr>
-		    	
-		    	
+		    		</tr> --%>
+		    		
 		    		<tr>
 		    			<td class="font3 fftd">选择卸货岛：</td>
 		    			<td>
-		    				<select name="island_no" id="island_no">
+		    				<select name="island_no" id="island_no" >
 								<option disabled="disabled" selected="selected">-请选择卸货岛-</option>
 								<c:forEach items="${requestScope.AddVgetI}" var="avi" varStatus="stat">
 								<option value="${avi.no}" >${avi.iname}</option>
@@ -174,9 +133,9 @@
 		    		
 		    		
 		    		<tr>
-		    		<td class="font3 fftd">添加原因：</td>
+		    		<td class="font3 fftd">备注：</td>
 		    		<td>
-		    		<textarea name="remarks" id="remarks"  style="width: 180px; height: 80px" onblur="remarksControl()">${updateV.remarks}</textarea>
+		    		<textarea name="remarks" id="remarks" style="width: 180px; height: 80px" onblur="remarksControl()"></textarea>
 		    		</td>
 		    		<td><font id="remarksColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
@@ -185,7 +144,7 @@
 		    	
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		  
 		 </form>

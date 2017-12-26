@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+   
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html> 
 	<head>
@@ -24,7 +24,7 @@
 	//页面加载事件
 	
 	window.onload=function(){
-		$("#island_no").val("${updateV.island_no}");
+		$("#island_no").val("${updateO.island_no}");
 		
 		document.getElementById("island_noColor").style.color="green";
 		document.getElementById("island_noColor").innerText="√";
@@ -90,8 +90,8 @@
 		});
 		
 		
-    	/* VIP队列添加提交 事件  */
-		$("#VipUpdForm").submit(function(){
+    	/* 普通队列添加提交 事件 起名字  */
+		$("#OrdinaryUpdForm").submit(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
 			var remarks = $("#remarks");
@@ -107,7 +107,7 @@
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
 			}else if ($.trim(remarks.val()) == ""){
-				msg = "请填写原因！";
+				msg = "请填写备注！";
 			}
 			
 			if (msg != ""){
@@ -118,7 +118,7 @@
 				
 				return true;
 			}
-			$("#VipUpdForm").submit();
+			$("#OrdinaryUpdForm").submit();
 		});
     });
 	
@@ -136,10 +136,10 @@
 <table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
   <tr valign="top">
     <td>
-    	 <form action="${ctx}/queuingV/updateVipAck" id="VipUpdForm" method="post">
+    	 <form action="${ctx}/queuingO/updOrdinaryAck" id="OrdinaryUpdForm" method="post">
     	 	<!-- 隐藏表单，flag表示添加标记 -->
     	 	<input type="hidden" name="flag" value="2">
-    	 	<input type="hidden" name="id" value="${updateV.id}">
+    	 	<input type="hidden" name="id" value="${updateO.id}">
     	 	
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
@@ -147,14 +147,14 @@
 
 		    		<tr>
 		    		<td class="font3 fftd">车牌号：</td>
-		    		<td><input name="car_code" id="car_code" value="${updateV.car_code}" type="text"  size="20" onblur="car_codeControl()"></td>
+		    		<td><input name="car_code" id="car_code" value="${updateO.car_code}" type="text"  size="20" onblur="car_codeControl()"></td>
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    	
 		    	
 		    		<tr>
 		    		<td class="font3 fftd">当前位置：</td>
-		    		<td><input name="queue_number" id="queue_number" value="${updateV.queue_number}" type="number"  size="20" onblur="queue_numberControl()"></td>
+		    		<td><input name="queue_number" id="queue_number" value="${updateO.queue_number}" type="number"  size="20" onblur="queue_numberControl()"></td>
 		    		<td><font id="queue_numberColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    	
@@ -174,9 +174,9 @@
 		    		
 		    		
 		    		<tr>
-		    		<td class="font3 fftd">添加原因：</td>
+		    		<td class="font3 fftd">备注：</td>
 		    		<td>
-		    		<textarea name="remarks" id="remarks"  style="width: 180px; height: 80px" onblur="remarksControl()">${updateV.remarks}</textarea>
+		    		<textarea name="remarks" id="remarks"  style="width: 180px; height: 80px" onblur="remarksControl()">${updateO.remarks}</textarea>
 		    		</td>
 		    		<td><font id="remarksColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>

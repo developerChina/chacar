@@ -27,7 +27,7 @@ public class QueuingConteoller {
 	@Autowired
 	@Qualifier("queuingService")
 	private QueuingService queuingService;
-
+	 
 	@RequestMapping(value = "/queuingI/islandIndex")
 	public ModelAndView islandIndex(Integer no, ModelAndView mv) {
 		if(no!=null){
@@ -114,9 +114,11 @@ public class QueuingConteoller {
 	/**
 	 * 卸货岛管理 跳向首页 分页查询
 	 */
-	@RequestMapping(value = "/queuingI/IslandAck")
-	public ModelAndView IslandAck(Integer pageIndex, @ModelAttribute Island island, ModelAndView mv) {
-		PageModel pageModel = new PageModel();
+	@RequestMapping(value="/queuingI/IslandAck")
+			 public ModelAndView IslandAck(Integer pageIndex,
+					 @ModelAttribute Island island,
+					 ModelAndView mv){		
+	    PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
 		}
@@ -134,9 +136,11 @@ public class QueuingConteoller {
 	 * flag=1跳向添加页面 <br>
 	 * flag=2执行添加
 	 */
-	@RequestMapping(value = "/queuingI/IslandAdd")
-	public ModelAndView IslandAdd(String flag, @ModelAttribute Island island, ModelAndView mv) {
-		if (flag.equals("1")) {
+	@RequestMapping(value="/queuingI/IslandAdd")
+			 public ModelAndView IslandAdd(String flag,
+					 @ModelAttribute Island island,
+					 ModelAndView mv){		
+	    if (flag.equals("1")) {
 			// 设置跳转到添加页面
 			mv.setViewName("/queuing/showAddI");
 		} else {
@@ -232,9 +236,10 @@ public class QueuingConteoller {
 	 * 
 	 */
 	@RequestMapping(value = "/queuingV/delVipAck")
-	public ModelAndView delVipAck(Integer vid, ModelAndView mv) {
+	public ModelAndView delVipAck(Integer id,
+	  ModelAndView mv) {
 
-		queuingService.delVip(vid);
+		queuingService.delVip(id);
 		mv.setViewName("redirect:/queuingV/VipAck");
 		return mv;
 	}
@@ -245,10 +250,12 @@ public class QueuingConteoller {
 	 * flag=2执行修改
 	 */
 	@RequestMapping(value = "/queuingV/updateVipAck")
-	public ModelAndView VipUpd(String flag, Integer vid, @ModelAttribute QueuingVip queuingVip, ModelAndView mv) {
+	public ModelAndView VipUpd(String flag, Integer id, 
+		@ModelAttribute QueuingVip queuingVip, 
+		ModelAndView mv) {
 		if (flag.equals("1")) {
 			// 设置跳转到修改页面
-			QueuingVip updateV = queuingService.updateVSel(vid);
+			QueuingVip updateV = queuingService.updateVSel(id);
 			List<Island> AddVgetI = queuingService.AddVgetI();
 			mv.addObject("AddVgetI", AddVgetI);
 			mv.addObject("updateV", updateV);
@@ -281,4 +288,97 @@ public class QueuingConteoller {
 		return mv;
 	}
 
+//4、普通队列		
+		/**
+		 * 历史队列的管理 跳向首页
+		 * 分页查询
+		 */
+		@RequestMapping(value="/queuingO/OrdinaryAck")
+		 public ModelAndView OrdinaryAck(Integer pageIndex,
+				 @ModelAttribute Ordinary ordinary,
+				 ModelAndView mv){
+			PageModel pageModel = new PageModel();
+			if(pageIndex != null){
+				pageModel.setPageIndex(pageIndex);
+			}
+			List<Ordinary> pageListO = queuingService.selectOByPage(ordinary, pageModel);
+			mv.addObject("pageListO", pageListO);
+			mv.addObject("pageModel", pageModel);
+			// 设置客户端跳转到查询请求
+			mv.setViewName("queuing/showO");
+			// 返回ModelAndView
+			return mv;
+		}
+		
+		/**
+		 * 普通队列添加 <br>
+		 * flag=1跳向添加页面
+		 * <br>
+		 * flag=2执行添加
+		 */
+		@RequestMapping(value="/queuingO/OrdinaryAdd")
+		 public ModelAndView OrdinaryAdd(String flag,
+				 @ModelAttribute Ordinary ordinary,
+				 ModelAndView mv){
+			if(flag.equals("1")){
+				// 设置跳转到添加页面
+						//卸货岛组件
+				List<Island> AddVgetI = queuingService.AddVgetI();
+				mv.addObject("AddVgetI", AddVgetI);
+				
+				mv.setViewName("/queuing/showAddO");
+			}else{
+				//执行添加
+				queuingService.addO(ordinary);
+				mv.setViewName("redirect:/queuingO/OrdinaryAck");
+			}
+			return mv;
+		}
+		
+		
+		
+		/**
+		 * 普通队列删除 <br>
+		 * 
+		 * @param id 普通队列的主键编号值
+		 * 
+		 */
+	@RequestMapping(value="/queuingO/delOAck")
+	 public ModelAndView delOAck(Integer id,
+			 ModelAndView mv){
+		
+		queuingService.delOrdinary(id);
+		mv.setViewName("redirect:/queuingO/OrdinaryAck");
+		return mv;
+	}
+		
+		
+		
+		
+	/**
+	 * 普通队列修改 <br>
+	 * flag=1跳向修改页面
+	 * <br>
+	 * flag=2执行修改
+	 */
+	@RequestMapping(value="/queuingO/updOrdinaryAck")
+	 public ModelAndView OrdinaryUpd(String flag,Integer id,
+			 @ModelAttribute Ordinary ordinary,
+			 ModelAndView mv){
+		if(flag.equals("1")){
+			// 设置跳转到修改页面
+			Ordinary updateO = queuingService.updateOSel(id);
+			
+			List<Island> AddVgetI = queuingService.AddVgetI();
+			mv.addObject("AddVgetI", AddVgetI);
+			mv.addObject("updateO", updateO);
+			mv.setViewName("/queuing/showUpdO");
+		}else{
+			//执行修改
+			queuingService.UpdO(ordinary);
+			mv.setViewName("redirect:/queuingO/OrdinaryAck");
+		}
+	// 返回ModelAndView
+		return mv;
+	}
 }

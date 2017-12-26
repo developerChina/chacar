@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html> 
 <head>
 	<title>排队叫号系统-历史记录管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -79,7 +79,7 @@
 					    <td class="font3">
 					    	卸货岛:<input type="text" name="car_code">&nbsp;&nbsp;
 					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
-					    	选择查看日期:
+					    	<!-- 选择查看日期:
 					    	<select name="rtype" id="rtype">
 								<option disabled="disabled" selected="selected">-请选择要查看日期-</option>
 								<option value="1" >一星期以内的</option>
@@ -88,7 +88,7 @@
 								<option value="3" >半年以内的</option>
 								<option value="3" >一年以内的</option>
 								<option value="3" >一年以上的</option>
-							</select>&nbsp;&nbsp;
+							</select>&nbsp;&nbsp; -->
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;导出历史记录&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
