@@ -1,5 +1,5 @@
 package org.core.service.queuing.impl;
-
+ 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -531,7 +531,7 @@ public class QueuingServiceImpl implements QueuingService {
 				addO(ordinary);
 				delOrdinary(ordinary.getId());
 			}else{
-				//2有排队 插队 条件：修改之后的岛号 位置
+				//2有排队 插队 条件：修改之后的岛号 位置 
 				int maxint = queuingDao.getQueueOMaxi(IAfter);
 				if(QAfter>maxint){
 					ordinary.setQueue_number(maxint+1);

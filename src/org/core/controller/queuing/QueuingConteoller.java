@@ -27,7 +27,7 @@ public class QueuingConteoller {
 	@Autowired
 	@Qualifier("queuingService")
 	private QueuingService queuingService;
-
+	 
 	@RequestMapping(value = "/queuingI/islandIndex")
 	public ModelAndView islandIndex(Integer no, ModelAndView mv) {
 		if(no!=null){

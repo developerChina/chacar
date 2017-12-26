@@ -18,7 +18,7 @@ public interface QueuingDao {
 //卸货岛
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="countI")
 	int countI(Map<String, Object> params);
-	
+	 
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="pageSelectI")
 	List<Island> pageSelectI(Map<String, Object> params);
 	
@@ -124,6 +124,7 @@ public interface QueuingDao {
 	
 	@Select("select max(queue_number) from "+Ordinary.tableName+" where island_no = #{no} ")
 	int getQueueOMaxi(int no);
+	
 	
 	@Select("select * from "+Ordinary.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
 	List<Ordinary> OselectListBybig(int queue_number, int island_no);
