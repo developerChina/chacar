@@ -120,9 +120,15 @@
 					  <td>${stat.count}</td>
 					  <td>${ph.island_no}</td>
 					  <td>${ph.car_code}</td>
-					  <td>${ph.comein_time}</td>
-					  <td>${ph.goout_time}</td>
-					  <td>A-B</td>
+					  <td>
+					  <f:formatDate value="${ph.comein_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  </td>
+					  <td>
+					  <f:formatDate value="${ph.goout_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  </td>
+					  <td>
+					  ${ph.reduce}
+					  </td>
 					  <td>${ph.remarks}</td>
 					  <td>${ph.empname}</td>
 				</tr>
