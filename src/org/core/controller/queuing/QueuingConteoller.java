@@ -416,5 +416,33 @@ public class QueuingConteoller {
 			return map;
 		}
 		
+		@ResponseBody
+		@RequestMapping(value="/queuingAdd/IaddValidate")
+		public Object IaddValidate(HttpServletRequest request,
+				 HttpServletResponse response){
+			
+			String no = request.getParameter("no");
+			String term = request.getParameter("no");
+			System.out.println(no+"==="+term);
+			Map<String,Object> map = new HashMap<>();
+			String flag = queuingService.IaddValidate(no,term);
+				System.out.println(flag);
+				if(!"".equals(flag)){
+					map.put("status", false);
+					map.put("message", flag);
+				}else{
+					map.put("status", true);
+					map.put("message", "验证通过");
+				}
+			return map;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		
 }

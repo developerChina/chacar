@@ -39,8 +39,8 @@
 			document.getElementById("remarksColor").style.color="green";
 			document.getElementById("remarksColor").innerText="√";
 		}else{
-			document.getElementById("remarksColor").style.color="red";
-			document.getElementById("remarksColor").innerText="*必填";
+			document.getElementById("remarksColor").style.color="green";
+			document.getElementById("remarksColor").innerText="*选填";
 		}
 	}
 	
@@ -61,16 +61,16 @@
 		$("#add").click(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
-			var remarks = $("#remarks");
+			/* var remarks = $("#remarks"); */
 			
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
-			}else if ($.trim(remarks.val()) == ""){
+			}/* else if ($.trim(remarks.val()) == ""){
 				msg = "请填写原因！";
-			}
+			} */
 			
 			if (msg != ""){
 				
@@ -148,7 +148,7 @@
 		    		<td>
 		    		<textarea name="remarks" id="remarks" style="width: 580px; height: 180px" onblur="remarksControl()"></textarea>
 		    		</td>
-		    		<td><font id="remarksColor" color="red">*必填&nbsp;</font></td>
+		    		<td><font id="remarksColor" color="green">*选填&nbsp;</font></td>
 		    		</tr>
 		    		
 		    	</table>

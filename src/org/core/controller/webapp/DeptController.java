@@ -72,6 +72,7 @@ public class DeptController {
 		/** 查询用户信息     */
 		List<Dept> depts = hrmService.findDept(dept, pageModel);
 		model.addAttribute("depts", depts);
+		model.addAttribute("model", dept);
 		model.addAttribute("pageModel", pageModel);
 		return "dept/dept";
 		

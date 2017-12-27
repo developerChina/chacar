@@ -107,6 +107,9 @@ public class EmployeeController {
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("depts", depts);
 		model.addAttribute("pageModel", pageModel);
+		model.addAttribute("model", employee);
+		model.addAttribute("job_id", job_id);
+		model.addAttribute("dept_id", dept_id);
 		// 返回员工页面
 		return "employee/employee";
 

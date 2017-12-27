@@ -55,7 +55,7 @@
 	 		           showModal: false,
 	 		            width: 250,
 	 		            title: "提示",
-	 		            message: "记录已删除",
+	 		            message: "请选择",
 	 		            timeout: 2000,
 	 		            x:"center",
 	 		            y:"top"
@@ -97,6 +97,7 @@
 	 	   
 	    })
 	    
+	    
 	</script>
 </head>
 <body>
@@ -122,8 +123,8 @@
 					  <tr>
 					    <td class="font3">
 					               上级部门：<input name="pid" id="pid" class="mini-treeselect" url="${ctx}/dept/selectAllDept" multiSelect="false"
-		    			    textField="name" valueField="id" parentField="pid" expandOnLoad="false" size="20" style="width:150px;"/>
-					    	部门名称：<input type="text" name="name">
+		    			    textField="name" valueField="id" parentField="pid" expandOnLoad="false" size="20" style="width:150px;" value="${model.pid}"/>
+					    	部门名称：<input type="text" name="name" value="${model.name}">
 					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加部门&nbsp;"/>

@@ -23,6 +23,8 @@ public class History implements java.io.Serializable {
 	private Island hpartsI;				//卸货岛实体
 	private String vagueiname;			//卸货岛名称用来模糊查询
 	
+	private String reduce;				//驶入驶出的差值
+	
 	public String getId() {
 		return id;
 	}
@@ -83,6 +85,13 @@ public class History implements java.io.Serializable {
 	public void setVagueiname(String vagueiname) {
 		this.vagueiname = vagueiname;
 	}
+	public String getReduce() {
+		return reduce;
+	}
+	public void setReduce(String reduce) {
+		this.reduce = reduce;
+	}
+	
 	
 	
 	

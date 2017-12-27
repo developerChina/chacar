@@ -71,6 +71,7 @@
 	 	   $("#import").click(function(){
 		 		 window.location = "${ctx }/job/importJobPage";
 		 	})
+		 	
 	    })
 	</script>
 </head>
@@ -96,7 +97,7 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	职位名称：<input type="text" name="name">
+					    	职位名称：<input type="text" name="name" value="${model.name}">
 					    	 <input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加职位&nbsp;"/>
