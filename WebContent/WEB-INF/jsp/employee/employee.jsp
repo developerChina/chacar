@@ -141,14 +141,14 @@
 					  <tr>
 					    <td class="font3">
 					    	职位：
-							    <select name="job_id" style="width:143px;">
+							    <select name="job_id" style="width:143px;" value="${job_id }">
 					    			<option value="0">--请选择职位--</option>
 					    			<c:forEach items="${requestScope.jobs }" var="job">
-					    				<option value="${job.id }">${job.name }</option>
+					    				<option value="${job.id }"  <c:if test="${job_id==job.id }">selected </c:if> >${job.name }</option>
 					    			</c:forEach>
 					    		</select>
-					    	姓名：<input type="text" name="name">
-					    	身份证号码：<input type="text" name="cardId" maxlength="18">
+					    	姓名：<input type="text" name="name" value="${model.name }">
+					    	身份证号码：<input type="text" name="cardId" maxlength="18" value="${model.cardId }">
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加&nbsp;"/>
@@ -159,16 +159,16 @@
 					  <tr>
 					    <td class="font3">
 					    	卡状态：
-					    		<select name="carstatus" style="width:130px;">
+					    		<select name="carstatus" style="width:130px;" value="${model.carstatus }">
 					    			<option value="-1">--请选择--</option>
-					    			<option value="1">已授权</option>
-					    			<option value="0">未授权</option>
+					    			<option value="1" <c:if test="${model.carstatus==1 }">selected </c:if> >已授权</option>
+					    			<option value="0" <c:if test="${model.carstatus==0 }">selected </c:if> >未授权</option>
 					    		</select>
-					    	手机：<input type="text" name="phone">
-					    	所属部门：&nbsp;<select  name="dept_id" style="width:166px;">
+					    	手机：<input type="text" name="phone" value="${model.phone }">
+					    	所属部门：&nbsp;<select  name="dept_id" style="width:166px;" value="${dept_id }">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
-					    				<option value="${dept.id }">${dept.name }</option>
+					    				<option value="${dept.id }"  <c:if test="${dept_id==dept.id }">selected </c:if>  >${dept.name }</option>
 					    			</c:forEach>
 							</select>&nbsp;
 					    	

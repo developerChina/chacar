@@ -56,6 +56,8 @@ public class JobController {
 		/** 查询用户信息     */
 		List<Job> jobs = hrmService.findJob(job, pageModel);
 		model.addAttribute("jobs", jobs);
+		job.setRemark("222");
+		model.addAttribute("model", job);
 		model.addAttribute("pageModel", pageModel);
 		return "job/job";
 		
