@@ -103,7 +103,7 @@
 	$(function(){
 		
     	/* 卸货岛添加提交 事件  */
-		$("#IslandAddForm").submit(function(){
+		$("#IslandAdd").click(function(){
 			
 			var no = $("#no");
 			var iname = $("#iname");
@@ -125,16 +125,27 @@
 			}else if ($.trim(small_screenip.val()) == ""){
 				msg = "请填写小屏幕的IP！";
 			}
-			
 			if (msg != ""){
 				
 				$.ligerDialog.error(msg);
 				return false;
-			}else{
-				
-				return true;
 			}
-			$("#IslandAddForm").submit();
+			$.ajax({
+				  type: 'post',
+				  url: '${ctx}/queuingAdd/IaddValidate',
+				  data: {
+					  "no":no.val(),
+					  "term":1
+				  },
+				  success: function(data){
+					if(data.status){
+						$("#IslandAddForm").submit();
+				  	}else{
+				  		alert(data.message);
+				  	}
+				  }
+				})
+				
 		});
     });
 		
@@ -205,7 +216,7 @@
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="IslandAdd" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		  
 		 </form>

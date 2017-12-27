@@ -41,7 +41,7 @@ public class QueuingServiceImpl implements QueuingService {
 	}
 	@Override
 	public void addI(Island island) {
-		//H-->添加时如果卸货岛编号已经存在 执行修改
+		/*//H-->添加时如果卸货岛编号已经存在 执行修改
 		Island AddtoUpdSelect = queuingDao.AddtoUpdSelect(island.getNo());
 		
 		if(AddtoUpdSelect!=null){
@@ -49,13 +49,12 @@ public class QueuingServiceImpl implements QueuingService {
 			queuingDao.UpdI(island);
 		}else{
 			queuingDao.addI(island);
-		}
-		
+		}*/
+		queuingDao.addI(island);
 	}
 	@Override
 	public void delIsland(Integer id) {
 		//删除卸货岛预留限制位置
-		
 		queuingDao.delIsland(id);
 	}
 	
@@ -65,17 +64,15 @@ public class QueuingServiceImpl implements QueuingService {
 	}
 	@Override
 	public void UpdI(Island island) {
-		//H-->修改时如果卸货岛编号不存在 执行添加
+		/*//H-->修改时如果卸货岛编号不存在 执行添加
 		Island AddtoUpdSelect = queuingDao.AddtoUpdSelect(island.getNo());
 		
 		if(AddtoUpdSelect!=null){
 			queuingDao.UpdI(island);
 		}else{
 			queuingDao.addI(island);
-		}
-		
-		
-		
+		}*/
+		queuingDao.UpdI(island);
 	}
 	
 	
@@ -595,12 +592,27 @@ public class QueuingServiceImpl implements QueuingService {
 					}else{
 						result="此车已经在VIP队列里，请勿重复排队";
 					}
-					
 				}else{
 					//有这个车牌
 					result="此车已经在当前队列里，请勿重复排队";
 				}
 			}
+			return result;
+		}
+		@Override
+		public String IaddValidate(String no,String term) {
+			
+			String result="";
+		if(term.equals("1")){
+			//添加时的判断
+			Island exi = queuingDao.selectOByNoToI(no);
+			if(exi==null){
+				result="";
+			}else{
+				result="编号重复 请勿重复添加";
+			}
+		}	
+			
 			return result;
 		}
 		

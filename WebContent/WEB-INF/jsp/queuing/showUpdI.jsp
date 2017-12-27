@@ -23,8 +23,6 @@
 	<script type="text/javascript">
 	
 	window.onload=function(){
-		document.getElementById("noColor").style.color="green";
-		document.getElementById("noColor").innerText="√";
 		
 		document.getElementById("rnameColor").style.color="green";
 		document.getElementById("rnameColor").innerText="√";
@@ -153,9 +151,10 @@
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">卸货岛编号：</td>
-		    			<td><input name="no" id="no" type="text" value="${updateI.no}" size="20" onblur="noControl()"/>
+		    			<td><input name="no" id="no" type="hidden" value="${updateI.no}" size="20" onblur="noControl()"/>
+		    			${updateI.no}
 		    			</td>
-		    			<td><font id="noColor" color="red">*必填&nbsp;</font></td>
+		    			<td><font id="noColor" color="red"></font></td>
 		    		</tr>
 		    		
 		    		<tr>

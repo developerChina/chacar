@@ -26,12 +26,12 @@
 		  var boxs  = $("input[type='checkbox'][id^='box_']");
 		  // 给其授权 按钮添加 点击事件
 		  $("#upEG").click(function(){
-			  var myajname =document.getElementById("myajname").value;
+			  /* var myajname =document.getElementById("myajname").value; */
 			 
 			  var msg = "";
-		 		if ($.trim(myajname) == ""){
+		 		/* if ($.trim(myajname) == ""){
 					msg = "授权名称不能为空！";
-				}
+				} */
 		 		if (msg != ""){
 					$.ligerDialog.error(msg);
 					return false;
@@ -80,6 +80,10 @@
 		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
+		    			<td class="font3 fftd">授权名称：<input type="text" name="ajname" id="myajname"  size="20"/>
+		    			</td>
+		    		</tr>
+		    		<tr>
 		    			<td class="font3 fftd">给当前员工添加权限：
 		    			<c:forEach items="${requestScope.findEmployeeByIds}" var="emps">
 		    				<input type="hidden" name="ajemps" id="empname" value="${emps.id}" size="20"/>${emps.name}&nbsp;
@@ -89,11 +93,7 @@
 		    			<input type="hidden" name="ajcard" id="cardno" value="${findEmployeeById.cardno}"> --%>
 		    			</td>
 		    		</tr>
-		    		<tr>
-		    			<td class="font3 fftd">授权名称：<input type="text" name="ajname" id="myajname"  size="20"/>
-		    			</td>
-		    		</tr>
-		    			
+		    		
 		    		<tr>
 		    			<td class="font3 fftd">请选择一个分组：<br/><br/>
 		    			<c:forEach items="${accessGroups}" var="accessGroup" varStatus="stat">

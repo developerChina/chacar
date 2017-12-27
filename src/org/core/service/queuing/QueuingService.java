@@ -68,6 +68,8 @@ public interface QueuingService {
 	void addConteollerO(Ordinary ordinary);
 //添加验证的友好提示
 	String addValidate(String car_code, String judge);
+
+	String IaddValidate(String no, String term);
 	
 
 	
