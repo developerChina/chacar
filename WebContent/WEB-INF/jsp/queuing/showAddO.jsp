@@ -59,7 +59,7 @@
 		
 		
     	/* VIP队列添加提交 事件  */
-		$("#OrdinaryAddForm").submit(function(){
+		$("#add").click(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
 			/* var remarks = $("#remarks"); */
@@ -69,7 +69,8 @@
 				msg = "请填写车牌号！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
-			}/* else if ($.trim(remarks.val()) == ""){
+			}
+			/* else if ($.trim(remarks.val()) == ""){
 				msg = "请填写备注！";
 			} */
 			
@@ -77,11 +78,24 @@
 				
 				$.ligerDialog.error(msg);
 				return false;
-			}else{
-				
-				return true;
 			}
-			$("#OrdinaryAddForm").submit();
+			$.ajax({
+				  type: 'post',
+				  url: '${ctx}/queuingAdd/addValidate',
+				  data: {
+					  "car_code":car_code.val(),
+					  "flag":2
+				  },
+				  success: function(data){
+					if(data.status){
+						$("#OrdinaryAddForm").submit();
+				  	}else{
+				  		alert(data.message);
+				  	}
+				  }
+			
+				})
+			
 		});
     });
 	
@@ -144,7 +158,7 @@
 		    	
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="add" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		  
 		 </form>

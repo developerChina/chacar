@@ -168,5 +168,8 @@ public interface QueuingDao {
 //根据车牌号查普通表 有值就删除了它
 	@Delete(" delete from "+Ordinary.tableName+" where car_code = #{car_code} ")
 	void delByCar_code(String car_code);
+//根据岛编号查卸货岛表有值就友好提示
+	@Select("select * from "+Island.tableName+" where no = #{no} ")
+	Island selectOByNoToI(String no);
 
 }

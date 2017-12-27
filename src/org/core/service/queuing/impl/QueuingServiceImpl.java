@@ -41,7 +41,7 @@ public class QueuingServiceImpl implements QueuingService {
 	}
 	@Override
 	public void addI(Island island) {
-		//H-->添加时如果卸货岛编号已经存在 执行修改
+		/*//H-->添加时如果卸货岛编号已经存在 执行修改
 		Island AddtoUpdSelect = queuingDao.AddtoUpdSelect(island.getNo());
 		
 		if(AddtoUpdSelect!=null){
@@ -49,13 +49,12 @@ public class QueuingServiceImpl implements QueuingService {
 			queuingDao.UpdI(island);
 		}else{
 			queuingDao.addI(island);
-		}
-		
+		}*/
+		queuingDao.addI(island);
 	}
 	@Override
 	public void delIsland(Integer id) {
 		//删除卸货岛预留限制位置
-		
 		queuingDao.delIsland(id);
 	}
 	
@@ -65,17 +64,15 @@ public class QueuingServiceImpl implements QueuingService {
 	}
 	@Override
 	public void UpdI(Island island) {
-		//H-->修改时如果卸货岛编号不存在 执行添加
+		/*//H-->修改时如果卸货岛编号不存在 执行添加
 		Island AddtoUpdSelect = queuingDao.AddtoUpdSelect(island.getNo());
 		
 		if(AddtoUpdSelect!=null){
 			queuingDao.UpdI(island);
 		}else{
 			queuingDao.addI(island);
-		}
-		
-		
-		
+		}*/
+		queuingDao.UpdI(island);
 	}
 	
 	
@@ -203,6 +200,12 @@ public class QueuingServiceImpl implements QueuingService {
 		for (History Hparts : pageListH) {
 			Island myVpartsI = queuingDao.getparts(Hparts.getIsland_no());
 			Hparts.setHpartsI(myVpartsI);
+			long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
+			System.out.println(Hparts.getGoout_time());
+			long hour1=between%(24*3600)/3600;
+			long minute1=between%3600/60;
+			long second1=between%60/60;
+			Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
 		}
 		return pageListH;
 	}
@@ -569,4 +572,57 @@ public class QueuingServiceImpl implements QueuingService {
 			 	queuingDao.addO(ordinary);
 			}
 		}
+//添加验证的友好提示
+		@Override
+		public String addValidate(String car_code,String judge) {
+			String result="";
+			//vip表
+			if(judge.equals("1")){
+				QueuingVip exv=queuingDao.selectVBycarno(car_code);
+				if(exv==null){
+					//没有这个车牌
+					result="";
+				}else{
+					//有这个车牌
+					result="此车已经在当前队列里，请勿重复排队";
+				}
+			}
+			//普通表
+			if(judge.equals("2")){
+				Ordinary exo=queuingDao.selectOBycarno(car_code);
+				if(exo==null){
+					QueuingVip exv=queuingDao.selectVBycarno(car_code);
+					//没有这个车牌
+					if(exv==null){
+						result="";
+					}else{
+						result="此车已经在VIP队列里，请勿重复排队";
+					}
+				}else{
+					//有这个车牌
+					result="此车已经在当前队列里，请勿重复排队";
+				}
+			}
+			return result;
+		}
+		@Override
+		public String IaddValidate(String no,String term) {
+			
+			String result="";
+		if(term.equals("1")){
+			//添加时的判断
+			Island exi = queuingDao.selectOByNoToI(no);
+			if(exi==null){
+				result="";
+			}else{
+				result="编号重复 请勿重复添加";
+			}
+		}	
+			
+			return result;
+		}
+		
+		
+		
+		
 }

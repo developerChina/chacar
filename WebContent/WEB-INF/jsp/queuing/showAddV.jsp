@@ -39,18 +39,17 @@
 			document.getElementById("remarksColor").style.color="green";
 			document.getElementById("remarksColor").innerText="√";
 		}else{
-			document.getElementById("remarksColor").style.color="red";
-			document.getElementById("remarksColor").innerText="*必填";
+			document.getElementById("remarksColor").style.color="green";
+			document.getElementById("remarksColor").innerText="*选填";
 		}
 	}
 	
 	
-
+	
 	
 	
 	
 	$(function(){
-		
 		$('#island_no').change(function(){
 			var rtypeid=$(this).children('option:selected').val()
 			if(rtypeid!=""){
@@ -58,33 +57,42 @@
 				document.getElementById("island_noColor").innerText="√";
 			}
 		});
-		
-		
-		
     	/* VIP队列添加提交 事件  */
-		$("#VipAddForm").submit(function(){
+		$("#add").click(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
-			var remarks = $("#remarks");
+			/* var remarks = $("#remarks"); */
 			
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
-			}else if ($.trim(remarks.val()) == ""){
+			}/* else if ($.trim(remarks.val()) == ""){
 				msg = "请填写原因！";
-			}
+			} */
 			
 			if (msg != ""){
 				
 				$.ligerDialog.error(msg);
 				return false;
-			}else{
-				
-				return true;
 			}
-			$("#VipAddForm").submit();
+			$.ajax({
+				  type: 'post',
+				  url: '${ctx}/queuingAdd/addValidate',
+				  data: {
+					  "car_code":car_code.val(),
+					  "flag":1
+				  },
+				  success: function(data){
+					if(data.status){
+						$("#VipAddForm").submit();
+				  	}else{
+				  		alert(data.message);
+				  	}
+				  }
+			
+				})
 		});
     });
 	
@@ -140,14 +148,14 @@
 		    		<td>
 		    		<textarea name="remarks" id="remarks" style="width: 580px; height: 180px" onblur="remarksControl()"></textarea>
 		    		</td>
-		    		<td><font id="remarksColor" color="red">*必填&nbsp;</font></td>
+		    		<td><font id="remarksColor" color="green">*选填&nbsp;</font></td>
 		    		</tr>
 		    		
 		    	</table>
-		    	
+		    
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="add" value="&nbsp;&nbsp;添加&nbsp;&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回 &nbsp;&nbsp;"></td></tr>
 		  </table>
 		  
 		 </form>
