@@ -1,0 +1,47 @@
+*{
+    margin:0;
+    padding:0;
+    -webkit-text-stroke-width: 0px;
+    -moz-text-stroke-width: 0px;
+    -o-text-stroke-width: 0px;
+    -ms-text-stroke-width: 0px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing:border-box;
+}
+a {
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+}
+input,select,textarea {
+    vertical-align:middle;
+    width: auto;
+    outline: none;
+    border:0;    
+}
+select {
+    appearance: normal;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+img {
+    vertical-align:middle;
+    border:0;
+    outline:none;
+}
+
+div, p, dl, dt, dd, ul, ol, li, h1,h2,h3,h4,h5,h6 {
+    display: block;
+    width: auto; 
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing:0px;
+    border: 0;
+}

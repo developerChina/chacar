@@ -290,7 +290,13 @@ public class QueuingConteoller {
 		// 返回ModelAndView
 		return mv;
 	}
-
+	@RequestMapping(value = "/queuingH/TodayAck")
+	public ModelAndView TodayAck(Integer pageIndex, ModelAndView mv) {
+		// 设置客户端跳转到查询请求
+		mv.setViewName("queuing/today");
+		// 返回ModelAndView
+		return mv;
+	}
 //4、普通队列		
 		/**
 		 * 历史队列的管理 跳向首页
