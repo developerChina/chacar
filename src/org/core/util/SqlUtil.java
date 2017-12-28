@@ -7,15 +7,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class SqlUtil {
 
+	private static Connection dbConn;
+	private static Statement stmt ;
+	private static ResultSet resultSet;
+	
 	public static Connection getSqlServerConnection(String dbname) {
-		Connection dbConn = null;
 		String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // 加载JDBC驱动
 		// 连接服务器和数据库ServletUser
-		String dbURL = "jdbc:sqlserver://"+getSys().getProperty("dbIp")+":14533; DatabaseName="+dbname;
+		String dbURL = "jdbc:sqlserver://" + getSys().getProperty("dbIp") + ":14533; DatabaseName=" + dbname;
 		String userName = getSys().getProperty("userName"); // 默认用户名
 		String userPwd = getSys().getProperty("userPwd"); // 密码
 		try {
@@ -26,19 +30,62 @@ public class SqlUtil {
 		}
 		return dbConn;
 	}
-	
+
 	public static Connection getMySqlConnection() {
-		Connection dbConn = null;
 		try {
 			Class.forName(getDb().getProperty("dataSource.driverClass"));
-			dbConn = DriverManager.getConnection(
-					getDb().getProperty("dataSource.jdbcUrl"), 
-					getDb().getProperty("dataSource.user"), 
-					getDb().getProperty("dataSource.password"));
+			dbConn = DriverManager.getConnection(getDb().getProperty("dataSource.jdbcUrl"),
+					getDb().getProperty("dataSource.user"), getDb().getProperty("dataSource.password"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dbConn;
+	}
+
+	public static ResultSet executeQuery(String SQL, Connection dbConn) {
+		try {
+			stmt = dbConn.createStatement();
+			resultSet = stmt.executeQuery(SQL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultSet;
+	}
+
+	public static boolean executeUpdate(String SQL, Connection dbConn) {
+		try {
+			stmt = dbConn.createStatement();
+			int result = stmt.executeUpdate(SQL);
+			if (result > 0)
+				return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static void releaseConn() {
+		if (resultSet != null) {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (dbConn != null) {
+			try {
+				dbConn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	/**
 	 * 根据路劲获取配置文件
@@ -75,6 +122,7 @@ public class SqlUtil {
 	public static String getDbValue(String key) {
 		return getDb().getProperty(key);
 	}
+
 	/**
 	 * 获取sys.properties配置文件
 	 * 
@@ -93,6 +141,7 @@ public class SqlUtil {
 	public static String getSysValue(String key) {
 		return getSys().getProperty(key);
 	}
+
 	public static void main(String[] args) {
 		Connection dbConn = null;
 		String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // 加载JDBC驱动
