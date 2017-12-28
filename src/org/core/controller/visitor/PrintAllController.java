@@ -147,13 +147,10 @@ public class PrintAllController {
 				}
 			}
 		}
-		System.out.println("1111111111:"+mj.toString());
-		System.out.println("2222222222:"+dt.toString());
-		System.out.println("3333333333:"+td.toString());
 		if(rb!=null) {
 			List<Employee> emps=hrmService.findEmployeeByCardNo_carstatus(rb.getBevisitedCardNo(),1);
 			if(emps!=null&&emps.size()>0) {
-				System.out.println("===員工卡號，不予賦權 請員工自重 ");
+				System.out.println("===员工不能访问登记=====");
 			}else {
 				VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
 			}

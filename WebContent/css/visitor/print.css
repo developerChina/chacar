@@ -242,8 +242,8 @@ tbody tr th:nth-child(5){
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	width: 100%;
-	min-width: 800px;
+	width: 10px;
+	min-width: 80px;
 	height: 62px;
 	padding-left: 1%;
 	font: bold 24px/62px "宋体";

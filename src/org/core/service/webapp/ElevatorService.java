@@ -38,4 +38,9 @@ public interface ElevatorService {
 	 * @return
 	 */
 	List<Elevator> selectBySN(String sn);
+	/**
+	 * 查询所有电梯
+	 * @return
+	 */
+	List<Elevator> selectAll();
 }

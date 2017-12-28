@@ -36,4 +36,10 @@ public interface PassagewayService {
 	 */
 	List<Passageway> selectBySN_No(String sn,int no);
 	
+	/**
+	 * 查询所有通道
+	 * @return
+	 */
+	List<Passageway> selectAll();
+	
 }

@@ -95,5 +95,10 @@ public class ElevatorServiceImpl implements ElevatorService {
 	public List<Elevator> selectBySN(String sn) {
 		return elevatorDao.selectBySN(sn);
 	}
+
+	@Override
+	public List<Elevator> selectAll() {
+		return elevatorDao.selectAll();
+	}
 	
 }

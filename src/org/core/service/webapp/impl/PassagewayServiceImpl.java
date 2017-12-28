@@ -83,5 +83,9 @@ public class PassagewayServiceImpl implements PassagewayService {
 	public List<Passageway> selectBySN_No(String sn, int no) {
 		return passagewayDao.selectBySN_No(sn,no);
 	}
+	@Override
+	public List<Passageway> selectAll() {
+		return passagewayDao.selectAll();
+	}
 	
 	}

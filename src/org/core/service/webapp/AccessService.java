@@ -33,6 +33,12 @@ public interface AccessService {
 		 * 根据SN和No
 		 */
 		List<Access> selectBySN_No(String sn,int no);
+		
+		/**
+		 * 查询所有门禁
+		 * @return
+		 */
+		List<Access> selectAll();
 
 
 }

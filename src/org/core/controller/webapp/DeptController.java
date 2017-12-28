@@ -69,6 +69,7 @@ public class DeptController {
 		model.addAttribute("pageModel", pageModel);
 		//分页参数
 		model.addAttribute("model", dept);
+		
 		String pageParam="";
 		if(dept.getPid()!=null){
 			pageParam+="&pid="+dept.getPid();
@@ -77,6 +78,8 @@ public class DeptController {
 			pageParam+="&name="+dept.getName();
 		}
 		model.addAttribute("pageParam", pageParam);
+		
+		
 		return "dept/dept";
 		
 	}
