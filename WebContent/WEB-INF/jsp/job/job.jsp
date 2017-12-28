@@ -63,6 +63,11 @@
 	 			   });
 	 		   }
 	 	   })
+	 	   $("#search").click(function(){
+	 		   var actionURL = $("#jobform").attr("action");
+	 	       $("#jobform").attr("action","${ctx}/job/selectJob");
+	 	       $("#jobform").submit();
+	 	   })
 	 	  /** 添加员工绑定点击事件 */
 	 	   $("#add").click(function(){
 	 		   window.location = "${ctx }/job/addJob?flag=1";
@@ -98,7 +103,7 @@
 					  <tr>
 					    <td class="font3">
 					    	职位名称：<input type="text" name="name" value="${model.name}">
-					    	 <input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加职位&nbsp;"/>
 					    	<input id="import" type="button" value="&nbsp; 导入 &nbsp;"/>
@@ -142,7 +147,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/job/selectJob?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/job/selectJob?pageIndex={0}${pageParam}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

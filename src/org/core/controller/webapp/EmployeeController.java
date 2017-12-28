@@ -86,8 +86,8 @@ public class EmployeeController {
 	 *            model
 	 */
 	@RequestMapping(value = "/employee/selectEmployee")
-	public String selectEmployee(Integer pageIndex, Integer job_id, Integer dept_id, @ModelAttribute Employee employee,
-			Model model) {
+	public String selectEmployee(Integer pageIndex, Integer job_id, Integer dept_id, 
+			@ModelAttribute Employee employee,Model model) {
 		// 模糊查询时判断是否有关联对象传递，如果有，创建并封装关联对象
 		this.genericAssociation(job_id, dept_id, employee);
 		// 创建分页对象
@@ -107,9 +107,30 @@ public class EmployeeController {
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("depts", depts);
 		model.addAttribute("pageModel", pageModel);
+		//分页参数
 		model.addAttribute("model", employee);
 		model.addAttribute("job_id", job_id);
 		model.addAttribute("dept_id", dept_id);
+		String pageParam="";
+		if(job_id!=null&&job_id>0){
+			pageParam+="&job_id="+job_id;
+		}
+		if(StringUtils.isNotBlank(employee.getName())){
+			pageParam+="&name="+employee.getName();
+		}
+		if(StringUtils.isNotBlank(employee.getCardId())){
+			pageParam+="&cardId="+employee.getCardId();
+		}
+		if(employee.getCarstatus()!=null&&employee.getCarstatus()>0){
+			pageParam+="&carstatus="+employee.getCarstatus();
+		}
+		if(StringUtils.isNotBlank(employee.getPhone())){
+			pageParam+="&phone="+employee.getPhone();
+		}
+		if(dept_id!=null&&dept_id>0){
+			pageParam+="&dept_id="+dept_id;
+		}
+		model.addAttribute("pageParam", pageParam);
 		// 返回员工页面
 		return "employee/employee";
 

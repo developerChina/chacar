@@ -94,6 +94,7 @@
 	 	       $("#deptform").attr("action","${ctx}/dept/exportExcel");
 	 	       $("#deptform").submit();
 	 	   })
+	 	  
 	 	   
 	    })
 	    
@@ -179,7 +180,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/dept/selectDept?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/dept/selectDept?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>
