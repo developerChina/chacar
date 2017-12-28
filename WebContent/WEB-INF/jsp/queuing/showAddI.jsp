@@ -141,7 +141,8 @@
 					if(data.status){
 						$("#IslandAddForm").submit();
 				  	}else{
-				  		alert(data.message);
+				  		//alert(data.message);
+				  		$.ligerDialog.error(data.message);
 				  	}
 				  }
 				})

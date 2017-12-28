@@ -44,14 +44,14 @@
 		 		   /** 获取到用户选中的复选框  */
 		 		   var checkedBoxs = boxs.filter(":checked");
 		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error(" 请选择一个需要删除的授权！");
+		 			   $.ligerDialog.error(" 请选择一个需要解除的授权！");
 		 		   }else{
 		 			   /** 得到用户选中的所有的需要删除的ids */
 		 			   var ids = checkedBoxs.map(function(){
 		 				   return this.value;
 		 			   })
 		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除通道授权",function(r){
+		 			   $.ligerDialog.confirm("确认要解除吗?","解除通道授权",function(r){
 		 				   if(r){
 		 					    //alert("删除："+ids.get());
 		 					    $("#remove").submit();
@@ -94,11 +94,11 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	通道授权名:<input type="text" name="pjname">&nbsp;
+					    	<!-- 通道授权名:<input type="text" name="pjname">&nbsp; -->
 					    	通道名称:<input type="text" name="pganame">&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
-					    	<input id="delpj" type="button" value="&nbsp;&nbsp;删除通道授权&nbsp;&nbsp;"/>&nbsp;
-					    	<input id="addpj" type="button" value="&nbsp;&nbsp;添加通道授权&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="delpj" type="button" value="&nbsp;&nbsp;解除通道授权&nbsp;&nbsp;"/>&nbsp;
+					    	<input id="addpj" type="button" value="&nbsp;&nbsp;绑定通道授权&nbsp;&nbsp;"/>&nbsp;
 					    </td>
 					  </tr>
 					</table>
@@ -116,7 +116,7 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>通道授权</td>
+			 <!--  <td>通道授权</td> -->
 			  <td>通道组</td>
 			  <td>通道</td>
 			  <td>员工</td>
@@ -127,7 +127,7 @@
 				<%-- <input type="hidden" name="groups"  value="${passageway.pjgroupid}"> --%>
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" name="ids" id="box_${stat.index}" value="${pp.pjempid};${pp.passagewayjid}"></td>
-					 <td>${pp.pjname}</td>
+					<%--  <td>${pp.pjname}</td> --%>
 					 <td>
 					 	${pp.pgroups.pgname}
 					 </td>

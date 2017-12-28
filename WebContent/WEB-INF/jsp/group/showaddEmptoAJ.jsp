@@ -39,7 +39,7 @@
 					/** 获取到用户选中的复选框  */
 		      		   var checkedBoxs = boxs.filter(":checked");
 		      		   if(checkedBoxs.length < 1){
-		      			   $.ligerDialog.error(" 请选择一个门禁或门禁组！");
+		      			   $.ligerDialog.error(" 请选择一个门禁组！");
 		      		   }else{
 		      			   var ids = checkedBoxs.map(function(){
 		      				   return this.value;
@@ -84,7 +84,7 @@
 		    			</td>
 		    		</tr>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：
+		    			<td class="font3 fftd">给当前员工添加权限： 
 		    			<c:forEach items="${requestScope.findEmployeeByIds}" var="emps">
 		    				<input type="hidden" name="ajemps" id="empname" value="${emps.id}" size="20"/>${emps.name}&nbsp;
 		    			</c:forEach>

@@ -46,4 +46,7 @@ public interface PassagewayDao {
 		@Select("select * from "+PASSAGEWAYTABLE+" where ControllerSN = #{sn} and pno=#{no}")
 		List<Passageway> selectBySN_No(@Param("sn")String sn, @Param("no")int no);
 		
+		@Select("select * from "+PASSAGEWAYTABLE)
+		List<Passageway> selectAll();
+		
 }

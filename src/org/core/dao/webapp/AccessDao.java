@@ -49,4 +49,7 @@ public interface AccessDao {
 	@Select("select * from "+ACCESSTABLE+" where csn = #{sn} and acno=#{no}")
 	List<Access> selectBySN_No(@Param("sn")String sn, @Param("no")int no);
 	
+	@Select("select * from "+ACCESSTABLE)
+	List<Access> selectAll();
+	
 }

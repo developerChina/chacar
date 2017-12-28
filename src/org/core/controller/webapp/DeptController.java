@@ -59,21 +59,27 @@ public class DeptController {
 	@RequestMapping(value="/dept/selectDept")
 	 public String selectDept(Model model,Integer pageIndex,
 			 @ModelAttribute Dept dept){
-		System.out.println("selectDept -->>");
-		System.out.println("pageIndex = " + pageIndex);
-		System.out.println("dept = " + dept);
 		PageModel pageModel = new PageModel();
-		System.out.println("getPageIndex = " + pageModel.getPageIndex());
-		System.out.println("getPageSize = " + pageModel.getPageSize());
-		System.out.println("getRecordCount = " + pageModel.getRecordCount());
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);
 		}
 		/** 查询用户信息     */
 		List<Dept> depts = hrmService.findDept(dept, pageModel);
 		model.addAttribute("depts", depts);
-		model.addAttribute("model", dept);
 		model.addAttribute("pageModel", pageModel);
+		//分页参数
+		model.addAttribute("model", dept);
+		
+		String pageParam="";
+		if(dept.getPid()!=null){
+			pageParam+="&pid="+dept.getPid();
+		}
+		if(dept.getName()!=null){
+			pageParam+="&name="+dept.getName();
+		}
+		model.addAttribute("pageParam", pageParam);
+		
+		
 		return "dept/dept";
 		
 	}

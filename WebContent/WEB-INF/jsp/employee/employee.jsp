@@ -63,6 +63,11 @@
 	    			   });
 	    		   }
 	    	   })
+	    	   $("#search").click(function(){
+		 		   var actionURL = $("#empform").attr("action");
+		 	       $("#empform").attr("action","${ctx}/employee/selectEmployee");
+		 	       $("#empform").submit();
+		 	   })
 	    	   
 		       /** 添加员工绑定点击事件 */
 		 	   $("#add").click(function(){
@@ -149,7 +154,7 @@
 					    		</select>
 					    	姓名：<input type="text" name="name" value="${model.name }">
 					    	身份证号码：<input type="text" name="cardId" maxlength="18" value="${model.cardId }">
-					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加&nbsp;"/>
 					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
@@ -243,7 +248,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}${pageParam}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

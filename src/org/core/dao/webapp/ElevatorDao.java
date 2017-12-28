@@ -43,5 +43,8 @@ public interface ElevatorDao {
 
 	@Select("select * from "+ELEVATORTABLE+" where controllerSN = #{sn}")
 	List<Elevator> selectBySN(String sn);
+
+	@Select("select * from "+ELEVATORTABLE)
+	List<Elevator> selectAll();
 	
 }

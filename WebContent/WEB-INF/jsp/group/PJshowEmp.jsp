@@ -92,14 +92,21 @@
 					    	所属部门：<select  name="dept_id" style="width:100px;">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
-					    				<option value="${dept.id }">${dept.name }</option>
+					    				<option value="${dept.id }" <c:if test="${dept_id==dept.id }">selected </c:if> >${dept.name }</option>
 					    			</c:forEach>
 							</select>&nbsp;
-				
+							职位：
+							<select name="job_id" style="width:143px;">
+					    			<option value="0">--请选择职位--</option>
+					    			<c:forEach items="${requestScope.jobs}" var="job">
+					    				<option value="${job.id}" <c:if test="${job_id==job.id }">selected </c:if> >${job.name }</option>
+					    			</c:forEach>
+					    	</select>
+							
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
-					    	<input type="button" id="bdsq" value="&nbsp;&nbsp;绑定授权（通道）&nbsp;&nbsp;"/>
 					    	<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;">
-					    </td>					    	
+					    	<input type="button" id="bdsq" value="&nbsp;&nbsp;绑定授权（通道）&nbsp;&nbsp;"/>
+					    	</td>					    	
 					   
 					  </tr>
 					 
@@ -144,7 +151,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/PassagewayJurisdiction/selectEmploee?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/PassagewayJurisdiction/selectEmploee?dept_id=${dept_id}&job_id=${job_id}&pageIndex={0}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

@@ -9,13 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.VisitorInfo;
+import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Blacklist;
+import org.core.domain.webapp.Elevator;
+import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.Reson;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
 import org.core.service.visitor.VisitorInfoService;
 import org.core.service.visitor.VisitorService;
+import org.core.service.webapp.AccessService;
+import org.core.service.webapp.ElevatorService;
+import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
 import org.core.util.GenId;
 import org.core.util.ImageUtils;
@@ -53,6 +59,16 @@ public class SingleVisitorController {
 	@Autowired
 	@Qualifier("visitorService")
 	private VisitorService visitorService;//黑名单
+	
+	@Autowired
+	@Qualifier("passagewayService")
+	private PassagewayService passagewayService;// 通道
+	@Autowired
+	@Qualifier("elevatorService")
+	private ElevatorService elevatorService;//电梯
+	@Autowired
+	@Qualifier("accessService")
+	private AccessService accessService;//门禁
 	
 	/**
 	 * 访问事由
@@ -143,7 +159,40 @@ public class SingleVisitorController {
 		return map;
 	}
 	
-	
+	/**
+	 * 根据身份证号码签离
+	 * @param cardid
+	 * @return
+	 */
+	@RequestMapping(value="/visitor/visitorSignOut")
+	@ResponseBody
+	public Object visitorSignOut(HttpServletRequest request,HttpServletResponse response,String cardid){
+		boolean bool=true;
+		String message="签离成功";
+		try {
+			//查询正在访问
+			List<RecordVisitors> recordVisitors=recordVisitorsService.selectRecordInfoBycardID_status(cardid, 3);
+			for (RecordVisitors entity : recordVisitors) {
+				entity.setVisitStatus(4);
+				recordVisitorsService.update(entity);
+			}
+			//删除硬件权限
+			List<Passageway> pass=passagewayService.selectAll();
+			List<Elevator> elt=elevatorService.selectAll();
+			List<Access> acc=accessService.selectAll();
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			bool=false;
+			message=e.getMessage();
+		}
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("status", bool);
+		map.put("message", message);
+		return map;
+	}
 	/**
 	 * 根据身份证号码查找对应访客信息
 	 * @param cardid

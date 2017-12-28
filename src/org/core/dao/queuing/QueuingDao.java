@@ -171,5 +171,8 @@ public interface QueuingDao {
 //根据岛编号查卸货岛表有值就友好提示
 	@Select("select * from "+Island.tableName+" where no = #{no} ")
 	Island selectOByNoToI(String no);
+	
+	@Select("select id from "+Ordinary.tableName+" where car_code = #{car_code} ")
+	int delSort(String car_code);
 
 }

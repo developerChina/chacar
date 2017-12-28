@@ -48,7 +48,7 @@
 	font: 26px/80px "宋体";
 	background: url(images/btn-bg.png) no-repeat;
 	background-size: 100% 100%;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 .right .btn a{
 	display: block;
@@ -67,12 +67,15 @@
 .right .btn:nth-child(3) a{
 	background: url(images/print.png) no-repeat 10% center;
 }
+.right .btn:nth-child(4) a{
+	background: url(images/signOut.png) no-repeat 10% center;
+}
 .foot{
 	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	min-width: 800px;
+	min-width: 80px;
 	height: 62px;
 	padding-left: 1%;
 	font: 20px/62px "宋体";

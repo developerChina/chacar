@@ -86,23 +86,25 @@
 			  	<form name="empform" method="post" id="empform" action="${ctx}/AccessJurisdiction/selectEmploee">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
-					  <td>
+					  <td class="font3">
 					    	所属部门：<select  name="dept_id" style="width:100px;">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
-					    				<option value="${dept.id }">${dept.name }</option>
+					    				<option value="${dept.id}" <c:if test="${dept_id==dept.id }">selected </c:if> >${dept.name }</option>
 					    			</c:forEach>
 							</select>&nbsp;&nbsp;
 					    	职位：
 							    <select name="job_id" style="width:143px;">
 					    			<option value="0">--请选择职位--</option>
 					    			<c:forEach items="${requestScope.jobs }" var="job">
-					    				<option value="${job.id }">${job.name }</option>
+					    				<option value="${job.id }" <c:if test="${job_id==job.id }">selected </c:if> >${job.name }</option>
 					    			</c:forEach>
 					    		</select>
+					    	姓名：<input type="text" name="name" value="${model.name}">	
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
+					    	<input type="button" onclick="javascript:window.history.back(-1);" value="&nbsp;&nbsp;返回&nbsp;&nbsp;">
 					    	<input type="button" id="bdsq" value="&nbsp;&nbsp;绑定授权（门禁）&nbsp;&nbsp;"/>
-					    </td>
+					    	</td>
 					  </tr>
 					</table>
 				</form>
@@ -120,8 +122,9 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
 			  <td>员工卡号</td>
-			  <td>职位</td>
 			  <td>部门</td>
+			  <td>职位</td>
+			 
 			  <!-- <td align="center">操作</td> -->
 			</tr>
 			<c:forEach items="${requestScope.employees}" var="employee" varStatus="stat">
@@ -129,8 +132,8 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 					 <td>${employee.name }</td>
 					  <td>${employee.cardno }</td>
-					  <td>${employee.job.name  }</td>
 					  <td>${employee.dept.name }</td>
+					  <td>${employee.job.name }</td>
 					  <%-- <td align="center" width="40px;">
 					      <a href="${ctx}/AccessJurisdiction/shouAJG?flag=1&id=${employee.id}">
 							<img title="给其授权门禁组" src="${ctx}/images/update.gif"/>
@@ -148,7 +151,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/AccessJurisdiction/selectEmploee?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/AccessJurisdiction/selectEmploee?dept_id=${dept_id}&job_id=${job_id}&pageIndex={0}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>
