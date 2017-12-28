@@ -68,7 +68,7 @@
 	background: url(images/print.png) no-repeat 10% center;
 }
 .right .btn:nth-child(4) a{
-	background: url(images/print.png) no-repeat 10% center;
+	background: url(images/signOut.png) no-repeat 10% center;
 }
 .foot{
 	position: absolute;
