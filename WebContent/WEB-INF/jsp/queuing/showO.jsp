@@ -109,7 +109,7 @@
 					  <td>${po.queue_number}</td>
 					  <td>${po.remarks}</td>
  					  <td align="center">
- 					  <a href="javascript:void(0)" onclick="deleteVip('${po.id}')">撤销</a>/<a href="javascript:void(0)" onclick="updateIsland('${po.id}')">修改</a>
+ 					  <a href="javascript:void(0)" onclick="deleteVip('${po.id}')">撤销</a><%-- /<a href="javascript:void(0)" onclick="updateIsland('${po.id}')">修改</a> --%>
 					  </td>
 				</tr>
 			</c:forEach>
