@@ -1,0 +1,639 @@
+.ssq_area{
+    clear: both;
+    width: 800px;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+}
+.select_ball_area{
+    clear: both;
+    width: 9%;
+}
+.redball_area{
+    float: left;
+    width:90%;
+}
+.redball_rule{
+    clear: both;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.redball_rule strong{
+    font-size: 15px;
+    color: red;
+    margin-right: 5px;
+}
+.redball_selected_area{
+    clear: both;
+    width: 90%;
+    overflow: hidden;
+    padding-top: 20px;
+    padding-left: 40px;
+    position: relative;
+}
+.redball_selected_area dt{
+    float: left;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+}
+.redball_selected_area dt p{
+    clear: both;
+    width: 30px;
+    height: 20px;
+    line-height: 18px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    background-color: #ccc;
+    margin: 5px 0px;
+    text-align: center;
+}
+.redball_selected_area dt span{
+    clear: both;
+    width: 30px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
+.redball_selected_area dd{
+    float: left;
+    width: 40px;
+    height: 50px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.redball_selected_area dd p{
+    clear: both;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    overflow: hidden;
+    border: 1px solid #333;
+    border-radius: 20px;
+    background-color:#eee;
+    font-size: 16px;
+    color:#333;
+    font-weight: bold;
+    margin: 0 auto;
+    text-align: center;
+    cursor: pointer;
+}
+.redball_selected_area dd p.active1{
+    background-color: red;
+    color:#fff;
+}
+.redball_selected_area dd span{
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    font-size: 14px;
+    color:#ccc;
+    text-align: center;
+}
+
+.blueball_area{
+    float: left;
+    width:240px;
+    margin-left: 20px;
+}
+.blueball_rule{
+    clear: both;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.blueball_rule strong{
+    font-size: 15px;
+    color: blue;
+    margin-right: 5px;
+}
+.blueball_area ul{
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+}
+.blueball_area ul li{
+    float: left;
+    width: 40px;
+    height: 50px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.blueball_area ul li p{
+    display: block;
+    clear: both;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    overflow: hidden;
+    border: 1px solid #333;
+    border-radius: 20px;
+    background-color:#eee;
+    font-size: 16px;
+    color:#333;
+    font-weight: bold;
+    margin: 0 auto;
+    text-align: center;
+    cursor: pointer;
+}
+.blueball_area ul li p.active2{
+    background-color: blue;
+    color:#fff;
+}
+.blueball_area ul li span{
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    font-size: 14px;
+    color:#ccc;
+    text-align: center;
+}
+.blueball_area ul li.selectall_box{
+    float: left;
+    width: 40px;
+    height: 25px;
+    line-height: 23px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    font-size: 14px;
+    color: #000;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.blueball_area ul li.selectall_box:hover{
+    color: red;
+}
+.machine_redselected_area{
+    clear: both;
+    width: 100%;
+}
+.machine_redselected_area dl{
+    float: left;
+    width: 45px;
+    position: relative;
+}
+.machine_redselected_area dl dt{
+    clear: both;
+    width: 100%;
+    height: 25px;
+    border: 1px solid #000;
+    padding: 2px;
+}
+.machine_redselected_area dl dt em{
+    float: left;
+    width: 55%;
+    height: 21px;
+    line-height: 21px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    font-style:normal;
+}
+.machine_redselected_area dl dt span{
+    float: left;
+    width:45%;
+    height: 21px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    cursor: pointer;
+}
+.machine_redselected_area dl dd{
+    display:none;
+    clear: both;
+    width: 100%;
+    border: 1px solid #000;
+    background-color: #fff;
+    position: absolute;
+    z-index: 10;
+    top: 25px;
+    left: 0px;
+}
+.machine_redselected_area dl dd p{
+    clear: both;
+    width: 100%;
+    height: 18px;
+    line-height:18px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    text-indent: 8px;
+}
+.machine_redselected_area dl dd p:hover{
+    background-color:#09c;
+}
+.machine_selectedred{
+    float: left;
+    width: 80px;
+    height: 25px;
+    line-height: 23px;
+    overflow: hidden;
+    border: 1px solid #000;
+    background-color: #eee;
+    margin-left: 20px;
+    font-size: 14px;
+    color: red;
+    padding-right: 3px;
+    cursor: pointer;
+}
+.machine_selectedred span{
+    float: left;
+    width: 18px;
+    height: 23px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 18px;
+    color: red;
+    text-align: center;
+}
+.machine_redselected_area strong{
+    float: left;
+    width: 80px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 14px;
+    color: blue;
+    font-weight: 400;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.machine_redselected_area strong:hover{
+    color: red;
+}
+.machine_blueselected_area{
+    clear: both;
+    width: 100%;
+}
+.machine_blueselected_area dl{
+    float: left;
+    width: 45px;
+    position: relative;
+}
+.machine_blueselected_area dl dt{
+    clear: both;
+    width: 100%;
+    height: 25px;
+    border: 1px solid #000;
+    padding: 2px;
+}
+.machine_blueselected_area dl dt em{
+    float: left;
+    width: 55%;
+    height: 21px;
+    line-height: 21px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    font-style:normal;
+}
+.machine_blueselected_area dl dt span{
+    float: left;
+    width:45%;
+    height: 21px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    cursor: pointer;
+}
+.machine_blueselected_area dl dd{
+    display: none;
+    clear: both;
+    width: 100%;
+    border: 1px solid #000;
+    background-color: #fff;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    top: 25px;
+    left: 0px;
+}
+.machine_blueselected_area dl dd p{
+    clear: both;
+    width: 100%;
+    height: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    background-color: #fff;
+    font-size: 14px;
+    color: #000;
+    text-indent: 8px;
+}
+.machine_blueselected_area dl dd p:hover{
+    background-color:#09c;
+}
+.machine_selectedblue{
+    float: left;
+    width: 80px;
+    height: 25px;
+    line-height: 23px;
+    overflow: hidden;
+    border: 1px solid #000;
+    background-color: #eee;
+    margin-left: 20px;
+    font-size: 14px;
+    color: blue;
+    padding-right: 3px;
+    cursor: pointer;
+}
+.machine_blueselected_area:hover{
+    color: red;
+}
+.machine_selectedblue span{
+    float: left;
+    width: 18px;
+    height: 23px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 18px;
+    color: blue;
+    text-align: center;
+}
+.machine_blueselected_area strong{
+    float: left;
+    width: 80px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 14px;
+    color: blue;
+    font-weight: 400;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.machine_blueselected_area strong:hover{
+    color: red;
+}
+.confirm_selected_area{
+    display: block;
+    clear: both;
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+.confirm_ballnums{
+    clear: both;
+    width: 250px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000;
+    margin: 0 auto;
+    text-align: center;
+}
+.confirm_area{
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+}
+.confirm_box{
+    display: block;
+    float: left;
+    width: 120px;
+    height: 40px;
+    line-height: 38px;
+    overflow: hidden;
+    font-size: 16px;
+    color: #ff8140;
+    border: 1px solid #F48C37;
+    background-color: #fff;
+    text-align: center;
+    margin-left: 40%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.confirm_box:hover{
+    background-color:#ffecec;
+}
+.confirm_box span{
+    width: 18px;
+    height: 38px;
+    line-height: 38px;
+    overflow: hidden;
+    font-size: 16px;
+    color: #F48C37;
+    margin: 0px 2px;
+}
+.empty_box,.confirm_area a{
+    float: left;
+    width: 60px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    font-size: 14px;
+    color:blue;
+    text-align: center;
+    margin: 0 10px;
+    margin-top:15px; 
+    cursor: pointer;
+}
+.empty_box:hover,.confirm_area a:hover{
+    color: red;
+}
+.confirm_num_box{
+    clear: both;
+    width: 600px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    margin: 0 auto;
+}
+.left_box{
+    float: left;
+    width: 450px;
+    overflow: hidden;
+}
+.left_box ul{
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 100px;
+    overflow:auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.left_box ul li{
+    display: block;
+    clear: both;
+    width: 100%;
+    min-height: 25px;
+    overflow: hidden;
+    padding-right: 80px;
+    position: relative;
+    cursor: pointer;
+}
+.left_box ul li.revise_area{
+    background-color:#ff8140;
+}
+/*.left_box ul li:hover{
+    background-color: #ffecec;
+}*/
+.left_box ul li span{
+    display: block;
+    float: left;
+    min-height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    color: #000;
+}
+.left_box ul li span b{
+    display: block;
+    float: left;  
+}
+.left_box ul li span b.red_balls{
+    display: block;
+    float: left;
+    min-height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    color: red;
+}
+.left_box ul li span b.blue_balls{
+    display: block;
+    float: left;
+    min-height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    color: blue;
+}
+.left_box ul li strong,.left_box ul li em{
+    display: block;
+    float: right;
+    width: 40px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    text-align: center;
+    font-weight: 400;
+    font-style:normal;
+    cursor: pointer;
+}
+.left_box ul li em{
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    right: 0px;
+}
+.left_box ul li strong{
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    right:40px;
+}
+.left_box ul li strong:hover,.left_box ul li em:hover{
+    color: red;   
+}
+.left_box p{
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    border-right: 1px solid #ccc;
+}
+.left_box p a{
+    display: block;
+    float: right;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: center;
+    margin-left: 10px;
+}
+.right_box{
+    float: left;
+    width: 148px;
+    overflow: hidden;
+    background-color: #fff;
+    padding:5px 10px;
+}
+.right_box p{
+    display: block;
+    clear: both;
+    width: 100px;
+    height: 25px;
+    line-height: 23px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    font-size: 14px;
+    color: #000;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.right_box p:hover{
+    color: red;
+}
+.right_box span{
+    display: block;
+    clear: both;
+    width: 100px;
+    height: 25px;
+    line-height: 23px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    font-size: 14px;
+    color: #000;
+    margin: 0 auto;
+    text-align: center;
+    cursor: pointer;
+}
+.right_box span:hover{
+    color: red;
+}
+.endconfirm_box{
+    display: block;
+    clear: both;
+    width: 600px;
+    height: 35px;
+    margin: 0 auto;
+    padding-top: 10px; 
+}
+.endconfirm_box input{
+    width: 80px;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    border: 1px solid #000;
+    margin: 2px 5px;
+    padding: 2px;
+}
+/*空开div*/
+.kong_area{
+    clear: both;
+    width: 100%;
+    height: 20px;
+}

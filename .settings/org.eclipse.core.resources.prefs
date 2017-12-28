@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/jsp/group/showaccessgroup.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/queuing/showAddI.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/visitor/all-print.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/visitor/single-visited.jsp=UTF-8
 encoding//WebContent/css/visitor/common.css=UTF-8
