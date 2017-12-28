@@ -22,6 +22,9 @@
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
 	<script type="text/javascript">
 	
+	
+	
+	
 	window.onload=function(){
 		
 		document.getElementById("rnameColor").style.color="green";
@@ -36,6 +39,25 @@
 		document.getElementById("small_screenipColor").style.color="green";
 		document.getElementById("small_screenipColor").innerText="√";
 	}
+	
+	function myQrCode(){ 
+		  $("#qrcode").html("");
+		  var uri="http://192.168.1.128:8080/chacar/queuingI/islandIndex?no="+$("#no").val();
+		  var myqrcode = $("#qrcode").qrcode(
+				  {
+				   render: "canvas",
+				   width:  $("#mywidth").val(),
+				   height:  $("#myheight").val(),
+				   text: uri
+				  });
+		 /*  var canvas=myqrcode.find('canvas').get(0);
+		  $('#imgOne').attr('src',canvas.toDataURL('image/jpg')) */
+	  }
+	
+	
+	
+	
+	
 	
 	/* 卸货岛编号光标移开事件 */
 	function noControl(){
@@ -155,6 +177,8 @@
 		    			${updateI.no}
 		    			</td>
 		    			<td><font id="noColor" color="red"></font></td>
+
+		    			
 		    		</tr>
 		    		
 		    		<tr>

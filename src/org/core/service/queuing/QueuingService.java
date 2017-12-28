@@ -70,6 +70,10 @@ public interface QueuingService {
 	String addValidate(String car_code, String judge);
 
 	String IaddValidate(String no, String term);
+
+	String position(int island_no, int queue_number);
+
+	String plain(int island_no, int queue_number);
 	
 
 	

@@ -607,7 +607,6 @@ public class QueuingServiceImpl implements QueuingService {
 		}
 		@Override
 		public String IaddValidate(String no,String term) {
-			
 			String result="";
 		if(term.equals("1")){
 			//添加时的判断
@@ -618,8 +617,52 @@ public class QueuingServiceImpl implements QueuingService {
 				result="编号重复 请勿重复添加";
 			}
 		}	
-			
 			return result;
+		}
+		
+		@Override
+		public String position(int island_no, int queue_number) {
+
+			String resultQueue="";
+			String maxstring = queuingDao.getQueueMaxsByno(island_no);
+			if(maxstring==null){
+				if(queue_number>1){
+					resultQueue="此岛无车辆排序，系统默认排序1 请确认";
+				}else{
+					resultQueue="";
+				}
+			}else{
+				int maxint = queuingDao.getQueueMaxiByno(island_no);
+				if(queue_number>(maxint+1)){
+					resultQueue="您选的位置超出最大值，系统默认排序当前最大 请确认";
+				}else{
+					resultQueue="";
+				}
+			}
+			
+			return resultQueue;
+		}
+		@Override
+		public String plain(int island_no, int queue_number) {
+			
+			String resultQueue="";
+			String maxstring = queuingDao.getQueueOMaxs(island_no);
+			if(maxstring==null){
+				if(queue_number>1){
+					resultQueue="此岛无车辆排序，系统默认排序1 请确认";
+				}else{
+					resultQueue="";
+				}
+			}else{
+				int maxint = queuingDao.getQueueOMaxi(island_no);
+				if(queue_number>(maxint+1)){
+					resultQueue="您选的位置超出最大值,系统默认排序为当前最大  请确认";
+				}else{
+					resultQueue="";
+				}
+			}
+			
+			return resultQueue;
 		}
 		
 		

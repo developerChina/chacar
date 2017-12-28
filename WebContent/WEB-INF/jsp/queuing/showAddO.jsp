@@ -44,6 +44,16 @@
 		}
 	}
 	
+	function queue_numberControl(){
+		var queue_number = $("#queue_number").val();
+		if ($.trim(queue_number)!=""){
+			document.getElementById("queue_numberColor").style.color="green";
+			document.getElementById("queue_numberColor").innerText="√";
+		}else{
+			document.getElementById("queue_numberColor").style.color="green";
+			document.getElementById("queue_numberColor").innerText="*选填";
+		}
+	}
 	
 	
 	$(function(){
@@ -63,10 +73,12 @@
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
 			/* var remarks = $("#remarks"); */
-			
+			var queue_number = $("#queue_number");
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
+			}else if ($.trim(queue_number.val()) == ""){
+				msg = "请填写排序位置！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
 			}
@@ -84,16 +96,25 @@
 				  url: '${ctx}/queuingAdd/addValidate',
 				  data: {
 					  "car_code":car_code.val(),
-					  "flag":2
+					  "flag":2,
+					  "island_no":island_no.val(),
+					  "queue_number":queue_number.val()
 				  },
 				  success: function(data){
 					if(data.status){
-						$("#OrdinaryAddForm").submit();
-				  	}else{
-				  		alert(data.message);
-				  	}
+					  if(data.queue){
+							$.ligerDialog.confirm(data.queuemessage,"系统提示！",function(r){
+								   if(r){
+									   $("#OrdinaryAddForm").submit();
+								   }
+							   });
+						}else{
+							$("#OrdinaryAddForm").submit();
+						}
+			  		}else{
+			  			$.ligerDialog.error(data.message)
+			  		}
 				  }
-			
 				})
 			
 		});
@@ -126,11 +147,11 @@
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    		
-		    		<%-- <tr>
+		    		<tr>
 		    		<td class="font3 fftd">排号位置：</td>
-		    		<td><input name="queue_number" id="queue_number" value="${maxnum}" type="number"  size="20" onblur="queue_numberControl()"></td>
+		    		<td><input name="queue_number" id="queue_number" style="width: 580px; height: 30px" type="number"  size="20" onblur="queue_numberControl()"></td>
 		    		<td><font id="queue_numberColor" color="red">*必填&nbsp;</font></td>
-		    		</tr> --%>
+		    		</tr>
 		    		
 		    		<tr>
 		    			<td class="font3 fftd">选择卸货岛：</td>
