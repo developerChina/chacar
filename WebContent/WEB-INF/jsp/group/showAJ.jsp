@@ -44,14 +44,14 @@
 		 		   /** 获取到用户选中的复选框  */
 		 		   var checkedBoxs = boxs.filter(":checked");
 		 		   if(checkedBoxs.length < 1){
-		 			   $.ligerDialog.error(" 请选择一个需要删除的授权！");
+		 			   $.ligerDialog.error(" 请选择一个需要解除的授权！");
 		 		   }else{
 		 			   /** 得到用户选中的所有的需要删除的ids */
 		 			   var ids = checkedBoxs.map(function(){
 		 				   return this.value;
 		 			   })
 		 			   
-		 			   $.ligerDialog.confirm("确认要删除吗?","删除授权",function(r){
+		 			   $.ligerDialog.confirm("确认要解除吗?","解除授权",function(r){
 		 				   if(r){
 		 					    //alert("删除："+ids.get());
 		 					   // 发送请求
@@ -92,11 +92,11 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	门禁授权名:<input type="text" name="ajname">&nbsp;
+					    	<!-- 门禁授权名:<input type="text" name="ajname">&nbsp; -->
 					    	门禁名:<input type="text" name="pganame">&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
-					    	<input id="delaj" type="button" value="&nbsp;&nbsp;删除门禁授权&nbsp;&nbsp;"/>
-					    	<input id="addaj" type="button" value="&nbsp;&nbsp;添加门禁授权&nbsp;&nbsp;"/>
+					    	<input id="delaj" type="button" value="&nbsp;&nbsp;解除门禁授权&nbsp;&nbsp;"/>
+					    	<input id="addaj" type="button" value="&nbsp;&nbsp;绑定门禁授权&nbsp;&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -113,7 +113,7 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>名称</td>
+			  <!-- <td>名称</td> -->
 			  <td>门禁组</td>
 			  <td>门禁</td> 
 			  <td>员工</td>
@@ -123,7 +123,7 @@
 			<c:forEach items="${requestScope.accessjs}" var="aj" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${aj.ajempid};${aj.ajaccessid}"></td>
-					 <td>${aj.ajname}</td>
+					<%--  <td>${aj.ajname}</td> --%>
 					 <td>
 					 		${aj.agroups.agname}<%--${aj.agroups.agid} --%>
 					 		<%-- (<c:forEach items="${aj.accessList}" var="gyo">

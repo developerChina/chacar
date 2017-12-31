@@ -413,21 +413,18 @@ public class QueuingConteoller {
 	// 返回ModelAndView
 		return mv;
 	}
-	//友好提示
+//友好提示
 		@ResponseBody
 		@RequestMapping(value="/queuingAdd/addValidate")
 		public Object addValidate(HttpServletRequest request,
 				 HttpServletResponse response){
-			
 			String car_code = request.getParameter("car_code");
-			
 			String judge = request.getParameter("flag");
-			System.out.println(judge+car_code);
+			int queue_number = new Integer(request.getParameter("queue_number"));
+			int island_no = new Integer(request.getParameter("island_no"));
 			Map<String,Object> map = new HashMap<>();
-			
 			String flag = queuingService.addValidate(car_code,judge);
-				
-				System.out.println(flag);
+				//judge=1-->VIP judge=2-->普通 验证车牌号是否已经存在
 				if(!"".equals(flag)){
 					map.put("status", false);
 					map.put("message", flag);
@@ -435,9 +432,29 @@ public class QueuingConteoller {
 					map.put("status", true);
 					map.put("message", "验证通过");
 				}
+				String position =queuingService.position(island_no,queue_number);
+				//VIP队列 验证排序位置是否合理 给出的提示
+				if(!"".equals(position)){
+					map.put("queue", true);
+					map.put("queuemessage", position);
+				}else{
+					map.put("queue", false);
+					map.put("queuemessage", "验证通过");
+				}
+				
+				String plain =queuingService.plain(island_no,queue_number);
+				//普通队列 验证排序位置是否合理 给出的提示
+				if(!"".equals(plain)){
+					map.put("queue", true);
+					map.put("queuemessage", plain);
+				}else{
+					map.put("queue", false);
+					map.put("queuemessage", "验证通过");
+				}
 				
 			return map;
 		}
+
 		
 		@ResponseBody
 		@RequestMapping(value="/queuingAdd/IaddValidate")

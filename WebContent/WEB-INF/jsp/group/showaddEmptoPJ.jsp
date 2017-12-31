@@ -26,11 +26,11 @@
 		  var boxs  = $("input[type='checkbox'][id^='box_']");
 		  // 给其授权 按钮添加 点击事件
 		  $("#upPG").click(function(){
-			  var mypjname =document.getElementById("mypjname").value;
+			  /* var mypjname =document.getElementById("mypjname").value; */
 			  var msg = "";
-		 		if ($.trim(mypjname) == ""){
+		 		/* if ($.trim(mypjname) == ""){
 					msg = "授权名称不能为空！";
-				}
+				} */
 		 		if (msg != ""){
 					$.ligerDialog.error(msg);
 					return false;
@@ -71,7 +71,11 @@
 		    <input type="hidden" name="flag" value="2"/>
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">给当前员工添加权限：<br>
+		    		<tr>
+		    			<td class="font3 fftd">授权名称：<input type="text" name="pjname" id="mypjname"  size="20"/>
+		    			</td>
+		    		</tr>
+		    			<td class="font3 fftd">给当前员工添加权限：
 		    			<c:forEach items="${requestScope.findEmployeeById}" var="emps">
 		    				<input type="hidden" name="pjemps" id="empname" value="${emps.id}" size="20"/>${emps.name}&nbsp;
 		    			</c:forEach>
@@ -79,10 +83,6 @@
 		    			${findEmployeeById.name}
 		    			<input type="hidden" name="pjcard" id="cardno" value="${findEmployeeById.cardno}" size="20"/>
 		    			 --%></td>
-		    		</tr>
-		    		<tr>
-		    			<td class="font3 fftd">授权名称：<input type="text" name="pjname" id="mypjname"  size="20"/>
-		    			</td>
 		    		</tr>
 		    			
 		    		<tr>

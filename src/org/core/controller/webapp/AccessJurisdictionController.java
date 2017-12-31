@@ -66,6 +66,10 @@ public class AccessJurisdictionController {
 			model.addAttribute("jobs", jobs);
 			model.addAttribute("depts", depts);
 			model.addAttribute("pageModel", pageModel);
+			
+			model.addAttribute("model", employee);
+			model.addAttribute("job_id", job_id);
+			model.addAttribute("dept_id", dept_id);
 			// 跳转到电梯显示员工的界面
 			return "group/AJshowEmp";
 			

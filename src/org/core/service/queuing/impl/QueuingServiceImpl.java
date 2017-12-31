@@ -137,18 +137,46 @@ public class QueuingServiceImpl implements QueuingService {
 			//根据车牌号查普通表 有值就删除了它
 			Ordinary exo=queuingDao.selectOBycarno(queuingVip.getCar_code());
 			  if(exo!=null){
+				  //将普通表重新排序
+				  int selectId = queuingDao.delSort(queuingVip.getCar_code());
+				  ordAgain(selectId);
+				  //删除它
 				  queuingDao.delByCar_code(queuingVip.getCar_code());
+				 
 			  }
 			//2排序
-			 int max =vipAddSort(queuingVip.getIsland_no());
+			 int max =vipAddSort(queuingVip.getIsland_no(),queuingVip.getQueue_number());
+			 
 			 queuingVip.setQueue_number(max);
+			 
 			//3执行添加
 			queuingDao.addV(queuingVip);
 		}
-			
-		
 	}
 
+//VIP 排序的方法
+		//添加时排序
+		public int vipAddSort(int no,int qn){
+			String maxstring = queuingDao.getQueueMaxsByno(no);
+			if(maxstring==null){
+				return 1;
+			}else{
+				int maxint = queuingDao.getQueueMaxiByno(no);
+				if(qn>(maxint+1)){
+					return maxint+1;
+				}else{
+					List<QueuingVip> Sortlist = queuingDao.selectVIByQI(qn,no);
+					for (QueuingVip insert : Sortlist) {
+						int man = insert.getQueue_number()+1;
+						queuingDao.updateQByid(man,insert.getId());
+					}
+					return qn;
+				}
+			}
+		}	
+	
+		
+	
 	@Override
 	public void delVip(Integer id) {
 		//1	删除之后将其重新添回之前队列
@@ -234,18 +262,7 @@ public class QueuingServiceImpl implements QueuingService {
 	}
 	
 	
-//VIP 排序的方法
-	
-	//添加时排序
-	public int vipAddSort(int no){
-		String maxstring = queuingDao.getQueueMaxsByno(no);
-		if(maxstring==null){
-			return 1;
-		}else{
-			int maxint = queuingDao.getQueueMaxiByno(no);
-			return maxint+1;
-		}
-	}
+
 
 	//删除时重新排序
 	public void vipAgain(Integer id) {
@@ -420,14 +437,24 @@ public class QueuingServiceImpl implements QueuingService {
 			 * 
 			 * if 查出的为null 普通队列没有在此岛排车 返回1
 			 * 	else 普通队列在此岛排车了 再查int 最大值+1
+			 * 
 			 * */
-		public int ordAddSort(int no){
+		public int ordAddSort(int no,int qn){
 			String maxstring = queuingDao.getQueueOMaxs(no);
 			if(maxstring==null){
 				return 1;
 			}else{
 				int maxint = queuingDao.getQueueOMaxi(no);
-				return maxint+1;
+				if(qn>(maxint+1)){
+					return maxint+1;
+				}else{
+					List<Ordinary> Sortlist = queuingDao.selectOrdIByQI(qn,no);
+					for (Ordinary insert : Sortlist) {
+						int man = insert.getQueue_number()+1;
+						queuingDao.updOrdQByid(man,insert.getId());
+					}
+					return qn;
+				}
 			}
 		}
 		//删除时排序
@@ -571,7 +598,7 @@ public class QueuingServiceImpl implements QueuingService {
 			Ordinary exo=queuingDao.selectOBycarno(ordinary.getCar_code());
 			QueuingVip exv=queuingDao.selectVBycarno(ordinary.getCar_code());
 			if(exo==null&&exv==null){
-				int max =ordAddSort(ordinary.getIsland_no());
+				int max =ordAddSort(ordinary.getIsland_no(),ordinary.getQueue_number());
 			 	ordinary.setQueue_number(max);
 			 	queuingDao.addO(ordinary);
 			}
@@ -611,7 +638,6 @@ public class QueuingServiceImpl implements QueuingService {
 		}
 		@Override
 		public String IaddValidate(String no,String term) {
-			
 			String result="";
 		if(term.equals("1")){
 			//添加时的判断
@@ -622,13 +648,54 @@ public class QueuingServiceImpl implements QueuingService {
 				result="编号重复 请勿重复添加";
 			}
 		}	
-			
 			return result;
 		}
 		
 		@Override
 		public History selectIng(int landno) {
 			return queuingDao.selectIng(landno);
+		}
+		public String position(int island_no, int queue_number) {
+
+			String resultQueue="";
+			String maxstring = queuingDao.getQueueMaxsByno(island_no);
+			if(maxstring==null){
+				if(queue_number>1){
+					resultQueue="此岛无车辆排序，系统默认排序1 请确认";
+				}else{
+					resultQueue="";
+				}
+			}else{
+				int maxint = queuingDao.getQueueMaxiByno(island_no);
+				if(queue_number>(maxint+1)){
+					resultQueue="您选的位置超出最大值，系统默认排序当前最大 请确认";
+				}else{
+					resultQueue="";
+				}
+			}
+			
+			return resultQueue;
+		}
+		@Override
+		public String plain(int island_no, int queue_number) {
+			
+			String resultQueue="";
+			String maxstring = queuingDao.getQueueOMaxs(island_no);
+			if(maxstring==null){
+				if(queue_number>1){
+					resultQueue="此岛无车辆排序，系统默认排序1 请确认";
+				}else{
+					resultQueue="";
+				}
+			}else{
+				int maxint = queuingDao.getQueueOMaxi(island_no);
+				if(queue_number>(maxint+1)){
+					resultQueue="您选的位置超出最大值,系统默认排序为当前最大  请确认";
+				}else{
+					resultQueue="";
+				}
+			}
+			return resultQueue;
 		}
 		
 		

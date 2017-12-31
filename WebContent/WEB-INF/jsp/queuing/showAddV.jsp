@@ -44,7 +44,16 @@
 		}
 	}
 	
-	
+	function queue_numberControl(){
+		var queue_number = $("#queue_number").val();
+		if ($.trim(queue_number)!=""){
+			document.getElementById("queue_numberColor").style.color="green";
+			document.getElementById("queue_numberColor").innerText="√";
+		}else{
+			document.getElementById("queue_numberColor").style.color="green";
+			document.getElementById("queue_numberColor").innerText="*选填";
+		}
+	}
 	
 	
 	
@@ -61,11 +70,14 @@
 		$("#add").click(function(){
 			var car_code = $("#car_code");
 			var island_no = $("#island_no");
+			var queue_number = $("#queue_number");
 			/* var remarks = $("#remarks"); */
 			
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
+			}else if ($.trim(queue_number.val()) == ""){
+				msg = "请填写排序位置！";
 			}else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
 			}/* else if ($.trim(remarks.val()) == ""){
@@ -73,7 +85,6 @@
 			} */
 			
 			if (msg != ""){
-				
 				$.ligerDialog.error(msg);
 				return false;
 			}
@@ -82,13 +93,24 @@
 				  url: '${ctx}/queuingAdd/addValidate',
 				  data: {
 					  "car_code":car_code.val(),
-					  "flag":1
+					  "flag":1,
+					  "island_no":island_no.val(),
+					  "queue_number":queue_number.val()
 				  },
 				  success: function(data){
 					if(data.status){
-						$("#VipAddForm").submit();
+						if(data.queue){
+							$.ligerDialog.confirm(data.queuemessage,"系统提示！",function(r){
+								   if(r){
+									   $("#VipAddForm").submit();
+								   }
+							   });
+						}else{
+							$("#VipAddForm").submit();
+						}
 				  	}else{
-				  		alert(data.message);
+				  		//alert(data.message);
+				  		$.ligerDialog.error(data.message)
 				  	}
 				  }
 			
@@ -115,7 +137,7 @@
     	 	<input type="hidden" name="flag" value="2">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
-		    	<table>
+		    	<table cellpadding="5px">
 
 		    		<tr>
 		    		<td class="font3 fftd">车牌号：</td>
@@ -123,11 +145,11 @@
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    		
-		    		<%-- <tr>
+		    		<tr>
 		    		<td class="font3 fftd">排号位置：</td>
-		    		<td><input name="queue_number" id="queue_number" value="${maxnum}" type="number"  size="20" onblur="queue_numberControl()"></td>
+		    		<td><input name="queue_number" id="queue_number"  type="number" style="width: 580px; height: 30px" size="20" onblur="queue_numberControl()"></td>
 		    		<td><font id="queue_numberColor" color="red">*必填&nbsp;</font></td>
-		    		</tr> --%>
+		    		</tr> 
 		    		
 		    		<tr>
 		    			<td class="font3 fftd">选择卸货岛：</td>

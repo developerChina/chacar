@@ -75,16 +75,8 @@ public interface QueuingService {
 
 	//查询正在处理的队列
 	History selectIng(int landno);
-	
+	String position(int island_no, int queue_number);
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	String plain(int island_no, int queue_number);
 	
 }
