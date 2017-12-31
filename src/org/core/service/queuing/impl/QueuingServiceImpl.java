@@ -77,8 +77,12 @@ public class QueuingServiceImpl implements QueuingService {
 	
 	
 	@Override
-	public Island selectByNo(Integer No) {
+	public Island selectIByNo(Integer No) {
 		return queuingDao.getparts(No);
+	}
+	@Override
+	public List<Island> selectIAll() {
+		return queuingDao.selectIAll();
 	}
 	
 //2、VIP队列的业务逻辑层接口的实现
@@ -258,20 +262,20 @@ public class QueuingServiceImpl implements QueuingService {
 		
 	}
 	@Override
-	public Ordinary selectMaxOByLand(int landid) {
-		return queuingDao.selectMaxOByLand(landid);
+	public Ordinary selectMaxOByLand(int landno) {
+		return queuingDao.selectMaxOByLand(landno);
 	}
 	@Override
 	public Ordinary selectOBycarno(String carno) {
 		return queuingDao.selectOBycarno(carno);
 	}
 	@Override
-	public List<QueuingVip> selectVAll(int landid) {
-		return queuingDao.selectVAll(landid);
+	public List<QueuingVip> selectVAll(int landno) {
+		return queuingDao.selectVAll(landno);
 	}
 	@Override
-	public List<Ordinary> selectOAll(int landid) {
-		return queuingDao.selectOAll(landid);
+	public List<Ordinary> selectOAll(int landno) {
+		return queuingDao.selectOAll(landno);
 	}
 //VIP修改时重新排序
 	public void vipUpd(QueuingVip queuingVip) {
@@ -620,6 +624,11 @@ public class QueuingServiceImpl implements QueuingService {
 		}	
 			
 			return result;
+		}
+		
+		@Override
+		public History selectIng(int landno) {
+			return queuingDao.selectIng(landno);
 		}
 		
 		

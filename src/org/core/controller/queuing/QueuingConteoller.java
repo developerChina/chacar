@@ -13,6 +13,7 @@ import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
 import org.core.service.queuing.QueuingService;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 /**
  * 处理排队叫号控制器
@@ -34,7 +36,7 @@ public class QueuingConteoller {
 	@RequestMapping(value = "/queuingI/islandIndex")
 	public ModelAndView islandIndex(Integer no, ModelAndView mv) {
 		if(no!=null){
-			Island island=queuingService.selectByNo(no);
+			Island island=queuingService.selectIByNo(no);
 			if(island!=null){
 				mv.addObject("island", island);
 			}else{
@@ -53,7 +55,7 @@ public class QueuingConteoller {
 	public Object addQueue(@ModelAttribute Ordinary ordinary,Integer isadd) {
 		Map<String, Object> map=new HashMap<>();
 		//判断卸货岛是否存在
-		Island island=queuingService.selectByNo(ordinary.getIsland_no());
+		Island island=queuingService.selectIByNo(ordinary.getIsland_no());
 		if(island!=null){
 			//判断车辆是否入场
 			if(1==1){
@@ -291,12 +293,33 @@ public class QueuingConteoller {
 		return mv;
 	}
 	@RequestMapping(value = "/queuingH/TodayAck")
-	public ModelAndView TodayAck(Integer pageIndex, ModelAndView mv) {
+	public ModelAndView TodayAck(HttpServletRequest request,ModelAndView mv) {
+		String island=request.getParameter("island");
 		// 设置客户端跳转到查询请求
+		List<Island> lands=queuingService.selectIAll();
+		if(StringUtils.isNotBlank(island)&&!island.equals("0")){
+			int landno=Integer.parseInt(island);
+			mv.addObject("landno", landno);
+			for (Island land : lands) {
+				if(land.getNo()==landno){
+					mv.addObject("landname", land.getIname());
+					break;
+				}
+			}
+			List<QueuingVip> listV=queuingService.selectVAll(landno);
+			List<Ordinary> listO=queuingService.selectOAll(landno);
+			mv.addObject("all", listV.size()+listO.size());
+			mv.addObject("vip", listV.size());
+			mv.addObject("o", listO.size());
+			History ing=queuingService.selectIng(landno);
+			mv.addObject("ing", ing);
+		}
+		mv.addObject("lands", lands);
 		mv.setViewName("queuing/today");
 		// 返回ModelAndView
 		return mv;
 	}
+	
 //4、普通队列		
 		/**
 		 * 历史队列的管理 跳向首页
@@ -436,13 +459,5 @@ public class QueuingConteoller {
 				}
 			return map;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
 		
 }

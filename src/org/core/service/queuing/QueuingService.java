@@ -20,7 +20,9 @@ public interface QueuingService {
 
 	void UpdI(Island island);
 	
-	Island selectByNo(Integer No);
+	Island selectIByNo(Integer No);
+	
+	List<Island> selectIAll();
 	//VIP队列
 	List<QueuingVip> selectVByPage(QueuingVip queuingVip, PageModel pageModel);
 	
@@ -70,6 +72,9 @@ public interface QueuingService {
 	String addValidate(String car_code, String judge);
 
 	String IaddValidate(String no, String term);
+
+	//查询正在处理的队列
+	History selectIng(int landno);
 	
 
 	
