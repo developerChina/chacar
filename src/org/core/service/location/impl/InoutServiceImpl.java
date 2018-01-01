@@ -35,5 +35,9 @@ public class InoutServiceImpl implements InoutService {
 		 
 		return locationInouts;
 	}
+	@Override
+	public LocationInout selectNewRecord(String car_code) {
+		return inoutDao.selectNewRecord(car_code);
+	}
 
 }

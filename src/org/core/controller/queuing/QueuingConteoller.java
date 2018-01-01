@@ -8,12 +8,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
+import org.core.service.location.InoutService;
 import org.core.service.queuing.QueuingService;
-import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,6 +33,11 @@ public class QueuingConteoller {
 	@Autowired
 	@Qualifier("queuingService")
 	private QueuingService queuingService;
+	
+	@Autowired
+	@Qualifier("inoutService")
+	private InoutService inoutService;
+	
 	 
 	@RequestMapping(value = "/queuingI/islandIndex")
 	public ModelAndView islandIndex(Integer no, ModelAndView mv) {
@@ -58,7 +64,8 @@ public class QueuingConteoller {
 		Island island=queuingService.selectIByNo(ordinary.getIsland_no());
 		if(island!=null){
 			//判断车辆是否入场
-			if(1==1){
+			LocationInout inout= inoutService.selectNewRecord(ordinary.getCar_code());
+			if(inout!=null){
 				if(isadd==0){
 					//判断是否添加
 					Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
@@ -97,7 +104,6 @@ public class QueuingConteoller {
 						}
 					}
 				}
-				
 				map.put("status", true);
 				map.put("waiting", waiting);
 				map.put("all", vips.size()+os.size());
@@ -294,31 +300,38 @@ public class QueuingConteoller {
 	}
 	@RequestMapping(value = "/queuingH/TodayAck")
 	public ModelAndView TodayAck(HttpServletRequest request,ModelAndView mv) {
-		String island=request.getParameter("island");
 		// 设置客户端跳转到查询请求
 		List<Island> lands=queuingService.selectIAll();
-		if(StringUtils.isNotBlank(island)&&!island.equals("0")){
-			int landno=Integer.parseInt(island);
-			mv.addObject("landno", landno);
-			for (Island land : lands) {
-				if(land.getNo()==landno){
-					mv.addObject("landname", land.getIname());
-					break;
-				}
-			}
-			List<QueuingVip> listV=queuingService.selectVAll(landno);
-			List<Ordinary> listO=queuingService.selectOAll(landno);
-			mv.addObject("all", listV.size()+listO.size());
-			mv.addObject("vip", listV.size());
-			mv.addObject("o", listO.size());
-			History ing=queuingService.selectIng(landno);
-			mv.addObject("ing", ing);
-		}
 		mv.addObject("lands", lands);
 		mv.setViewName("queuing/today");
 		// 返回ModelAndView
 		return mv;
 	}
+	@RequestMapping(value = "/queuingH/toPie")
+	@ResponseBody
+	public Object toPie(HttpServletRequest request) {
+		// 设置客户端跳转到查询请求
+		List<Island> lands=queuingService.selectIAll();
+		List<Map<String, Object>> list=new ArrayList<>();
+		int index=0;
+		for (Island land : lands) {
+			Map<String, Object> map= new HashMap<>();
+			List<QueuingVip> listV=queuingService.selectVAll(land.getNo());
+			List<Ordinary> listO=queuingService.selectOAll(land.getNo());
+			History ing=queuingService.selectIng(land.getNo());
+			map.put("all", listV.size()+listO.size());
+			map.put("vip", listV.size());
+			map.put("o", listO.size());
+			map.put("ing", ing); 
+			map.put("land", land);
+			map.put("index", index++);
+			list.add(map);
+		}
+		return list;
+	}
+	
+	
+	
 	
 //4、普通队列		
 		/**

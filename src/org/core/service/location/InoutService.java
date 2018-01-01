@@ -9,4 +9,6 @@ public interface InoutService {
 
 	List<LocationInout> findLocationAlarm(LocationInout locationInout, PageModel pageModel);
 
+	LocationInout selectNewRecord(String car_code);
+
 }

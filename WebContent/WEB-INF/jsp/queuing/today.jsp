@@ -35,77 +35,75 @@
 	</table>
 	
 	<table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
-	  <!-- 查询区  -->
-	  <tr valign="top">
-	    <td colspan="2" height="30">
-		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
-		    <tr>
-			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/queuingH/TodayAck">
-				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-					  <tr>
-					    <td class="font3">
-					    	卸货岛：
-					    		<select name="island" style="width:143px;">
-					    			<option value="0">--请选择卸货岛--</option>
-					    			<c:forEach items="${lands}" var="land">
-					    				<option value="${land.no}" <c:if test="${landno==land.no}">selected </c:if>  >${land.iname}</option>
-					    			</c:forEach>
-					    		</select>
-					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
-					    </td>
-					  </tr>
-					</table>
-				</form>
-			  </td>
-			</tr>
-		  </table>
-		</td>
-	  </tr>
-	  
 	  <!-- 数据展示区 -->
-	  <tr valign="top">
-	    <td height="20">
-		  <!--  饼图    -->
-		  <div id="container" style="height: 100%"></div>
-		</td>
-	  </tr>
+	  <c:forEach items="${lands}" varStatus="stat" step="4">
+		<tr valign="top">
+		    <td height="20">
+			  <div id="container_${stat.index+0}" style="height:300px;width:300px;"></div>
+			</td>
+			<td height="20">
+			  <div id="container_${stat.index+1}" style="height:300px;width:300px;"></div>
+			</td>
+			<td height="20">
+			  <div id="container_${stat.index+2}" style="height:300px;width:300px;"></div>
+			</td>
+			<td height="20">
+			  <div id="container_${stat.index+3}" style="height:300px;width:300px;"></div>
+			</td>
+		</tr>
+	 </c:forEach>
+	  
 	</table>
 	<div style="height:10px;"></div>
 	<script type="text/javascript">
-		if("${landno!='' && landno!=null && landno!=0 }"=='true'){
-			showChart();
-		}
+	 
+	$.post(
+			"${ctx}/queuingH/toPie",
+			 function(list){
+				for (var i = 0; i < list.length; i++) {
+					showChart(list[i]);
+				}
+			}
+		);
 	
-	 function showChart(){
-		var dom = document.getElementById("container");
+	
+	 function showChart(map){
+		var dom = document.getElementById("container_"+map.index);
 		var myChart = echarts.init(dom);
-		var app = {};
-		option = null;
+		var queueName="";
+		console.info(map.ing)
+		if(map.ing!=null){
+			if(map.ing.source==1){
+				queueName="当前处理:VIP,车牌号:"+map.ing.car_code;
+			}else{
+				queueName="当前处理:普通,车牌号:"+map.ing.car_code;;
+			} 
+		}
+		
 		option = {
 		    title : {
-		        text: '${landname}',
-		        subtext: "当前处理:${ing.source==1?'VIP':'普通'},车牌号:${ing.car_code}",
+		        text: map.land.iname,
+		        subtext:queueName,
 		        x:'center'
 		    },
 		    tooltip : {
 		        trigger: 'item',
 		        formatter: "{a} <br/>{b} : {c} ({d}%)"
 		    },
-		    legend: {
-		        orient: 'vertical',
-		        left: 'left',
-		        data: ['总数','vip','普通']
-		    },
+		   // legend: {
+		   //     orient: 'vertical',
+		   //     left: 'left',
+		   //     data: ['总数','vip','普通']
+		   // },
 		    series : [
 		        {
 		            type: 'pie',
 		            radius : '55%',
 		            center: ['50%', '60%'],
 		            data:[
-		                {value:'${all}', name:'总数'},
-		                {value:'${vip}', name:'vip'},
-		                {value:'${o}', name:'普通'},
+		                {value:map.all, name:'总数('+map.all+")"},
+		                {value:map.vip, name:'vip('+map.vip+")"},
+		                {value:map.o, name:'普通('+map.o+")"},
 		            ],
 		            itemStyle: {
 		                emphasis: {
