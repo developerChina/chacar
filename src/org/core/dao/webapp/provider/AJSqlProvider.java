@@ -21,6 +21,9 @@ public class AJSqlProvider {
 					if(accessj.getPganame()!=null && !accessj.getPganame().equals("")){
 						WHERE(" ajaccessid in ( "+ accessj.getPganame() +"  ) ");
 					}
+					if(accessj.getAjEmpName()!=null && !accessj.getAjEmpName().equals("")){
+						WHERE(" ajempid in ( "+ accessj.getAjEmpName() +"  ) ");
+					}
 				}
 			}
 		}.toString();
@@ -43,7 +46,10 @@ public class AJSqlProvider {
 					if(accessj.getPganame()!=null && !accessj.getPganame().equals("")){
 						WHERE(" ajaccessid in ( "+ accessj.getPganame() +"  ) ");
 					}
-					} 
+					if(accessj.getAjEmpName()!=null && !accessj.getAjEmpName().equals("")){
+						WHERE(" ajempid in ( "+ accessj.getAjEmpName() +"  ) ");
+					}
+				} 
 			}
 		}.toString();
 	}

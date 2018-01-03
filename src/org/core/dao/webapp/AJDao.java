@@ -5,6 +5,7 @@ import static org.core.util.GlobleConstants.ACCESSJTABLE;
 import static org.core.util.GlobleConstants.ACCESSTABLE;
 import static org.core.util.GlobleConstants.MiddletoAGTABLE;
 import static org.core.util.GlobleConstants.TotleAuthTABLE;
+import static org.core.util.GlobleConstants.EMPLOYEETABLE;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.core.dao.webapp.provider.TotleAuthorizationProvider;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.AccessGroup;
 import org.core.domain.webapp.Accessj;
+import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.TotleAuthorization;
 
 //查询所有权限
@@ -70,4 +72,6 @@ public interface AJDao {
 	//门禁名称的模糊查询
 		@Select(" select * from "+ACCESSTABLE+" where accessname LIKE CONCAT('%',#{vague},'%')")
 		List<Access> getPlist(String vague);
+		@Select(" select * from "+EMPLOYEETABLE+" where name LIKE CONCAT('%',#{empName},'%')")
+		List<Employee> getEmp(String empName);
 }

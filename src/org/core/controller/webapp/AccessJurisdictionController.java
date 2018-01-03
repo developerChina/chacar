@@ -142,7 +142,14 @@ public class AccessJurisdictionController {
 		 * 查询授权表
 		 * */
 		@RequestMapping(value="/AccessJurisdiction/selectAJ")
-		public String selectPJ(Integer pageIndex, @ModelAttribute Accessj accessj,Model model){
+		public String selectPJ(Integer pageIndex,
+				@ModelAttribute Accessj accessj,Model model){
+			String pageParam="";
+			if(StringUtils.isNotBlank(accessj.getAjEmpName())){
+				pageParam+="&ajEmpName="+accessj.getAjEmpName();
+			}
+			model.addAttribute("pageParam", pageParam);
+			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);
@@ -167,6 +174,7 @@ public class AccessJurisdictionController {
 			}
 			model.addAttribute("accessjs", accessjs);
 			model.addAttribute("pageModel", pageModel);
+			
 			return "group/showAJ";
 		}
 		/**

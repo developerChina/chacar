@@ -78,6 +78,18 @@ public class AJServiceImpl implements AJService {
 			myids = myids.substring(0,myids.length() - 1);
 			accessj.setPganame(myids);
 		}
+		
+		String empName = accessj.getAjEmpName();
+		if(empName!=null&& !"".equals(empName)){
+			List<Employee>  vagueList = aJDao.getEmp(empName);
+			String myids="";
+			for (Employee employee : vagueList) {
+				myids+=employee.getId()+",";
+			}
+			myids = myids.substring(0,myids.length() - 1);
+			accessj.setAjEmpName(myids);
+		}
+		
 		/** 当前需要分页的总数据条数 */
 		Map<String, Object> gy = new HashMap<>();
 		gy.put("accessj", accessj);

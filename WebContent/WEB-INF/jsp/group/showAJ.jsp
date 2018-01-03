@@ -94,6 +94,7 @@
 					    <td class="font3">
 					    	<!-- 门禁授权名:<input type="text" name="ajname">&nbsp; -->
 					    	门禁名:<input type="text" name="pganame">&nbsp;
+					    	员工名称:<input type="text" name="ajEmpName">&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
 					    	<input id="delaj" type="button" value="&nbsp;&nbsp;解除门禁授权&nbsp;&nbsp;"/>
 					    	<input id="addaj" type="button" value="&nbsp;&nbsp;绑定门禁授权&nbsp;&nbsp;"/>
@@ -152,7 +153,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/AccessJurisdiction/selectAJ?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/AccessJurisdiction/selectAJ?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>
