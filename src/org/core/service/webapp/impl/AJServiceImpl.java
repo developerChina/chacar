@@ -72,10 +72,12 @@ public class AJServiceImpl implements AJService {
 		if(vague!=null&& !"".equals(vague)){
 			List<Access>  vagueList = aJDao.getPlist(vague);
 			String myids="";
-			for (Access access : vagueList) {
-				myids+=access.getAccessid()+",";
+			if(vagueList!=null&&vagueList.size()>0){
+				for (Access access : vagueList) {
+					myids+=access.getAccessid()+",";
+				}
+				myids = myids.substring(0,myids.length() - 1);
 			}
-			myids = myids.substring(0,myids.length() - 1);
 			accessj.setPganame(myids);
 		}
 		
@@ -83,10 +85,12 @@ public class AJServiceImpl implements AJService {
 		if(empName!=null&& !"".equals(empName)){
 			List<Employee>  vagueList = aJDao.getEmp(empName);
 			String myids="";
-			for (Employee employee : vagueList) {
-				myids+=employee.getId()+",";
+			if(vagueList!=null&&vagueList.size()>0){
+				for (Employee employee : vagueList) {
+					myids+=employee.getId()+",";
+				}
+				myids = myids.substring(0,myids.length() - 1);
 			}
-			myids = myids.substring(0,myids.length() - 1);
 			accessj.setAjEmpName(myids);
 		}
 		
