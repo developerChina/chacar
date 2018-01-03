@@ -176,7 +176,7 @@
 		    			<td><input name="no" id="no" type="number"  size="20" onblur="noControl()"/>
 		    			</td>
 		    			<td><font id="noColor" color="red">*必填&nbsp;</font></td>
-		    			<td rowspan="4" class="font3 fftd">
+		    			<td rowspan="5" class="font3 fftd">
                                                                            长：<input type="text"  id="mywidth" size="5" value="120"/>
 		    			         宽：<input type="text"  id="myheight" size="5" value="120"/>
 		    			    <br/><br/>

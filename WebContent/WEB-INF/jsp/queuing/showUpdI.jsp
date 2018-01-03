@@ -20,10 +20,10 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="${ctx }/js/jquery.qrcode.min.js"></script>
+	
+	
 	<script type="text/javascript">
-	
-	
-	
 	
 	window.onload=function(){
 		
@@ -43,6 +43,7 @@
 	function myQrCode(){ 
 		  $("#qrcode").html("");
 		  var uri="http://192.168.1.128:8080/chacar/queuingI/islandIndex?no="+$("#no").val();
+		 //alert(uri);
 		  var myqrcode = $("#qrcode").qrcode(
 				  {
 				   render: "canvas",
@@ -55,8 +56,7 @@
 	  }
 	
 	
-	
-	
+
 	
 	
 	/* 卸货岛编号光标移开事件 */
@@ -119,7 +119,6 @@
 	}
 	
 	$(function(){
-		
 		$("#IslandUpForm").submit(function(){
 			var iname = $("#iname");
 			var cameraip = $("#cameraip");
@@ -173,12 +172,17 @@
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">卸货岛编号：</td>
-		    			<td><input name="no" id="no" type="hidden" value="${updateI.no}" size="20" onblur="noControl()"/>
-		    			${updateI.no}
+		    			<td><input name="no" id="no" type="number" value="${updateI.no}" size="20" onblur="noControl()"/>
 		    			</td>
 		    			<td><font id="noColor" color="red"></font></td>
-
-		    			
+						<td rowspan="5" class="font3 fftd">
+                                                            长：<input type="text"  id="mywidth" size="5" value="120"/>
+		    			         宽：<input type="text"  id="myheight" size="5" value="120"/>
+		    			    <br/><br/>
+ 		    			    <div id="qrcode" style="width:120px;height:120px;"></div>
+ 		    			    <br/>
+ 		    			    <input type="button" onclick="myQrCode()" value="&nbsp;&nbsp;生成二维码&nbsp;&nbsp;">
+                       </td>
 		    		</tr>
 		    		
 		    		<tr>

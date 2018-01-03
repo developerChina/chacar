@@ -13,6 +13,7 @@ import org.core.domain.webapp.Job;
 import org.core.service.webapp.AJService;
 import org.core.service.webapp.AccessGroupService;
 import org.core.service.webapp.HrmService;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -71,6 +72,17 @@ public class AccessJurisdictionController {
 			model.addAttribute("job_id", job_id);
 			model.addAttribute("dept_id", dept_id);
 			// 跳转到电梯显示员工的界面
+			String pageParam="";
+			if(dept_id!=null&&dept_id>0){
+				pageParam+="&dept_id="+dept_id;
+			}
+			if(job_id!=null&&job_id>0){
+				pageParam+="&job_id="+job_id;
+			}
+			if(StringUtils.isNotBlank(employee.getName())){
+				pageParam+="&name="+employee.getName();
+			}
+			model.addAttribute("pageParam", pageParam);
 			return "group/AJshowEmp";
 			
 		}

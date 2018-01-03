@@ -13,6 +13,7 @@ import org.core.domain.webapp.Passagewayj;
 import org.core.service.webapp.HrmService;
 import org.core.service.webapp.PJService;
 import org.core.service.webapp.PassagewayGroupService;
+import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -71,6 +72,20 @@ public class PassagewayJurisdictionController {
 			model.addAttribute("model", employee);
 			model.addAttribute("job_id", job_id);
 			model.addAttribute("dept_id", dept_id);
+			
+			String pageParam="";
+			if(dept_id!=null&&dept_id>0){
+				pageParam+="&dept_id="+dept_id;
+			}
+			if(job_id!=null&&job_id>0){
+				pageParam+="&job_id="+job_id;
+			}
+			if(StringUtils.isNotBlank(employee.getName())){
+				pageParam+="&name="+employee.getName();
+			}
+			model.addAttribute("pageParam", pageParam);
+			
+			
 			// 跳转到电梯显示员工的界面
 			return "group/PJshowEmp";
 			
