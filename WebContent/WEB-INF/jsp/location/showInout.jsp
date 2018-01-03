@@ -146,9 +146,9 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	 定位仪状态：
+					    	 定位仪类型：
 							    <select name="vehicleType"  style="width:143px;">
-					<option value="-1">-请选择定位仪状态-</option>
+					<option value="-1">-请选择定位仪类型-</option>
 					<option value="1">固定定位仪</option>
 					<option value="0">临时定位仪</option>
 					</select> 

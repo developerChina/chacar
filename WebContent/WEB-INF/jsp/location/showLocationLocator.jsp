@@ -115,7 +115,7 @@
 			  <td>定位仪名称</td>
 			  <td>SIM卡号</td>
 			  <td>设备id</td>
-			  <td>定位仪类型</td>
+			  <td>定位仪类型</td> 
 			  <td align="center">操作</td>
 			</tr>
 			<c:forEach items="${requestScope.locationLocators}" var="locationLocator" varStatus="stat">
