@@ -26,12 +26,13 @@
 	
 	function myQrCode(){ 
 		  $("#qrcode").html("");
-		  var uri="http://192.168.1.128:8080/chacar/queuingI/islandIndex?no="+$("#no").val();
+		  var uri="http://113.204.202.89:8080/chacar/queuingI/islandIndex?no="+$("#no").val();
 		  var myqrcode = $("#qrcode").qrcode(
 				  {
 				   render: "canvas",
 				   width:  $("#mywidth").val(),
 				   height:  $("#myheight").val(),
+				   src: '${ctx}/images/bt_file.jpg',
 				   text: uri
 				  });
 		 /*  var canvas=myqrcode.find('canvas').get(0);

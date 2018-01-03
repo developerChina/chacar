@@ -81,20 +81,20 @@ public interface QueuingDao {
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="addO")
 	void addO(Ordinary ordinary);
 	
-	@Select(" select * from "+Ordinary.tableName+" where island_no= #{landid} order by queue_number desc limit 1")
-	Ordinary selectMaxOByLand(int landid);
+	@Select(" select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number desc limit 1")
+	Ordinary selectMaxOByLand(int landno);
 
 	@Select(" select * from "+Ordinary.tableName+" where car_code= #{carno} ")
 	Ordinary selectOBycarno(String carno);
 	
-	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landid} order by queue_number")
-	List<QueuingVip> selectVAll(int landid);
+	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landno} order by queue_number")
+	List<QueuingVip> selectVAll(int landno);
 
 	@Select(" select * from "+QueuingVip.tableName+" where car_code= #{carno} ")
 	QueuingVip selectVBycarno(String car_code);
 
-	@Select("select * from "+Ordinary.tableName+" where island_no= #{landid} order by queue_number")
-	List<Ordinary> selectOAll(int landid);
+	@Select("select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number")
+	List<Ordinary> selectOAll(int landno);
 	
 //普通队列表
 	
@@ -175,4 +175,9 @@ public interface QueuingDao {
 	@Select("select id from "+Ordinary.tableName+" where car_code = #{car_code} ")
 	int delSort(String car_code);
 
+	@Select("select * from "+Island.tableName)
+	List<Island> selectIAll();
+
+	@Select("select * from "+History.tableName+" where island_no = #{landno} and goout_time is null order by comein_time desc limit 1")
+	History selectIng(int landno);
 }

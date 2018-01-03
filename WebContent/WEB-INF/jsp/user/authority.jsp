@@ -21,12 +21,8 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-    
-    
     <script src="${ctx}/scripts/boot.js" type="text/javascript"></script>
-   
     <link href="${ctx}/scripts/demo.css" rel="stylesheet" type="text/css" />
-    
 	<script type="text/javascript">
 		$(function(){
 			/** 获取上一次选中的部门数据 */
