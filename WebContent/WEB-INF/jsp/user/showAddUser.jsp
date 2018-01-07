@@ -49,11 +49,16 @@
 			}else{
 				return true;
 			}
-			$("#userForm").submit();
+			alert();
+			 var vals = [];
+			$('input:checkbox:checked').each(function (index, item) {
+			       vals.push($(this).val());
+			      
+			});
+			 alert(vals);
+			//$("#userForm").submit();
 		});
     });
-		
-
 	</script>
 </head>
 <body>
@@ -83,7 +88,32 @@
 		    			<td class="font3 fftd">登录名：<input name="loginname" id="loginname" size="20" /></td>
 		    			<td class="font3 fftd">密&nbsp;码：<input name="password" id="password" size="20" /></td>
 		    		</tr>
-		    		
+		    		<tr>
+		    			<td class="font3 fftd" colspan="4">
+		    			   <input type="checkbox" name="ajgroup" id="authority_1" value="1" checked/>系统管理
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_2" value="2" checked/>员工管理 
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_3" value="3" checked/>访客系统
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_4" value="4" checked/>门禁系统
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_5" value="5" checked/>梯控系统
+		    			   &nbsp;
+		    			</td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd" colspan="4">
+		    			   <input type="checkbox" name="ajgroup" id="authority_6" value="6" checked/>通道系统
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_7" value="7" checked/>车辆系统
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_8" value="8" checked/>定位系统
+		    			   &nbsp;
+		    			   <input type="checkbox" name="ajgroup" id="authority_9" value="9" checked/>排队叫号
+		    			   &nbsp;
+		    			</td>
+		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
