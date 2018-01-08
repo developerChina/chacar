@@ -23,9 +23,11 @@ import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
 import org.core.service.webapp.PassagewayService;
 import org.core.service.webapp.ResonService;
+import org.core.util.AControlUtil;
 import org.core.util.GenId;
 import org.core.util.ImageUtils;
 import org.core.util.JsonUtils;
+import org.core.util.LadderControlUtil;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.BeanUtils;
@@ -177,11 +179,13 @@ public class SingleVisitorController {
 				recordVisitorsService.update(entity);
 			}
 			//删除硬件权限
-			List<Passageway> pass=passagewayService.selectAll();
-			List<Elevator> elt=elevatorService.selectAll();
-			List<Access> acc=accessService.selectAll();
-			
-			
+			List<Passageway> passList=passagewayService.selectAll();
+			List<Elevator> egElevators=elevatorService.selectAll();
+			List<Access> agAccesss=accessService.selectAll();
+			//卡 物理 号
+			String cardno=cardid;
+			//授权-》去掉 权限
+			GrantAuthorization(agAccesss,passList,egElevators,cardno,0);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,6 +196,34 @@ public class SingleVisitorController {
 		map.put("status", bool);
 		map.put("message", message);
 		return map;
+	}
+    //门禁,通道  int authority[] = { 1, 1, 1, 1 };
+	public static void GrantAuthorization(List<Access> agAccesss,List<Passageway> passList,List<Elevator> egElevators,String cardno,int flag) {
+		int authority[] = { 0, 0, 0, 0 };
+		int lay[] = { 0, 0, 0, 0, 0 };
+		if(flag==1) {
+			authority[0]=1;
+			authority[1]=1;
+			authority[2]=1;
+			authority[3]=1;
+			lay[0]=255;
+			lay[1]=255;
+			lay[2]=255;
+			lay[3]=255;
+			lay[4]=255;
+		}
+		for(Access ac:agAccesss) {
+		   AControlUtil.AddUserCard(Long.valueOf(ac.getCsn()), ac.getCip(), Long.valueOf(cardno), (byte) 0x20, (byte) 0x29, (byte) 0x12,
+					(byte) 0x31, authority);
+		}
+		for(Passageway pa:passList) {
+			   AControlUtil.AddUserCard(Long.valueOf(pa.getControllerSN()), pa.getControllerIP(), Long.valueOf(cardno), (byte) 0x20, (byte) 0x29, (byte) 0x12,
+						(byte) 0x31, authority);
+		}
+		for(Elevator ea:egElevators) {
+			LadderControlUtil.LadderControlUserCard(Long.valueOf(ea.getControllerSN()), ea.getControllerIP(), Long.valueOf(cardno), 1, (byte) 0x20, (byte) 0x29,
+					(byte) 0x12, (byte) 0x31, lay[0], lay[1], lay[2], lay[3], lay[4]);
+		}
 	}
 	/**
 	 * 根据身份证号码查找对应访客信息

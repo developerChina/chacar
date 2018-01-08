@@ -217,8 +217,8 @@
 				  <td>${employee.cardno }</td>
 				  <td>
 			        <c:choose>
-			        	<c:when test="${employee.carstatus == 1 }"><font color="green">已授权</font></c:when>
-			        	<c:otherwise><font color="red">未授权</font></c:otherwise>
+			        	<c:when test="${employee.carstatus == 1 }"><font color="green">内部员工授权</font></c:when>
+			        	<c:otherwise><font color="red">外部员工授权</font></c:otherwise>
 			        </c:choose>
 				  </td>
 				  <td>${employee.job.name  }</td>
