@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
 import org.core.dao.queuing.provider.QueuingAuthorityProvider;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
-import org.apache.ibatis.annotations.Update;
 
 public interface QueuingDao {
 //卸货岛
@@ -82,16 +83,16 @@ public interface QueuingDao {
 	void addO(Ordinary ordinary);
 	
 	@Select(" select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number desc limit 1")
-	Ordinary selectMaxOByLand(int landno);
+	Ordinary selectMaxOByLand(@Param("landno")int landno);
 
-	@Select(" select * from "+Ordinary.tableName+" where car_code= #{carno} ")
-	Ordinary selectOBycarno(String carno);
+	@Select(" select * from "+Ordinary.tableName+" where island_no= #{landno} and car_code= #{carno} ")
+	Ordinary selectOBycarno(@Param("landno")int landno,@Param("carno")String carno);
 	
 	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landno} order by queue_number")
 	List<QueuingVip> selectVAll(int landno);
 
-	@Select(" select * from "+QueuingVip.tableName+" where car_code= #{carno} ")
-	QueuingVip selectVBycarno(String car_code);
+	@Select(" select * from "+QueuingVip.tableName+" where island_no= #{landno} and car_code= #{carno} ")
+	QueuingVip selectVBycarno(@Param("landno")int landno,@Param("carno")String carno);
 
 	@Select("select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number")
 	List<Ordinary> selectOAll(int landno);

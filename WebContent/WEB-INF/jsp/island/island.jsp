@@ -123,7 +123,7 @@
 	        					 tbody.empty();
 	        					 loopQueue(tbody,obj.list);
 	        					 layer.open({
-	        							content: "取号成功",
+	        						 	content: obj.message,
 	        							skin: 'msg',
 	        							time: 1
 	        						 });
@@ -153,6 +153,11 @@
 	        	 $.post("${ctx}/queuingI/addQueue",{island_no:no,car_code:carno.toString(),isadd:1},
 	        			 function(obj){
 			        		 if(obj.status){
+			        			 layer.open({
+	        							content: obj.message,
+	        							skin: 'msg',
+	        							time: 1
+	        						 });
 			        			 $("#all").html(obj.all);
 	        					 $("#waiting").html(obj.waiting);
 	        					 var tbody=$("#list").find("tbody");

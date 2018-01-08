@@ -58,7 +58,7 @@ public class QueuingConteoller {
 	}
 	@RequestMapping(value = "/queuingI/addQueue")
 	@ResponseBody		
-	public Object addQueue(@ModelAttribute Ordinary ordinary,Integer isadd) {
+	public synchronized Object addQueue(@ModelAttribute Ordinary ordinary,Integer isadd) {
 		Map<String, Object> map=new HashMap<>();
 		//判断卸货岛是否存在
 		Island island=queuingService.selectIByNo(ordinary.getIsland_no());
@@ -66,16 +66,34 @@ public class QueuingConteoller {
 			//判断车辆是否入场
 			LocationInout inout= inoutService.selectNewRecord(ordinary.getCar_code());
 			if(inout!=null){
+				String message="";
 				if(isadd==0){
-					//判断是否添加
-					Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
-					if(maxo!=null){
-						ordinary.setQueue_number(maxo.getQueue_number()+1);
+					QueuingVip exv=queuingService.selectVBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+					if(exv!=null){
+						message="VIP正在排队";
 					}else{
-						ordinary.setQueue_number(1);
+						ordinary.setRemarks("普通号");
+						Ordinary exo=queuingService.selectOBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+						Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
+						if(exo!=null){
+							if(!exo.getCar_code().equals(maxo.getCar_code())){
+								ordinary.setQueue_number(maxo.getQueue_number()+1);
+								ordinary.setId(exo.getId());
+								queuingService.updateO(ordinary); 
+							}
+						}else{
+							if(maxo!=null){
+								ordinary.setQueue_number(maxo.getQueue_number()+1);
+							}else{
+								ordinary.setQueue_number(1);
+							}
+							queuingService.addO(ordinary);
+						}
+						message="排队成功";
 					}
-					ordinary.setRemarks("普通号");
-					queuingService.addO(ordinary);
+					
+				}else{
+					message="查询成功";
 				}
 				//查询车辆排队信息
 				List<Object> returnList=new ArrayList<>();
@@ -104,6 +122,7 @@ public class QueuingConteoller {
 						}
 					}
 				}
+				map.put("message", message);
 				map.put("status", true);
 				map.put("waiting", waiting);
 				map.put("all", vips.size()+os.size());
@@ -436,7 +455,7 @@ public class QueuingConteoller {
 			int queue_number = new Integer(request.getParameter("queue_number"));
 			int island_no = new Integer(request.getParameter("island_no"));
 			Map<String,Object> map = new HashMap<>();
-			String flag = queuingService.addValidate(car_code,judge);
+			String flag = queuingService.addValidate(island_no,car_code,judge);
 				//judge=1-->VIP judge=2-->普通 验证车牌号是否已经存在
 				if(!"".equals(flag)){
 					map.put("status", false);

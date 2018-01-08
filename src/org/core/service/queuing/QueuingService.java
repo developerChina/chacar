@@ -51,8 +51,8 @@ public interface QueuingService {
 	void addO(Ordinary ordinary);
 	
 	Ordinary selectMaxOByLand(int landid);
-	Ordinary selectOBycarno(String carno);
-
+	Ordinary selectOBycarno(int landno,String carno);
+	QueuingVip selectVBycarno(int landno,String carno);
 	List<QueuingVip> selectVAll(int landid);
 
 	List<Ordinary> selectOAll(int landid);
@@ -69,7 +69,7 @@ public interface QueuingService {
 
 	void addConteollerO(Ordinary ordinary);
 //添加验证的友好提示
-	String addValidate(String car_code, String judge);
+	String addValidate(int landno,String car_code, String judge);
 
 	String IaddValidate(String no, String term);
 
@@ -78,5 +78,7 @@ public interface QueuingService {
 	String position(int island_no, int queue_number);
 
 	String plain(int island_no, int queue_number);
+
+	void updateO(Ordinary ordinary);
 	
 }

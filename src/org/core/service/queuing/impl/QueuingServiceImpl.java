@@ -132,10 +132,10 @@ public class QueuingServiceImpl implements QueuingService {
 	@Override
 	public void addV(QueuingVip queuingVip) {
 		//判断 根据车牌号查vip表  
-		QueuingVip exv=queuingDao.selectVBycarno(queuingVip.getCar_code());
+		QueuingVip exv=queuingDao.selectVBycarno(queuingVip.getIsland_no(),queuingVip.getCar_code());
 		if(exv==null){
 			//根据车牌号查普通表 有值就删除了它
-			Ordinary exo=queuingDao.selectOBycarno(queuingVip.getCar_code());
+			Ordinary exo=queuingDao.selectOBycarno(queuingVip.getIsland_no(),queuingVip.getCar_code());
 			  if(exo!=null){
 				  //将普通表重新排序
 				  int selectId = queuingDao.delSort(queuingVip.getCar_code());
@@ -254,15 +254,8 @@ public class QueuingServiceImpl implements QueuingService {
 	//往普通队列表写数据
 	@Override
 	public void addO(Ordinary ordinary) {
-		Ordinary exo=queuingDao.selectOBycarno(ordinary.getCar_code());
-		QueuingVip exv=queuingDao.selectVBycarno(ordinary.getCar_code());
-		if(exo==null&&exv==null){
-			queuingDao.addO(ordinary);
-		}
+		queuingDao.addO(ordinary);
 	}
-	
-	
-
 
 	//删除时重新排序
 	public void vipAgain(Integer id) {
@@ -283,8 +276,8 @@ public class QueuingServiceImpl implements QueuingService {
 		return queuingDao.selectMaxOByLand(landno);
 	}
 	@Override
-	public Ordinary selectOBycarno(String carno) {
-		return queuingDao.selectOBycarno(carno);
+	public Ordinary selectOBycarno(int landno,String carno) {
+		return queuingDao.selectOBycarno(landno,carno);
 	}
 	@Override
 	public List<QueuingVip> selectVAll(int landno) {
@@ -595,8 +588,8 @@ public class QueuingServiceImpl implements QueuingService {
 		@Override
 		public void addConteollerO(Ordinary ordinary) {
 			
-			Ordinary exo=queuingDao.selectOBycarno(ordinary.getCar_code());
-			QueuingVip exv=queuingDao.selectVBycarno(ordinary.getCar_code());
+			Ordinary exo=queuingDao.selectOBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+			QueuingVip exv=queuingDao.selectVBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
 			if(exo==null&&exv==null){
 				int max =ordAddSort(ordinary.getIsland_no(),ordinary.getQueue_number());
 			 	ordinary.setQueue_number(max);
@@ -605,11 +598,11 @@ public class QueuingServiceImpl implements QueuingService {
 		}
 //添加验证的友好提示
 		@Override
-		public String addValidate(String car_code,String judge) {
+		public String addValidate(int landno,String car_code,String judge) {
 			String result="";
 			//vip表
 			if(judge.equals("1")){
-				QueuingVip exv=queuingDao.selectVBycarno(car_code);
+				QueuingVip exv=queuingDao.selectVBycarno(landno,car_code);
 				if(exv==null){
 					//没有这个车牌
 					result="";
@@ -620,9 +613,9 @@ public class QueuingServiceImpl implements QueuingService {
 			}
 			//普通表
 			if(judge.equals("2")){
-				Ordinary exo=queuingDao.selectOBycarno(car_code);
+				Ordinary exo=queuingDao.selectOBycarno(landno,car_code);
 				if(exo==null){
-					QueuingVip exv=queuingDao.selectVBycarno(car_code);
+					QueuingVip exv=queuingDao.selectVBycarno(landno,car_code);
 					//没有这个车牌
 					if(exv==null){
 						result="";
@@ -696,6 +689,14 @@ public class QueuingServiceImpl implements QueuingService {
 				}
 			}
 			return resultQueue;
+		}
+		@Override
+		public QueuingVip selectVBycarno(int landno, String carno) {
+			return queuingDao.selectVBycarno(landno,carno);
+		}
+		@Override
+		public void updateO(Ordinary ordinary) {
+			queuingDao.UpdO(ordinary);
 		}
 		
 		
