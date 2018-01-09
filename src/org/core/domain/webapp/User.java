@@ -21,6 +21,8 @@ public class User implements Serializable {
 	private String password;	// 密码
 	private Integer status;		// 状态
 	private Date createDate;	// 建档日期
+	//2018-1-7业务增加字段
+	private String userPower;	// 用户权限
 	// 无参数构造器
 	public User() {
 		super();
@@ -63,6 +65,12 @@ public class User implements Serializable {
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+	public String getUserPower() {
+		return userPower;
+	}
+	public void setUserPower(String userPower) {
+		this.userPower = userPower;
 	}
 	@Override
 	public String toString() {

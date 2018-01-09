@@ -23,8 +23,17 @@
 	<script type="text/javascript">
 	
 	$(function(){
+		
     	/** 员工表单提交 */
-		$("#userForm").submit(function(){
+		$("#userFormadd").click(function(){
+			
+			var vals = [];
+			$('input:checkbox:checked').each(function (index, item) {
+			        vals.push($(this).val());
+			});
+			 
+			//alert(vals);
+			
 			var username = $("#username");
 			var status = $("#status");
 			var loginname = $("#loginname");
@@ -42,21 +51,18 @@
 			}else if ($.trim(password.val()) == ""){
 				msg = "密码不能为空！";
 				password.focus();
+			}else if (vals.length == 0){
+				msg = "请配置一个系统！";
 			}
+			
 			if (msg != ""){
 				$.ligerDialog.error(msg);
 				return false;
 			}else{
-				return true;
+				/* return true; */
+				$("#userForm").submit();
 			}
-			alert();
-			 var vals = [];
-			$('input:checkbox:checked').each(function (index, item) {
-			       vals.push($(this).val());
-			      
-			});
-			 alert(vals);
-			//$("#userForm").submit();
+			
 		});
     });
 	</script>
@@ -90,35 +96,35 @@
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd" colspan="4">
-		    			   <input type="checkbox" name="ajgroup" id="authority_1" value="1" checked/>系统管理
+		    			   <input type="checkbox" name="userPower" id="authority_1" value="1" checked/>系统管理
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_2" value="2" checked/>员工管理 
+		    			   <input type="checkbox" name="userPower" id="authority_2" value="2" checked/>员工管理 
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_3" value="3" checked/>访客系统
+		    			   <input type="checkbox" name="userPower" id="authority_3" value="3" checked/>访客系统
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_4" value="4" checked/>门禁系统
+		    			   <input type="checkbox" name="userPower" id="authority_4" value="4" checked/>门禁系统
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_5" value="5" checked/>梯控系统
-		    			   &nbsp;
+		    			   <input type="checkbox" name="userPower" id="authority_5" value="5" checked/>梯控系统
+		    			   &nbsp; 
 		    			</td>
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd" colspan="4">
-		    			   <input type="checkbox" name="ajgroup" id="authority_6" value="6" checked/>通道系统
+		    			   <input type="checkbox" name="userPower" id="authority_6" value="6" checked/>通道系统
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_7" value="7" checked/>车辆系统
+		    			   <input type="checkbox" name="userPower" id="authority_7" value="7" checked/>车辆系统
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_8" value="8" checked/>定位系统
+		    			   <input type="checkbox" name="userPower" id="authority_8" value="8" checked/>定位系统
 		    			   &nbsp;
-		    			   <input type="checkbox" name="ajgroup" id="authority_9" value="9" checked/>排队叫号
-		    			   &nbsp;
+		    			   <input type="checkbox" name="userPower" id="authority_9" value="9" checked/>排队叫号
+		    			   &nbsp; 
 		    			</td>
 		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
-			<tr><td align="left" class="fftd"><input type="submit" value="&nbsp;添加&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);"  value="&nbsp;返回 &nbsp;"></td></tr>
+			<tr><td align="left" class="fftd"><input type="button" id="userFormadd" value="&nbsp;添加&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);"  value="&nbsp;返回 &nbsp;"></td></tr>
 		  </table>
 		 </form>
 	</td>

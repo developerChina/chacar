@@ -76,6 +76,9 @@ public class UserDynaSqlProvider {
 				if(user.getPassword() != null && !user.getPassword().equals("")){
 					VALUES("password", "#{password}");
 				}
+				if(user.getUserPower() != null && !user.getUserPower().equals("")){
+					VALUES("userPower", "#{userPower}");
+				}
 			}
 		}.toString();
 	}
@@ -99,6 +102,9 @@ public class UserDynaSqlProvider {
 					}
 					if(user.getCreateDate()!= null){
 						SET(" create_date = #{createDate} ");
+					}
+					if(user.getUserPower()!= null){
+						SET(" userPower = #{userPower} ");
 					}
 					WHERE(" id = #{id} ");
 				}

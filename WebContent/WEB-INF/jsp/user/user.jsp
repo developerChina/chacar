@@ -123,7 +123,8 @@
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
 					 <td>${user.loginname }</td>
-					  <td>${user.password }</td>
+					  <td>${user.password}</td> 
+					  <%--<td>********</td>--%>
 					  <td>${user.username }</td>
 					  <td>${user.status }</td>
 					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>

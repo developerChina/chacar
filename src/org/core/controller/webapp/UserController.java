@@ -131,6 +131,7 @@ public class UserController {
 		}else{
 			// 执行修改操作
 			hrmService.modifyUser(user);
+			//System.out.println(user.getUserPower());
 			// 设置客户端跳转到查询请求
 			mv.setViewName("redirect:/user/selectUser");
 		}
@@ -156,6 +157,7 @@ public class UserController {
 		}else{
 			// 执行添加操作
 			hrmService.addUser(user);
+			//System.out.println(user.getUserPower());
 			// 设置客户端跳转到查询请求
 			mv.setViewName("redirect:/user/selectUser");
 		}
