@@ -44,7 +44,7 @@
    };
 		
 		
-    	/** 员工表单提交 */
+    	/** 员工表单提交 git*/
 		$("#userUpdate").click(function(){
 			
 			var vals = [];
