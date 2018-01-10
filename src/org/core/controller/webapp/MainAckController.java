@@ -52,11 +52,10 @@ public class MainAckController {
 	@RequestMapping(value="/leftAck")
 	public ModelAndView leftAck(Model model,HttpSession session,ModelAndView mv)
 	{
-		System.out.println("============");
 		/** 查询用户信息     */
 		User users = (User)session.getAttribute(GlobleConstants.USER_SESSION);
 		System.out.println(users.getLoginname());
-		model.addAttribute("authlist", users);
+		model.addAttribute("userPower", "2,3,4,9");
 		// 设置客户端跳转到查询请求
 		mv.setViewName("left");
 		// 返回ModelAndView
