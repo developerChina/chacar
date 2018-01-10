@@ -68,12 +68,24 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	访客姓名：<input type="text" name="cardName" size="20">
+					    	&nbsp;&nbsp;访客姓名：<input type="text" name="cardName" size="20">
 					    	访客身份证号：<input type="text" name="cardID" size="20">
-					    	访问时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+					    	访客电话：<input type="text" name="telephone" size="20">
+					    </td>
+					  </tr>
+					  <tr>
+					  <td class="font3">
+					  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					  </td>
+					  </tr>
+					  <tr>
+					    <td class="font3">
+					    	被访人姓名：<input type="text" name="bevisitedName" size="20">
+					    	&nbsp;&nbsp;被访人电话：<input type="text" name="bevisitedTel" size="20">
+					    	访问时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
 									name="sDate" size="20"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
 									name="eDate" size="20"/>
-					    	<input type="submit" value="搜索"/>
+					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -92,25 +104,32 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>访客名称</td>
 			  <td>访客身份证</td>
+			  <td>访客电话</td>
 			  <td>控制器</td>
 			  <td>被访人</td>
 			  <td>时间</td>
 			  <td>状态</td>
 			  <td>证件照片</td>
+			  <!-- 
 			  <td>现场照片</td>
+			   -->
 			</tr>
 			<c:forEach items="${requestScope.trajectorys}" var="trajectory" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${trajectory.id}"></td>
 					 <td>${trajectory.recordVisitors.cardName }</td>
 					  <td>${trajectory.recordVisitors.cardID }</td>
+					  <td>${trajectory.recordVisitors.telephone }</td>
 					  <td>${trajectory.controllerDesc }</td>
 					  <td>
 						<c:forEach items="${trajectory.employees }" var="employe" varStatus="stat">
 							${employe.name }<br/>
 						</c:forEach>
 					  </td>
-					  <td>${trajectory.optDate }</td>
+					  <td>
+					  
+					  ${trajectory.optDate }
+					  </td>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.visitStatus!=null && trajectory.recordVisitors.visitStatus!='' }">
 					      <c:if test="${trajectory.recordVisitors.visitStatus==0}">
@@ -140,6 +159,7 @@
 						  </a>
 					     </c:if>
 					  </td>
+					  <!-- 
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.photo1!=null && trajectory.recordVisitors.photo1!='' }">
 					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.photo1 }">
@@ -147,6 +167,7 @@
 						  </a>
 					     </c:if>
 					  </td>
+					   -->
 				</tr>
 			</c:forEach>
 		  </table>

@@ -60,4 +60,9 @@ public class RecordBevisitedsServiceImpl implements RecordBevisitedsService{
 	public List<Employee> selectBycardNo(String cardNo, Date optDate) {
 		return dao.selectBycardNo(cardNo,optDate);
 	}
+
+	@Override
+	public List<RecordBevisiteds> selectByEntity(RecordBevisiteds entity) {
+		return dao.selectByEntity(entity);
+	}
 }

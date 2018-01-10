@@ -26,6 +26,7 @@
 							<span class="fl"></span>
 							<span>访客信息</span>
 						</div>
+						<!-- 
 						<div id="capctrl-div" style="position: absolute;display: none">
 							<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="420px" height="315px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
 							<param name="Visible" value="0">
@@ -56,6 +57,7 @@
 							<param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
 							</object>
 						</div>
+						 -->
 						<div class="photoArea clearfix">
 							<div class="fl">
 								<img id="cardPhoto-img" src="${ctx}/images/photoOne.png" alt="" />
@@ -284,20 +286,21 @@
 			}
 		}
 		
-		var capCtrl;
-		try {
+		//var capCtrl;
+		//try {
 			//拍照控件初始化
-			capCtrl = document.getElementById("CapCtrl");
-			capCtrl.SwitchWatchOnly();
-	    }
-	    catch (e) {
-	        console.info(e);
-	    }
+		//	capCtrl = document.getElementById("CapCtrl");
+		//	capCtrl.SwitchWatchOnly();
+	   // }
+	    //catch (e) {
+	   //     console.info(e);
+	   // }
 		
 		/**
 		* 拍照
 		*/
 		function photograph(){
+			return ;
 			var cardid=$("#cardID").val();
 			if(cardid==""){
 				alert("请登记身份证信息");

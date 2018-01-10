@@ -6,7 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.visitor.RecordVisitors;
-import org.core.util.BeanUtil;;
+import org.core.util.BeanUtil;
+import org.core.util.StringUtils;;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -43,11 +44,17 @@ public class RecordVisitorsProvider {
 			{
 				SELECT("*");
 				FROM(RecordVisitors.tableName);
-				if(entity.getCardName() != null && !entity.getCardName().equals("")){
+				if(StringUtils.isNotBlank(entity.getRecordID())){
+					WHERE(" recordID in ("+entity.getRecordID()+") ");
+				}
+				if(StringUtils.isNotBlank(entity.getCardName())){
 					WHERE(" cardName LIKE CONCAT ('%',#{cardName},'%') ");
 				}
-				if(entity.getCardID() != null && !entity.getCardID().equals("")){
+				if(StringUtils.isNotBlank(entity.getCardID())){
 					WHERE(" cardID LIKE CONCAT ('%',#{cardID},'%') ");
+				}
+				if(StringUtils.isNotBlank(entity.getTelephone())){
+					WHERE(" telephone LIKE CONCAT ('%',#{telephone},'%') ");
 				}
 			}
 		}.toString();

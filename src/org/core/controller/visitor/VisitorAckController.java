@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.visitor.VisitorInfo;
@@ -348,14 +349,39 @@ public class VisitorAckController {
 			pageModel.setPageIndex(pageIndex);
 		}
 		
+    	
+    	//被访人过滤
+		String bevisitedName=request.getParameter("bevisitedName");
+		String bevisitedTel=request.getParameter("bevisitedTel");
+		String recordIDs="";
+		if(StringUtils.isNotBlank(bevisitedName) || StringUtils.isNotBlank(bevisitedTel)){
+			StringBuffer ids=new StringBuffer();
+			RecordBevisiteds entity=new RecordBevisiteds();
+			entity.setBevisitedName(bevisitedName);
+			entity.setBevisitedTel(bevisitedTel);
+			List<RecordBevisiteds> rbs=recordBevisitedsService.selectByEntity(entity);
+			for (RecordBevisiteds r : rbs) {
+				ids.append(",'").append(r.getRecordID()).append("'");
+			}
+			if(StringUtils.isNotBlank(ids.toString())){
+				recordIDs=ids.substring(1);
+			}
+		}
 		
+		//访客过滤
 		String cardName=request.getParameter("cardName");
 		String cardID=request.getParameter("cardID");
+		String telephone=request.getParameter("telephone");
 		
-		if(StringUtils.isNotBlank(cardName) || StringUtils.isNotBlank(cardID)){
+		if(StringUtils.isNotBlank(cardName) || 
+				StringUtils.isNotBlank(cardID) || 
+				StringUtils.isNotBlank(telephone) || 
+				StringUtils.isNotBlank(recordIDs.toString())){
 			RecordVisitors entity=new RecordVisitors();
 			entity.setCardName(cardName);
 			entity.setCardID(cardID);
+			entity.setTelephone(telephone);
+			entity.setRecordID(recordIDs);
 			List<RecordVisitors> rs=recordVisitorsService.selectByEntity(entity);
 			StringBuffer cardNo=new StringBuffer();
 			if(rs.size()==1){
@@ -364,7 +390,11 @@ public class VisitorAckController {
 				for (RecordVisitors r : rs) {
 					cardNo.append(",'").append(r.getCardNo()).append("'");
 				}
-				trajectory.setCardNo(cardNo.toString().substring(1));
+				if(StringUtils.isNotBlank(cardNo.toString())){
+					trajectory.setCardNo(cardNo.toString().substring(1));
+				}else{
+					trajectory.setCardNo("null");
+				}
 			}
 		}
 		
