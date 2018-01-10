@@ -1,6 +1,14 @@
 package org.core.controller.webapp;
 
+import javax.servlet.http.HttpSession;
+
+import org.core.domain.webapp.User;
+import org.core.service.webapp.HrmService;
+import org.core.util.GlobleConstants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,6 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
  * */
 @Controller
 public class MainAckController {
+	
+	/**
+	 * 自动注入UserService
+	 * */
+	@Autowired
+	@Qualifier("hrmService")
+	private HrmService hrmService;
+	
 	
 	@RequestMapping(value="/loginAck")
 	 public ModelAndView loginAck(ModelAndView mv){
@@ -32,8 +48,15 @@ public class MainAckController {
 		// 返回ModelAndView
 		return mv;
 	}
+
 	@RequestMapping(value="/leftAck")
-	 public ModelAndView leftAck(ModelAndView mv){
+	public ModelAndView leftAck(Model model,HttpSession session,ModelAndView mv)
+	{
+		System.out.println("============");
+		/** 查询用户信息     */
+		User users = (User)session.getAttribute(GlobleConstants.USER_SESSION);
+		System.out.println(users.getLoginname());
+		model.addAttribute("authlist", users);
 		// 设置客户端跳转到查询请求
 		mv.setViewName("left");
 		// 返回ModelAndView

@@ -37,7 +37,7 @@
 	<div style="margin:10px;background-color:#FFFFFF; text-align:left;">
 		<table width="200" height="100%" border="0" cellpadding="0" cellspacing="0" class="left_nav_bg">
 		  
-		  <tr><td class="left_nav_top"><div class="font1">系统管理</div></td></tr>
+		  <tr><td class="left_nav_top"><div class="font1">系统管理 dd  ${authlist.username}</div></td></tr>
 		  <tr valign="top">
 		    <td class="left_nav_bgshw" height="30">
 			  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/user/selectUser" target="main">用户管理</a></img></p>
