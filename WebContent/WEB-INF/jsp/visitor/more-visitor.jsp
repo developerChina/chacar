@@ -54,7 +54,7 @@
 				</div>
 				<div class="bottom clearfix">
 					<div class="fl left">
-					  <div id="datagrid1" class="mini-datagrid" style="width:671px;height:271px;" idField="cardID" showPager="false" allowSortColumn="false" frozenStartColumn="0" frozenEndColumn="2">
+					  <div id="datagrid1" class="mini-datagrid"  idField="cardID" showPager="false" allowSortColumn="false" frozenStartColumn="0" frozenEndColumn="2">
 					      <div property="columns">
 					      	  <div type="checkcolumn"></div>
 					          <div cellCls="actionIcons" name="action" width="40" headerAlign="center" align="center" renderer="onActionRenderer">操作</div>
@@ -82,10 +82,14 @@
 							<img id="cardPhoto-img" src="${ctx}/images/photoOne.png" alt="" />
 							<p>证件照片</p>
 						</div>
-						<div class="fl" style="width:246px;height:212px">
-							<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" style="width:240px;height:180px"/>
+						<div class="fl" >
+							<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" />
 							<p>拍照照片</p>
 						</div>
+						<!-- 
+						style="width:671px;height:271px;"
+						style="width:246px;height:212px"
+						style="width:240px;height:180px"
 						<div id="capctrl-div" style="position: absolute;display: none">
 							<object classid="clsid:34681DB3-58E6-4512-86F2-9477F1A9F3D8" id="CapCtrl" width="420px" height="315px" codebase="ImageCapOnWeb.cab#version=1,2,0,0" style="margin:0;padding:0;float:left;">
 							<param name="Visible" value="0">
@@ -116,6 +120,7 @@
 							<param name="key2" value="UoteC+oam7pRXJD+LR6+PearD5PI+tnbTOPp1vs13dnBQrPkJFItST16wBOTEaiSWUwWZ1JnKUHcCkvM+Ie+CeRbZvvaT2ATi9yZ1Q==">
 							</object>
 						</div>
+						-->
 					</div>
 					<div class="page fr">
 						<a href="${ctx}/vindex.jsp" class="fl prevpage"></a>
