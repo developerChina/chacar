@@ -270,19 +270,20 @@
 			return cardInfo;
 		}
         
-		var capCtrl;
-		try {
+		//var capCtrl;
+		//try {
 			//拍照控件初始化
-			capCtrl = document.getElementById("CapCtrl");
-			capCtrl.SwitchWatchOnly();
-	    }
-	    catch (e) {
-	        console.info(e);
-	    }
+		//	capCtrl = document.getElementById("CapCtrl");
+		//	capCtrl.SwitchWatchOnly();
+	    //}
+	   // catch (e) {
+	   //     console.info(e);
+	   // }
 		/**
 		* 拍照
 		*/
 		function photograph(){
+			return;
 			var row=grid.getSelected();
 			if(row==null){
 				alert("请登记身份证信息");

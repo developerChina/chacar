@@ -44,4 +44,7 @@ public interface RecordBevisitedsDao {
 				+ ")"
 			+ ")" )
 	List<Employee> selectBycardNo(@Param("cardNo")String cardNo,@Param("optDate")Date optDate);
+
+	@SelectProvider(type=RecordBevisitedsProvider.class,method="selectByEntity")
+	List<RecordBevisiteds> selectByEntity(RecordBevisiteds entity);
 }

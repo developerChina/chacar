@@ -50,6 +50,9 @@ public class VisitorInfoProvider {
 					if(StringUtils.isNotBlank(entity.getCardID())){
 						WHERE("  cardID LIKE CONCAT ('%',#{entity.cardID},'%') ");
 					}
+					if(StringUtils.isNotBlank(entity.getTelephone())){
+						WHERE(" telephone LIKE CONCAT ('%',#{entity.telephone},'%') ");
+					}
 				}
 			}
 		}.toString();

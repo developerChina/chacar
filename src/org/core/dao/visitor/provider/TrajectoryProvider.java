@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.core.domain.visitor.Trajectory;;
+import org.core.domain.visitor.Trajectory;
+import org.core.util.StringUtils;;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -19,16 +20,14 @@ public class TrajectoryProvider {
 				SELECT("*");
 				FROM(Trajectory.tableName);
 				if(params.get("entity") != null){
-					
 					Trajectory entity = (Trajectory) params.get("entity");
-					if(entity.getCardNo()!= null && !"".equals(entity.getCardNo())){
+					if(StringUtils.isNotBlank(entity.getCardNo())){
 						if(entity.getCardNo().contains(",")){
 							WHERE(" cardNo in ( "+entity.getCardNo()+" )");
 						}else{
 							WHERE(" cardNo = #{entity.cardNo} ");
 						}
 					}
-					
 					Date startDate = (Date) params.get("startDate");
 					Date endDate = (Date) params.get("endDate");
 					if(startDate!=null&&endDate!=null){
@@ -54,16 +53,14 @@ public class TrajectoryProvider {
 				SELECT("count(*)");
 				FROM(Trajectory.tableName);
 				if(params.get("entity") != null){
-					
 					Trajectory entity = (Trajectory) params.get("entity");
-					if(entity.getCardNo()!= null && "".equals(entity.getCardNo())){
+					if(StringUtils.isNotBlank(entity.getCardNo())){
 						if(entity.getCardNo().contains(",")){
 							WHERE(" cardNo in ( "+entity.getCardNo()+" )");
 						}else{
 							WHERE(" cardNo = #{entity.cardNo} ");
 						}
 					}
-					
 					Date startDate = (Date) params.get("startDate");
 					Date endDate = (Date) params.get("endDate");
 					if(startDate!=null&&endDate!=null){

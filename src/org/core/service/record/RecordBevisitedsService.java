@@ -49,6 +49,13 @@ public interface RecordBevisitedsService {
 	 * @param optDate
 	 * @return
 	 */
-	List<Employee> selectBycardNo(String cardNo, Date optDate);	
+	List<Employee> selectBycardNo(String cardNo, Date optDate);
+
+	/**
+	 * 不分页
+	 * @param entity
+	 * @return
+	 */
+	List<RecordBevisiteds> selectByEntity(RecordBevisiteds entity);	
 
 }

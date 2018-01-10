@@ -124,14 +124,14 @@
      
      
 	function findRecordByRead(){
-		//var cardInfo=readIDCard();
-		//if(cardInfo.state){
-			//$("#cardid").val(cardInfo.message.code);
-			//findRecord(cardInfo.message.code);
-			findRecord('150207199510088612');
-		//}else{
-			//alert(cardInfo.message);
-		//}
+		var cardInfo=readIDCard();
+		if(cardInfo.state){
+			$("#cardid").val(cardInfo.message.code);
+			findRecord(cardInfo.message.code);
+		}else{
+			alert(cardInfo.message);
+		}
+		//findRecord('150207199510088612');
 	}
 	
 	

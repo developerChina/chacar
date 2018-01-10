@@ -74,6 +74,7 @@
 					    <td class="font3">
 					    	姓名：<input type="text" name="cardName">
 					    	身份证：<input type="text" name="cardID">
+					    	电话：<input type="text" name="telephone">
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
 					  </tr>
@@ -93,9 +94,10 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
 			  <td>身份证号码</td>
-			  <td>出生日期</td>
 			  <td>性别</td>
 			  <td>民族</td>
+			  <td>电话</td>
+			  <td>工作单位</td>
 			  <td>地址</td>
 			</tr>
 			<c:forEach items="${requestScope.visitors}" var="visitor" varStatus="stat">
@@ -103,9 +105,10 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${visitor.visitorID}"></td>
 					 <td>${visitor.cardName }</td>
 					 <td>${visitor.cardID }</td>
-					 <td><f:formatDate value="${visitor.cardBirthday}" type="date" dateStyle="long"/></td>
 					 <td>${visitor.cardSex }</td>
 					 <td>${visitor.cardNation }</td>
+					 <td>${visitor.telephone }</td>
+					 <td>${visitor.company }</td>
 					 <td>${visitor.cardAddress }</td>
 				</tr>
 			</c:forEach>

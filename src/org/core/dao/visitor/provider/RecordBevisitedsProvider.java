@@ -4,7 +4,8 @@ import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.visitor.RecordBevisiteds;
-import org.core.util.BeanUtil;;
+import org.core.util.BeanUtil;
+import org.core.util.StringUtils;;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -52,6 +53,22 @@ public class RecordBevisitedsProvider {
 		 * 分页后续再补 if(params.get("pageModel") != null){ sql += " limit
 		 * #{pageModel.firstLimitParam} , #{pageModel.pageSize} "; }
 		 */
+		return sql;
+	}
+	
+	public String selectByEntity(RecordBevisiteds entity) {
+		String sql = new SQL() {
+			{
+				SELECT("*");
+				FROM(RecordBevisiteds.tableName);
+				if(StringUtils.isNotBlank(entity.getBevisitedName())){
+					WHERE(" bevisitedName LIKE CONCAT ('%',#{bevisitedName},'%') ");
+				}
+				if(StringUtils.isNotBlank(entity.getBevisitedTel())){
+					WHERE(" bevisitedTel LIKE CONCAT ('%',#{bevisitedTel},'%') ");
+				}
+			}
+		}.toString();
 		return sql;
 	}
 
