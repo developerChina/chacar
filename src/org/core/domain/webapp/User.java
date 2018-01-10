@@ -12,7 +12,7 @@ import java.util.Date;
 public class User implements Serializable {
 
 	/**
-	 * 
+	 * git 提交
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;			// id

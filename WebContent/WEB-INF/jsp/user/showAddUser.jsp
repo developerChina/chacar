@@ -24,7 +24,7 @@
 	
 	$(function(){
 		
-    	/** 员工表单提交 */
+    	/** 员工表单提交git */
 		$("#userFormadd").click(function(){
 			
 			var vals = [];

@@ -13,6 +13,7 @@ import org.core.domain.webapp.User;;
  * @author 肖文吉	36750064@qq.com   
  * @date 2016年7月11日 上午11:19:23 
  * @version V1.0   
+ * git提交
  */
 public class UserDynaSqlProvider {
 	// 分页动态查询

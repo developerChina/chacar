@@ -43,7 +43,7 @@
 	 		   if(checkedBoxs.length < 1){
 	 			   $.ligerDialog.error("请选择一个需要删除的用户！");
 	 		   }else{
-	 			   /** 得到用户选中的所有的需要删除的ids */
+	 			   /** 得到用户选中的所有的需要删除的ids git */
 	 			   var ids = checkedBoxs.map(function(){
 	 				   return this.value;
 	 			   })
