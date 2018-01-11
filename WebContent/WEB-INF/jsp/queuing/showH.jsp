@@ -77,7 +77,7 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	卸货岛:<input type="text" name="car_code">&nbsp;&nbsp;
+					    	卸货岛:<input type="text" name="vagueiname">&nbsp;&nbsp;
 					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
 					    	<!-- 选择查看日期:
 					    	<select name="rtype" id="rtype">
@@ -112,8 +112,8 @@
 			  <td>驶入时间</td>
 			  <td>驶出时间</td>
 			  <td>操作时间</td>
-			  <td>备注</td>
-			  <td>操作员</td>
+			  <!-- <td>备注</td>
+			  <td>操作员</td> -->
 			</tr>
 			<c:forEach items="${requestScope.pageListH}" var="ph" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
@@ -129,8 +129,8 @@
 					  <td>
 					  ${ph.reduce}
 					  </td>
-					  <td>${ph.remarks}</td>
-					  <td>${ph.empname}</td>
+					  <%-- <td>${ph.remarks}</td>
+					  <td>${ph.empname}</td> --%>
 				</tr>
 			</c:forEach>
 		  </table>

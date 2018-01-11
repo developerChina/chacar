@@ -29,5 +29,21 @@ public class InoutController {
 		List<LocationInout> locationInouts = inoutService.findLocationAlarm(locationInout, pageModel);
 		model.addAttribute("locationInouts", locationInouts);
 		model.addAttribute("pageModel", pageModel);
+		model.addAttribute("model", locationInout);
+		
+		String pageParam="";
+		if(locationInout.getCominDate()!=null){
+			pageParam+="&cominDate="+locationInout.getCominDate();
+		}
+		if(locationInout.getOutDate()!=null){
+			pageParam+="&outDate="+locationInout.getOutDate();
+		}
+		if(locationInout.getVehicleCode()!=null){
+			pageParam+="&vehicleCode="+locationInout.getVehicleCode();
+		}
+		if(locationInout.getVehicleType()!=null){
+			pageParam+="&vehicleType="+locationInout.getVehicleType();
+		}
+		model.addAttribute("pageParam", pageParam);
 		return "location/showInout";
 	}}

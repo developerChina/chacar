@@ -142,15 +142,15 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	车主：<input type="text" name="driverID">
-							车辆类型：<input type="text" name="vehicleTypeID">
-							颜色类型：<input type="text" name="colorID">
-					    	车牌号码：<input type="text" name="vehicleCode">
+					    	车主：<input type="text" name="driverID" value="${model.driverID }">
+							车辆类型：<input type="text" name="vehicleTypeID" value="${model.vehicleTypeID }">
+							颜色类型：<input type="text" name="colorID" value="${model.colorID }">
+					    	车牌号码：<input type="text" name="vehicleCode" value="${model.vehicleCode }">
 					    	设备类型：
 							    <select name="deviceType"  style="width:143px;">
 					<option value="-1">-请选择设备类型-</option>
-					<option value="0">临时</option>
-					<option value="1">固定</option>
+					<option value="0" <c:if test="${model.deviceType==0}">selected</c:if>>临时</option>
+					<option value="1" <c:if test="${model.deviceType==1}">selected</c:if>>固定</option>
 					</select> 
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
@@ -203,7 +203,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/logisVehicle/selectlogisVehicle?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/logisVehicle/selectlogisVehicle?pageIndex={0}${pageParam}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

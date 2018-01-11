@@ -139,26 +139,26 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	经度：<input type="text" name="lng" size="15">
-					    	位置：<input type="text" name="posinfo">	
+					    	经度：<input type="text" name="lng" size="15" value="${model.lng}">
+					    	位置：<input type="text" name="posinfo" value="${model.posinfo}">	
 							接收时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="recvtime" id="recvtime" size="10"/>
+					name="recvtime" id="recvtime" size="10" value="${model.recvtime}"/>
 					    	 处理状态：
 							    <select name="handletype"  style="width:143px;">
-					<option value="-1">-请选择处理状态-</option>
-					<option value="1">已处理</option>
-					<option value="0">未处理</option>
-					</select> 
-							速度：<input type="text" name="veo" size="15">
+								<option value="-1">-请选择处理状态-</option>
+								<option value="1" <c:if test="${model.handletype==1}">selected</c:if> >已处理 </option>
+								<option value="0" <c:if test="${model.handletype==1}">selected</c:if> >未处理</option>
+								</select> 
+							速度：<input type="text" name="veo" size="15" value="${model.veo}">
 					    </td>
 					  </tr>
 					  <tr>
 					  	<td class="font3">
-					  		纬度：<input type="text" name="lat" size="15">
-					    	里程：<input type="text" name="totaldistance">
+					  		纬度：<input type="text" name="lat" size="15" value="${model.lat}">
+					    	里程：<input type="text" name="totaldistance" value="${model.totaldistance}">
 					    	G P S时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="gpstime" id="gpstime" size="10"/>
-							处理意见：<input type="text" name="handleidea" maxlength="18">
+					name="gpstime" id="gpstime" size="10" value="${model.gpstime}"/>
+							处理意见：<input type="text" name="handleidea" maxlength="18" value="${model.handleidea}">
 					    	<input type="submit" value="&nbsp;搜索&nbsp;" />
 					    	<input id="bingd" type="button" value="&nbsp;办理违规&nbsp;">
 					  </tr>
@@ -228,7 +228,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/Alarm/selectAlarm?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/Alarm/selectAlarm?pageIndex={0}${pageParam}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

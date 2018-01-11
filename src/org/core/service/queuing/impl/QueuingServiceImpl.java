@@ -95,13 +95,15 @@ public class QueuingServiceImpl implements QueuingService {
 		if(vague!=null && !"".equals(vague)){
 			String nos = "";
 			List<Island> vagueI = queuingDao.vagueI(vague);
-			for (Island Single : vagueI) {
-				nos+=Single.getNo()+",";
+			if(vagueI!=null&&vagueI.size()>0){
+				for (Island Single : vagueI) {
+					nos+=Single.getNo()+",";
+				}
+				//System.out.println(nos); 1,2,3,
+				nos = nos.substring(0,nos.length() - 1);
+				//System.out.println(nos); 1,2,3
+				queuingVip.setVagueiname(nos);
 			}
-			//System.out.println(nos); 1,2,3,
-			nos = nos.substring(0,nos.length() - 1);
-			//System.out.println(nos); 1,2,3
-			queuingVip.setVagueiname(nos);
 		}
 		Map<String,Object> params = new HashMap<>();
 		params.put("queuingVip", queuingVip);
@@ -124,17 +126,13 @@ public class QueuingServiceImpl implements QueuingService {
 		return queuingDao.AddVgetI();
 	}
 	
-	
-	//之前想法1添加前判断 如果普通表里也有 说明自己拍过队将普通表里的删除
-	//删除的条件是 卸货岛编号和车牌号 
-	//一个车牌能同时排好几个卸货岛吗
 	//vip添加
 	@Override
 	public void addV(QueuingVip queuingVip) {
 		//判断 根据车牌号查vip表  
 		QueuingVip exv=queuingDao.selectVBycarno(queuingVip.getIsland_no(),queuingVip.getCar_code());
 		if(exv==null){
-			//根据车牌号查普通表 有值就删除了它
+			//根据车牌号查普通表 有值就删除了它 条件车牌号
 			Ordinary exo=queuingDao.selectOBycarno(queuingVip.getIsland_no(),queuingVip.getCar_code());
 			  if(exo!=null){
 				  //将普通表重新排序
@@ -142,13 +140,10 @@ public class QueuingServiceImpl implements QueuingService {
 				  ordAgain(selectId);
 				  //删除它
 				  queuingDao.delByCar_code(queuingVip.getCar_code());
-				 
 			  }
 			//2排序
 			 int max =vipAddSort(queuingVip.getIsland_no(),queuingVip.getQueue_number());
-			 
 			 queuingVip.setQueue_number(max);
-			 
 			//3执行添加
 			queuingDao.addV(queuingVip);
 		}
@@ -175,8 +170,6 @@ public class QueuingServiceImpl implements QueuingService {
 			}
 		}	
 	
-		
-	
 	@Override
 	public void delVip(Integer id) {
 		//1	删除之后将其重新添回之前队列
@@ -186,22 +179,15 @@ public class QueuingServiceImpl implements QueuingService {
 			vipAgain(id);
 		//4	执行删除
 		queuingDao.delVip(id);
-		
-		
 	}
 	
 	@Override
 	public QueuingVip updateVSel(Integer vid) {
-		
 		return queuingDao.updateVSel(vid);
 	}
-	
 	@Override
 	public void UpdV(QueuingVip queuingVip) {
-		// 修改那排序怎么玩！
-		
-		//执行修改
-		vipUpd(queuingVip);
+
 	}
 	
 //3、历史记录的业务逻辑层接口的实现
@@ -212,13 +198,16 @@ public class QueuingServiceImpl implements QueuingService {
 		if(vague!=null && !"".equals(vague)){
 			String nos = "";
 			List<Island> vagueI = queuingDao.vagueI(vague);
-			for (Island Single : vagueI) {
-				nos+=Single.getNo()+",";
+			if(vagueI!=null&&vagueI.size()>0){
+				for (Island Single : vagueI) {
+					nos+=Single.getNo()+",";
+				}
+				//System.out.println(nos); 1,2,3,
+				nos = nos.substring(0,nos.length() - 1);
+				//System.out.println(nos); 1,2,3
+				history.setVagueiname(nos);
 			}
-			//System.out.println(nos); 1,2,3,
-			nos = nos.substring(0,nos.length() - 1);
-			//System.out.println(nos); 1,2,3
-			history.setVagueiname(nos);
+			
 		}
 		Map<String,Object> params = new HashMap<>();
 		params.put("history", history);
@@ -233,7 +222,7 @@ public class QueuingServiceImpl implements QueuingService {
 			Island myVpartsI = queuingDao.getparts(Hparts.getIsland_no());
 			Hparts.setHpartsI(myVpartsI);
 			long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
-			System.out.println(Hparts.getGoout_time());
+			//System.out.println(Hparts.getGoout_time());
 			long hour1=between%(24*3600)/3600;
 			long minute1=between%3600/60;
 			long second1=between%60;
@@ -268,8 +257,6 @@ public class QueuingServiceImpl implements QueuingService {
 				queuingDao.updateQByid(man,AgainVip.getId());
 			}
 		}
-		
-		
 	}
 	@Override
 	public Ordinary selectMaxOByLand(int landno) {
@@ -287,107 +274,25 @@ public class QueuingServiceImpl implements QueuingService {
 	public List<Ordinary> selectOAll(int landno) {
 		return queuingDao.selectOAll(landno);
 	}
-//VIP修改时重新排序
-	public void vipUpd(QueuingVip queuingVip) {
 
-		QueuingVip updateVSel = queuingDao.updateVSel(queuingVip.getId());
-		//QFront 修改以前的位置 IFront 修改以前的岛号
-		int QFront=updateVSel.getQueue_number();
-		int IFront=updateVSel.getIsland_no();
-		//QAfter 修改以后的位置 IAfter 修改以后的岛号
-		int	QAfter=queuingVip.getQueue_number();
-		int IAfter=queuingVip.getIsland_no();
-		
-		//1--->岛没变
-			if(IFront==IAfter){
-				//判断位置改变了没有 1没变 2变了
-				//之前表最大值
-				int maxint = queuingDao.getQueueMaxiByno(IFront);
-				if(QAfter==QFront){
-						queuingDao.UpdV(queuingVip);
-				}else{
-					//1-2-1从小往大改  比它大的都-1
-					if(QFront<QAfter){
-						
-						List<QueuingVip> Sortlist = queuingDao.selectVipByQI(QFront,IFront);
-						for (QueuingVip small : Sortlist) {
-							int man = small.getQueue_number()-1;
-							queuingDao.updateQByid(man,small.getId());
-						}
-					}
-					//1-2-2从大往小改  比它小的比修改以后大于等于的  都+1！  
-					if(QFront>QAfter){
-						List<QueuingVip> Sortlist = queuingDao.selListByetc(QFront,IFront,QAfter);
-						for (QueuingVip big : Sortlist) {
-							int man = big.getQueue_number()+1;
-							queuingDao.updateQByid(man,big.getId());
-						}
-					}
-					//执行修改自己  1改4那没问题 1改100 改到4
-					if(QAfter>maxint){
-						queuingVip.setQueue_number(maxint);
-						queuingDao.UpdV(queuingVip);
-					}else{
-						queuingDao.UpdV(queuingVip);
-					}
-				}
-				
-			}
-	//2--->岛变
-	if(IFront!=IAfter){
-		//当前岛有没有排队 
-		String maxstring = queuingDao.getQueueMaxsByno(IAfter);
-			//1没有排队  新添一个 删掉以前的 保证一条
-		if(maxstring==null){
-			addV(queuingVip);
-			delVip(queuingVip.getId());
-		}else{
-			//2有排队 插队 条件：修改之后的岛号 位置
-			int maxint = queuingDao.getQueueMaxiByno(IAfter);
-			if(QAfter>maxint){
-				queuingVip.setQueue_number(maxint+1);
-				queuingDao.UpdV(queuingVip);
-				//修改以前的排序
-				List<QueuingVip> Sortlist = queuingDao.selectListBybig(QFront,IFront);
-				for (QueuingVip small : Sortlist) {
-					int man = small.getQueue_number()-1;
-					queuingDao.updateQByid(man,small.getId());
-				}
-			}else{
-				List<QueuingVip> Sortlist = queuingDao.selectVIByQI(QAfter,IAfter);
-				for (QueuingVip insert : Sortlist) {
-					int man = insert.getQueue_number()+1;
-					queuingDao.updateQByid(man,insert.getId());
-				}
-				//修改以前的排序
-				List<QueuingVip> SortList = queuingDao.selectListBybig(QFront,IFront);
-				for (QueuingVip small : SortList) {
-					int man = small.getQueue_number()-1;
-					queuingDao.updateQByid(man,small.getId());
-				}
-				queuingDao.UpdV(queuingVip);
-			}
-			
-		}
-	}
-
-	}
 	
 //4、普通表的业务逻辑层接口的实现
 		@Override
 		public List<Ordinary> selectOByPage(Ordinary ordinary, PageModel pageModel) {
-			
 			String vague = ordinary.getVagueiname();
 			if(vague!=null && !"".equals(vague)){
 				String nos = "";
 				List<Island> vagueI = queuingDao.vagueI(vague);
-				for (Island Single : vagueI) {
-					nos+=Single.getNo()+",";
+				if(vagueI!=null&&vagueI.size()>0){
+					
+					for (Island Single : vagueI) {
+						nos+=Single.getNo()+",";
+					}
+					//System.out.println(nos); 1,2,3,
+					nos = nos.substring(0,nos.length() - 1);
+					//System.out.println(nos); 1,2,3
+					ordinary.setVagueiname(nos);
 				}
-				//System.out.println(nos); 1,2,3,
-				nos = nos.substring(0,nos.length() - 1);
-				//System.out.println(nos); 1,2,3
-				ordinary.setVagueiname(nos);
 			}
 			Map<String,Object> params = new HashMap<>();
 			params.put("ordinary", ordinary);
@@ -421,7 +326,7 @@ public class QueuingServiceImpl implements QueuingService {
 		//修改
 		@Override
 		public void UpdO(Ordinary ordinary) {
-				ordUpdSort(ordinary);
+				//ordUpdSort(ordinary);
 		}
 
 		//添加时排序
@@ -478,116 +383,10 @@ public class QueuingServiceImpl implements QueuingService {
 			
 		}
 		
-		//修改时重新 排序
-		/*
-		 * 传入你修改的对象
-		 * id 修改后的位置 修改后的岛号
-		 * 		根据id查出  之前的位置 之前的岛号
-		 * 岛号是否变化   1没变 2变了
-		 *  1--->岛没变
-		 *  	判断位置改变了没有 1没变 2变了
-		 *  	1-1
-		 *  	执行修改 业务无关的修改 车牌号+原因 
-		 * 		1-2 位置改变了 -->1从小往大改 2还是从大往小改
-		 * 			1-2-1从小往大改  比它大的都-1  修改他人了
-		 * 			1-2-2从大往小改  比它小的都+1 修改他人了
-		 * 		执行修改  修改自己
-		 * 	2--->岛变了
-		 * 		当前岛有没有排队 1没有 2 有
-		 * 		2-1没有排队 不用管它位置 新添加(添加那块做了判断 null 则位置重新赋值1)
-		 * 		直接新添加一个  根据id删除之前的
-		 * 		2-2有排队 插队
-		 * 		比修改之后的值大的都加1 根据 修改之后的岛号 位置>=修改以后的值
-		 * 		修改自己
-		 * 
-		 * */
-		public void ordUpdSort(Ordinary ordinary) {
-			Ordinary updateOSel = queuingDao.updateOSel(ordinary.getId());
-			//QFront 修改以前的位置 IFront 修改以前的岛号
-			int QFront=updateOSel.getQueue_number();
-			int IFront=updateOSel.getIsland_no();
-			//QAfter 修改以后的位置 IAfter 修改以后的岛号
-			int	QAfter=ordinary.getQueue_number();
-			int IAfter=ordinary.getIsland_no();
-			
-			//1--->岛没变
-				if(IFront==IAfter){
-					//判断位置改变了没有 1没变 2变了
-					//之前表最大值
-					int maxint = queuingDao.getQueueOMaxi(IFront);
-					if(QAfter==QFront){
-							queuingDao.UpdO(ordinary);
-					}else{
-						//1-2-1从小往大改  比它大的都-1
-						if(QFront<QAfter){
-							
-							List<Ordinary> Sortlist = queuingDao.selectOrdByQI(QFront,IFront);
-							for (Ordinary small : Sortlist) {
-								int man = small.getQueue_number()-1;
-								queuingDao.updOrdQByid(man,small.getId());
-							}
-						}
-						//1-2-2从大往小改  比它小的比修改以后大于等于的  都+1  
-						if(QFront>QAfter){
-							List<Ordinary> Sortlist = queuingDao.selectOrdAByQI(QFront,IFront,QAfter);
-							for (Ordinary big : Sortlist) {
-								int man = big.getQueue_number()+1;
-								queuingDao.updOrdQByid(man,big.getId());
-							}
-						}
-						//执行修改自己  1改4那没问题 1改100 改到4
-						if(QAfter>maxint){
-							ordinary.setQueue_number(maxint);
-							queuingDao.UpdO(ordinary);
-						}else{
-							queuingDao.UpdO(ordinary);
-						}
-					}
-					
-				}
-		//2--->岛变
-		if(IFront!=IAfter){
-			//当前岛有没有排队 
-			String maxstring = queuingDao.getQueueOMaxs(IAfter);
-				//1没有排队  新添一个 删掉以前的 保证一条
-			if(maxstring==null){
-				addO(ordinary);
-				delOrdinary(ordinary.getId());
-			}else{
-				//2有排队 插队 条件：修改之后的岛号 位置 
-				int maxint = queuingDao.getQueueOMaxi(IAfter);
-				if(QAfter>maxint){
-					ordinary.setQueue_number(maxint+1);
-					queuingDao.UpdO(ordinary);
-					//修改以前的排序
-					List<Ordinary> Sortlist = queuingDao.selectOrdByQI(QFront,IFront);
-					for (Ordinary small : Sortlist) {
-						int man = small.getQueue_number()-1;
-						queuingDao.updOrdQByid(man,small.getId());
-					}
-				}else{
-					List<Ordinary> Sortlist = queuingDao.selectOrdIByQI(QAfter,IAfter);
-					for (Ordinary insert : Sortlist) {
-						int man = insert.getQueue_number()+1;
-						queuingDao.updOrdQByid(man,insert.getId());
-					}
-					//修改以前的排序
-					List<Ordinary> SortList = queuingDao.selectOrdByQI(QFront,IFront);
-					for (Ordinary small : SortList) {
-						int man = small.getQueue_number()-1;
-						queuingDao.updOrdQByid(man,small.getId());
-					}
-					queuingDao.UpdO(ordinary);
-				}
-				
-			}
-		}
-	}
 		//总控平台的添加普通列表
 			//判断 根据车牌号查俩张表  都为空才执行
 		@Override
 		public void addConteollerO(Ordinary ordinary) {
-			
 			Ordinary exo=queuingDao.selectOBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
 			QueuingVip exv=queuingDao.selectVBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
 			if(exo==null&&exv==null){
