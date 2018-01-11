@@ -164,6 +164,12 @@ public class PassagewayJurisdictionController {
 			}
 			model.addAttribute("pageParam", pageParam);
 			model.addAttribute("model", passagewayj.getPganame());
+			
+			model.addAttribute("targetEmp", passagewayj.getpEmpName());
+			model.addAttribute("target",passagewayj.getPganame());
+			/*model.addAttribute("targetPh",passagewayj.getPjphone());*/
+			
+			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);

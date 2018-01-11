@@ -24,7 +24,10 @@ public class PJSqlProvider {
 					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
 						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
 					}
+					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
+						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
 					}
+				}
 			}
 		}.toString();
 		if(gy.get("pageModel")!=null){
@@ -50,7 +53,7 @@ public class PJSqlProvider {
 					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
 						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
 					}
-					} 
+				} 
 			}
 		}.toString();
 	}

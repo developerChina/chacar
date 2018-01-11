@@ -118,6 +118,8 @@
 			  <td>门禁组</td>
 			  <td>门禁</td> 
 			  <td>员工</td>
+			  <td>手机号</td>
+			  <td>部门</td>
 			 <!--  <td align="center">操作</td> -->
 			</tr>
 			
@@ -140,6 +142,8 @@
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td> --%>
+					  <td>${aj.ajEmployee.phone}</td>
+					  <td>${aj.ajEmployee.dept.name}</td>
 				</tr>
 			</c:forEach>
 		  </table>

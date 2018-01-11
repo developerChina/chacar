@@ -18,6 +18,8 @@ public class Passagewayj implements Serializable{
 	//模糊查询用到的字段
 	private String pganame;
 	private String pEmpName;
+	
+	private	String pjphone;		//用来模糊查询员工电话
 	/*
 	 *  授权里的通道分组集合
 	 */
@@ -103,6 +105,15 @@ public class Passagewayj implements Serializable{
 	public void setpEmpName(String pEmpName) {
 		this.pEmpName = pEmpName;
 	}
+	public String getPjphone() {
+		return pjphone;
+	}
+	public void setPjphone(String pjphone) {
+		this.pjphone = pjphone;
+	}
+	
+	
+	
 	
 	
 }

@@ -74,4 +74,6 @@ public interface AJDao {
 		List<Access> getPlist(String vague);
 		@Select(" select * from "+EMPLOYEETABLE+" where name LIKE CONCAT('%',#{empName},'%')")
 		List<Employee> getEmp(String empName);
+		@Select(" select * from "+EMPLOYEETABLE+" where phone LIKE CONCAT('%',#{aph},'%')")
+		List<Employee> getEmpByPh(String aph);
 }

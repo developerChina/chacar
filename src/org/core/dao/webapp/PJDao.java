@@ -48,4 +48,6 @@ public interface PJDao {
 		List<Passageway> getPlist(String vague);
 		@Select(" select * from "+EMPLOYEETABLE+" where name LIKE CONCAT('%',#{pen},'%')")
 		List<Employee> getEmp(String pen);
+		@Select(" select * from "+EMPLOYEETABLE+" where phone LIKE CONCAT('%',#{pph},'%')")
+		List<Employee> getEmpByPh(String pph);
 }
