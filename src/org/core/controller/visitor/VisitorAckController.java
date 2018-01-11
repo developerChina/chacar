@@ -349,10 +349,19 @@ public class VisitorAckController {
 			pageModel.setPageIndex(pageIndex);
 		}
 		
-    	
+		String pageParam="";
+		
     	//被访人过滤
 		String bevisitedName=request.getParameter("bevisitedName");
+		mv.addObject("bevisitedName", bevisitedName);
+		if(StringUtils.isNotBlank(bevisitedName)){
+			pageParam+="&bevisitedName="+bevisitedName;
+		}
 		String bevisitedTel=request.getParameter("bevisitedTel");
+		mv.addObject("bevisitedTel", bevisitedTel);
+		if(StringUtils.isNotBlank(bevisitedTel)){
+			pageParam+="&bevisitedTel="+bevisitedTel;
+		}
 		String recordIDs="";
 		if(StringUtils.isNotBlank(bevisitedName) || StringUtils.isNotBlank(bevisitedTel)){
 			StringBuffer ids=new StringBuffer();
@@ -370,8 +379,20 @@ public class VisitorAckController {
 		
 		//访客过滤
 		String cardName=request.getParameter("cardName");
+		mv.addObject("cardName", cardName);
+		if(StringUtils.isNotBlank(cardName)){
+			pageParam+="&cardName="+cardName;
+		}
 		String cardID=request.getParameter("cardID");
+		mv.addObject("cardID", cardID);
+		if(StringUtils.isNotBlank(cardID)){
+			pageParam+="&cardID="+cardID;
+		}
 		String telephone=request.getParameter("telephone");
+		mv.addObject("telephone", telephone);
+		if(StringUtils.isNotBlank(telephone)){
+			pageParam+="&telephone="+telephone;
+		}
 		
 		if(StringUtils.isNotBlank(cardName) || 
 				StringUtils.isNotBlank(cardID) || 
@@ -412,6 +433,9 @@ public class VisitorAckController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		mv.addObject("pageParam", pageParam);
 		
 		List<Trajectory>  trajectorys=trajectoryService.selectByPage(trajectory, pageModel,startDate,endDate);
 		mv.addObject("trajectorys", trajectorys);

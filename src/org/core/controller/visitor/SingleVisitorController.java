@@ -254,6 +254,18 @@ public class SingleVisitorController {
 		List<VisitorInfo> visitors=visitorInfoService.selectByPage(visitorInfo,pageModel);
 		model.addAttribute("visitors", visitors);
 		model.addAttribute("pageModel", pageModel);
+		model.addAttribute("visitorInfo", visitorInfo);
+		String pageParam="";
+		if(visitorInfo.getCardName()!=null){
+			pageParam+="&cardName="+visitorInfo.getCardName();
+		}
+		if(visitorInfo.getCardID()!=null){
+			pageParam+="&cardID="+visitorInfo.getCardID();
+		}
+		if(visitorInfo.getTelephone()!=null){
+			pageParam+="&telephone="+visitorInfo.getTelephone();
+		}
+		model.addAttribute("pageParam", pageParam);
 		return "visitor/visitors";
 	}
 	

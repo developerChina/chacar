@@ -44,7 +44,7 @@
 		    	$("#bdsq").click(function(){
 		    		var checkedBoxs = boxs.filter(":checked");
 			 		   if(checkedBoxs.length < 1){
-			 			   $.ligerDialog.error(" 请选择一个需要授权的员工！");
+			 			   $.ligerDialog.warn(" 请选择一个需要授权的员工！");
 			 		   }else{
 			 			   /** 得到用户选中的所有的需要添加的ids */
 			 			   var ids = checkedBoxs.map(function(){

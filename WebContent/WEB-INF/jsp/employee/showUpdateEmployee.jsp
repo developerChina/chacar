@@ -43,13 +43,13 @@
 				msg = "员工卡号不能为空！";
 			}
 			if (msg != ""){
-				$.ligerDialog.error(msg);
+				$.ligerDialog.warn(msg);
 				return false;
 			}else{
 				return true;
 			}
 			if (msg != ""){
-				$.ligerDialog.error(msg);
+				$.ligerDialog.warn(msg);
 				return false;
 			}else{
 				return true;

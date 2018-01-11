@@ -34,13 +34,13 @@
 					msg = "授权名称不能为空！";
 				}
 		 		if (msg != ""){
-					$.ligerDialog.error(msg);
+					$.ligerDialog.warn(msg);
 					return false;
 				}else{
 					/** 获取到用户选中的复选框  */
 		      		   var checkedBoxs = boxs.filter(":checked");
 		      		   if(checkedBoxs.length < 1){
-		      			   $.ligerDialog.error(" 请选择一个电梯或电梯组！");
+		      			   $.ligerDialog.warn(" 请选择一个电梯或电梯组！");
 		      		   }else{
 		      			   var ids = checkedBoxs.map(function(){
 		      				   return this.value;

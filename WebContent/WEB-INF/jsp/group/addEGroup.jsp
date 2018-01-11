@@ -47,13 +47,13 @@
 					msg = "电梯组名称不能为空！";
 				}
 		 		if (msg != ""){
-					$.ligerDialog.error(msg);
+					$.ligerDialog.warn(msg);
 					return false;
 				}else{
 					/** 获取到用户选中的复选框  */
 			 		   var checkedBoxs = boxs.filter(":checked");
 			 		   if(checkedBoxs.length < 1){
-			 			   $.ligerDialog.error(" 请选择一个需要添加的电梯！");
+			 			   $.ligerDialog.warn(" 请选择一个需要添加的电梯！");
 			 		   }else{
 			 			   /** 得到用户选中的所有的需要添加的ids */
 			 			   var ids = checkedBoxs.map(function(){

@@ -88,7 +88,7 @@
 			
 			if (msg != ""){
 				
-				$.ligerDialog.error(msg);
+				$.ligerDialog.warn(msg);
 				return false;
 			}
 			$.ajax({

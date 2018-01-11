@@ -31,7 +31,7 @@
 					msg = "请选择上传文件！";
 				}
 				if (msg != ""){
-					$.ligerDialog.error(msg);
+					$.ligerDialog.warn(msg);
 					return false;
 				}else{
 					return true;

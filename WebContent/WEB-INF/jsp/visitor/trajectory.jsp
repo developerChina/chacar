@@ -76,9 +76,9 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	&nbsp;&nbsp;访客姓名：<input type="text" name="cardName" size="20">
-					    	访客身份证号：<input type="text" name="cardID" size="20">
-					    	访客电话：<input type="text" name="telephone" size="20">
+					    	&nbsp;&nbsp;访客姓名：<input type="text" name="cardName" size="20" value="${cardName}">
+					    	访客身份证号：<input type="text" name="cardID" size="20" value="${cardID}">
+					    	访客电话：<input type="text" name="telephone" size="20" value="${telephone}">
 					    </td>
 					  </tr>
 					  <tr>
@@ -88,11 +88,11 @@
 					  </tr>
 					  <tr>
 					    <td class="font3">
-					    	被访人姓名：<input type="text" name="bevisitedName" size="20">
-					    	&nbsp;&nbsp;被访人电话：<input type="text" name="bevisitedTel" size="20">
+					    	被访人姓名：<input type="text" name="bevisitedName" size="20" value="${bevisitedName}">
+					    	&nbsp;&nbsp;被访人电话：<input type="text" name="bevisitedTel" size="20" value="${bevisitedTel}">
 					    	访问时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
-									name="sDate" size="20"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
-									name="eDate" size="20"/>
+									name="sDate" size="20" value="${sDate}"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+									name="eDate" size="20" value="${eDate}"/>
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
 					  </tr>
@@ -189,7 +189,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/visitor/trajectoryAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/visitor/trajectoryAck?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

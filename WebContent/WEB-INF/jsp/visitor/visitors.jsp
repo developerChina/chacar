@@ -72,9 +72,9 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	姓名：<input type="text" name="cardName">
-					    	身份证：<input type="text" name="cardID">
-					    	电话：<input type="text" name="telephone">
+					    	姓名：<input type="text" name="cardName" value="${visitorInfo.cardName }">
+					    	身份证：<input type="text" name="cardID" value="${visitorInfo.cardID }">
+					    	电话：<input type="text" name="telephone" value="${visitorInfo.telephone }">
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
 					  </tr>
@@ -123,7 +123,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/visitor/selectVisitor?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/visitor/selectVisitor?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

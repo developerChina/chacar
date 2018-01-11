@@ -50,7 +50,7 @@
 				msg = "识别仪列表不能为空！";
 			}
 			if (msg != ""){
-				$.ligerDialog.error(msg);
+				$.ligerDialog.warn(msg);
 				return false;
 			}else{
 				return true;

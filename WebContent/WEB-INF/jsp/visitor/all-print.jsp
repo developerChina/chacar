@@ -229,7 +229,11 @@
 	             swal.showInputError("请输入!");
 	             return false
 	         }
-	          
+	        if (inputValue.length>13 || inputValue.length<5) //根据长度判断是否有效
+          	{
+          		alert("无效卡号，请重新输入");
+           		return;
+          	}
 	        re = /[\u4E00-\u9FA5]/g; //测试中文字符的正则
           	if (re.test(inputValue)) //使用正则判断是否存在中文
           	{
@@ -276,7 +280,7 @@
                   	$.ajax({
                		  type: 'POST',
                		  url: '${ctx}/visitor/mySelfPrint',
-               		  data: {"serIp":"10.76.160.20:8756","cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
+               		  data: {"serIp":"${printPath}","cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
                		  success: function(data){
                			 
                		  }

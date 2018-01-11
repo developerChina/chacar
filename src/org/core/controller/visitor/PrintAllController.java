@@ -24,6 +24,7 @@ import org.core.service.webapp.PassagewayService;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
 import org.core.util.HttpClientUtil;
+import org.core.util.PropUtil;
 import org.core.util.SendSmsUtil;
 import org.core.util.StringUtils;
 import org.core.util.VisitorEntryUtil;
@@ -65,6 +66,7 @@ public class PrintAllController {
 	@RequestMapping(value="/visitor/forwardAllPrint")
 	 public ModelAndView forwardAllPrint(HttpServletRequest request,HttpServletResponse response,ModelAndView mv){
 		// 设置客户端跳转到查询请求
+		mv.addObject("printPath", PropUtil.getSys().getProperty("printPath"));
 		mv.setViewName("visitor/all-print");
 		// 返回ModelAndView
 		return mv;

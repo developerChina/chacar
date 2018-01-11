@@ -30,7 +30,7 @@
 				msg = "内容不能为空！";
 				content.focus();}
 			if (msg != ""){
-				$.ligerDialog.error(msg);
+				$.ligerDialog.warn(msg);
 				return false;
 			}else{
 				return true;

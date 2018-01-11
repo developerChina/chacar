@@ -50,7 +50,7 @@
 				msg = "密码长度必须是6~20之间";
 			}
 			if (msg != "") {
-				$.ligerDialog.error(msg);
+				$.ligerDialog.warn(msg);
 				return;
 			}
 			/** 提交表单 */
