@@ -21,7 +21,9 @@ public class PJSqlProvider {
 					if(passagewayj.getPganame()!=null && !passagewayj.getPganame().equals("")){
 						WHERE(" passagewayjid in ( "+ passagewayj.getPganame() +"  ) ");
 					}
-					
+					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
+						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
+					}
 					}
 			}
 		}.toString();
@@ -44,6 +46,9 @@ public class PJSqlProvider {
 					}
 					if(passagewayj.getPganame()!=null && !passagewayj.getPganame().equals("")){
 						WHERE(" passagewayjid in ( "+ passagewayj.getPganame() +"  ) ");
+					}
+					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
+						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
 					}
 					} 
 			}

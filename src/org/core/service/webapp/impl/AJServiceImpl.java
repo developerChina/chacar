@@ -77,8 +77,11 @@ public class AJServiceImpl implements AJService {
 					myids+=access.getAccessid()+",";
 				}
 				myids = myids.substring(0,myids.length() - 1);
+				accessj.setPganame(myids);
+			}else{
+				accessj.setPganame("000000");
 			}
-			accessj.setPganame(myids);
+			
 		}
 		
 		String empName = accessj.getAjEmpName();
@@ -90,8 +93,10 @@ public class AJServiceImpl implements AJService {
 					myids+=employee.getId()+",";
 				}
 				myids = myids.substring(0,myids.length() - 1);
+				accessj.setAjEmpName(myids);
+			}else{
+				accessj.setAjEmpName("000000");
 			}
-			accessj.setAjEmpName(myids);
 		}
 		
 		/** 当前需要分页的总数据条数 */

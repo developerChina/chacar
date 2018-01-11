@@ -153,6 +153,8 @@ public class AccessJurisdictionController {
 			}
 			model.addAttribute("pageParam", pageParam);
 			
+			model.addAttribute("targetEmp", accessj.getAjEmpName());
+			model.addAttribute("target",accessj.getPganame());
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);

@@ -40,6 +40,9 @@ public class LocatorController {
 		if(locationLocator.getDeviceid()!=null){
 			pageParam+="&deviceid="+locationLocator.getDeviceid();
 		}
+		if(locationLocator.getSim()!=null){
+			pageParam+="&sim="+locationLocator.getSim();
+		}
 		model.addAttribute("pageParam", pageParam);
 		return "location/showLocationLocator";
 	}

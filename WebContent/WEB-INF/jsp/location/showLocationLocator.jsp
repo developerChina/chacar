@@ -93,6 +93,7 @@
 					    <td class="font3">
 					    	定位仪名称：<input type="text" name="name" value="${model.name }">
 					    	设备id：<input type="text" name="deviceid" value="${model.deviceid }">
+					    	SIM：<input type="text" name="sim" value="${model.sim }">
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;&nbsp;添加定位仪&nbsp;&nbsp;"/>
