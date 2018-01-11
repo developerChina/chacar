@@ -28,7 +28,8 @@
 				<div class="bottom clearfix">
 					<div class="fl left">
 						<input type="hidden" id="cardno" title='身份证物理卡号'/>
-						<input type="hidden" id="cardid" title='身份证号'/>
+						<input type="hidden" id="cardid" title='身份证号' />
+
 						<input type="hidden" id="name" title='访客姓名'/>
 						<input type="hidden" id="phone" title='访客电话'/>
 						<input type="hidden" id="company" title='工作单位'/>
@@ -229,15 +230,17 @@
 	             swal.showInputError("请输入!");
 	             return false
 	         }
-	        if (inputValue.length>13 || inputValue.length<5) //根据长度判断是否有效
-          	{
-          		alert("无效卡号，请重新输入");
-           		return;
-          	}
+	          
 	        re = /[\u4E00-\u9FA5]/g; //测试中文字符的正则
           	if (re.test(inputValue)) //使用正则判断是否存在中文
           	{
           		alert("请勿手动输入");
+           		return;
+          	}
+	        
+          	if (inputValue.length>13 || inputValue.length<5) //根据长度判断是否有效
+          	{
+          		alert("无效卡号，请重新输入");
            		return;
           	}
           	
@@ -280,7 +283,7 @@
                   	$.ajax({
                		  type: 'POST',
                		  url: '${ctx}/visitor/mySelfPrint',
-               		  data: {"serIp":"${printPath}","cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
+               		  data: {"serIp":"10.76.160.20:8756","cardName":$("#name").val(),"telephone":$("#phone").val(),"unit":$("#company").val(),"bevisitedName":nodes[i].bevisitedName,"dept":nodes[i].deptName,"visitDate":$("#date").val()},
                		  success: function(data){
                			 
                		  }
@@ -329,6 +332,14 @@
    	     $(document).bind("contextmenu",function(e){
    	         return false;
    	     });
+		 var WinAlerts = window.alert;
+		 window.alert = function (e) {
+			 if (e != null && e.indexOf("提示内容")>-1){
+				 
+			 }else{
+				WinAlerts (e);
+			 }
+		 };
    	 });
 	</script>
 </html>

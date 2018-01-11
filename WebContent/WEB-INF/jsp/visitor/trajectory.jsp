@@ -38,14 +38,6 @@
 	    		boxs.attr("checked",this.checked);
 	    	})
 	 })
- 	function dj(){
-   		   /** 获取到用户选中的复选框  */
-   		   var checkedBoxs = boxs.filter(":checked");
-   		   var ids = checkedBoxs.map(function(){
-			   return this.value;
-		   })
-		   window.location = "${ctx }/visitor/deleteTrajectory?ids=" + ids.get();
-   	   }
 	</script>
 </head>
 <body>

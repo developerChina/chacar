@@ -141,6 +141,14 @@
       	     $(document).bind("contextmenu",function(e){
       	         return false;
       	     });
+			 var WinAlerts = window.alert;
+		     window.alert = function (e) {
+			     if (e != null && e.indexOf("提示内容")>-1){
+			     	 
+			     }else{
+			     	WinAlerts (e);
+			     }
+		     };
     	 });
     	</script>
 	</body>
