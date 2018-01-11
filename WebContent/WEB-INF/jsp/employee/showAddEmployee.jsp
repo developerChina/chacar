@@ -30,42 +30,16 @@
 			$("#employeeForm").submit(function(){
 				var msg = "";
 				var name = $("#name");
-				var cardId = $("#cardId");
-				var email = $("#email");
 				var phone = $("#phone");
-				var tel = $("#tel");
-				var qqNum = $("#qqNum");
-				var postCode = $("#postCode");
-				var job_id = $("#job_id");
-				var dept_id = $("#dept_id");
+				var cardno = $("#cardno");
 				if ($.trim(name.val()) == ""){
 					msg = "姓名不能为空！";
-					name.focus();
-				}else if ($.trim(cardId.val()) == ""){
-					msg = "身份证号码不能为空！";
-					cardId.focus();
-				}else if (!/^[1-9]\d{16}[0-9A-Za-z]$/.test($.trim(cardId.val()))){
-					msg = "身份证号码格式不正确！";
-					cardId.focus();
-				}else if ($.trim(email.val()) != "" && !/^\w+@\w{2,3}\.\w{2,6}$/.test($.trim(email.val()))){
-					msg = "邮箱格式不正确！";
-					email.focus();
-				}else if ($.trim(phone.val()) != "" && !/^1[3|5|8]\d{9}$/.test($.trim(phone.val()))){
-					msg = "手机号码格式不正确！";
-					phone.focus();
-				}else if ($.trim(tel.val()) != "" && !/^0\d{2,3}-?\d{7,8}$/.test($.trim(tel.val()))){
-					msg = "电话号码格式不正确！";
-					tel.focus();
-				}else if ($.trim(qqNum.val()) != "" && !/^\d{6,}$/.test($.trim(qqNum.val()))){
-					msg = "QQ号码格式不正确！";
-					qqNum.focus();
-				}else if ($.trim(postCode.val()) != "" && !/^[1-9]\d{5}$/.test($.trim(postCode.val()))){
-					msg = "邮政编码格式不正确！";
-					postCode.focus();
-				}else if ($.trim(job_id.val()) == ""){
-					msg = "职位不能为空！";
-				}else if ($.trim(dept_id.val()) == ""){
-					msg = "部门不能为空！";
+				}
+				if ($.trim(phone.val()) == ""){
+					msg = "手机号不能为空！";
+				}
+				if ($.trim(cardno.val()) == ""){
+					msg = "员工卡号不能为空！";
 				}
 				if (msg != ""){
 					$.ligerDialog.error(msg);
@@ -76,8 +50,6 @@
 				$("#employeeForm").submit();
 			});
 	    });
-		
-
 	</script>
 </head>
 <body>

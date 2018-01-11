@@ -94,8 +94,8 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	车主姓名：<input type="text" name="name">
-					    	车牌号：<input type="text" name="carno">
+					    	车主姓名：<input type="text" name="name" value="${carInfo.name }">
+					    	车牌号：<input type="text" name="carno" value="${carInfo.carno }">
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;"/>
@@ -149,7 +149,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/car/carInfo?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/car/carInfo?pageIndex={0}${pageParam }"/>
 		  </td>
 	  </tr>
 	</table>

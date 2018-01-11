@@ -174,22 +174,21 @@ public class SingleVisitorController {
 		try {
 			//查询正在访问
 			List<RecordVisitors> recordVisitors=recordVisitorsService.selectRecordInfoBycardID_status(cardid, 3);
-			for (RecordVisitors entity : recordVisitors) {
-				entity.setVisitStatus(4);
-				recordVisitorsService.update(entity);
-			}
 			//删除硬件权限
 			List<Passageway> passList=passagewayService.selectAll();
 			List<Elevator> egElevators=elevatorService.selectAll();
 			List<Access> agAccesss=accessService.selectAll();
-			//卡 物理 号
-			String cardno=cardid;
-			//授权-》去掉 权限
-			GrantAuthorization(agAccesss,passList,egElevators,cardno,0);
 			
+			for (RecordVisitors entity : recordVisitors) {
+				entity.setVisitStatus(4);
+				recordVisitorsService.update(entity);
+				//授权-》去掉 权限
+				GrantAuthorization(agAccesss,passList,egElevators,entity.getCardNo(),0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			bool=false;
+			
 			message=e.getMessage();
 		}
 		Map<String, Object> map=new HashMap<String, Object>();

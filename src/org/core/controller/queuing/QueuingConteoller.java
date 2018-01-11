@@ -15,6 +15,7 @@ import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
 import org.core.service.location.InoutService;
 import org.core.service.queuing.QueuingService;
+import org.core.util.PropUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -172,6 +173,7 @@ public class QueuingConteoller {
 					 ModelAndView mv){		
 	    if (flag.equals("1")) {
 			// 设置跳转到添加页面
+	    	mv.addObject("qrcodePath", PropUtil.getSys().get("qrcodePath"));
 			mv.setViewName("/queuing/showAddI");
 		} else {
 			// 执行添加
@@ -205,7 +207,7 @@ public class QueuingConteoller {
 		if (flag.equals("1")) {
 			// 设置跳转到修改页面
 			Island updateI = queuingService.updateISel(id);
-
+			mv.addObject("qrcodePath", PropUtil.getSys().get("qrcodePath"));
 			mv.addObject("updateI", updateI);
 			mv.setViewName("/queuing/showUpdI");
 		} else {

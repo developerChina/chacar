@@ -87,5 +87,9 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 		}
 		return entitys;
 	}
+	@Override
+	public void deleteTrajectoryById(String id) {
+		dao.deleteTrajectoryById(id);
+	}
 
 }

@@ -17,4 +17,6 @@ public interface TrajectoryService {
 	 */
 	List<Trajectory> selectByPage(Trajectory entity,PageModel pageModel,Date startDate,Date endDate);
 
+	void deleteTrajectoryById(String id);
+
 }

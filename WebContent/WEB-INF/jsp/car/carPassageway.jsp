@@ -91,8 +91,14 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	用户名：<input type="text" name="username">
-					    	用户状态：<input type="text" name="status">
+					    	出入口名称：<input type="text" name="name" value="${carPassageway.name }">
+					    	&nbsp;&nbsp;所属车场：
+					    	<select name="park_id" style="width:200px;">
+				    			<option value="0">--请选择车场--</option> 
+				    			<c:forEach items="${requestScope.carParks }" var="carPark">
+				    				<option value="${carPark.id }"  <c:if test="${carPark.id==carPassageway.park_id }">selected </c:if> >${carPark.name }</option>
+				    			</c:forEach>
+				    		</select>
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;"/>
@@ -151,7 +157,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/car/carPassageway?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/car/carPassageway?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>
