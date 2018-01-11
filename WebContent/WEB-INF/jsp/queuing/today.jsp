@@ -36,7 +36,7 @@
 	
 	<table width="100%" height="90%" border="0" cellpadding="5" cellspacing="0" class="main_tabbor">
 	  <!-- 数据展示区 -->
-	  <c:forEach items="${lands}" varStatus="stat" step="4">
+	  <c:forEach items="${lands}" varStatus="stat" step="3">
 		<tr valign="top">
 		    <td height="20">
 			  <div id="container_${stat.index+0}" style="height:300px;width:300px;"></div>
@@ -46,9 +46,6 @@
 			</td>
 			<td height="20">
 			  <div id="container_${stat.index+2}" style="height:300px;width:300px;"></div>
-			</td>
-			<td height="20">
-			  <div id="container_${stat.index+3}" style="height:300px;width:300px;"></div>
 			</td>
 		</tr>
 	 </c:forEach>
@@ -82,7 +79,7 @@
 		
 		option = {
 		    title : {
-		        text: map.land.iname,
+		        text: map.land.iname+"("+map.all+")",
 		        subtext:queueName,
 		        x:'center'
 		    },
@@ -101,7 +98,6 @@
 		            radius : '55%',
 		            center: ['50%', '60%'],
 		            data:[
-		                {value:map.all, name:'总数('+map.all+")"},
 		                {value:map.vip, name:'vip('+map.vip+")"},
 		                {value:map.o, name:'普通('+map.o+")"},
 		            ],
