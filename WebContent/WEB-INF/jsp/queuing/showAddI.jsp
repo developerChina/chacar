@@ -140,6 +140,7 @@
 				  },
 				  success: function(data){
 					if(data.status){
+						//alert(data.message);
 						$("#IslandAddForm").submit();
 				  	}else{
 				  		//alert(data.message);

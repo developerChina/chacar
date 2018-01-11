@@ -494,8 +494,8 @@ public class QueuingConteoller {
 				 HttpServletResponse response){
 			
 			String no = request.getParameter("no");
-			String term = request.getParameter("no");
-			System.out.println(no+"==="+term);
+			String term = request.getParameter("term");
+			//System.out.println(no+"==="+term);
 			Map<String,Object> map = new HashMap<>();
 			String flag = queuingService.IaddValidate(no,term);
 				System.out.println(flag);

@@ -118,7 +118,7 @@
 			<c:forEach items="${requestScope.pageListH}" var="ph" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					  <td>${stat.count}</td>
-					  <td>${ph.island_no}</td>
+					  <td>${ph.hpartsI.iname}</td>
 					  <td>${ph.car_code}</td>
 					  <td>
 					  <f:formatDate value="${ph.comein_time}" pattern="yyyy-MM-dd HH:mm:ss"/>

@@ -93,7 +93,7 @@
 	    	         		  type: 'POST',
 	    	         		  url: '${ctx}/employee/bingdEmployee?flag=1&ids='+ids.get(),
 	    	         		  success: function(data){
-	    	         			 alert(data);
+	    	         			 $.ligerDialog.error(data.message);
 	    	         		  }
 	    	         	});
 	    		   }
@@ -114,7 +114,7 @@
 	    	         		  type: 'POST',
 	    	         		  url: '${ctx}/employee/bingdEmployee?flag=0&ids='+ids.get(),
 	    	         		  success: function(data){
-	    	         			 alert(data);
+	    	         			 $.ligerDialog.error(data.message);
 	    	         		  }
 	    	         	});
 	    		   }

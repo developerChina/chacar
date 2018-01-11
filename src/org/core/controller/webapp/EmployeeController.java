@@ -147,8 +147,9 @@ public class EmployeeController {
 		List<Passageway> passList=passagewayGroupService.selectPGSubordinate();
 		//所有电梯
 		List<Elevator> egElevators= groupService.selectEGSubordinate();
-
-		boolean b=true;
+		Map<String,Object> map = new HashMap<>();
+		String b="授权操作成功";
+		map.put("message", b);
 		// 分解id字符串
 		try {
 			String[] idArray = ids.split(",");
@@ -162,9 +163,10 @@ public class EmployeeController {
 				hrmService.modifyEmployee(employee);
 			}
 		}catch(Exception e) {
-			b=false;
+			b="授权操作失败";
+			map.put("message", b);
 		}
-		return b;
+		return map;
 	}
     //门禁,通道  int authority[] = { 1, 1, 1, 1 };
 	public static void GrantAuthorization(List<Access> agAccesss,List<Passageway> passList,List<Elevator> egElevators,String cardno,int flag) {

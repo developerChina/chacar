@@ -18,7 +18,7 @@
 	background: url(images/single-logo.png) no-repeat 4% center;
 }
 .content{
-	width: 1200px;
+	width: 950px;
 	height: 450px;
 	box-sizing: border-box;
 	position: absolute;
@@ -60,7 +60,7 @@
 	margin: 5px 0 0 20px;
 }
 .left{
-	width: 670px;
+	width: 550px;
 	height: 270px;
 	border: 1px solid #c7d8ec;
 	margin-right: 30px;
@@ -207,7 +207,7 @@ tbody tr th:nth-child(5){
 	position: relative;
 }
 .right div:nth-child(1){
-	margin-right: 50px;
+	margin-right: 10px;
 }
 .right img{
 	display: block;

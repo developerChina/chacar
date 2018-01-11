@@ -64,8 +64,8 @@
 								<input type="hidden" id="cardPhoto" name="cardPhoto" value="">
 								<p>证件照片</p>
 							</div>
-							<div class="fl" style="width:246px;height:212px"> 
-								<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt="" style="width:240px;height:180px"/>
+							<div class="fl"> 
+								<img id="photo1-img" src="${ctx}/images/photoTwo.png" alt=""/>
 								<input type="hidden" id="photo1" name="photo1" value="">
 								<p>拍照照片</p>
 							</div>
@@ -238,7 +238,7 @@
 			return cardInfo;
 		}
 		$(function() {
-			 //check();
+			 check();
 		}); 
 		
 		function check() {
@@ -325,6 +325,14 @@
 		     $(document).bind("contextmenu",function(e){
 		         return false;
 		     });
+		     var WinAlerts = window.alert;
+		     window.alert = function (e) {
+			     if (e != null && e.indexOf("提示内容")>-1){
+			     	alert(222);
+			     }else{
+			     	WinAlerts (e);
+			     }
+		     };
 		 });
 		
 	</script>
