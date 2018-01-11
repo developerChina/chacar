@@ -95,8 +95,8 @@
 					  <tr>
 					    <td class="font3">
 					    	<!-- 通道授权名:<input type="text" name="pjname">&nbsp; -->
-					    	通道名称:<input type="text" name="pganame" value="${target}">&nbsp;
-					    	员工姓名:<input type="text" name="pEmpName" value="${targetEmp}">
+					    	通道名称:<input type="text" name="pganame" >&nbsp;
+					    	员工姓名:<input type="text" name="pEmpName" >
 					    	<!-- 手机号:<input type="text" name="pjphone"> -->
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delpj" type="button" value="&nbsp;&nbsp;解除通道授权&nbsp;&nbsp;"/>&nbsp;
