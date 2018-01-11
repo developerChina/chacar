@@ -222,7 +222,15 @@ public class QueuingConteoller {
 	 * VIP队列管理 跳向首页 分页查询
 	 */
 	@RequestMapping(value = "/queuingV/VipAck")
-	public ModelAndView VipAck(Integer pageIndex, @ModelAttribute QueuingVip queuingVip, ModelAndView mv) {
+	public ModelAndView VipAck(Integer pageIndex, 
+			@ModelAttribute QueuingVip queuingVip, ModelAndView mv) {
+		String pageParam="";
+		if(queuingVip.getVagueiname()!=null){
+			pageParam+="&vagueiname="+queuingVip.getVagueiname();
+		}
+		mv.addObject("pageParam", pageParam);
+		mv.addObject("model", queuingVip.getVagueiname());
+		mv.addObject("target", queuingVip.getCar_code());
 		PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
@@ -233,6 +241,8 @@ public class QueuingConteoller {
 		// 设置客户端跳转到查询请求
 		mv.setViewName("queuing/showV");
 		// 返回ModelAndView
+		
+		
 		return mv;
 	}
 
@@ -304,7 +314,19 @@ public class QueuingConteoller {
 	 * 历史队列的管理 跳向首页 分页查询
 	 */
 	@RequestMapping(value = "/queuingH/HistoryAck")
-	public ModelAndView HistoryAck(Integer pageIndex, @ModelAttribute History history, ModelAndView mv) {
+	public ModelAndView HistoryAck(Integer pageIndex,
+			@ModelAttribute History history, ModelAndView mv) {
+		String pageParam="";
+		if(history.getVagueiname()!=null){
+			pageParam+="&vagueiname="+history.getVagueiname();
+		}
+		if(history.getCar_code()!=null){
+			pageParam+="&car_code="+history.getCar_code();
+		}
+		mv.addObject("pageParam", pageParam);
+		mv.addObject("model", history.getVagueiname());
+		mv.addObject("target", history.getCar_code());
+		
 		PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
@@ -361,6 +383,14 @@ public class QueuingConteoller {
 		 public ModelAndView OrdinaryAck(Integer pageIndex,
 				 @ModelAttribute Ordinary ordinary,
 				 ModelAndView mv){
+			String pageParam="";
+			if(ordinary.getVagueiname()!=null){
+				pageParam+="&vagueiname="+ordinary.getVagueiname();
+			}
+			mv.addObject("pageParam", pageParam);
+			mv.addObject("model", ordinary.getVagueiname());
+			mv.addObject("target", ordinary.getCar_code());
+			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);

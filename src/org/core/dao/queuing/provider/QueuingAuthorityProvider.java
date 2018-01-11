@@ -240,7 +240,7 @@ public class QueuingAuthorityProvider {
 					if(params.get("ordinary") != null){
 						Ordinary ordinary = (Ordinary) params.get("ordinary");
 						if(ordinary.getCar_code() != null && !ordinary.getCar_code().equals("")){
-							WHERE(" car_code LIKE CONCAT('%',#{history.car_code},'%') ");				
+							WHERE(" car_code LIKE CONCAT('%',#{ordinary.car_code},'%') ");				
 						}
 						if(ordinary.getVagueiname() != null && !ordinary.getVagueiname().equals("")){
 							WHERE(" island_no in ("+ ordinary.getVagueiname() +" ) ");				
@@ -258,7 +258,7 @@ public class QueuingAuthorityProvider {
 					if(params.get("ordinary") != null){
 						Ordinary ordinary = (Ordinary) params.get("ordinary");
 						if(ordinary.getCar_code() != null && !ordinary.getCar_code().equals("")){
-							WHERE(" car_code LIKE CONCAT('%',#{history.car_code},'%') ");				
+							WHERE(" car_code LIKE CONCAT('%',#{ordinary.car_code},'%') ");				
 						}
 						if(ordinary.getVagueiname() != null && !ordinary.getVagueiname().equals("")){
 							WHERE(" island_no in ("+ ordinary.getVagueiname() +" ) ");				

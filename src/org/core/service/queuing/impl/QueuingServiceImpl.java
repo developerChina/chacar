@@ -103,6 +103,8 @@ public class QueuingServiceImpl implements QueuingService {
 				nos = nos.substring(0,nos.length() - 1);
 				//System.out.println(nos); 1,2,3
 				queuingVip.setVagueiname(nos);
+			}else{
+				queuingVip.setVagueiname("000000");
 			}
 		}
 		Map<String,Object> params = new HashMap<>();
@@ -206,6 +208,8 @@ public class QueuingServiceImpl implements QueuingService {
 				nos = nos.substring(0,nos.length() - 1);
 				//System.out.println(nos); 1,2,3
 				history.setVagueiname(nos);
+			}else{
+				history.setVagueiname("000000");
 			}
 			
 		}
@@ -284,7 +288,6 @@ public class QueuingServiceImpl implements QueuingService {
 				String nos = "";
 				List<Island> vagueI = queuingDao.vagueI(vague);
 				if(vagueI!=null&&vagueI.size()>0){
-					
 					for (Island Single : vagueI) {
 						nos+=Single.getNo()+",";
 					}
@@ -292,6 +295,8 @@ public class QueuingServiceImpl implements QueuingService {
 					nos = nos.substring(0,nos.length() - 1);
 					//System.out.println(nos); 1,2,3
 					ordinary.setVagueiname(nos);
+				}else{
+					ordinary.setVagueiname("000000");
 				}
 			}
 			Map<String,Object> params = new HashMap<>();

@@ -144,7 +144,7 @@
 				  <tr valign="top" id="submenu8" style="display: none">
 				    <td class="left_nav_bgshw tdbtmline" height="50">
 				    <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p>
-					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingV/VipAck" target="main">VIP队列维护</a></img></p>
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingV/VipAck" target="main">急件队列维护</a></img></p>
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingO/OrdinaryAck" target="main">普通队列维护</a></img></p>
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/TodayAck" target="main">现场查询统计</a></img></p>
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/HistoryAck" target="main">历史查询统计</a></img></p>
