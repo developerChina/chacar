@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -153,9 +153,9 @@
 					<option value="0" <c:if test="${model.vehicleType==0}">selected</c:if>>临时定位仪</option>
 					</select> 
 							进入时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="cominDate" id="cominDate" size="10" value="${model.cominDate}"/>
+					name="cominDate" id="cominDate" size="10" value='<fmt:formatDate value='${model.cominDate}' pattern='yyyy-MM-dd' />'/>
 					    	离开时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="outDate" id="outDate" size="10" value="${model.outDate}"/>
+					name="outDate" id="outDate" size="10" value="<fmt:formatDate value='${model.outDate}' pattern='yyyy-MM-dd' />"/>
 					    	车牌号码：<input type="text" name="vehicleCode">
 					    	<input type="submit" value="&nbsp;搜索&nbsp;" value="${model.vehicleCode}"/>
 					    </td>
