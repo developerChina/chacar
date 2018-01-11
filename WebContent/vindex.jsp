@@ -48,7 +48,7 @@
 	     var WinAlerts = window.alert;
 	     window.alert = function (e) {
 		     if (e != null && e.indexOf("提示内容")>-1){
-		     	alert(222);
+		     	 
 		     }else{
 		     	WinAlerts (e);
 		     }
