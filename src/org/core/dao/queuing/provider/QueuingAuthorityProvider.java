@@ -189,6 +189,7 @@ public class QueuingAuthorityProvider {
 						WHERE(" island_no in ("+ history.getVagueiname() +" ) ");				
 					}
 				}
+				ORDER_BY("comein_time desc");
 			}
 		}.toString();
 		if(params.get("pageModel") != null){

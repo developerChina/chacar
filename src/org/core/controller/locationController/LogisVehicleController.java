@@ -30,6 +30,25 @@ public class LogisVehicleController {
 		// 设置Model数据
 		model.addAttribute("locationLogisVehicles", locationLogisVehicles);
 		model.addAttribute("pageModel", pageModel);
+		model.addAttribute("model", locationLogisVehicle);
+		
+		String pageParam="";
+		if(locationLogisVehicle.getDriverID()!=null){
+			pageParam+="&driverID="+locationLogisVehicle.getDriverID();
+		}
+		if(locationLogisVehicle.getVehicleTypeID()!=null){
+			pageParam+="&vehicleTypeID="+locationLogisVehicle.getVehicleTypeID();
+		}
+		if(locationLogisVehicle.getColorID()!=null){
+			pageParam+="&colorID="+locationLogisVehicle.getColorID();
+		}
+		if(locationLogisVehicle.getVehicleCode()!=null){
+			pageParam+="&vehicleCode="+locationLogisVehicle.getVehicleCode();
+		}
+		if(locationLogisVehicle.getDeviceType()!=null){
+			pageParam+="&deviceType="+locationLogisVehicle.getDeviceType();
+		}
+		model.addAttribute("pageParam", pageParam);
 		// 返回员工页面
 		return "location/ShowLocationLogisVehicles";
 
