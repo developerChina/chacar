@@ -30,7 +30,7 @@
 						<a href="${ctx}/visitor/forwardAllPrint">打印访客单</a>
 					</div>
 					<div class="btn">
-						<a href="#" onclick="SignOut()">自助签离</a>
+						<a href="#" onclick="SignOut()">非正常签离</a>
 					</div>
 				</div>
 			</div>

@@ -356,7 +356,7 @@ public class QueuingConteoller {
 	
 //4、普通队列		
 		/**
-		 * 历史队列的管理 跳向首页
+		 * 普队列的管理 跳向首页
 		 * 分页查询
 		 */
 		@RequestMapping(value="/queuingO/OrdinaryAck")

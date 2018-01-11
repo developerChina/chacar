@@ -148,16 +148,16 @@
 					    <td class="font3">
 					    	 定位仪类型：
 							    <select name="vehicleType"  style="width:143px;">
-					<option value="-1">-请选择定位仪类型-</option>
-					<option value="1">固定定位仪</option>
-					<option value="0">临时定位仪</option>
+					<option value="-1" >-请选择定位仪类型-</option>
+					<option value="1"  <c:if test="${model.vehicleType==1}">selected</c:if> >固定定位仪</option>
+					<option value="0" <c:if test="${model.vehicleType==0}">selected</c:if>>临时定位仪</option>
 					</select> 
 							进入时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="cominDate" id="cominDate" size="10"/>
+					name="cominDate" id="cominDate" size="10" value="${model.cominDate}"/>
 					    	离开时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="outDate" id="outDate" size="10"/>
+					name="outDate" id="outDate" size="10" value="${model.outDate}"/>
 					    	车牌号码：<input type="text" name="vehicleCode">
-					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	<input type="submit" value="&nbsp;搜索&nbsp;" value="${model.vehicleCode}"/>
 					    </td>
 					  </tr>
 					</table>
@@ -188,7 +188,9 @@
 				  <td>${employee.vehicleCode }</td>
 				 <td><f:formatDate value="${employee.cominDate}" type="date" dateStyle="long"/></td>
 				 <td><f:formatDate value="${employee.outDate}" type="date" dateStyle="long"/></td>    
-				  <td>${employee.vehicleType }</td>
+				  <td><c:if test="${employee.vehicleType==1}">固定定位仪</c:if>
+					  	  <c:if test="${employee.vehicleType==0}">临时定位仪</c:if>
+					  	</td>
 				</tr>
 			</c:forEach>
 		  </table>
@@ -201,7 +203,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/Inout/selectInout?pageIndex={0}"/>
+	  	        submitUrl="${ctx}/Inout/selectInout?pageIndex={0}${pageParam}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

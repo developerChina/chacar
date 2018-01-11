@@ -30,7 +30,40 @@ public class AlarmController {
 		List<LocationAlarm> locationAlarms = alarmService.findLocationAlarm(locationAlarm, pageModel);
 		model.addAttribute("locationAlarms", locationAlarms);
 		model.addAttribute("pageModel", pageModel);
+		model.addAttribute("model", locationAlarm);
+		
+		String pageParam="";
+		if(locationAlarm.getLat()!=null){
+			pageParam+="&lat="+locationAlarm.getLat();
+		}
+		if(locationAlarm.getLng()!=null){
+			pageParam+="&lng="+locationAlarm.getLng();
+		}
+		if(locationAlarm.getGpstime()!=null){
+			pageParam+="&gpstime="+locationAlarm.getGpstime();
+		}
+		if(locationAlarm.getRecvtime()!=null){
+			pageParam+="&recvtime="+locationAlarm.getRecvtime();
+		}
+		if(locationAlarm.getPosinfo()!=null){
+			pageParam+="&posinfo="+locationAlarm.getPosinfo();
+		}
+		if(locationAlarm.getDistance()!=null){
+			pageParam+="&distance="+locationAlarm.getDistance();
+		}
+		if(locationAlarm.getHandletype()!=null){
+			pageParam+="&handletype="+locationAlarm.getHandletype();
+		}
+		if(locationAlarm.getHandleidea()!=null){
+			pageParam+="&handleidea="+locationAlarm.getHandleidea();
+		}
+		if(locationAlarm.getVeo()!=null){
+			pageParam+="&veo="+locationAlarm.getVeo();
+		}
+		model.addAttribute("pageParam", pageParam);
 		return "location/showAlarm";
+		
+		
 	}
 	//修改
 	@RequestMapping(value="/Alarm/updateAlarm")

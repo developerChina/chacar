@@ -31,6 +31,16 @@ public class LocatorController {
 		List<LocationLocator> locationLocators = locatorService.findLocationLocator(locationLocator, pageModel);
 		model.addAttribute("locationLocators", locationLocators);
 		model.addAttribute("pageModel", pageModel);
+		model.addAttribute("model", locationLocator);
+		
+		String pageParam="";
+		if(locationLocator.getName()!=null){
+			pageParam+="&name="+locationLocator.getName();
+		}
+		if(locationLocator.getDeviceid()!=null){
+			pageParam+="&deviceid="+locationLocator.getDeviceid();
+		}
+		model.addAttribute("pageParam", pageParam);
 		return "location/showLocationLocator";
 	}
 	//删除
