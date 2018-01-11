@@ -43,10 +43,13 @@ public class CarDistinguishProvider {
 				SELECT("*");
 				FROM(CarDistinguish.tableName);
 				if(params.get("entity") != null){
-//					CarDistinguish entity = (CarDistinguish) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					CarDistinguish entity = (CarDistinguish) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getName())){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
+					if(StringUtils.isNotBlank(entity.getIp())){
+						WHERE("  ip LIKE CONCAT ('%',#{entity.ip},'%') ");
+					}
 				}
 			}
 		}.toString();
@@ -63,10 +66,13 @@ public class CarDistinguishProvider {
 				SELECT("count(*)");
 				FROM(CarDistinguish.tableName);
 				if(params.get("entity") != null){
-//					CarDistinguish entity = (CarDistinguish) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					CarDistinguish entity = (CarDistinguish) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getName())){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
+					if(StringUtils.isNotBlank(entity.getIp())){
+						WHERE("  ip LIKE CONCAT ('%',#{entity.ip},'%') ");
+					}
 				}
 			}
 		}.toString();

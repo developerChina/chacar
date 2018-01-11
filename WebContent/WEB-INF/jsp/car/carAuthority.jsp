@@ -90,7 +90,7 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	车牌号：<input type="text" name="carno">
+					    	车牌号：<input type="text" name="carno" value="${carAuthority.carno }">
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;授权&nbsp;&nbsp;"/>
@@ -133,7 +133,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/car/carAuthority?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/car/carAuthority?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

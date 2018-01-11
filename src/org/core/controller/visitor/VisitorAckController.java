@@ -423,4 +423,22 @@ public class VisitorAckController {
 		mv.setViewName("visitor/trajectory");
 		return mv;
 	}
+	
+	
+	@RequestMapping(value = "/visitor/deleteTrajectory")
+	public ModelAndView removeEmployee(String ids, ModelAndView mv) {
+		// 分解id字符串
+		String[] idArray = ids.split(",");
+		for (String id : idArray) {
+			// 根据id删除员工
+			trajectoryService.deleteTrajectoryById(id);
+		}
+		// 设置客户端跳转到查询请求
+		// mv.setView(new RedirectView("/hrmapp/employee/selectEmployee"));
+		// mv.setViewName("forward:/employee/selectEmployee");
+		mv.setViewName("redirect:/visitor/trajectoryAck");
+		// 返回ModelAndView
+		return mv;
+	}
+	
 }

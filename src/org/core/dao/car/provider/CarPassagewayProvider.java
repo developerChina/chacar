@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.car.CarPassageway;
 import org.core.util.BeanUtil;
+import org.core.util.StringUtils;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -42,10 +43,13 @@ public class CarPassagewayProvider {
 				SELECT("*");
 				FROM(CarPassageway.tableName);
 				if(params.get("entity") != null){
-//					CarPassageway entity = (CarPassageway) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					CarPassageway entity = (CarPassageway) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getName())){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
+					if(entity.getPark_id()>0){
+						WHERE("  park_id = #{entity.park_id} ");
+					}
 				}
 			}
 		}.toString();

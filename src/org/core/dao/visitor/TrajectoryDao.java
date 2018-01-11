@@ -1,8 +1,11 @@
 package org.core.dao.visitor;
 
+import static org.core.util.GlobleConstants.BLACKLISTTABLE;
+
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -22,5 +25,8 @@ public interface TrajectoryDao {
 		@Result(column="cardNo",property="recordVisitors",one=@One(select="org.core.dao.visitor.RecordVisitorsDao.selectVisitorByCardNo",fetchType=FetchType.EAGER))
 	})
 	List<Trajectory> selectByPage(Map<String, Object> params);
+
+	@Delete(" delete from "+Trajectory.tableName+" where id = #{id} ")
+	void deleteTrajectoryById(String id);
 
 }

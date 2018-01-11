@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 import org.core.domain.car.CarPark;
 import org.core.util.BeanUtil;
+import org.core.util.StringUtils;
 
 /**
  * @Description: 动态SQL语句提供类
@@ -42,10 +43,10 @@ public class CarParkProvider {
 				SELECT("*");
 				FROM(CarPark.tableName);
 				if(params.get("entity") != null){
-//					CarPark entity = (CarPark) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					CarPark entity = (CarPark) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getName())){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
 				}
 			}
 		}.toString();
@@ -62,10 +63,10 @@ public class CarParkProvider {
 				SELECT("count(*)");
 				FROM(CarPark.tableName);
 				if(params.get("entity") != null){
-//					CarPark entity = (CarPark) params.get("entity");
-//					if(dept.getName() != null && !dept.getName().equals("")){
-//						WHERE("  name LIKE CONCAT ('%',#{dept.name},'%') ");
-//					}
+					CarPark entity = (CarPark) params.get("entity");
+					if(StringUtils.isNotBlank(entity.getName())){
+						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+					}
 				}
 			}
 		}.toString();

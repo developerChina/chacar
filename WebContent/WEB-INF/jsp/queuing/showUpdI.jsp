@@ -42,7 +42,7 @@
 	
 	function myQrCode(){ 
 		  $("#qrcode").html("");
-		  var uri="http://192.168.1.128:8080/chacar/queuingI/islandIndex?no="+$("#no").val();
+		  var uri="${qrcodePath}"+$("#no").val();
 		 //alert(uri);
 		  var myqrcode = $("#qrcode").qrcode(
 				  {
