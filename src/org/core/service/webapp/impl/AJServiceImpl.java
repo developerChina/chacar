@@ -77,8 +77,11 @@ public class AJServiceImpl implements AJService {
 					myids+=access.getAccessid()+",";
 				}
 				myids = myids.substring(0,myids.length() - 1);
+				accessj.setPganame(myids);
+			}else{
+				accessj.setPganame("000000");
 			}
-			accessj.setPganame(myids);
+			
 		}
 		
 		String empName = accessj.getAjEmpName();
@@ -90,9 +93,27 @@ public class AJServiceImpl implements AJService {
 					myids+=employee.getId()+",";
 				}
 				myids = myids.substring(0,myids.length() - 1);
+				accessj.setAjEmpName(myids);
+			}else{
+				accessj.setAjEmpName("000000");
 			}
-			accessj.setAjEmpName(myids);
 		}
+		
+		/*String aph = accessj.getAjphone();
+		if(aph!=null&& !"".equals(aph)){
+			List<Employee>  vagueList = aJDao.getEmpByPh(aph);
+			String myids="";
+			if(vagueList!=null&&vagueList.size()>0){
+				for (Employee employee : vagueList) {
+					myids+=employee.getId()+",";
+				}
+				myids = myids.substring(0,myids.length() - 1);
+				accessj.setAjphone(myids);
+			}else{
+				accessj.setAjphone("000000");
+			}
+		}*/
+		
 		
 		/** 当前需要分页的总数据条数 */
 		Map<String, Object> gy = new HashMap<>();

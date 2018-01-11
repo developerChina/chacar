@@ -151,7 +151,14 @@ public class AccessJurisdictionController {
 			if(StringUtils.isNotBlank(accessj.getPganame())){
 				pageParam+="&pganame="+accessj.getPganame();
 			}
+			/*if(StringUtils.isNotBlank(accessj.getAjphone())){
+				pageParam+="&ajphone="+accessj.getAjphone();
+			}*/
 			model.addAttribute("pageParam", pageParam);
+			
+			model.addAttribute("targetEmp", accessj.getAjEmpName());
+			model.addAttribute("target",accessj.getPganame());
+			/*model.addAttribute("targetPh",accessj.getAjphone());*/
 			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){

@@ -153,7 +153,23 @@ public class PassagewayJurisdictionController {
 		 * 查询授权表
 		 * */
 		@RequestMapping(value="/PassagewayJurisdiction/selectPJ")
-		public String selectPJ(Integer pageIndex, @ModelAttribute Passagewayj passagewayj,Model model){
+		public String selectPJ(Integer pageIndex, @ModelAttribute Passagewayj passagewayj,
+				Model model){
+			String pageParam="";
+			if(StringUtils.isNotBlank(passagewayj.getPganame())){
+				pageParam+="&pganame="+passagewayj.getPganame();
+			}
+			if(StringUtils.isNotBlank(passagewayj.getpEmpName())){
+				pageParam+="&pEmpName="+passagewayj.getpEmpName();
+			}
+			model.addAttribute("pageParam", pageParam);
+			model.addAttribute("model", passagewayj.getPganame());
+			
+			model.addAttribute("targetEmp", passagewayj.getpEmpName());
+			model.addAttribute("target",passagewayj.getPganame());
+			/*model.addAttribute("targetPh",passagewayj.getPjphone());*/
+			
+			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);

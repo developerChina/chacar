@@ -95,7 +95,9 @@
 					  <tr>
 					    <td class="font3">
 					    	<!-- 通道授权名:<input type="text" name="pjname">&nbsp; -->
-					    	通道名称:<input type="text" name="pganame">&nbsp;
+					    	通道名称:<input type="text" name="pganame" >&nbsp;
+					    	员工姓名:<input type="text" name="pEmpName" >
+					    	<!-- 手机号:<input type="text" name="pjphone"> -->
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delpj" type="button" value="&nbsp;&nbsp;解除通道授权&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="addpj" type="button" value="&nbsp;&nbsp;绑定通道授权&nbsp;&nbsp;"/>&nbsp;
@@ -120,6 +122,8 @@
 			  <td>通道组</td>
 			  <td>通道</td>
 			  <td>员工</td>
+			  <td>手机号</td>
+			  <td>部门</td>
 			 <!--  <td align="center">操作</td> -->
 			</tr>
 			
@@ -140,6 +144,8 @@
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td> --%>
+					  <td>${pp.pjEmployee.phone}</td>
+					  <td>${pp.pjEmployee.dept.name}</td>
 				</tr>
 			</c:forEach>
 		  </table>
@@ -154,7 +160,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/PassagewayJurisdiction/selectPJ?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/PassagewayJurisdiction/selectPJ?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

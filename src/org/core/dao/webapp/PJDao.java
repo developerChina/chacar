@@ -1,4 +1,5 @@
 package org.core.dao.webapp;
+import static org.core.util.GlobleConstants.EMPLOYEETABLE;
 import static org.core.util.GlobleConstants.PASSAGEWAYGROUPTABLE;
 import static org.core.util.GlobleConstants.PASSAGEWAYJTABLE;
 import static org.core.util.GlobleConstants.PASSAGEWAYTABLE;
@@ -10,6 +11,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.core.dao.webapp.provider.PJSqlProvider;
+import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Passageway;
 import org.core.domain.webapp.PassagewayGroup;
 import org.core.domain.webapp.Passagewayj;
@@ -44,4 +46,8 @@ public interface PJDao {
 	//通道名称模糊查询
 		@Select(" select * from "+PASSAGEWAYTABLE+" where passagewayName LIKE CONCAT('%',#{vague},'%')")
 		List<Passageway> getPlist(String vague);
+		@Select(" select * from "+EMPLOYEETABLE+" where name LIKE CONCAT('%',#{pen},'%')")
+		List<Employee> getEmp(String pen);
+		@Select(" select * from "+EMPLOYEETABLE+" where phone LIKE CONCAT('%',#{pph},'%')")
+		List<Employee> getEmpByPh(String pph);
 }

@@ -52,12 +52,50 @@ public class PJServiceImpl implements PJService {
 		if(vague!=null&& !"".equals(vague)){
 			List<Passageway>  vagueList = pJDao.getPlist(vague);
 			String myids="";
-			for (Passageway passageway : vagueList) {
+			if(vagueList!=null && vagueList.size()>0){
+				for (Passageway passageway : vagueList) {
 				myids+=passageway.getPassagewayID()+",";
+			   }
+				myids = myids.substring(0,myids.length() - 1);
+				passagewayj.setPganame(myids);
+			}else{
+				passagewayj.setPganame("000000");
 			}
-			myids = myids.substring(0,myids.length() - 1);
-			passagewayj.setPganame(myids);
+			
 		}
+		
+		String pen = passagewayj.getpEmpName();
+		if(pen!=null && !"".equals(pen)){
+			List<Employee>  vagueList = pJDao.getEmp(pen);
+			String myids="";
+			if(vagueList!=null&&vagueList.size()>0){
+				for (Employee employee : vagueList) {
+					myids+=employee.getId()+",";
+				}
+				myids = myids.substring(0,myids.length() - 1);
+				passagewayj.setpEmpName(myids);
+			}else{
+				passagewayj.setpEmpName("000000");
+			}
+			
+		}
+		
+		/*String pph = passagewayj.getPjphone();
+		if(pen!=null && !"".equals(pen)){
+			List<Employee>  vagueList = pJDao.getEmpByPh(pph);
+			String myids="";
+			if(vagueList!=null&&vagueList.size()>0){
+				for (Employee employee : vagueList) {
+					myids+=employee.getId()+",";
+				}
+				myids = myids.substring(0,myids.length() - 1);
+				passagewayj.setPjphone(myids);
+			}else{
+				passagewayj.setPjphone("000000");
+			}
+			
+		}*/
+		
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> gy = new HashMap<>();
 		gy.put("passagewayj", passagewayj);

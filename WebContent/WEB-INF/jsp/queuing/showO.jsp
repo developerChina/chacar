@@ -77,8 +77,8 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	卸货岛:<input type="text" name="vagueiname">
-					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
+					    	卸货岛:<input type="text" name="vagueiname" value="${model}">
+					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;新增普通队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
@@ -124,7 +124,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/queuingO/OrdinaryAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/queuingO/OrdinaryAck?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

@@ -77,8 +77,8 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	卸货岛:<input type="text" name="vagueiname">&nbsp;&nbsp;
-					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
+					    	卸货岛:<input type="text" name="vagueiname" value="${model}">&nbsp;&nbsp;
+					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
 					    	<!-- 选择查看日期:
 					    	<select name="rtype" id="rtype">
 								<option disabled="disabled" selected="selected">-请选择要查看日期-</option>
@@ -144,7 +144,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/queuingH/HistoryAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/queuingH/HistoryAck?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

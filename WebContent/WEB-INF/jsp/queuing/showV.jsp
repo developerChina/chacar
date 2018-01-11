@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html> 
 <head>
-	<title>排队叫号系统-VIP队列管理</title>
+	<title>排队叫号系统-急件队列管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -25,7 +25,7 @@
 <script type="text/javascript">
 
     function deleteVip(a){
-    	$.ligerDialog.confirm("确认要撤销此VIP队列吗?","撤销VIP队列 ",function(r){
+    	$.ligerDialog.confirm("确认要撤销此急件队列吗?","撤销急件队列 ",function(r){
 			   if(r){
 				   window.location = "${ctx}/queuingV/delVipAck?id=" + a;
 			   }
@@ -61,7 +61,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：排队叫号系统-VIP队列管理 &gt; VIP队列查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：排队叫号系统-急件队列管理 &gt; 急件队列查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
@@ -77,8 +77,8 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	卸货岛:<input type="text" name="vagueiname">
-					    	车牌号:<input type="text" name="car_code">&nbsp;&nbsp;
+					    	卸货岛:<input type="text" name="vagueiname" value="${model}">
+					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;新增VIP队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
@@ -124,7 +124,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/queuingV/VipAck?pageIndex={0}"/>
+		  	        submitUrl="${ctx}/queuingV/VipAck?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

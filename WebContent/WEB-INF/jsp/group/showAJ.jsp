@@ -93,8 +93,8 @@
 					  <tr>
 					    <td class="font3">
 					    	<!-- 门禁授权名:<input type="text" name="ajname">&nbsp; -->
-					    	门禁名:<input type="text" name="pganame">&nbsp;
-					    	员工名称:<input type="text" name="ajEmpName">&nbsp;
+					    	门禁名:<input type="text" name="pganame" >&nbsp;
+					    	员工名称:<input type="text" name="ajEmpName" >&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
 					    	<input id="delaj" type="button" value="&nbsp;&nbsp;解除门禁授权&nbsp;&nbsp;"/>
 					    	<input id="addaj" type="button" value="&nbsp;&nbsp;绑定门禁授权&nbsp;&nbsp;"/>
@@ -118,6 +118,8 @@
 			  <td>门禁组</td>
 			  <td>门禁</td> 
 			  <td>员工</td>
+			  <td>手机号</td>
+			  <td>部门</td>
 			 <!--  <td align="center">操作</td> -->
 			</tr>
 			
@@ -140,6 +142,8 @@
 							   <img title="修改" src="${ctx}/images/update.gif"/>
 						   </a>
 					  </td> --%>
+					  <td>${aj.ajEmployee.phone}</td>
+					  <td>${aj.ajEmployee.dept.name}</td>
 				</tr>
 			</c:forEach>
 		  </table>
