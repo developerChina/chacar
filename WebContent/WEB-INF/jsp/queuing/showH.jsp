@@ -90,7 +90,7 @@
 								<option value="3" >一年以上的</option>
 							</select>&nbsp;&nbsp; -->
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="&nbsp;&nbsp;导出历史记录&nbsp;&nbsp;"/>&nbsp;&nbsp; 
+					    	<!-- <input id="add" type="button" value="&nbsp;&nbsp;导出历史记录&nbsp;&nbsp;"/>&nbsp;&nbsp;  -->
 					    </td>
 					  </tr>
 					</table>

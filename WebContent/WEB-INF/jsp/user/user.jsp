@@ -112,9 +112,9 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
+			  <td>用户名</td>
 			  <td>登录名</td>
 			  <td>密码</td>
-			  <td>用户名</td>
 			  <td>状态</td>
 			  <td>创建时间</td>
 			  <td align="center">操作</td>
@@ -122,10 +122,11 @@
 			<c:forEach items="${requestScope.users}" var="user" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${user.id}"></td>
+					 <td>${user.username }</td>
 					 <td>${user.loginname }</td>
 					  <td>${user.password}</td> 
 					  <%--<td>********</td>--%>
-					  <td>${user.username }</td>
+					  
 					  <td>${user.status }</td>
 					  <td><f:formatDate value="${user.createDate}"  type="date" dateStyle="long"/></td>
  					  <td align="center" width="40px;"><a href="${ctx}/user/updateUser?flag=1&id=${user.id}">
