@@ -147,14 +147,14 @@ public class PrintAllController {
 						mj.add(accessService.findAccessById(Integer.parseInt(d)));
 					}
 				}
-			}
-		}
-		if(rb!=null) {
-			List<Employee> emps=hrmService.findEmployeeByCardNo_carstatus(rb.getBevisitedCardNo(),1);
-			if(emps!=null&&emps.size()>0) {
-				System.out.println("===员工不能访问登记=====");
-			}else {
-				VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
+				
+				List<Employee> emps=hrmService.findEmployeeByCardNo_carstatus(cardno,1);
+				if(emps!=null&&emps.size()>0) {
+					System.out.println("===员工不能访问登记=====");
+				}else {
+					VisitorEntryUtil.inPermissionControl(cardno, mj, dt, td);
+				}
+				
 			}
 		}
 		return true;
