@@ -75,7 +75,7 @@
 							<p class="clearfix">
 								<span class="fl">
 									<input type="hidden" id="cardName" name="cardName" value="">
-									姓&nbsp;&nbsp;名&nbsp;&nbsp;<span id="cardName-span" class="underline">3333</span>
+									姓&nbsp;&nbsp;名&nbsp;&nbsp;<span id="cardName-span" class="underline"></span>
 								</span>
 								<span class="fl">
 									<input type="hidden" id="cardSex" name="cardSex" value="">

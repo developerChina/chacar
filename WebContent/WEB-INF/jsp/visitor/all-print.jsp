@@ -28,7 +28,7 @@
 				<div class="bottom clearfix">
 					<div class="fl left">
 						<input type="hidden" id="cardno" title='身份证物理卡号'/>
-						<input type="hidden" id="cardid" title='身份证号' />
+						<input type="hidden" id="cardid" title='身份证号' value="142622199010303211"/>
 						<input type="hidden" id="name" title='访客姓名'/>
 						<input type="hidden" id="phone" title='访客电话'/>
 						<input type="hidden" id="company" title='工作单位'/>
@@ -124,14 +124,8 @@
      
      
 	function findRecordByRead(){
-		var cardInfo=readIDCard();
-		if(cardInfo.state){
-			$("#cardid").val(cardInfo.message.code);
-			findRecord(cardInfo.message.code);
-		}else{
-			alert(cardInfo.message);
-		}
-		//findRecord('150207199510088612');
+		 
+		 findRecord('142622199010303211');
 	}
 	
 	
