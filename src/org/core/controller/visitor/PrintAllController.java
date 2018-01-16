@@ -174,7 +174,13 @@ public class PrintAllController {
 	
 		String params="cardName="+cardName+"&bevisitedName="+bevisitedName+"&telephone="+telephone+"&dept="+dept+"&unit="+unit+"&visitDate="+visitDate;
 		
-		HttpClientUtil.doGet("http://"+serIp+"?"+params);
+		System.out.println("====开始打印=====");
+		System.out.println("serIp:"+serIp);
+		System.out.println("params:"+params);
+		
+		String getStr=HttpClientUtil.doGet("http://"+serIp+"?"+params);
+		
+		System.out.println("打印结束:"+getStr);
 	
 		return true;
 	}

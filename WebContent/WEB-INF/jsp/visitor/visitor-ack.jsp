@@ -17,7 +17,6 @@
 	</head>
 	<body>
 		<div id="section_container">
-			<section id="index_section" data-role="section" class="active">
 				<header>
 		            <div class="titlebar">
 		                <h1 class="text-center">访客确认</h1>
@@ -87,19 +86,16 @@
 									</select>
 							  	</div>
 						 </label>
-						 
+						<ul class="menubar reverse">
+							<c:if test="${isShow=='yes'}">
+			                <li class="tab active" data-role="tab" data-toggle="article" onclick="auditRecord()">
+							 	<label class="tab-label">确认</label>
+			                </li>
+			                </c:if>
+			            </ul>
 					</form>
 				</article>
-				<footer>
-					<ul class="menubar reverse">
-						<c:if test="${isShow=='yes'}">
-		                <li class="tab active" data-role="tab" data-toggle="article" onclick="auditRecord()">
-						 	<label class="tab-label">确认</label>
-		                </li>
-		                </c:if>
-		            </ul>
-				</footer>
-			</section>
+				
 		</div>
 
 		<script type="text/javascript">
