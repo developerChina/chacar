@@ -88,8 +88,9 @@ public class BeisitedController {
 			if(rv.get("cardID")!=null){
 				RecordVisitors recordVisitor= new RecordVisitors();
 				VisitorInfo visitorInfo=visitorInfoService.selectOneBycardID(rv.get("cardID").toString());
-				visitorNames=visitorNames+","+"[来访人:"+recordVisitor.getCardName()+",公司:"+recordVisitor.getCompany()+",事由:"+recordVisitor.getVisitReason()+"]";
 				BeanUtils.copyProperties(visitorInfo, recordVisitor);
+				String reason=recordVisitor.getVisitReason()!=null?",事由:"+recordVisitor.getVisitReason():"";
+				visitorNames=visitorNames+","+"[来访人:"+recordVisitor.getCardName()+",公司:"+recordVisitor.getCompany()+reason+"]";
 				recordVisitor.setRecordID(recordid);
 				recordVisitor.setVisitStatus(1);
 				recordVisitor.setVisitReason(rv.get("visitReason")!=null?rv.get("visitReason").toString():"");
@@ -98,7 +99,7 @@ public class BeisitedController {
 		}
 		
 		if(visitorNames.contains(",")) {
-			visitorNames.substring(1);
+			visitorNames=visitorNames.substring(1);
 		}
 		//保存记录被访人
 		Employee employee= hrmService.findEmployeeById(Integer.parseInt(id));
