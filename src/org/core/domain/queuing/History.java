@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * table="logis_history" <br>
- *  历史数据的统计实体
+ *  历史数据的统计实体 git
  */
 @SuppressWarnings("serial")
 public class History implements java.io.Serializable {

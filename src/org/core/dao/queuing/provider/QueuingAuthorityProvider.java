@@ -155,7 +155,7 @@ public class QueuingAuthorityProvider {
 	
 	
 /*
-	历史记录
+	历史记录 新增查询条件 按时间 按供货商 
 */	
 		public String countH(Map<String, Object> params) {
 		String sql =  new SQL(){

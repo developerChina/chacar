@@ -181,10 +181,10 @@ public interface QueuingDao {
 
 	@Select("select * from "+History.tableName+" where island_no = #{landno} and goout_time is null order by comein_time desc limit 1")
 	History selectIng(int landno);
-	
+	//查供货商
 	@Select(" select DriverID from logis_vehicle as v WHERE v.VehicleCode=#{car_code} ")
 	List<String> getSupplier(String car_code);
-	
+	//模糊查车牌
 	@Select(" select VehicleCode from logis_vehicle as v WHERE v.DriverID LIKE CONCAT('%',#{vSupplier},'%') ")
 	List<String> vagueCar_code(String vSupplier);
 	

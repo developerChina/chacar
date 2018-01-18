@@ -582,7 +582,7 @@ public class QueuingConteoller {
 			return map;
 		}
 		
-		//导出历史记录Excel
+		//导出历史记录Excel git提交
 		@RequestMapping(value="/queuingH/exportExcel")
 		public void exportExcel(HttpServletRequest request,HttpServletResponse response,
 		Integer island_no,@ModelAttribute History history){

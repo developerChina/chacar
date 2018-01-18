@@ -251,7 +251,7 @@ public class QueuingServiceImpl implements QueuingService {
 			long minute1=between%3600/60;
 			long second1=between%60;
 			Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
-			//预防查出多条
+			//预防查出多条 git提交
 			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
 			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
 				Hparts.setSupplier(SupplierList.get(0));
