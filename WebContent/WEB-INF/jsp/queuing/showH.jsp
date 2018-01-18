@@ -21,22 +21,12 @@
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
 	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
 	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
-
+	<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 
-    function deleteIsland(a){
-    	$.ligerDialog.confirm("确认要删除吗?","删除排队叫号系统卸货岛 ",function(r){
-			   if(r){
-				   window.location = "${ctx}/queuingI/delIslandAck?no=" + a;
-			   }
-		   });
-    }
     
-    function updateIsland(a){
-    	
-	window.location = "${ctx}/queuingI/updateIslandAck?flag=1&no=" + a;
-			
-    }
+    
+    
 
 		$(function(){
 		 	  /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
@@ -46,9 +36,18 @@
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
 		    	
-		 	   /** 给添加卸货岛绑定点击事件 */
+		    $("#search").click(function(){
+	 		   var actionURL = $("#Historyform").attr("action");
+	 	       $("#Historyform").attr("action","${ctx}/queuingH/HistoryAck");
+	 	       $("#Historyform").submit(); 
+	 	   })
+		    	
+		    	
+		 	   /** 给导出添加绑定点击事件 */
 		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/queuingI/IslandAdd?flag=1";
+		 		  var actionURL = $("#Historyform").attr("action");
+		 	       $("#Historyform").attr("action","${ctx}/queuingH/exportExcel");
+		 	       $("#Historyform").submit();
 		 	   })
 		 	   
 	 })
@@ -73,24 +72,29 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="Historyform" method="post" id="Historyform" action="${ctx}/queuingH/HistoryAck">
+			  	<form name="Historyform" method="post" id="Historyform" >
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
-					    <td class="font3">
-					    	卸货岛:<input type="text" name="vagueiname" value="${model}">&nbsp;&nbsp;
+					   <td class="font3">
+		    				卸货岛:<select name="island_no" id="island_no" >
+								<option value="0">-请选择卸货岛-</option>
+								<c:forEach items="${requestScope.AddVgetI}" var="avi" varStatus="stat">
+								<option value="${avi.no}" <c:if test="${island_no==avi.no}">selected </c:if> >${avi.iname}</option>
+								</c:forEach>
+							</select>
+							
+							卸货岛名称:<input type="text" name="vagueiname" value="${model}">&nbsp;&nbsp;
+					    	
 					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
-					    	<!-- 选择查看日期:
-					    	<select name="rtype" id="rtype">
-								<option disabled="disabled" selected="selected">-请选择要查看日期-</option>
-								<option value="1" >一星期以内的</option>
-								<option value="2" >一个月以内的</option>
-								<option value="3" >三个月以内的</option>
-								<option value="3" >半年以内的</option>
-								<option value="3" >一年以内的</option>
-								<option value="3" >一年以上的</option>
-							</select>&nbsp;&nbsp; -->
-					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
-					    	<!-- <input id="add" type="button" value="&nbsp;&nbsp;导出历史记录&nbsp;&nbsp;"/>&nbsp;&nbsp;  -->
+					 
+					 	 	供货商:<input type="text" name="supplier" value="${targetSupplier}">&nbsp;&nbsp;
+					 
+					   		驶入时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
+							name="comein_time"  size="10" value='<f:formatDate value='${targetComein_time}' pattern='yyyy-MM-dd' />'/>
+					   
+					     	<input type="button" id="search" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
+					   
+					    	<input id="add" type="button" value="&nbsp;&nbsp;导出&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
 					  </tr>
 					</table>
@@ -108,17 +112,18 @@
 		    <tr class="main_trbg_tit" align="center">
 		      <td>序号</td>
 			  <td>卸货岛名称</td>
+			  <td>供应商</td>
 			  <td>车牌号码</td>
 			  <td>驶入时间</td>
 			  <td>驶出时间</td>
 			  <td>操作时间</td>
-			  <!-- <td>备注</td>
-			  <td>操作员</td> -->
+			  <td>备注</td>
 			</tr>
 			<c:forEach items="${requestScope.pageListH}" var="ph" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					  <td>${stat.count}</td>
 					  <td>${ph.hpartsI.iname}</td>
+					  <td>${ph.supplier}</td>
 					  <td>${ph.car_code}</td>
 					  <td>
 					  <f:formatDate value="${ph.comein_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -127,10 +132,13 @@
 					  <f:formatDate value="${ph.goout_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					  </td>
 					  <td>
-					  ${ph.reduce}
+					  <font color="green">${ph.reduce}</font> 
 					  </td>
-					  <%-- <td>${ph.remarks}</td>
-					  <td>${ph.empname}</td> --%>
+					  <td>
+					  <c:if test="${ph.source==1}">普通</c:if>
+					  <c:if test="${ph.source==0}">急件</c:if>
+					  </td>
+					  <%-- <td>${ph.empname}</td> --%> 
 				</tr>
 			</c:forEach>
 		  </table>

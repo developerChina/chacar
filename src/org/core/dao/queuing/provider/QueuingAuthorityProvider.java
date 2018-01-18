@@ -167,8 +167,17 @@ public class QueuingAuthorityProvider {
 					if(history.getCar_code() != null && !history.getCar_code().equals("")){
 						WHERE(" car_code LIKE CONCAT('%',#{history.car_code},'%') ");				
 					}
+					if(history.getHpartsI() != null && history.getHpartsI().getNo()!=0 ){
+						WHERE(" island_no = #{history.hpartsI.no} ");				
+					}
 					if(history.getVagueiname() != null && !history.getVagueiname().equals("")){
 						WHERE(" island_no in ("+ history.getVagueiname() +" ) ");				
+					}
+					if(history.getSupplier() != null && !history.getSupplier().equals("")){
+						WHERE(" car_code in ("+ history.getSupplier() +" ) ");				
+					}
+					if(history.getComein_time() != null && !"".equals(history.getComein_time())){
+						WHERE("  DATE_FORMAT(comein_time,'%m-%d-%Y')=DATE_FORMAT(#{history.comein_time},'%m-%d-%Y') ");
 					}
 				}
 			}
@@ -185,8 +194,17 @@ public class QueuingAuthorityProvider {
 					if(history.getCar_code() != null && !history.getCar_code().equals("")){
 						WHERE(" car_code LIKE CONCAT('%',#{history.car_code},'%') ");				
 					}
+					if(history.getHpartsI() != null && history.getHpartsI().getNo()!=0 ){
+						WHERE(" island_no = #{history.hpartsI.no} ");				
+					}
 					if(history.getVagueiname() != null && !history.getVagueiname().equals("")){
 						WHERE(" island_no in ("+ history.getVagueiname() +" ) ");				
+					}
+					if(history.getSupplier() != null && !history.getSupplier().equals("")){
+						WHERE(" car_code in ("+ history.getSupplier() +" ) ");				
+					}
+					if(history.getComein_time() != null && !"".equals(history.getComein_time())){
+						WHERE("  DATE_FORMAT(comein_time,'%m-%d-%Y')=DATE_FORMAT(#{history.comein_time},'%m-%d-%Y') ");
 					}
 				}
 				ORDER_BY("comein_time desc");

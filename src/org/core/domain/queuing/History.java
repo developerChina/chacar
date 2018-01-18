@@ -2,6 +2,8 @@ package org.core.domain.queuing;
  
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * table="logis_history" <br>
  *  历史数据的统计实体
@@ -13,7 +15,9 @@ public class History implements java.io.Serializable {
 	private String id; 	 				//int(11) 		     历史数据的统计表的主键
 	private int island_no; 	 			//int(11) 		     卸货岛编号
 	private String car_code;  			//varchar(50)     历史表的车牌
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date comein_time; 			//date    		    驶入时间
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date goout_time;  			//date     	             驶出时间
 	private String remarks;  			//varchar(50)     备注
 	private int source;					//int(11) 		    数据来源 1_vip 2_普通表
@@ -24,6 +28,8 @@ public class History implements java.io.Serializable {
 	private String vagueiname;			//卸货岛名称用来模糊查询
 	
 	private String reduce;				//驶入驶出的差值
+	private String supplier;			//供货商名称
+	
 	
 	public String getId() {
 		return id;
@@ -90,6 +96,12 @@ public class History implements java.io.Serializable {
 	}
 	public void setReduce(String reduce) {
 		this.reduce = reduce;
+	}
+	public String getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
 	}
 	
 	

@@ -195,7 +195,6 @@ public class QueuingServiceImpl implements QueuingService {
 //3、历史记录的业务逻辑层接口的实现
 	@Override
 	public List<History> selectHByPage(History history, PageModel pageModel) {
-		
 		String vague = history.getVagueiname();
 		if(vague!=null && !"".equals(vague)){
 			String nos = "";
@@ -211,8 +210,28 @@ public class QueuingServiceImpl implements QueuingService {
 			}else{
 				history.setVagueiname("000000");
 			}
-			
 		}
+		
+		String vSupplier = history.getSupplier();
+		if(vSupplier!=null && !"".equals(vSupplier)){
+			String nos = "";
+			List<String> carList = queuingDao.vagueCar_code(vSupplier);
+			if(carList!=null&&carList.size()>0){
+				
+				for (String code : carList) {
+					nos+="'"+code+"'"+",";
+				}
+				//System.out.println(nos);
+				nos = nos.substring(0,nos.length() - 1);
+				//System.out.println(nos); 
+				history.setSupplier(nos);
+			}else{
+				history.setSupplier("000000");
+			}
+		}
+		
+		
+		
 		Map<String,Object> params = new HashMap<>();
 		params.put("history", history);
 		int recordCount = queuingDao.countH(params);
@@ -221,16 +240,26 @@ public class QueuingServiceImpl implements QueuingService {
 		    params.put("pageModel", pageModel);
 	    }
 		List<History> pageListH = queuingDao.pageSelectH(params);
-		//将卸货岛封装到历史记录里
+		//1将卸货岛封装到历史记录里 2计算时间差 3查到车的供货商
 		for (History Hparts : pageListH) {
 			Island myVpartsI = queuingDao.getparts(Hparts.getIsland_no());
 			Hparts.setHpartsI(myVpartsI);
+			
 			long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
 			//System.out.println(Hparts.getGoout_time());
 			long hour1=between%(24*3600)/3600;
 			long minute1=between%3600/60;
 			long second1=between%60;
 			Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
+			//预防查出多条
+			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
+			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
+				Hparts.setSupplier(SupplierList.get(0));
+			}else{
+				Hparts.setSupplier("");
+			}
+			
+			
 		}
 		return pageListH;
 	}

@@ -1,20 +1,30 @@
 package org.core.controller.queuing;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.poi.hssf.util.Region;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
+import org.core.domain.webapp.Dept;
 import org.core.service.location.InoutService;
 import org.core.service.queuing.QueuingService;
+import org.core.util.DateUtil;
+import org.core.util.ExcelUtil;
 import org.core.util.PropUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -317,18 +327,34 @@ public class QueuingConteoller {
 	 */
 	@RequestMapping(value = "/queuingH/HistoryAck")
 	public ModelAndView HistoryAck(Integer pageIndex,
-			@ModelAttribute History history, ModelAndView mv) {
+			@ModelAttribute History history,
+			Integer island_no, ModelAndView mv) {
+		
+		this.islandH(island_no,history);
+		
 		String pageParam="";
-		if(history.getVagueiname()!=null){
+		if(history.getVagueiname()!=null && !history.getVagueiname().equals("")){
 			pageParam+="&vagueiname="+history.getVagueiname();
 		}
-		if(history.getCar_code()!=null){
+		if(history.getCar_code()!=null && !history.getCar_code().equals("")){
 			pageParam+="&car_code="+history.getCar_code();
 		}
+		if(island_no!=null&&island_no>0){
+			pageParam+="&island_no="+island_no;
+		}
+		if(history.getSupplier()!=null && !history.getSupplier().equals("")){
+			pageParam+="&supplier="+history.getSupplier();
+		}
+		if(history.getComein_time()!=null && !"".equals(history.getComein_time())){
+			pageParam+="&comein_time="+DateUtil.DateToString(history.getComein_time(), "yyyy-MM-dd");
+		}
+		//System.out.println("dffdd:"+history.getComein_time());
 		mv.addObject("pageParam", pageParam);
 		mv.addObject("model", history.getVagueiname());
 		mv.addObject("target", history.getCar_code());
-		
+		mv.addObject("island_no", island_no);
+		mv.addObject("targetSupplier", history.getSupplier());
+		mv.addObject("targetComein_time", history.getComein_time());
 		PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
@@ -336,11 +362,26 @@ public class QueuingConteoller {
 		List<History> pageListH = queuingService.selectHByPage(history, pageModel);
 		mv.addObject("pageListH", pageListH);
 		mv.addObject("pageModel", pageModel);
+		
+		List<Island> AddVgetI = queuingService.AddVgetI();
+		mv.addObject("AddVgetI", AddVgetI);
 		// 设置客户端跳转到查询请求
 		mv.setViewName("queuing/showH");
 		// 返回ModelAndView
 		return mv;
 	}
+	
+	/**
+	 * 由于卸货岛在历史表是对象关联映射， 所以不能直接接收参数，需要创建卸货岛对象
+	 */
+	private void islandH(Integer island_no,History history) {
+		if (island_no != null) {
+			Island island = new Island();
+			island.setNo(island_no);
+			history.setHpartsI(island);
+		}
+	}
+	
 	@RequestMapping(value = "/queuingH/TodayAck")
 	public ModelAndView TodayAck(HttpServletRequest request,ModelAndView mv) {
 		// 设置客户端跳转到查询请求
@@ -540,5 +581,108 @@ public class QueuingConteoller {
 				}
 			return map;
 		}
+		
+		//导出历史记录Excel
+		@RequestMapping(value="/queuingH/exportExcel")
+		public void exportExcel(HttpServletRequest request,HttpServletResponse response,
+		Integer island_no,@ModelAttribute History history){
+			
+			this.islandH(island_no,history);
+			PageModel pageModel = new PageModel();
+			pageModel.setPageSize(Integer.MAX_VALUE);
+			
+			List<History> pageListH = queuingService.selectHByPage(history, pageModel);
+			
+			// 声明一个工作薄
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			String sheetName = "历史记录";//sheet名称
+			HSSFSheet sheet = workbook.createSheet(sheetName);
+			sheet.setFitToPage(true);  
+		    sheet.setHorizontallyCenter(true);
+		    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+		    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");  
+			sheet.setAutoFilter(c);
+		    //设置列宽
+		    sheet.setColumnWidth(0, 3200);
+	        sheet.setColumnWidth(1, 4800);		
+	        sheet.setColumnWidth(2, 6800);
+	        sheet.setColumnWidth(3, 3200);
+	        sheet.setColumnWidth(4, 5000);
+	        sheet.setColumnWidth(5, 5000);
+	        sheet.setColumnWidth(6, 6000);
+	        sheet.setColumnWidth(7, 3200);
+			//定义表格行索引
+	        int index=0;
+	        
+	      //添加标题
+	        HSSFRow row_title = sheet.createRow(index++);
+	        row_title.setHeight((short) 600);// 设置行高 
+	        HSSFCell row_title0 = row_title.createCell(0);   
+	        row_title0.setCellValue(new HSSFRichTextString("历史记录")); 
+	        //合并表头单元格
+	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)7),ExcelUtil.createTitleStyle(workbook));
+	        sheet.addMergedRegion(new Region(
+	        0 //first row (0-based) from 行  
+	        ,(short)0 //first column (0-based) from 列     
+	        ,0//last row  (0-based)  to 行
+	        ,(short)7//last column  (0-based)  to 列     
+	        ));
+	        
+	        //添加头信息
+	        String[] titles={"编码","卸货岛名称","供应商","车牌号","驶入时间","驶出时间","操作时间","描述"};
+	        HSSFRow row_head = sheet.createRow(index++);
+	        for (int i=0; i<titles.length;i++) {
+	        	HSSFCell cell = row_head.createCell(i);
+				cell.setCellValue(titles[i]);
+				cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			}
+	        
+	        for (History entity:pageListH) {
+	        	HSSFRow row = sheet.createRow(index++);
+	        	//编码
+	        	HSSFCell cell0 = row.createCell(0);
+	        	cell0.setCellValue(entity.getId());
+				//卸货岛名称
+				HSSFCell cell1 = row.createCell(1);
+				cell1.setCellValue(entity.getHpartsI().getIname());
+				//供应商
+				HSSFCell cell2 = row.createCell(2);
+				if(entity.getSupplier()!=null){
+					cell2.setCellValue(entity.getSupplier());
+				}
+				//车牌号
+				HSSFCell cell3 = row.createCell(3);
+				cell3.setCellValue(entity.getCar_code());
+				//驶入时间
+				HSSFCell cell4 = row.createCell(4);
+				cell4.setCellValue(DateUtil.DateToString(entity.getComein_time(), "yyyy-MM-dd HH:mm:ss"));
+				//驶出时间
+				HSSFCell cell5 = row.createCell(5);
+				cell5.setCellValue(DateUtil.DateToString(entity.getGoout_time(), "yyyy-MM-dd HH:mm:ss"));
+				//操作时间
+				HSSFCell cell6 = row.createCell(6);
+				cell6.setCellValue(entity.getReduce());
+				//备注
+				HSSFCell cell7 = row.createCell(7);
+				if(entity.getSource()==1){
+					cell7.setCellValue("普通");
+				}
+				if(entity.getSource()==0){
+					cell7.setCellValue("急件");
+				}
+			}
+	        try {
+				String fileName="历史记录";
+				ExcelUtil.write(request, response, workbook, fileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
+		
+		
 		
 }
