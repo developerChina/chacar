@@ -226,6 +226,15 @@ public class VisitorAckController {
 	public ModelAndView blackAutomatic(ModelAndView mv, Model model, Integer pageIndex,
 			@ModelAttribute VisitorInfo entity) {
 
+		String pageParam="";
+		if(entity.getCardName()!=null && !entity.getCardName().equals("")){
+			pageParam+="&cardName="+entity.getCardName();
+		}
+		if(entity.getCompany()!=null && !entity.getCompany().equals("")){
+			pageParam+="&company="+entity.getCompany();
+		}
+		mv.addObject("pageParam", pageParam);
+		
 		PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
