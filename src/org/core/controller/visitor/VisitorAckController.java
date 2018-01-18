@@ -221,7 +221,7 @@ public class VisitorAckController {
 		return mv;
 	}
 
-	// 1_4 自动添加到黑名单（将访客拉黑）
+	// 1_4 自动添加到黑名单（将访客拉黑）git
 	@RequestMapping(value = "visitor/blackAutomatic")
 	public ModelAndView blackAutomatic(ModelAndView mv, Model model, Integer pageIndex,
 			@ModelAttribute VisitorInfo entity) {
