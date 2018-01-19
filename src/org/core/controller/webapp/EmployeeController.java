@@ -23,10 +23,12 @@ import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
 import org.core.domain.webapp.Passageway;
+import org.core.domain.webapp.TrajectoryEmp;
 import org.core.service.webapp.AccessGroupService;
 import org.core.service.webapp.GroupService;
 import org.core.service.webapp.HrmService;
 import org.core.service.webapp.PassagewayGroupService;
+import org.core.service.webapp.TrajectoryEmpService;
 import org.core.util.AControlUtil;
 import org.core.util.DateStyle;
 import org.core.util.DateUtil;
@@ -71,6 +73,12 @@ public class EmployeeController {
 	@Autowired
 	@Qualifier("groupService")
 	private GroupService groupService;
+	
+	@Autowired
+	@Qualifier("trajectoryEmpService")
+	private TrajectoryEmpService trajectoryEmpService;
+	
+	
 	/**
 	 * 处理查询请求
 	 * 
@@ -536,4 +544,60 @@ public class EmployeeController {
 
 	}
 
+	
+	@RequestMapping(value = "/employee/selectTrajectoryEmp")
+	public String selectTrajectoryEmp(HttpServletRequest request,Integer pageIndex,Model model) {
+		// 创建分页对象
+		PageModel pageModel = new PageModel();
+		// 如果参数pageIndex不为null，设置pageIndex，即显示第几页
+		if (pageIndex != null) {
+			pageModel.setPageIndex(pageIndex);
+		}
+		String pageParam=""; 
+		String name=request.getParameter("name");
+		model.addAttribute("name", name);
+		if(StringUtils.isNotBlank(name)){pageParam+="&name="+name;}
+		String cardno=request.getParameter("cardno");
+		model.addAttribute("cardno", cardno);
+		if(StringUtils.isNotBlank(cardno)){pageParam+="&cardno="+cardno;}
+		String phone=request.getParameter("phone");
+		model.addAttribute("phone", phone);
+		if(StringUtils.isNotBlank(phone)){pageParam+="&phone="+phone;}
+		String sDate=request.getParameter("sDate");
+		model.addAttribute("sDate", sDate);
+		if(StringUtils.isNotBlank(sDate)){pageParam+="&sDate="+sDate;}
+		String eDate=request.getParameter("eDate");
+		model.addAttribute("eDate", eDate);
+		if(StringUtils.isNotBlank(eDate)){pageParam+="&eDate="+eDate;}
+		model.addAttribute("pageParam", pageParam);
+		
+		TrajectoryEmp trajectoryEmp=new TrajectoryEmp();
+		if(StringUtils.isNotBlank(name)||StringUtils.isNotBlank(cardno)||StringUtils.isNotBlank(phone)){
+			List<Employee> list=hrmService.getEmployeees(name, cardno, phone);
+			String cardnos="";
+			for (Employee employee : list) {
+				cardnos+=",'"+employee.getCardno()+"' ";
+			}
+			if(cardnos.contains(",")){
+				trajectoryEmp.setCardno(cardnos.substring(1));
+			}else{
+				trajectoryEmp.setCardno("null");
+			}
+		}
+		
+		if(StringUtils.isNotBlank(sDate)){
+			trajectoryEmp.setStartTime(DateUtil.StringToDate(sDate));
+		}
+		if(StringUtils.isNotBlank(eDate)){
+			trajectoryEmp.setEndTime(DateUtil.StringToDate(eDate));
+		}
+		
+		List<TrajectoryEmp> traEmps=trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
+		model.addAttribute("traEmps", traEmps);
+		model.addAttribute("pageModel", pageModel);
+		// 返回员工页面
+		return "employee/trajectoryEmp";
+
+	}
+	
 }

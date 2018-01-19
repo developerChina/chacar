@@ -3,6 +3,7 @@ package org.core.service.webapp;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
@@ -162,7 +163,7 @@ public interface HrmService {
 	
 	
 	/**
-	 * 根据用户名或电话查找员工
+	 * 根据用户名或电话查找员工(精确)
 	 * @param name
 	 * @param telphone
 	 * @return
@@ -185,5 +186,14 @@ public interface HrmService {
 	 * 查詢物理卡員工
 	 */
 	List<Employee> findEmployeeByCardNo_carstatus(String cardNo, int carstatus);
+	
+	/**
+	 * 模糊查询员工
+	 * @param name
+	 * @param cardno
+	 * @param phone
+	 * @return
+	 */
+	List<Employee> getEmployeees(String name,String cardno,String phone);
 	
 }

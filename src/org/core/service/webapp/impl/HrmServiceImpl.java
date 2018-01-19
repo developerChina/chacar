@@ -385,4 +385,9 @@ public class HrmServiceImpl implements HrmService{
 		return employeeDao.findEmployeeByCardNo_carstatus(cardNo,carstatus);
 	}
 
+	@Override
+	public List<Employee> getEmployeees(String name, String cardno, String phone) {
+		return employeeDao.getEmployeees(name,cardno,phone);
+	}
+
 }

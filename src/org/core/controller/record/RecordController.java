@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.core.domain.visitor.RecordBevisiteds;
 import org.core.domain.visitor.RecordVisitors;
 import org.core.domain.webapp.Access;
-import org.core.domain.webapp.AccessGroup;
 import org.core.service.record.RecordBevisitedsService;
 import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.VisitorRecordService;
