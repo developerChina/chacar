@@ -2,6 +2,7 @@ package org.core.controller.queuing;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -328,7 +329,8 @@ public class QueuingConteoller {
 	@RequestMapping(value = "/queuingH/HistoryAck")
 	public ModelAndView HistoryAck(Integer pageIndex,
 			@ModelAttribute History history,
-			Integer island_no, ModelAndView mv) {
+			Integer island_no, ModelAndView mv,
+			HttpServletRequest request,HttpServletResponse response) {
 		
 		this.islandH(island_no,history);
 		
@@ -345,21 +347,43 @@ public class QueuingConteoller {
 		if(history.getSupplier()!=null && !history.getSupplier().equals("")){
 			pageParam+="&supplier="+history.getSupplier();
 		}
-		if(history.getComein_time()!=null && !"".equals(history.getComein_time())){
-			pageParam+="&comein_time="+DateUtil.DateToString(history.getComein_time(), "yyyy-MM-dd");
+		
+
+		String sDate=request.getParameter("sDate");
+		//System.out.println("1:"+sDate);
+		if(sDate!=null && !"".equals(sDate)){
+			pageParam+="&sDate="+sDate;
 		}
-		//System.out.println("dffdd:"+history.getComein_time());
+		Date startDate=null;
+		try {
+			startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String eDate=request.getParameter("eDate");
+		//System.out.println("2:"+eDate);
+		if(eDate!=null && !"".equals(eDate)){
+			pageParam+="&eDate="+eDate;
+		}
+		Date endDate=null;
+		try {
+			endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		mv.addObject("pageParam", pageParam);
 		mv.addObject("model", history.getVagueiname());
 		mv.addObject("target", history.getCar_code());
 		mv.addObject("island_no", island_no);
 		mv.addObject("targetSupplier", history.getSupplier());
-		mv.addObject("targetComein_time", history.getComein_time());
+		mv.addObject("sDate", sDate);
+		mv.addObject("eDate", eDate);
 		PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
 		}
-		List<History> pageListH = queuingService.selectHByPage(history, pageModel);
+		List<History> pageListH = queuingService.selectHByPage(history, pageModel,startDate,endDate);
 		mv.addObject("pageListH", pageListH);
 		mv.addObject("pageModel", pageModel);
 		
@@ -591,7 +615,23 @@ public class QueuingConteoller {
 			PageModel pageModel = new PageModel();
 			pageModel.setPageSize(Integer.MAX_VALUE);
 			
-			List<History> pageListH = queuingService.selectHByPage(history, pageModel);
+			String sDate=request.getParameter("sDate");
+			Date startDate=null;
+			try {
+				startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String eDate=request.getParameter("eDate");
+			Date endDate=null;
+			try {
+				endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			List<History> pageListH = queuingService.selectHByPage(history, pageModel,startDate,endDate);
 			
 			// 声明一个工作薄
 			HSSFWorkbook workbook = new HSSFWorkbook();

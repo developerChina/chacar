@@ -86,12 +86,20 @@
 							卸货岛名称:<input type="text" name="vagueiname" value="${model}">&nbsp;&nbsp;
 					    	
 					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
-					 
+					   		</td>
+					  	</tr>
+					  	 <tr>
+					  <td class="font3">
+					  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					  </td>
+					  </tr>
+					  <tr>
+					    <td class="font3">
 					 	 	供货商:<input type="text" name="supplier" value="${targetSupplier}">&nbsp;&nbsp;
 					 
 					   		驶入时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-							name="comein_time"  size="10" value='<f:formatDate value='${targetComein_time}' pattern='yyyy-MM-dd' />'/>
-					   
+									name="sDate" size="10" value="${sDate}"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
+									name="eDate" size="10" value="${eDate}"/>
 					     	<input type="button" id="search" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					   
 					    	<input id="add" type="button" value="&nbsp;&nbsp;导出&nbsp;&nbsp;"/>&nbsp;&nbsp; 

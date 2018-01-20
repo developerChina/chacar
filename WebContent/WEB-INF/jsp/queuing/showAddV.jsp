@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-	<title>添加VIP队列</title>
+	<title>添加急件队列</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -125,7 +125,7 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：VIP队列管理  &gt; 添加VIP队列</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：急件队列管理  &gt; 添加急件队列</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>

@@ -80,7 +80,7 @@
 					    	卸货岛:<input type="text" name="vagueiname" value="${model}">
 					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
-					    	<input id="add" type="button" value="&nbsp;&nbsp;新增VIP队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
+					    	<input id="add" type="button" value="&nbsp;&nbsp;新增急件队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
 					    </td>
 					  </tr>
 					</table>

@@ -1,5 +1,6 @@
 package org.core.service.queuing.impl;
  
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -194,7 +195,7 @@ public class QueuingServiceImpl implements QueuingService {
 	
 //3、历史记录的业务逻辑层接口的实现
 	@Override
-	public List<History> selectHByPage(History history, PageModel pageModel) {
+	public List<History> selectHByPage(History history, PageModel pageModel,Date startDate, Date endDate) {
 		String vague = history.getVagueiname();
 		if(vague!=null && !"".equals(vague)){
 			String nos = "";
@@ -234,6 +235,8 @@ public class QueuingServiceImpl implements QueuingService {
 		
 		Map<String,Object> params = new HashMap<>();
 		params.put("history", history);
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
 		int recordCount = queuingDao.countH(params);
 		pageModel.setRecordCount(recordCount);
 		if(recordCount > 0){
@@ -258,7 +261,7 @@ public class QueuingServiceImpl implements QueuingService {
 			}else{
 				Hparts.setSupplier("");
 			}
-			
+			//进出记录
 			
 		}
 		return pageListH;

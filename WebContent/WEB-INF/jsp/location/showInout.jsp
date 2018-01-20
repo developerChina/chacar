@@ -152,10 +152,10 @@
 					<option value="1"  <c:if test="${model.vehicleType==1}">selected</c:if> >固定定位仪</option>
 					<option value="0" <c:if test="${model.vehicleType==0}">selected</c:if>>临时定位仪</option>
 					</select> 
-							进入时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="cominDate" id="cominDate" size="10" value='<fmt:formatDate value='${model.cominDate}' pattern='yyyy-MM-dd' />'/>
-					    	离开时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="outDate" id="outDate" size="10" value="<fmt:formatDate value='${model.outDate}' pattern='yyyy-MM-dd' />"/>
+							进入时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd '});" 
+					name="cominDate" id="cominDate" size="10" value='<fmt:formatDate value='${model.cominDate}' pattern='yyyy-MM-dd ' />'/>
+					    	离开时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd '});" 
+					name="outDate" id="outDate" size="10" value="<fmt:formatDate value='${model.outDate}' pattern='yyyy-MM-dd ' />"/>
 					    	车牌号码：<input type="text" name="vehicleCode">
 					    	<input type="submit" value="&nbsp;搜索&nbsp;" value="${model.vehicleCode}"/>
 					    </td>
@@ -186,8 +186,8 @@
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 				  <td>${employee.vehicleCode }</td>
-				 <td><f:formatDate value="${employee.cominDate}" type="date" dateStyle="long"/></td>
-				 <td><f:formatDate value="${employee.outDate}" type="date" dateStyle="long"/></td>    
+				 <td><fmt:formatDate value="${employee.cominDate}" type="date" pattern="yyyy-MM-dd HH:mm:ss" dateStyle="long"/></td>
+				 <td><fmt:formatDate value="${employee.outDate}" type="date"  pattern="yyyy-MM-dd HH:mm:ss" dateStyle="long"/></td>    
 				  <td><c:if test="${employee.vehicleType==1}">固定定位仪</c:if>
 					  	  <c:if test="${employee.vehicleType==0}">临时定位仪</c:if>
 					  	</td>

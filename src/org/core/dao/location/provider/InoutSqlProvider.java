@@ -45,10 +45,10 @@ public class InoutSqlProvider {
 				if(gy.get("locationInout")!=null){
 					LocationInout locationInout=(LocationInout) gy.get("locationInout");
 					if(locationInout.getCominDate()!=null && !"".equals(locationInout.getCominDate())){
-						WHERE(" cominDate = CONCAT(#{locationInout.cominDate})");
+						WHERE(" DATE_FORMAT(cominDate,'%m-%d-%Y')=DATE_FORMAT(#{locationInout.cominDate},'%m-%d-%Y') ");
 					}
 					if(locationInout.getOutDate()!=null && !"".equals(locationInout.getOutDate())){
-						WHERE(" outDate = CONCAT(#{locationInout.outDate})");
+						WHERE("  DATE_FORMAT(outDate,'%m-%d-%Y')=DATE_FORMAT(#{locationInout.outDate},'%m-%d-%Y') ");
 					}
 					if(locationInout.getVehicleCode()!=null && !"".equals(locationInout.getVehicleCode())){
 						WHERE(" vehicleCode LIKE CONCAT('%',#{locationInout.vehicleCode},'%')");

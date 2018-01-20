@@ -1,5 +1,6 @@
 package org.core.service.queuing;
  
+import java.util.Date;
 import java.util.List;
 
 import org.core.domain.queuing.History;
@@ -43,7 +44,7 @@ public interface QueuingService {
 	
 	
 	//历史记录
-	List<History> selectHByPage(History history, PageModel pageModel);
+	List<History> selectHByPage(History history, PageModel pageModel, Date startDate, Date endDate);
 	//其他业务所用
 	//往数据库中	历史记录表里写数据
 	void addH(History history);

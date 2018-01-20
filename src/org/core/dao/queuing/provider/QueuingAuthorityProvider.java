@@ -1,5 +1,6 @@
 package org.core.dao.queuing.provider;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
@@ -176,9 +177,15 @@ public class QueuingAuthorityProvider {
 					if(history.getSupplier() != null && !history.getSupplier().equals("")){
 						WHERE(" car_code in ("+ history.getSupplier() +" ) ");				
 					}
-					if(history.getComein_time() != null && !"".equals(history.getComein_time())){
-						WHERE("  DATE_FORMAT(comein_time,'%m-%d-%Y')=DATE_FORMAT(#{history.comein_time},'%m-%d-%Y') ");
+					Date startDate = (Date) params.get("startDate");
+					Date endDate = (Date) params.get("endDate");
+					if(startDate!=null&&endDate!=null){
+						WHERE(" comein_time  BETWEEN #{startDate} AND #{endDate} ");
+					}else{
+						if(startDate!=null){ WHERE(" comein_time >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" comein_time <= #{endDate}  "); }
 					}
+					
 				}
 			}
 		}.toString();
@@ -203,9 +210,17 @@ public class QueuingAuthorityProvider {
 					if(history.getSupplier() != null && !history.getSupplier().equals("")){
 						WHERE(" car_code in ("+ history.getSupplier() +" ) ");				
 					}
-					if(history.getComein_time() != null && !"".equals(history.getComein_time())){
-						WHERE("  DATE_FORMAT(comein_time,'%m-%d-%Y')=DATE_FORMAT(#{history.comein_time},'%m-%d-%Y') ");
+					
+					Date startDate = (Date) params.get("startDate");
+					Date endDate = (Date) params.get("endDate");
+					if(startDate!=null&&endDate!=null){
+						WHERE(" comein_time  BETWEEN #{startDate} AND #{endDate} ");
+					}else{
+						if(startDate!=null){ WHERE(" comein_time >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" comein_time <= #{endDate}  "); }
 					}
+					
+					
 				}
 				ORDER_BY("comein_time desc");
 			}
