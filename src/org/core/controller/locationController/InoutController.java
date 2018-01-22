@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.core.domain.location.LocationInout;
 import org.core.service.location.InoutService;
+import org.core.util.DateUtil;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,10 +34,10 @@ public class InoutController {
 		
 		String pageParam="";
 		if(locationInout.getCominDate()!=null){
-			pageParam+="&cominDate="+locationInout.getCominDate();
+			pageParam+="&cominDate="+DateUtil.DateToString(locationInout.getCominDate(), "yyyy-MM-dd");
 		}
 		if(locationInout.getOutDate()!=null){
-			pageParam+="&outDate="+locationInout.getOutDate();
+			pageParam+="&outDate="+DateUtil.DateToString(locationInout.getOutDate(), "yyyy-MM-dd");
 		}
 		if(locationInout.getVehicleCode()!=null){
 			pageParam+="&vehicleCode="+locationInout.getVehicleCode();

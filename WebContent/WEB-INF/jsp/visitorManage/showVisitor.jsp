@@ -123,7 +123,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/visitor/blackAck?pageIndex={0}${pageParam}"/>
+		  	        submitUrl="${ctx}/visitor/blackAutomatic?pageIndex={0}${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>

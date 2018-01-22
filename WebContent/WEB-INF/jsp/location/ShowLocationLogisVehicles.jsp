@@ -146,12 +146,12 @@
 							车辆类型：<input type="text" name="vehicleTypeID" value="${model.vehicleTypeID }">
 							颜色类型：<input type="text" name="colorID" value="${model.colorID }">
 					    	车牌号码：<input type="text" name="vehicleCode" value="${model.vehicleCode }">
-					    	设备类型：
-							    <select name="deviceType"  style="width:143px;">
+					    	<%--设备类型：
+							     <select name="deviceType"  style="width:143px;">
 					<option value="-1">-请选择设备类型-</option>
 					<option value="0" <c:if test="${model.deviceType==0}">selected</c:if>>临时</option>
 					<option value="1" <c:if test="${model.deviceType==1}">selected</c:if>>固定</option>
-					</select> 
+					</select>  --%>
 					    	<input type="submit" value="&nbsp;搜索&nbsp;"/>
 					    </td>
 					  </tr>
@@ -176,7 +176,7 @@
 			  <td>SIM卡号</td>
 			  <td>设备</td>
 			  <td>客户</td>
-			  <td>设备类型</td>
+			  <!-- <td>设备类型</td> -->
 			</tr>
 			<c:forEach items="${requestScope.locationLogisVehicles}" var="employee" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
@@ -188,9 +188,9 @@
 				  <td>${employee.sIM}</td>
 				  <td>${employee.deviceId}</td>
 				  <td>${employee.clientId}</td>
-				  <td><c:if test="${employee.deviceType==1}">固定定位仪</c:if>
+				  <%-- <td><c:if test="${employee.deviceType==1}">固定定位仪</c:if>
 					  	  <c:if test="${employee.deviceType==0}">临时定位仪</c:if>
-					  	</td>
+					  	</td> --%>
 				</tr>
 			</c:forEach>
 		  </table>
