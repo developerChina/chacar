@@ -26,7 +26,25 @@
     
 	<script type="text/javascript">
 	$(function(){
-		   
+		 /** 给数据行绑定鼠标覆盖以及鼠标移开事件 git提交 */
+    	$("tr[id^='data_']").hover(function(){
+    		$(this).css("backgroundColor","#eeccff");
+    	},function(){
+    		$(this).css("backgroundColor","#ffffff");
+    	})
+		
+		 $("#search").click(function(){
+	 		   var actionURL = $("#empform").attr("action");
+	 	       $("#empform").attr("action","${ctx}/employee/selectTrajectoryEmp");
+	 	       $("#empform").submit(); 
+	 	   })
+	 	   
+	 	  /** 给导出添加绑定点击事件 */
+		 	   $("#add").click(function(){
+		 		  var actionURL = $("#empform").attr("action");
+		 	       $("#empform").attr("action","${ctx}/employee/exportExcel");
+		 	       $("#empform").submit();
+		 	   })  
 	 })
 	</script>
 </head>
@@ -54,19 +72,34 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/employee/selectTrajectoryEmp">
+			  	<form name="empform" method="post" id="empform" >
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	&nbsp;&nbsp;
-					    	员工姓名：<input type="text" name="name" size="20" value="${name}">
-					    	员工卡号：<input type="text" name="cardno" size="20" value="${cardno}">
-					    	员工电话：<input type="text" name="phone" size="20" value="${phone}">
-					    	访问时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+					    	员工姓名:<input type="text" name="name" size="20" value="${name}">
+					    	员工卡号:<input type="text" name="cardno" size="20" value="${cardno}">
+					    	员工电话:<input type="text" name="phone" size="20" value="${phone}">
+					    </td>
+					  </tr>
+					  	<tr>
+							 <td class="font3">
+					  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					  		</td>
+					  </tr>
+					  <tr>
+					    <td class="font3">
+					    	刷卡时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
 									  name="sDate" size="20" value="${sDate}"/>
 							      —   <input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
 									  name="eDate" size="20" value="${eDate}"/>
-					    		     <input type="submit" value="&nbsp;搜索&nbsp;"/>
+					    	所属部门:<select  name="dept_id" style="width:166px;" value="${dept_id }">
+								   <option value="0">--部门选择--</option>
+								   <c:forEach items="${requestScope.depts }" var="dept">
+					    				<option value="${dept.id }"  <c:if test="${dept_id==dept.id }">selected </c:if>  >${dept.name}</option>
+					    			</c:forEach>
+							</select>&nbsp;    
+					    		     <input type="button" id="search" value="&nbsp;搜索&nbsp;"/>
+					    		      <input type="button" id="add" value="&nbsp;导出记录&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -82,7 +115,7 @@
 	    <td height="20">
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
-			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
+			  <!-- <td><input type="checkbox" name="checkAll" id="checkAll"></td> -->
 			  <td>姓名</td>
 			  <td>手机号码</td>
 			  <td>员工卡号</td>
@@ -92,7 +125,7 @@
 			</tr>
 			<c:forEach items="${requestScope.traEmps}" var="traEmp" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					<td><input type="checkbox" id="box_${stat.index}" value="${traEmp.id}"></td>
+					<%-- <td><input type="checkbox" id="box_${stat.index}" value="${traEmp.id}"></td> --%>
 					<td>${traEmp.employees.name}</td>
 					<td>${traEmp.employees.phone}</td>
 					<td>${traEmp.employees.cardno}</td>

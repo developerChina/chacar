@@ -21,10 +21,13 @@ public class TrajectoryEmpDynaSqlProvider {
 						WHERE(" cardno in ("+entity.getCardno()+") ");
 					}
 					if(entity.getStartTime()!=null){
-						WHERE(" optTime > '"+DateUtil.DateToString(entity.getStartTime(), DateStyle.YYYY_MM_DD_HH_MM_SS)+"'" );
+						WHERE(" optTime >= '"+DateUtil.DateToString(entity.getStartTime(), DateStyle.YYYY_MM_DD_HH_MM_SS)+"'" );
 					}
 					if(entity.getEndTime()!=null){
-						WHERE(" optTime < '"+DateUtil.DateToString(entity.getEndTime(), DateStyle.YYYY_MM_DD_HH_MM_SS)+"'" );
+						WHERE(" optTime <= '"+DateUtil.DateToString(entity.getEndTime(), DateStyle.YYYY_MM_DD_HH_MM_SS)+"'" );
+					}
+					if(entity.getTrajectoryDept()!=null&&!"".equals(entity.getTrajectoryDept())){
+						WHERE(" cardno in ("+ entity.getTrajectoryDept() +" ) ");
 					}
 				}
 				ORDER_BY(" optTime DESC ");
@@ -53,6 +56,9 @@ public class TrajectoryEmpDynaSqlProvider {
 					}
 					if(entity.getEndTime()!=null){
 						WHERE(" optTime < '"+DateUtil.DateToString(entity.getEndTime(), DateStyle.YYYY_MM_DD_HH_MM_SS)+"'" );
+					}
+					if(entity.getTrajectoryDept()!=null&&!"".equals(entity.getTrajectoryDept())){
+						WHERE(" cardno in ("+ entity.getTrajectoryDept() +" ) ");
 					}
 				}
 			}

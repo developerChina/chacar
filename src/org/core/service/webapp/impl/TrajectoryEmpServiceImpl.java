@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.core.dao.webapp.TrajectoryEmpDao;
+import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.TrajectoryEmp;
 import org.core.service.webapp.TrajectoryEmpService;
 import org.core.util.tag.PageModel;
@@ -21,6 +22,27 @@ public class TrajectoryEmpServiceImpl implements TrajectoryEmpService {
 
 	@Override
 	public List<TrajectoryEmp> selectTrajectory(TrajectoryEmp entity, PageModel pageModel) {
+		
+		//Osnd按部门查
+		String vague = entity.getTrajectoryDept();
+		if(vague!=null && !"".equals(vague)){
+			String nos = "";
+			 List<Employee> vagueE =dao.vagueDept(vague);
+			if(vagueE!=null&&vagueE.size()>0){
+				for (Employee Single:vagueE) {
+					nos+=Single.getCardno()+",";
+				}
+				//System.out.println(nos); 
+				nos = nos.substring(0,nos.length() - 1);
+				//System.out.println("查出东西没有1"+nos);
+				entity.setTrajectoryDept(nos);
+			}else{
+				//System.out.println("查出东西没有2"+nos);
+				entity.setTrajectoryDept("");
+			}
+		}
+		
+		
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);

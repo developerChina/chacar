@@ -18,7 +18,9 @@ public class TrajectoryEmp implements Serializable{
 	private Employee employees; //查询当前被访问人的信息
 	private Date startTime;      // datetime  查询开始时间条件
 	private Date endTime;      // datetime  查询结束时间条件
-
+	//Osnd 
+	private String trajectoryDept;     //按部门模糊查询
+	
 	public String getId() {
 		return id;
 	}
@@ -75,4 +77,13 @@ public class TrajectoryEmp implements Serializable{
 		this.endTime = endTime;
 	}
 
+	public String getTrajectoryDept() {
+		return trajectoryDept;
+	}
+
+	public void setTrajectoryDept(String trajectoryDept) {
+		this.trajectoryDept = trajectoryDept;
+	}
+
+	
 }

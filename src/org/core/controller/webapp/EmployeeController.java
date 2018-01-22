@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -569,6 +571,13 @@ public class EmployeeController {
 		String eDate=request.getParameter("eDate");
 		model.addAttribute("eDate", eDate);
 		if(StringUtils.isNotBlank(eDate)){pageParam+="&eDate="+eDate;}
+		//Osnd 部门条件
+		String dept_id=request.getParameter("dept_id");
+		model.addAttribute("dept_id", dept_id);
+		if(StringUtils.isNotBlank(dept_id)){
+			pageParam+="&dept_id="+dept_id;
+		}
+		
 		model.addAttribute("pageParam", pageParam);
 		
 		TrajectoryEmp trajectoryEmp=new TrajectoryEmp();
@@ -591,6 +600,13 @@ public class EmployeeController {
 		if(StringUtils.isNotBlank(eDate)){
 			trajectoryEmp.setEndTime(DateUtil.StringToDate(eDate));
 		}
+		//Osnd加的部门信息
+		List<Dept> depts = hrmService.findAllDept();
+		model.addAttribute("depts", depts);
+		//按部门查
+		if(StringUtils.isNotBlank(dept_id)){
+			trajectoryEmp.setTrajectoryDept(dept_id);
+		}
 		
 		List<TrajectoryEmp> traEmps=trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
 		model.addAttribute("traEmps", traEmps);
@@ -599,5 +615,121 @@ public class EmployeeController {
 		return "employee/trajectoryEmp";
 
 	}
+	//导出内部员工的出入记录
+	//导出历史记录Excel 
+			@RequestMapping(value="/employee/exportExcel")
+			public void exportExcel(HttpServletRequest request,
+					HttpServletResponse response){
+				
+			PageModel pageModel = new PageModel();
+			pageModel.setPageSize(Integer.MAX_VALUE);
+				
+				//名字导出
+				String name=request.getParameter("name");
+				//卡号导出
+				String cardno=request.getParameter("cardno");
+				//电话号导出
+				String phone=request.getParameter("phone");
+				//时间导出
+				String sDate=request.getParameter("sDate");
+				String eDate=request.getParameter("eDate");
+				//按部门
+				String dept_id=request.getParameter("dept_id");
+				
+				TrajectoryEmp trajectoryEmp=new TrajectoryEmp();
+				if(StringUtils.isNotBlank(name)||StringUtils.isNotBlank(cardno)||StringUtils.isNotBlank(phone)){
+					List<Employee> list=hrmService.getEmployeees(name, cardno, phone);
+					String cardnos="";
+					for (Employee employee : list) {
+						cardnos+=",'"+employee.getCardno()+"' ";
+					}
+					if(cardnos.contains(",")){
+						trajectoryEmp.setCardno(cardnos.substring(1));
+					}else{
+						trajectoryEmp.setCardno("null");
+					}
+				}
+				
+				if(StringUtils.isNotBlank(sDate)){
+					trajectoryEmp.setStartTime(DateUtil.StringToDate(sDate));
+				}
+				if(StringUtils.isNotBlank(eDate)){
+					trajectoryEmp.setEndTime(DateUtil.StringToDate(eDate));
+				}
+				if(StringUtils.isNotBlank(dept_id)){
+					trajectoryEmp.setTrajectoryDept(dept_id);
+				}
+				List<TrajectoryEmp> traEmps=trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
+				
+				// 声明一个工作薄
+				HSSFWorkbook workbook = new HSSFWorkbook();
+				String sheetName = "员工出入记录";//sheet名称
+				HSSFSheet sheet = workbook.createSheet(sheetName);
+				sheet.setFitToPage(true);  
+			    sheet.setHorizontallyCenter(true);
+			    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+			    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");  
+				sheet.setAutoFilter(c);
+			    //设置列宽
+			    sheet.setColumnWidth(0, 3200);
+		        sheet.setColumnWidth(1, 4800);		
+		        sheet.setColumnWidth(2, 6800);
+		        sheet.setColumnWidth(3, 3200);
+		        sheet.setColumnWidth(4, 5000);
+		        sheet.setColumnWidth(5, 6000);
+		      //定义表格行索引
+		        int index=0;
+		      //添加标题
+		        HSSFRow row_title = sheet.createRow(index++);
+		        row_title.setHeight((short) 600);// 设置行高 
+		        HSSFCell row_title0 = row_title.createCell(0);   
+		        row_title0.setCellValue(new HSSFRichTextString("员工出入记录")); 
+		        //合并表头单元格
+		        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)5),ExcelUtil.createTitleStyle(workbook));
+		        sheet.addMergedRegion(new Region(
+		        0 //first row (0-based) from 行  
+		        ,(short)0 //first column (0-based) from 列     
+		        ,0//last row  (0-based)  to 行
+		        ,(short)5//last column  (0-based)  to 列     
+		        ));
+		        
+		        //添加头信息
+		        String[] titles={"姓名","手机号码","员工卡号","部门","进出","时间"};
+		        HSSFRow row_head = sheet.createRow(index++);
+		        for (int i=0; i<titles.length;i++) {
+		        	HSSFCell cell = row_head.createCell(i);
+					cell.setCellValue(titles[i]);
+					cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+				}
+		        
+		        for (TrajectoryEmp entity : traEmps) {
+		        	HSSFRow row = sheet.createRow(index++);
+		        	//姓名
+		        	HSSFCell cell0 = row.createCell(0);
+		        	cell0.setCellValue(entity.getEmployees().getName());
+		        	//手机号码
+		        	HSSFCell cell1 = row.createCell(1);
+					cell1.setCellValue(entity.getEmployees().getPhone());
+		        	//员工卡号
+					HSSFCell cell2 = row.createCell(2);
+					cell2.setCellValue(entity.getEmployees().getCardno());
+		        	//部门
+					HSSFCell cell3 = row.createCell(3);
+					cell3.setCellValue(entity.getEmployees().getDept().getName());
+		        	//进出
+					HSSFCell cell4 = row.createCell(4);
+					cell4.setCellValue(entity.getOptAction());
+		        	//时间
+					HSSFCell cell5 = row.createCell(5);
+					cell5.setCellValue(DateUtil.DateToString(entity.getOptTime(), "yyyy-MM-dd HH:mm:ss"));
+				}
+		        try {
+					String fileName="员工出入记录";
+					ExcelUtil.write(request, response, workbook, fileName);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+	
 	
 }
