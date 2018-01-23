@@ -81,8 +81,8 @@
 		    <tr><td class="font3 fftd">
 		    	<table>
 		    		<tr>
-		    			<td class="font3 fftd">姓名：<input type="text" name="name" id="name" size="20" value="${employee.name }"/></td>
-		    			<td class="font3 fftd">身份证号码：<input type="text" name="cardId" id="cardId" size="20" value="${employee.cardId }"/></td>
+		    			<td class="font3 fftd">姓名：&nbsp;<input type="text" name="name" id="name" size="20" value="${employee.name }"/></td>
+		    			<td class="font3 fftd">身份证号码：&nbsp;&nbsp;<input type="text" name="cardId" id="cardId" size="20" value="${employee.cardId }"/></td>
 		    		</tr>
 		    		<tr>
 		    			<td class="font3 fftd">性别：
@@ -92,22 +92,41 @@
 									<option value="2">女</option>
 					    		</select>
 					    </td>
-		    			<td class="font3 fftd">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：
+		    			<td class="font3 fftd">
+		    			员工编号：&nbsp;&nbsp;&nbsp;&nbsp;<input name="hobby" id="hobby" size="20" value="${employee.hobby }"/>
+					    </td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd">
+		    			部门：
+						<select  name="dept_id" id="dept_id" style="width:143px;">
+						   <option value="">--部门选择--</option>
+						   <c:forEach items="${requestScope.depts }" var="dept">
+						   		<c:choose>
+			    					<c:when test="${employee.dept.id == dept.id }">
+			    						<option value="${dept.id }" selected="selected">${dept.name }</option>
+			    					</c:when>
+			    					<c:otherwise>
+			    						<option value="${dept.id }">${dept.name }</option>
+			    					</c:otherwise>
+			    				</c:choose>
+			    			</c:forEach>
+							</select>
+		    			</td>
+		    			<td class="font3 fftd">
+		    			职位：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		    			 	<select id="job_id" name="job_id" style="width:143px;">
 					    			<option value="">--请选择职位--</option>
 					    			<c:forEach items="${requestScope.jobs }" var="job">
 					    				<option value="${job.id }">${job.name }</option>
 					    			</c:forEach>
 					    		</select>
-					    </td>
+		    			</td>
 		    		</tr>
 		    		<tr>
-		    			<td class="font3 fftd">学历：<input name="education" id="education" size="20" value="${employee.education }"/></td>
-		    			<td class="font3 fftd">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：<input name="email" id="email" size="20" value="${employee.email }"/></td>
-		    		</tr>
-		    		<tr>
-		    			<td class="font3 fftd">手机：<input name="phone" id="phone" size="20" value="${employee.phone }"/></td>
-		    			<td class="font3 fftd">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：<input name="tel" id="tel" size="20" value="${employee.tel }"/></td>
+		    			<td class="font3 fftd">手机：&nbsp;<input name="phone" id="phone" size="20" value="${employee.phone }"/></td>
+		    			<td class="font3 fftd">员工物理卡号：<input name="cardno" id="cardno" size="20" value="${employee.cardno }"/>
+					<!--&nbsp;车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/> --></td>
 		    		</tr>
 		    		
 		    	</table>
@@ -133,8 +152,7 @@
 			<tr>
 				<td class="font3 fftd">
 					出生日期：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="birthday" id="birthday" size="40" value="<fmt:formatDate value='${employee.birthday }' pattern='yyyy-MM-dd' />" />
-					&nbsp;&nbsp;
+					name="birthday" id="birthday" size="40" value="<fmt:formatDate value='${employee.birthday }' pattern='yyyy-MM-dd' />" />&nbsp;&nbsp;
 					民&nbsp;&nbsp;&nbsp;&nbsp;族：<input name="race" id="race" size="20" value="${employee.race }"/>
 				</td>
 			</tr>
@@ -143,34 +161,20 @@
 			<tr>
 				<td class="font3 fftd">
 					所学专业：<input  name="speciality" id="speciality" size="40" value="${employee.speciality }"/>&nbsp;&nbsp;
-					爱&nbsp;&nbsp;&nbsp;&nbsp;好：<input name="hobby" id="hobby" size="20" value="${employee.hobby }"/>
+					电&nbsp;&nbsp;&nbsp;&nbsp;话：<input name="tel" id="tel" size="20" value="${employee.tel }"/>
 				</td>
 			</tr>
 			<tr><td class="main_tdbor"></td></tr>
 			
 			<tr>
 				<td class="font3 fftd">
-					备&nbsp;&nbsp;&nbsp;&nbsp;注：<input name="remark" id="remark" size="40" value="${employee.remark }"/>
-					&nbsp;&nbsp;所属部门：
-					<select  name="dept_id" id="dept_id" style="width:143px;">
-						   <option value="">--部门选择--</option>
-						   <c:forEach items="${requestScope.depts }" var="dept">
-						   		<c:choose>
-			    					<c:when test="${employee.dept.id == dept.id }">
-			    						<option value="${dept.id }" selected="selected">${dept.name }</option>
-			    					</c:when>
-			    					<c:otherwise>
-			    						<option value="${dept.id }">${dept.name }</option>
-			    					</c:otherwise>
-			    				</c:choose>
-			    			</c:forEach>
-					</select>
+					学&nbsp;&nbsp;&nbsp;&nbsp;历：<input name="education" id="education" size="40" value="${employee.education }"/>&nbsp;&nbsp;
+					邮&nbsp;&nbsp;&nbsp;&nbsp;箱：<input name="email" id="email" size="20" value="${employee.email }"/>
 				</td>
 			</tr>
 			<tr><td class="main_tdbor"></td></tr>
 			<td class="font3 fftd">
-					员工卡号：<input name="cardno" id="cardno" size="40" value="${employee.cardno }"/>
-					<!--&nbsp;车&nbsp;牌&nbsp;号：<input name="carno" id="carno" size="20" value="${employee.carno }"/> -->
+					备&nbsp;&nbsp;&nbsp;&nbsp;注：<input name="remark" id="remark" size="40" value="${employee.remark }"/>
 			</td>
 			<tr><td class="main_tdbor"></td></tr>
 			
