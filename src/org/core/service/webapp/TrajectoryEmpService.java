@@ -8,5 +8,6 @@ import org.core.util.tag.PageModel;
 public interface TrajectoryEmpService {
 	//查询员工轨迹表
 	List<TrajectoryEmp> selectTrajectory(TrajectoryEmp trajectoryEmp, PageModel pageModel);
-
+	
+	void deleteTrajectory(String id);
 }

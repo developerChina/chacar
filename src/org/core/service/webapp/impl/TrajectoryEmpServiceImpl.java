@@ -54,6 +54,11 @@ public class TrajectoryEmpServiceImpl implements TrajectoryEmpService {
 		List<TrajectoryEmp> entitys = dao.selectByPage(params);
 		return entitys;
 	}
+
+	@Override
+	public void deleteTrajectory(String id) {
+		dao.deleteTrajectory(id);
+	}
 	 
 
 }

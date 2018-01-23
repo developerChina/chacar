@@ -197,6 +197,7 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
 			  <td>手机号码</td>
+			  <td>员工工号</td>
 			  <td>员工卡号</td>
 			  <td>卡授权状态</td>
 			  <td>职位</td>
@@ -214,6 +215,7 @@
 				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 				  <td>${employee.name }</td>
 				  <td>${employee.phone }</td>
+				  <td>${employee.hobby }</td>
 				  <td>${employee.cardno }</td>
 				  <td>
 			        <c:choose>

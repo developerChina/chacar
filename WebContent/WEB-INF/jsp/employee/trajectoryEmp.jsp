@@ -40,11 +40,15 @@
 	 	   })
 	 	   
 	 	  /** 给导出添加绑定点击事件 */
-		 	   $("#add").click(function(){
-		 		  var actionURL = $("#empform").attr("action");
-		 	       $("#empform").attr("action","${ctx}/employee/exportExcel");
-		 	       $("#empform").submit();
-		 	   })  
+	 	   $("#add").click(function(){
+	 		  $.ligerDialog.confirm("确认要导出吗?导出后删除记录","删除",function(r){
+  				   if(r){
+  					 var actionURL = $("#empform").attr("action");
+  		 	        	$("#empform").attr("action","${ctx}/employee/exportExcel");
+  		 	         $("#empform").submit();
+  				   }
+  			   });
+	 	   })  
 	 })
 	</script>
 </head>

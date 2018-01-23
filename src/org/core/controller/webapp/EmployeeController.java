@@ -363,7 +363,7 @@ public class EmployeeController {
 		// 定义表格行索引
 		int index = 0;
 		// 添加头信息
-		String[] titles = { "姓名","身份证号","卡号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业"," 爱好","备注","车牌号","地址"};
+		String[] titles = { "姓名","身份证号","卡号","员工编号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业","备注","车牌号","地址"};
 		HSSFRow row_head = sheet.createRow(index++);
 		for (int i = 0; i < titles.length; i++) {
 			HSSFCell cell = row_head.createCell(i);
@@ -490,41 +490,41 @@ public class EmployeeController {
 			Row row = sheet.getRow(0);
 			int colNum = row.getPhysicalNumberOfCells();
 			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
-			// "姓名","身份证号","卡号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业"," 爱好","备注","车牌号","地址"
+			// "姓名","身份证号","卡号"," 员工编号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业","备注","车牌号","地址"
 			for (Map<Integer, String> data : list) {
 				Employee employee = new Employee();
 				for (Integer key : data.keySet()) {
 					employee.setName(data.get(0));
 					employee.setCardId(data.get(1));
 					employee.setCardno(data.get(2));
-					if ("女".equals(data.get(3))) {
+					employee.setHobby(data.get(3));
+					if ("女".equals(data.get(4))) {
 						employee.setSex(0);
 					} else {
 						employee.setSex(1);
 					}
-					employee.setPhone(data.get(4));
-					if(StringUtils.isNotBlank(data.get(5))){
+					employee.setPhone(data.get(5));
+					if(StringUtils.isNotBlank(data.get(6))){
 						Dept dept = new Dept();
-						dept.setId(map_dept.get(data.get(5)));
+						dept.setId(map_dept.get(data.get(6)));
 						employee.setDept(dept);	
 					}
-					if(StringUtils.isNotBlank(data.get(6))){
+					if(StringUtils.isNotBlank(data.get(7))){
 						Job job = new Job();
-						job.setId(map_job.get(data.get(6)));
+						job.setId(map_job.get(data.get(7)));
 						employee.setJob(job);
 					}
-					if(StringUtils.isNotBlank(data.get(7))){
-						employee.setBirthday(DateUtil.StringToDate(data.get(7), DateStyle.YYYY_MM_DD_EN));
+					if(StringUtils.isNotBlank(data.get(8))){
+						employee.setBirthday(DateUtil.StringToDate(data.get(8), DateStyle.YYYY_MM_DD_EN));
 					}
-					employee.setPostCode(data.get(8));
-					employee.setTel(data.get(9));
-					employee.setQqNum(data.get(10));
-					employee.setEmail(data.get(11));
-					employee.setParty(data.get(12));
-					employee.setRace(data.get(13));
-					employee.setEducation(data.get(14));
-					employee.setSpeciality(data.get(15));
-					employee.setHobby(data.get(16));
+					employee.setPostCode(data.get(9));
+					employee.setTel(data.get(10));
+					employee.setQqNum(data.get(11));
+					employee.setEmail(data.get(12));
+					employee.setParty(data.get(13));
+					employee.setRace(data.get(14));
+					employee.setEducation(data.get(15));
+					employee.setSpeciality(data.get(16));
 					employee.setRemark(data.get(17));
 					employee.setCarno(data.get(18));
 					employee.setAddress(data.get(19));
@@ -726,6 +726,11 @@ public class EmployeeController {
 		        try {
 					String fileName="员工出入记录";
 					ExcelUtil.write(request, response, workbook, fileName);
+					
+					for (TrajectoryEmp entity : traEmps) {
+						trajectoryEmpService.deleteTrajectory(entity.getId());
+					}
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
