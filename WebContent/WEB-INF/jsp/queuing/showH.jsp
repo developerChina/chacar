@@ -97,9 +97,9 @@
 					    <td class="font3">
 					 	 	供货商:<input type="text" name="supplier" value="${targetSupplier}">&nbsp;&nbsp;
 					 
-					   		驶入时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-									name="sDate" size="10" value="${sDate}"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-									name="eDate" size="10" value="${eDate}"/>
+					   		驶入时间:<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+									name="sDate" size="20" value="${sDate}"/>—<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+									name="eDate" size="20" value="${eDate}"/>
 					     	<input type="button" id="search" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					   
 					    	<input id="add" type="button" value="&nbsp;&nbsp;导出&nbsp;&nbsp;"/>&nbsp;&nbsp; 
@@ -122,8 +122,8 @@
 			  <td>卸货岛名称</td>
 			  <td>供应商</td>
 			  <td>车牌号码</td>
-			  <td>驶入时间</td>
-			  <td>驶出时间</td>
+			  <td>卸货开始时间</td>
+			  <td>卸货结束时间</td>
 			  <td>操作时间</td>
 			  <td>备注</td>
 			</tr>

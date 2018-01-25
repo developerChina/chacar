@@ -196,14 +196,14 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>姓名</td>
+			  <td>员工编号</td>
+			  <td>职位</td>
+			  <td>部门</td>
 			  <td>手机号码</td>
-			  <td>员工工号</td>
 			  <td>员工卡号</td>
 			  <td>卡授权状态</td>
-			  <td>职位</td>
-			  <td>学历</td>
 			  <td>身份证号码</td>
-			  <td>部门</td>
+			  <!-- <td>学历</td> -->
 			  <!-- 
 			  <td>车牌号码</td>
 			   -->
@@ -214,8 +214,10 @@
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 				  <td>${employee.name }</td>
-				  <td>${employee.phone }</td>
 				  <td>${employee.hobby }</td>
+				  <td>${employee.job.name  }</td>
+				  <td>${employee.dept.name }</td>
+				  <td>${employee.phone }</td>
 				  <td>${employee.cardno }</td>
 				  <td>
 			        <c:choose>
@@ -223,10 +225,8 @@
 			        	<c:otherwise><font color="red">外部员工授权</font></c:otherwise>
 			        </c:choose>
 				  </td>
-				  <td>${employee.job.name  }</td>
-				  <td>${employee.education }</td>
 				  <td>${employee.cardId }</td>
-				  <td>${employee.dept.name }</td>
+				  <%-- <td>${employee.education }</td> --%>
 				  <!--
 				  <td>${employee.carno }</td>
 				  -->

@@ -41,8 +41,6 @@ public class TrajectoryEmpServiceImpl implements TrajectoryEmpService {
 				entity.setTrajectoryDept("");
 			}
 		}
-		
-		
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);

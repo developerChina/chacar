@@ -236,14 +236,22 @@ public class QueuingConteoller {
 	 */
 	@RequestMapping(value = "/queuingV/VipAck")
 	public ModelAndView VipAck(Integer pageIndex, 
-			@ModelAttribute QueuingVip queuingVip, ModelAndView mv) {
+			@ModelAttribute QueuingVip queuingVip,
+			Integer island_no,ModelAndView mv) {
+		
+		this.islandV(island_no,queuingVip);
+		
 		String pageParam="";
 		if(queuingVip.getVagueiname()!=null){
 			pageParam+="&vagueiname="+queuingVip.getVagueiname();
 		}
+		if(island_no!=null&&island_no>0){
+			pageParam+="&island_no="+island_no;
+		}
 		mv.addObject("pageParam", pageParam);
 		mv.addObject("model", queuingVip.getVagueiname());
 		mv.addObject("target", queuingVip.getCar_code());
+		mv.addObject("island_no", island_no);
 		PageModel pageModel = new PageModel();
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
@@ -251,6 +259,9 @@ public class QueuingConteoller {
 		List<QueuingVip> pageListV = queuingService.selectVByPage(queuingVip, pageModel);
 		mv.addObject("pageListV", pageListV);
 		mv.addObject("pageModel", pageModel);
+		
+		List<Island> AddVgetI = queuingService.AddVgetI();
+		mv.addObject("AddVgetI", AddVgetI);
 		// 设置客户端跳转到查询请求
 		mv.setViewName("queuing/showV");
 		// 返回ModelAndView
@@ -259,6 +270,19 @@ public class QueuingConteoller {
 		return mv;
 	}
 
+	
+	/**
+	 * 由于卸货岛在VIP表是对象关联映射， 所以不能直接接收参数，需要创建卸货岛对象
+	 */
+	private void islandV(Integer island_no,QueuingVip queuingVip) {
+		if (island_no != null) {
+			Island island = new Island();
+			island.setNo(island_no);
+			queuingVip.setVpartsI(island);
+		}
+	}
+	
+	
 	/**
 	 * VIP队列添加 <br>
 	 * flag=1跳向添加页面 <br>
@@ -356,7 +380,7 @@ public class QueuingConteoller {
 		}
 		Date startDate=null;
 		try {
-			startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd");
+			startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd HH:mm:ss");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -367,7 +391,7 @@ public class QueuingConteoller {
 		}
 		Date endDate=null;
 		try {
-			endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd");
+			endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd HH:mm:ss");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -449,15 +473,19 @@ public class QueuingConteoller {
 		@RequestMapping(value="/queuingO/OrdinaryAck")
 		 public ModelAndView OrdinaryAck(Integer pageIndex,
 				 @ModelAttribute Ordinary ordinary,
-				 ModelAndView mv){
+				 Integer island_no,ModelAndView mv){
+			this.islandO(island_no,ordinary);
 			String pageParam="";
 			if(ordinary.getVagueiname()!=null){
 				pageParam+="&vagueiname="+ordinary.getVagueiname();
 			}
+			if(island_no!=null&&island_no>0){
+				pageParam+="&island_no="+island_no;
+			}
 			mv.addObject("pageParam", pageParam);
 			mv.addObject("model", ordinary.getVagueiname());
 			mv.addObject("target", ordinary.getCar_code());
-			
+			mv.addObject("island_no", island_no);
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);
@@ -465,10 +493,25 @@ public class QueuingConteoller {
 			List<Ordinary> pageListO = queuingService.selectOByPage(ordinary, pageModel);
 			mv.addObject("pageListO", pageListO);
 			mv.addObject("pageModel", pageModel);
+			
+			List<Island> AddVgetI = queuingService.AddVgetI();
+			mv.addObject("AddVgetI", AddVgetI);
+			
 			// 设置客户端跳转到查询请求
 			mv.setViewName("queuing/showO");
 			// 返回ModelAndView
 			return mv;
+		}
+		
+		/**
+		 * 由于卸货岛在普通表是对象关联映射， 所以不能直接接收参数，需要创建卸货岛对象
+		 */
+		private void islandO(Integer island_no,Ordinary ordinary) {
+			if (island_no != null) {
+				Island island = new Island();
+				island.setNo(island_no);
+				ordinary.setOpartsI(island);
+			}
 		}
 		
 		/**
@@ -552,35 +595,41 @@ public class QueuingConteoller {
 			int queue_number = new Integer(request.getParameter("queue_number"));
 			int island_no = new Integer(request.getParameter("island_no"));
 			Map<String,Object> map = new HashMap<>();
-			String flag = queuingService.addValidate(island_no,car_code,judge);
+			String test = queuingService.addValidate(island_no,car_code,judge);
 				//judge=1-->VIP judge=2-->普通 验证车牌号是否已经存在
-				if(!"".equals(flag)){
+				if(!"".equals(test)){
 					map.put("status", false);
-					map.put("message", flag);
+					map.put("message", test);
 				}else{
 					map.put("status", true);
 					map.put("message", "验证通过");
 				}
-				String position =queuingService.position(island_no,queue_number);
-				//VIP队列 验证排序位置是否合理 给出的提示
-				if(!"".equals(position)){
-					map.put("queue", true);
-					map.put("queuemessage", position);
-				}else{
-					map.put("queue", false);
-					map.put("queuemessage", "验证通过");
+				
+				//验证排序位置是否合理 给出的提示
+				
+				if(judge.equals("1")){
+					String position =queuingService.position(island_no,queue_number);
+					//VIP队列 验证排序位置是否合理 给出的提示
+					if(!"".equals(position)){
+						map.put("queue", true);
+						map.put("queuemessage", position);
+					}else{
+						map.put("queue", false);
+						map.put("queuemessage", "验证通过");
+					}
 				}
 				
-				String plain =queuingService.plain(island_no,queue_number);
-				//普通队列 验证排序位置是否合理 给出的提示
-				if(!"".equals(plain)){
-					map.put("queue", true);
-					map.put("queuemessage", plain);
-				}else{
-					map.put("queue", false);
-					map.put("queuemessage", "验证通过");
+				if(judge.equals("2")){
+					/*String plain =queuingService.plain(island_no,queue_number);
+					//普通队列 验证排序位置是否合理 给出的提示
+					if(!"".equals(plain)){
+						map.put("queue", true);
+						map.put("queuemessage", plain);
+					}else{
+						map.put("queue", false);
+						map.put("queuemessage", "验证通过");
+					}*/
 				}
-				
 			return map;
 		}
 
@@ -669,7 +718,7 @@ public class QueuingConteoller {
 	        ));
 	        
 	        //添加头信息
-	        String[] titles={"编码","卸货岛名称","供应商","车牌号","驶入时间","驶出时间","操作时间","描述"};
+	        String[] titles={"编码","卸货岛名称","供应商","车牌号","卸货开始时间","卸货结束时间","操作时间","描述"};
 	        HSSFRow row_head = sheet.createRow(index++);
 	        for (int i=0; i<titles.length;i++) {
 	        	HSSFCell cell = row_head.createCell(i);

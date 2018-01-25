@@ -22,6 +22,7 @@ public class Ordinary implements java.io.Serializable {
 	//表外字段
 	private String vagueiname;		//模糊查询
 	private Island opartsI;			//卸货岛实体
+	private String supplier;		//供货商名称
 	
 	public int getId() {
 		return id;
@@ -76,6 +77,12 @@ public class Ordinary implements java.io.Serializable {
 	}
 	public void setOpartsI(Island opartsI) {
 		this.opartsI = opartsI;
+	}
+	public String getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
 	}
 	
 

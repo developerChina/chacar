@@ -120,6 +120,12 @@ public class QueuingServiceImpl implements QueuingService {
 		for (QueuingVip Vparts : pageListV) {
 			Island myVpartsI = queuingDao.getparts(Vparts.getIsland_no());
 			Vparts.setVpartsI(myVpartsI);
+			List<String> SupplierList = queuingDao.getSupplier(Vparts.getCar_code());
+			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
+				Vparts.setSupplier(SupplierList.get(0));
+			}else{
+				Vparts.setSupplier("");
+			}
 		}
 		
 		return pageListV;
@@ -132,6 +138,10 @@ public class QueuingServiceImpl implements QueuingService {
 	//vip添加
 	@Override
 	public void addV(QueuingVip queuingVip) {
+		
+		if(queuingVip.getRemarks()==null||queuingVip.getRemarks().equals("")){
+			queuingVip.setRemarks("手动添加急件");
+		}
 		//判断 根据车牌号查vip表  
 		QueuingVip exv=queuingDao.selectVBycarno(queuingVip.getIsland_no(),queuingVip.getCar_code());
 		if(exv==null){
@@ -139,7 +149,7 @@ public class QueuingServiceImpl implements QueuingService {
 			Ordinary exo=queuingDao.selectOBycarno(queuingVip.getIsland_no(),queuingVip.getCar_code());
 			  if(exo!=null){
 				  //将普通表重新排序
-				  int selectId = queuingDao.delSort(queuingVip.getCar_code());
+				  int selectId = queuingDao.delSort(queuingVip.getIsland_no(),queuingVip.getCar_code());
 				  ordAgain(selectId);
 				  //删除它
 				  queuingDao.delByCar_code(queuingVip.getCar_code());
@@ -230,8 +240,6 @@ public class QueuingServiceImpl implements QueuingService {
 				history.setSupplier("000000");
 			}
 		}
-		
-		
 		
 		Map<String,Object> params = new HashMap<>();
 		params.put("history", history);
@@ -343,6 +351,12 @@ public class QueuingServiceImpl implements QueuingService {
 			for (Ordinary Oparts : pageListO) {
 				Island myVpartsI = queuingDao.getparts(Oparts.getIsland_no());
 				Oparts.setOpartsI(myVpartsI);
+				List<String> SupplierList = queuingDao.getSupplier(Oparts.getCar_code());
+				if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
+					Oparts.setSupplier(SupplierList.get(0));
+				}else{
+					Oparts.setSupplier("");
+				}
 			}
 			return pageListO;
 		}
@@ -380,7 +394,7 @@ public class QueuingServiceImpl implements QueuingService {
 				return 1;
 			}else{
 				int maxint = queuingDao.getQueueOMaxi(no);
-				if(qn>(maxint+1)){
+				/*if(qn>(maxint+1)){
 					return maxint+1;
 				}else{
 					List<Ordinary> Sortlist = queuingDao.selectOrdIByQI(qn,no);
@@ -389,7 +403,8 @@ public class QueuingServiceImpl implements QueuingService {
 						queuingDao.updOrdQByid(man,insert.getId());
 					}
 					return qn;
-				}
+				}*/
+				return maxint+1;
 			}
 		}
 		//删除时排序
@@ -429,6 +444,9 @@ public class QueuingServiceImpl implements QueuingService {
 			if(exo==null&&exv==null){
 				int max =ordAddSort(ordinary.getIsland_no(),ordinary.getQueue_number());
 			 	ordinary.setQueue_number(max);
+			 	if(ordinary.getRemarks()==null||ordinary.getRemarks().equals("")){
+					ordinary.setRemarks("手动添加普通号");
+				}
 			 	queuingDao.addO(ordinary);
 			}
 		}
@@ -456,7 +474,7 @@ public class QueuingServiceImpl implements QueuingService {
 					if(exv==null){
 						result="";
 					}else{
-						result="此车已经在VIP队列里，请勿重复排队";
+						result="此车已经在急件队列里，请勿重复排队";
 					}
 				}else{
 					//有这个车牌

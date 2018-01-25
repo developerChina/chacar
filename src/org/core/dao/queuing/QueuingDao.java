@@ -54,8 +54,8 @@ public interface QueuingDao {
 	@Delete(" delete from "+QueuingVip.tableName+" where id = #{id} ")
 	void delVip(Integer id);
 	
-	@Select("select * from "+QueuingVip.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
-	List<QueuingVip> selectListBybig(int queue_number, int island_no);
+	@Select("select * from "+QueuingVip.tableName+" where queue_number > #{queue_number} and island_no = #{island_no}")
+	List<QueuingVip> selectListBybig(@Param("queue_number")Integer queue_number,@Param("island_no")Integer island_no);
 	
 	@Select("select * from "+QueuingVip.tableName+" where id = #{id}")
 	QueuingVip updateVSel(Integer id);
@@ -121,17 +121,17 @@ public interface QueuingDao {
 	int getQueueOMaxi(int no);
 	
 	
-	@Select("select * from "+Ordinary.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
-	List<Ordinary> OselectListBybig(int queue_number, int island_no);
+	@Select("select * from "+Ordinary.tableName+" where queue_number > #{queue_number} and island_no = #{island_no}")
+	List<Ordinary> OselectListBybig(@Param("queue_number")Integer queue_number, @Param("island_no")Integer island_no);
 
-	@Update("update "+Ordinary.tableName+" set queue_number = #{arg0} where id=#{arg1}")
-	void updateOQByid(int man, int id);
+	@Update("update "+Ordinary.tableName+" set queue_number = #{man} where id=#{id}")
+	void updateOQByid(@Param("man")Integer man, @Param("id")Integer id);
 
-	@Select("select * from "+Ordinary.tableName+" where queue_number > #{arg0} and island_no = #{arg1}")
-	List<Ordinary> selectOrdByQI(int qFront, int iFront);
+	@Select("select * from "+Ordinary.tableName+" where queue_number > #{qFront} and island_no = #{iFront}")
+	List<Ordinary> selectOrdByQI(@Param("qFront")Integer qFront, @Param("iFront")Integer iFront);
 
-	@Update("update "+Ordinary.tableName+" set queue_number = #{arg0} where id=#{arg1}")
-	void updOrdQByid(int man, int id);
+	@Update("update "+Ordinary.tableName+" set queue_number = #{man} where id=#{id}")
+	void updOrdQByid(@Param("man")Integer man, @Param("id")Integer id);
 
 	@Select("select * from "+Ordinary.tableName+" where queue_number < #{arg0} and queue_number >= #{arg2} and island_no = #{arg1}")
 	List<Ordinary> selectOrdAByQI(int qFront, int iFront, int qAfter);
@@ -173,8 +173,8 @@ public interface QueuingDao {
 	@Select("select * from "+Island.tableName+" where no = #{no} ")
 	Island selectOByNoToI(String no);
 	
-	@Select("select id from "+Ordinary.tableName+" where car_code = #{car_code} ")
-	int delSort(String car_code);
+	@Select("select id from "+Ordinary.tableName+" where car_code = #{car_code} and island_no = #{island_no} ")
+	int delSort( @Param("island_no")Integer island_no, @Param("car_code")String car_code);
 
 	@Select("select * from "+Island.tableName)
 	List<Island> selectIAll();

@@ -50,7 +50,7 @@
 			document.getElementById("queue_numberColor").style.color="green";
 			document.getElementById("queue_numberColor").innerText="√";
 		}else{
-			document.getElementById("queue_numberColor").style.color="green";
+			document.getElementById("queue_numberColor").style.color="red";
 			document.getElementById("queue_numberColor").innerText="*选填";
 		}
 	}

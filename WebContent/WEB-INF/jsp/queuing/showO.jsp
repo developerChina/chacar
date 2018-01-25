@@ -77,7 +77,13 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	卸货岛:<input type="text" name="vagueiname" value="${model}">
+					    	卸货岛:<select name="island_no" id="island_no" >
+								<option value="0">-请选择卸货岛-</option>
+								<c:forEach items="${requestScope.AddVgetI}" var="avi" varStatus="stat">
+								<option value="${avi.no}" <c:if test="${island_no==avi.no}">selected </c:if> >${avi.iname}</option>
+								</c:forEach>
+							</select>
+					    	卸货岛名称:<input type="text" name="vagueiname" value="${model}">
 					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;新增普通队列&nbsp;&nbsp;"/>&nbsp;&nbsp; 
@@ -97,6 +103,7 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td>卸货岛名称</td>
+			  <td>供应商</td>
 			  <td>普通队列车牌</td>
 			  <td>当前排序位置</td>
 			  <td>备注</td>
@@ -105,6 +112,7 @@
 			<c:forEach items="${requestScope.pageListO}" var="po" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					  <td>${po.opartsI.iname}</td>
+					  <td>${po.supplier}</td>
 					  <td>${po.car_code}</td>
 					  <td>${po.queue_number}</td>
 					  <td>${po.remarks}</td>

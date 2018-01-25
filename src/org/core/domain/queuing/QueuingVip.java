@@ -21,7 +21,7 @@ public class QueuingVip implements java.io.Serializable {
 	//表外字段
 	private Island vpartsI;			//卸货岛实体
 	private String vagueiname;		//卸货岛名称用来模糊查询
-	
+	private String supplier;		//供货商名称
 	
 	public int getId() {
 		return id;
@@ -77,17 +77,12 @@ public class QueuingVip implements java.io.Serializable {
 	public void setVagueiname(String vagueiname) {
 		this.vagueiname = vagueiname;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public String getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
 	
 	
 	

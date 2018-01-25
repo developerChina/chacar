@@ -94,7 +94,9 @@ public class QueuingAuthorityProvider {
 					if(queuingVip.getVagueiname() != null && !queuingVip.getVagueiname().equals("")){
 						WHERE(" island_no in ("+ queuingVip.getVagueiname() +" ) ");				
 					}
-					
+					if(queuingVip.getVpartsI() != null && queuingVip.getVpartsI().getNo()!=0 ){
+						WHERE(" island_no = #{queuingVip.vpartsI.no} ");				
+					}
 				}
 			}
 		}.toString();
@@ -112,6 +114,9 @@ public class QueuingAuthorityProvider {
 					}
 					if(queuingVip.getVagueiname() != null && !queuingVip.getVagueiname().equals("")){
 						WHERE(" island_no in ("+ queuingVip.getVagueiname() +" ) ");				
+					}
+					if(queuingVip.getVpartsI() != null && queuingVip.getVpartsI().getNo()!=0 ){
+						WHERE(" island_no = #{queuingVip.vpartsI.no} ");				
 					}
 				}
 			}
@@ -185,7 +190,6 @@ public class QueuingAuthorityProvider {
 						if(startDate!=null){ WHERE(" comein_time >= #{startDate}  "); }
 						if(endDate!=null){ WHERE(" comein_time <= #{endDate}  "); }
 					}
-					
 				}
 			}
 		}.toString();
@@ -219,8 +223,6 @@ public class QueuingAuthorityProvider {
 						if(startDate!=null){ WHERE(" comein_time >= #{startDate}  "); }
 						if(endDate!=null){ WHERE(" comein_time <= #{endDate}  "); }
 					}
-					
-					
 				}
 				ORDER_BY("comein_time desc");
 			}
@@ -278,6 +280,9 @@ public class QueuingAuthorityProvider {
 						if(ordinary.getVagueiname() != null && !ordinary.getVagueiname().equals("")){
 							WHERE(" island_no in ("+ ordinary.getVagueiname() +" ) ");				
 						}
+						if(ordinary.getOpartsI() != null && ordinary.getOpartsI().getNo()!=0 ){
+							WHERE(" island_no = #{ordinary.opartsI.no} ");				
+						}
 					}
 				}
 			}.toString();
@@ -295,6 +300,9 @@ public class QueuingAuthorityProvider {
 						}
 						if(ordinary.getVagueiname() != null && !ordinary.getVagueiname().equals("")){
 							WHERE(" island_no in ("+ ordinary.getVagueiname() +" ) ");				
+						}
+						if(ordinary.getOpartsI() != null && ordinary.getOpartsI().getNo()!=0 ){
+							WHERE(" island_no = #{ordinary.opartsI.no} ");				
 						}
 					}
 				}

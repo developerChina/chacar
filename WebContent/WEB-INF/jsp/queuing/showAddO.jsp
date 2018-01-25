@@ -77,9 +77,11 @@
 			var msg = "";
 			if ($.trim(car_code.val()) == ""){
 				msg = "请填写车牌号！";
-			}else if ($.trim(queue_number.val()) == ""){
-				msg = "请填写排序位置！";
-			}else if ($.trim(island_no.val()) == ""){
+			}
+			/* else if ($.trim(queue_number.val()) == ""){
+				msg = "请填写排序位置！"; 
+			}*/
+			else if ($.trim(island_no.val()) == ""){
 				msg = "请选择卸货岛！";
 			}
 			/* else if ($.trim(remarks.val()) == ""){
@@ -98,7 +100,7 @@
 					  "car_code":car_code.val(),
 					  "flag":2,
 					  "island_no":island_no.val(),
-					  "queue_number":queue_number.val()
+					  "queue_number":99/* queue_number.val() */
 				  },
 				  success: function(data){
 					if(data.status){
@@ -127,7 +129,7 @@
   <tr><td height="10"></td></tr>
   <tr>
     <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：VIP队列管理  &gt; 添加VIP队列</td>
+	<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：普通队列管理  &gt; 添加普通队列</td>
 	<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
   </tr>
 </table>
@@ -147,11 +149,11 @@
 		    		<td><font id="car_codeColor" color="red">*必填&nbsp;</font></td>
 		    		</tr>
 		    		
-		    		<tr>
+		    		<!-- <tr>
 		    		<td class="font3 fftd">排号位置：</td>
 		    		<td><input name="queue_number" id="queue_number" style="width: 580px; height: 30px" type="number"  size="20" onblur="queue_numberControl()"></td>
 		    		<td><font id="queue_numberColor" color="red">*必填&nbsp;</font></td>
-		    		</tr>
+		    		</tr> -->
 		    		
 		    		<tr>
 		    			<td class="font3 fftd">选择卸货岛：</td>
