@@ -106,6 +106,7 @@
 			  <td>供应商</td>
 			  <td>普通队列车牌</td>
 			  <td>当前排序位置</td>
+			  <td>车辆取号时间</td>
 			  <td>备注</td>
 			  <td align="center">操作</td>
 			</tr>
@@ -115,6 +116,9 @@
 					  <td>${po.supplier}</td>
 					  <td>${po.car_code}</td>
 					  <td>${po.queue_number}</td>
+					  <td>
+					  <f:formatDate value="${po.take_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  </td>
 					  <td>${po.remarks}</td>
  					  <td align="center">
  					  <a href="javascript:void(0)" onclick="deleteVip('${po.id}')">撤销</a><%-- /<a href="javascript:void(0)" onclick="updateIsland('${po.id}')">修改</a> --%>

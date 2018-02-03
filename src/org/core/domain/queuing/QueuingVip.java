@@ -23,6 +23,9 @@ public class QueuingVip implements java.io.Serializable {
 	private String vagueiname;		//卸货岛名称用来模糊查询
 	private String supplier;		//供货商名称
 	
+	//业务需求新增字段
+	private Date take_time;			//date				取号时间
+	
 	public int getId() {
 		return id;
 	}
@@ -82,6 +85,12 @@ public class QueuingVip implements java.io.Serializable {
 	}
 	public void setSupplier(String supplier) {
 		this.supplier = supplier;
+	}
+	public Date getTake_time() {
+		return take_time;
+	}
+	public void setTake_time(Date take_time) {
+		this.take_time = take_time;
 	}
 	
 	

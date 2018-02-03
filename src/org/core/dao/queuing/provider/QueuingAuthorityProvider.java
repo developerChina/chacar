@@ -118,6 +118,7 @@ public class QueuingAuthorityProvider {
 					if(queuingVip.getVpartsI() != null && queuingVip.getVpartsI().getNo()!=0 ){
 						WHERE(" island_no = #{queuingVip.vpartsI.no} ");				
 					}
+					ORDER_BY("queue_number");
 				}
 			}
 		}.toString();
@@ -287,7 +288,7 @@ public class QueuingAuthorityProvider {
 				}
 			}.toString();
 			return sql;
-			}
+		}
 			public String pageSelectO(Map<String, Object> params) {
 			String sql =  new SQL(){
 				{
@@ -304,6 +305,7 @@ public class QueuingAuthorityProvider {
 						if(ordinary.getOpartsI() != null && ordinary.getOpartsI().getNo()!=0 ){
 							WHERE(" island_no = #{ordinary.opartsI.no} ");				
 						}
+						ORDER_BY("queue_number");
 					}
 				}
 			}.toString();

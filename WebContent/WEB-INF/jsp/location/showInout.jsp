@@ -146,18 +146,22 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	 定位仪类型：
+					    	<%--  定位仪类型：
 							    <select name="vehicleType"  style="width:143px;">
 					<option value="-1" >-请选择定位仪类型-</option>
 					<option value="1"  <c:if test="${model.vehicleType==1}">selected</c:if> >固定定位仪</option>
 					<option value="0" <c:if test="${model.vehicleType==0}">selected</c:if>>临时定位仪</option>
-					</select> 
-							进入时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="cominDate" id="cominDate" size="10" value='<fmt:formatDate value='${model.cominDate}' pattern='yyyy-MM-dd' />'/>
-					    	离开时间：<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'});" 
-					name="outDate" id="outDate" size="10" value="<fmt:formatDate value='${model.outDate}' pattern='yyyy-MM-dd' />"/>
-					    	车牌号码：<input type="text" name="vehicleCode">
-					    	<input type="submit" value="&nbsp;搜索&nbsp;" value="${model.vehicleCode}"/>
+					</select>  --%>
+							供货商:<input type="text" name="supplier" value="${targetSupplier}">&nbsp;&nbsp;
+							车牌号码：<input type="text" name="vehicleCode" value="${model.vehicleCode}">
+							进入时间：
+							<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+					<%-- name="cominDate" id="cominDate" size="20" value='<fmt:formatDate value='${cominDate}' pattern='yyyy-MM-dd HH:mm:ss' />'/> --%>
+					name="sDate" id="cominDate" size="20" value="${cominDate}"/>
+					    	-<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
+					name="eDate" id="outDate" size="20" value="${outDate}"/>
+					    	
+					    	<input type="submit" value="&nbsp;搜索&nbsp;" />
 					    </td>
 					  </tr>
 					</table>
@@ -174,8 +178,11 @@
 		  <table width="100%" border="1" cellpadding="5" id="Alarmtable" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
+			  <td>供应商</td>
 			  <td>车牌号</td>
+			  <td>进场门岗</td>
 			  <td>进入时间</td>
+			  <td>出场门岗</td>
 			  <td>离开时间</td>
 			 <!--  <td>定位仪类型</td> -->
 			  <!-- 
@@ -185,8 +192,11 @@
 			<c:forEach items="${requestScope.locationInouts}" var="employee" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
+				  <td>${employee.supplier }</td>
 				  <td>${employee.vehicleCode }</td>
+				  	<td>${employee.serverInName }</td>
 				 <td><fmt:formatDate value="${employee.cominDate}" type="date" pattern="yyyy-MM-dd HH:mm:ss" dateStyle="long"/></td>
+				 	<td>${employee.serverOutName }</td>
 				 <td><fmt:formatDate value="${employee.outDate}" type="date"  pattern="yyyy-MM-dd HH:mm:ss" dateStyle="long"/></td>    
 				 <%--  <td><c:if test="${employee.vehicleType==1}">固定定位仪</c:if>
 					  	  <c:if test="${employee.vehicleType==0}">临时定位仪</c:if>

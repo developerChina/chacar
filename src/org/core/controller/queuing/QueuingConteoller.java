@@ -21,7 +21,6 @@ import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
-import org.core.domain.webapp.Dept;
 import org.core.service.location.InoutService;
 import org.core.service.queuing.QueuingService;
 import org.core.util.DateUtil;
@@ -82,7 +81,7 @@ public class QueuingConteoller {
 				if(isadd==0){
 					QueuingVip exv=queuingService.selectVBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
 					if(exv!=null){
-						message="VIP正在排队";
+						message="急件正在排队";
 					}else{
 						ordinary.setRemarks("普通号");
 						Ordinary exo=queuingService.selectOBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
@@ -692,14 +691,17 @@ public class QueuingConteoller {
 		    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");  
 			sheet.setAutoFilter(c);
 		    //设置列宽
-		    sheet.setColumnWidth(0, 3200);
-	        sheet.setColumnWidth(1, 4800);		
-	        sheet.setColumnWidth(2, 6800);
-	        sheet.setColumnWidth(3, 3200);
-	        sheet.setColumnWidth(4, 5000);
-	        sheet.setColumnWidth(5, 5000);
-	        sheet.setColumnWidth(6, 6000);
-	        sheet.setColumnWidth(7, 3200);
+		    sheet.setColumnWidth(0, 4200);
+	        sheet.setColumnWidth(1, 4200);		
+	        sheet.setColumnWidth(2, 3200);
+	        sheet.setColumnWidth(3, 5800);
+	        sheet.setColumnWidth(4, 5800);
+	        sheet.setColumnWidth(5, 5800);
+	        sheet.setColumnWidth(6, 5800);
+	        sheet.setColumnWidth(7, 5800);
+	        sheet.setColumnWidth(8, 5800);
+	        sheet.setColumnWidth(9, 5800);
+	        sheet.setColumnWidth(10, 2000);
 			//定义表格行索引
 	        int index=0;
 	        
@@ -709,16 +711,16 @@ public class QueuingConteoller {
 	        HSSFCell row_title0 = row_title.createCell(0);   
 	        row_title0.setCellValue(new HSSFRichTextString("历史记录")); 
 	        //合并表头单元格
-	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)7),ExcelUtil.createTitleStyle(workbook));
+	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)10),ExcelUtil.createTitleStyle(workbook));
 	        sheet.addMergedRegion(new Region(
 	        0 //first row (0-based) from 行  
 	        ,(short)0 //first column (0-based) from 列     
 	        ,0//last row  (0-based)  to 行
-	        ,(short)7//last column  (0-based)  to 列     
+	        ,(short)10//last column  (0-based)  to 列     
 	        ));
 	        
 	        //添加头信息
-	        String[] titles={"编码","卸货岛名称","供应商","车牌号","卸货开始时间","卸货结束时间","操作时间","描述"};
+	        String[] titles={"卸货岛名称","供应商","车牌号","进场时间","取号时间","卸货开始","卸货结束","出场时间","卸货时长","在场时长","描述"};
 	        HSSFRow row_head = sheet.createRow(index++);
 	        for (int i=0; i<titles.length;i++) {
 	        	HSSFCell cell = row_head.createCell(i);
@@ -728,36 +730,54 @@ public class QueuingConteoller {
 	        
 	        for (History entity:pageListH) {
 	        	HSSFRow row = sheet.createRow(index++);
-	        	//编码
-	        	HSSFCell cell0 = row.createCell(0);
-	        	cell0.setCellValue(entity.getId());
+	        	
 				//卸货岛名称
-				HSSFCell cell1 = row.createCell(1);
-				cell1.setCellValue(entity.getHpartsI().getIname());
+				HSSFCell cell0 = row.createCell(0);
+				cell0.setCellValue(entity.getHpartsI().getIname());
 				//供应商
-				HSSFCell cell2 = row.createCell(2);
+				HSSFCell cell1 = row.createCell(1);
 				if(entity.getSupplier()!=null){
-					cell2.setCellValue(entity.getSupplier());
+					cell1.setCellValue(entity.getSupplier());
 				}
 				//车牌号
+				HSSFCell cell2 = row.createCell(2);
+				cell2.setCellValue(entity.getCar_code());
+				
+				//进场时间
 				HSSFCell cell3 = row.createCell(3);
-				cell3.setCellValue(entity.getCar_code());
-				//驶入时间
+				cell3.setCellValue(DateUtil.DateToString(entity.getInplant(), "yyyy-MM-dd HH:mm:ss"));
+				
+				//取号时间
 				HSSFCell cell4 = row.createCell(4);
-				cell4.setCellValue(DateUtil.DateToString(entity.getComein_time(), "yyyy-MM-dd HH:mm:ss"));
-				//驶出时间
+				cell4.setCellValue(DateUtil.DateToString(entity.getTake_time(), "yyyy-MM-dd HH:mm:ss"));
+				
+				//驶入时间
 				HSSFCell cell5 = row.createCell(5);
-				cell5.setCellValue(DateUtil.DateToString(entity.getGoout_time(), "yyyy-MM-dd HH:mm:ss"));
-				//操作时间
+				cell5.setCellValue(DateUtil.DateToString(entity.getComein_time(), "yyyy-MM-dd HH:mm:ss"));
+				//驶出时间
 				HSSFCell cell6 = row.createCell(6);
-				cell6.setCellValue(entity.getReduce());
-				//备注
+				cell6.setCellValue(DateUtil.DateToString(entity.getGoout_time(), "yyyy-MM-dd HH:mm:ss"));
+				
+				//出场时间
 				HSSFCell cell7 = row.createCell(7);
+				cell7.setCellValue(DateUtil.DateToString(entity.getOutplant(), "yyyy-MM-dd HH:mm:ss"));
+				
+				
+				//操作时间
+				HSSFCell cell8 = row.createCell(8);
+				cell8.setCellValue(entity.getReduce());
+				
+				//操作时间
+				HSSFCell cell9 = row.createCell(9);
+				cell9.setCellValue(entity.getPlant());
+				
+				//备注
+				HSSFCell cell10 = row.createCell(10);
 				if(entity.getSource()==1){
-					cell7.setCellValue("普通");
+					cell10.setCellValue("普通");
 				}
 				if(entity.getSource()==0){
-					cell7.setCellValue("急件");
+					cell10.setCellValue("急件");
 				}
 			}
 	        try {
@@ -769,8 +789,31 @@ public class QueuingConteoller {
 		}
 		
 		
-		
-		
+		/*
+		 * 现场查询统计 以表格形式展示将饼图屏蔽 
+		 * 饼图的链接  
+		 * Conteoller:
+		 * @RequestMapping(value="/queuingH/TodayAck") 
+		 * @RequestMapping(value="/queuingH/toPie")
+		 * jsp:
+		 * today.jsp           
+		 */
+		@RequestMapping(value ="/queuingS/SceneStatistics")
+		public ModelAndView scene(HttpServletRequest request,ModelAndView mv) {
+			// 设置客户端跳转到查询请求
+			List<Map<String, Object>> list=queuingService.selectScene();
+			mv.addObject("list", list);
+			//统计总数
+			int Sum = queuingService.selectSum();
+			int VipSum = queuingService.selectVipSum();
+			int OSum = queuingService.selectOSum();
+			mv.addObject("Sum", Sum);
+			mv.addObject("VipSum", VipSum);
+			mv.addObject("OSum", OSum);
+			mv.setViewName("queuing/scene");
+			// 返回ModelAndView
+			return mv;
+		}
 		
 		
 		

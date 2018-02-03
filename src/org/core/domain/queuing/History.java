@@ -30,6 +30,12 @@ public class History implements java.io.Serializable {
 	private String reduce;				//驶入驶出的差值
 	private String supplier;			//供货商名称
 	
+	//业务需求新增字段
+	private Date take_time;				//date				取号时间
+	
+	private Date inplant;				//进厂的时间
+	private String plant;				//进出厂的差值
+	private Date outplant;				//出厂的时间
 	
 	public String getId() {
 		return id;
@@ -102,6 +108,30 @@ public class History implements java.io.Serializable {
 	}
 	public void setSupplier(String supplier) {
 		this.supplier = supplier;
+	}
+	public Date getTake_time() {
+		return take_time;
+	}
+	public void setTake_time(Date take_time) {
+		this.take_time = take_time;
+	}
+	public Date getInplant() {
+		return inplant;
+	}
+	public void setInplant(Date inplant) {
+		this.inplant = inplant;
+	}
+	public String getPlant() {
+		return plant;
+	}
+	public void setPlant(String plant) {
+		this.plant = plant;
+	}
+	public Date getOutplant() {
+		return outplant;
+	}
+	public void setOutplant(Date outplant) {
+		this.outplant = outplant;
 	}
 	
 	

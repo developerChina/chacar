@@ -1,18 +1,26 @@
 package org.core.domain.location;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Date;
 
-public class LocationInout {
+import org.springframework.format.annotation.DateTimeFormat;
+@SuppressWarnings("serial")
+public class LocationInout implements java.io.Serializable{
 	private Integer id;
 	private String vehicleCode;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private java.util.Date cominDate;	
+	private Date cominDate;	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private java.util.Date outDate;	
+	private Date outDate;	
 	private Integer vehicleType;
+	
+	private String supplier; 		//供应商
+	
+	private String serverIp;  		//相机ip
+	private String serverInName;	//进场名称
+	private String serverOutName;	//进场名称
+	
 	public LocationInout() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Integer getId() {
 		return id;
@@ -26,29 +34,50 @@ public class LocationInout {
 	public void setVehicleCode(String vehicleCode) {
 		this.vehicleCode = vehicleCode;
 	}
-	public java.util.Date getCominDate() {
-		return cominDate;
-	}
-	public void setCominDate(java.util.Date cominDate) {
-		this.cominDate = cominDate;
-	}
-	public java.util.Date getOutDate() {
-		return outDate;
-	}
-	public void setOutDate(java.util.Date outDate) {
-		this.outDate = outDate;
-	}
 	public Integer getVehicleType() {
 		return vehicleType;
 	}
 	public void setVehicleType(Integer vehicleType) {
 		this.vehicleType = vehicleType;
 	}
-	@Override
-	public String toString() {
-		return "LocationInout [id=" + id + ", vehicleCode=" + vehicleCode + ", cominDate=" + cominDate + ", outDate="
-				+ outDate + ", vehicleType=" + vehicleType + "]";
+	public String getSupplier() {
+		return supplier;
 	}
+	public void setSupplier(String supplier) {
+		this.supplier = supplier;
+	}
+	public Date getCominDate() {
+		return cominDate;
+	}
+	public void setCominDate(Date cominDate) {
+		this.cominDate = cominDate;
+	}
+	public Date getOutDate() {
+		return outDate;
+	}
+	public void setOutDate(Date outDate) {
+		this.outDate = outDate;
+	}
+	public String getServerIp() {
+		return serverIp;
+	}
+	public void setServerIp(String serverIp) {
+		this.serverIp = serverIp;
+	}
+	public String getServerInName() {
+		return serverInName;
+	}
+	public void setServerInName(String serverInName) {
+		this.serverInName = serverInName;
+	}
+	public String getServerOutName() {
+		return serverOutName;
+	}
+	public void setServerOutName(String serverOutName) {
+		this.serverOutName = serverOutName;
+	}
+	
+	
 	
 	
 	

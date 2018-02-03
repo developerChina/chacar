@@ -24,6 +24,9 @@ public class Ordinary implements java.io.Serializable {
 	private Island opartsI;			//卸货岛实体
 	private String supplier;		//供货商名称
 	
+	//业务需求新增字段
+	private Date take_time;			//date				取号时间
+	
 	public int getId() {
 		return id;
 	}
@@ -83,6 +86,12 @@ public class Ordinary implements java.io.Serializable {
 	}
 	public void setSupplier(String supplier) {
 		this.supplier = supplier;
+	}
+	public Date getTake_time() {
+		return take_time;
+	}
+	public void setTake_time(Date take_time) {
+		this.take_time = take_time;
 	}
 	
 

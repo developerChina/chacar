@@ -118,30 +118,55 @@
 	    <td height="20">
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
-		      <td>序号</td>
 			  <td>卸货岛名称</td>
 			  <td>供应商</td>
 			  <td>车牌号码</td>
-			  <td>卸货开始时间</td>
-			  <td>卸货结束时间</td>
-			  <td>操作时间</td>
+			  <td>进场时间</td>
+			 <!--  <td>取号时间</td> -->
+			  <td>卸货开始</td>
+			  <td>卸货结束</td>
+			  <td>出场时间</td>
+			  <td>卸货时长</td>
+			  <td>在场时长</td>
 			  <td>备注</td>
 			</tr>
 			<c:forEach items="${requestScope.pageListH}" var="ph" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
-					  <td>${stat.count}</td>
+					  
 					  <td>${ph.hpartsI.iname}</td>
 					  <td>${ph.supplier}</td>
 					  <td>${ph.car_code}</td>
+					  
+					  <td>
+					  <f:formatDate value="${ph.inplant}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  </td>
+					  
+					 <%--  
+					 <td>
+					  <f:formatDate value="${ph.take_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  </td> 
+					 --%>
+					  
 					  <td>
 					  <f:formatDate value="${ph.comein_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					  </td>
+					  
 					  <td>
 					  <f:formatDate value="${ph.goout_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					  </td>
+					  
 					  <td>
-					  <font color="green">${ph.reduce}</font> 
+					  <f:formatDate value="${ph.outplant}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					  </td>
+					  
+					  <td>
+					  <font color="green">${ph.reduce}</font>
+					  </td>
+					  
+					  <td>
+					  <font color="green">${ph.plant}</font> 
+					  </td>
+					  
 					  <td>
 					  <c:if test="${ph.source==1}">普通</c:if>
 					  <c:if test="${ph.source==0}">急件</c:if>

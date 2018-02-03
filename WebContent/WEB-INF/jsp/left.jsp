@@ -81,7 +81,7 @@
 				  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">门禁系统</div></td></tr>
 				  <tr valign="top" id="submenu3" style="display: none">
 				    <td class="left_nav_bgshw tdbtmline" height="50">
-				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁规划</a></img></p>
+				      <%-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁规划</a></img></p> --%>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/accessGroup/floorSplit" target="main">门禁分组</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/AccessJurisdiction/selectAJ" target="main">绑定授权</a></img></p>
 					</td>
@@ -92,7 +92,7 @@
 		          <tr><td id="navbg4" class="left_nav_closed" ><div class="font1">梯控系统</div></td></tr>
 				  <tr valign="top" id="submenu4" style="display: none">
 				    <td class="left_nav_bgshw tdbtmline" height="40">
-				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">梯控规划</a></img></p>
+				      <%-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">梯控规划</a></img></p> --%>
 				      <!-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/Grouping/elevatorSplit" target="main">梯控分组</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/Jurisdiction/getEJ" target="main">绑定授权</a></img></p> -->
 					</td>
@@ -103,7 +103,7 @@
 				  <tr><td id="navbg5" class="left_nav_closed" ><div class="font1">通道系统</div></td></tr>
 				  <tr valign="top" id="submenu5" style="display: none">
 				    <td class="left_nav_bgshw tdbtmline" height="50">
-				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道规划</a></img></p>
+				      <%-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道规划</a></img></p> --%>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/passagewayGroup/doorSplit" target="main">通道分组</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/PassagewayJurisdiction/selectPJ" target="main">绑定授权</a></img></p>
 					</td>
@@ -114,7 +114,7 @@
 		         <tr><td id="navbg6" class="left_nav_closed" ><div class="font1">车辆系统</div></td></tr>
 				  <tr valign="top" id="submenu6" style="display: none">
 				    <td class="left_nav_bgshw tdbtmline" height="50">
-				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carDistinguish" target="main">识别仪</a></img></p>
+				      <%-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carDistinguish" target="main">识别仪</a></img></p> --%>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carPark" target="main">车场管理</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carPassageway" target="main">识别仪->车场</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carInfo" target="main">车辆维护</a></img></p>
@@ -144,15 +144,38 @@
 		           <tr><td id="navbg8" class="left_nav_closed" ><div class="font1">排队叫号</div></td></tr>
 				  <tr valign="top" id="submenu8" style="display: none">
 				    <td class="left_nav_bgshw tdbtmline" height="50">
-				    <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p>
+				    <%-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p> --%>
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingV/VipAck" target="main">急件队列维护</a></img></p>
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingO/OrdinaryAck" target="main">普通队列维护</a></img></p>
-					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/TodayAck" target="main">现场查询统计</a></img></p>
+					<%-- <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/TodayAck" target="main">现场查询统计1</a></img></p> --%> 
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingS/SceneStatistics" target="main">现场查询统计</a></img></p>
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingH/HistoryAck" target="main">历史查询统计</a></img></p>
 					</td>
 				  </tr>
 				  <tr><td height="2"></td></tr>
 			  </c:if>
+			  
+			   <c:if test="${th=='10'}">
+		           <tr><td id="navbg9" class="left_nav_closed" ><div class="font1">维护系统</div></td></tr>
+				  <tr valign="top" id="submenu9" style="display: none">
+				    <td class="left_nav_bgshw tdbtmline" height="50">
+				    <!--通道  -->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/door/doorAck" target="main">通道规划</a></img></p>
+					<!--梯控  -->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/elevator/elevatorAck" target="main">梯控规划</a></img></p>
+					<!--门禁  -->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/floor/floorAck" target="main">门禁规划</a></img></p>
+					<!-- 卸货岛维护 -->
+				    <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p>
+					<!--识别仪  -->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carDistinguish" target="main">识别仪</a></img></p>
+					
+					</td>
+				  </tr>
+				  <tr><td height="2"></td></tr>
+			  </c:if>
+			  
+			  
 			</c:forEach>
 			  <tr><td height="2"></td></tr>
 			  

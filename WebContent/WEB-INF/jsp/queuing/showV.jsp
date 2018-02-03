@@ -106,6 +106,7 @@
 			  <td>供应商</td>
 			  <td>急件车牌</td>
 			  <td>当前排序位置</td>
+			  <td>车辆取号时间</td>
 			  <td>备注</td>
 			  <td align="center">操作</td>
 			</tr>
@@ -115,6 +116,9 @@
 					  <td>${pv.supplier}</td>
 					  <td>${pv.car_code}</td>
 					  <td>${pv.queue_number}</td>
+					  <td>
+					  <f:formatDate value="${pv.take_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  </td>
 					  <td>${pv.remarks}</td>
  					  <td align="center">
  					  <a href="javascript:void(0)" onclick="deleteVip('${pv.id}')">撤销</a><%-- /<a href="javascript:void(0)" onclick="updateIsland('${pv.id}')">修改</a> --%>

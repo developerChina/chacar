@@ -2,6 +2,7 @@ package org.core.service.queuing;
  
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
@@ -81,5 +82,13 @@ public interface QueuingService {
 	String plain(int island_no, int queue_number);
 
 	void updateO(Ordinary ordinary);
+//现场统计
+	List<Map<String, Object>> selectScene();
+//统计总数
+	int selectSum();
+
+	int selectVipSum();
+
+	int selectOSum();
 	
 }

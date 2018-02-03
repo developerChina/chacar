@@ -1,16 +1,21 @@
 package org.core.service.queuing.impl;
  
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.core.dao.queuing.QueuingDao;
+import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
 import org.core.domain.queuing.QueuingVip;
 import org.core.service.queuing.QueuingService;
+import org.core.util.DateUtil;
 import org.core.util.GenId;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,11 +157,16 @@ public class QueuingServiceImpl implements QueuingService {
 				  int selectId = queuingDao.delSort(queuingVip.getIsland_no(),queuingVip.getCar_code());
 				  ordAgain(selectId);
 				  //删除它
-				  queuingDao.delByCar_code(queuingVip.getCar_code());
+				  queuingDao.delByCar_code(queuingVip.getIsland_no(),queuingVip.getCar_code());
 			  }
 			//2排序
 			 int max =vipAddSort(queuingVip.getIsland_no(),queuingVip.getQueue_number());
 			 queuingVip.setQueue_number(max);
+			//取号时间
+			 Date date = new Date();
+			 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			 String time = format.format(date);
+			 queuingVip.setTake_time( DateUtil.StringToDate(time, "yyyy-MM-dd HH:mm:ss"));
 			//3执行添加
 			queuingDao.addV(queuingVip);
 		}
@@ -185,11 +195,7 @@ public class QueuingServiceImpl implements QueuingService {
 	
 	@Override
 	public void delVip(Integer id) {
-		//1	删除之后将其重新添回之前队列
-			//误操作添到vip 再删除 岂不白排了
-		//2	之前队列的排序要不要重新弄回去？
-		//3 重新排序
-			vipAgain(id);
+			//vipAgain(id);
 		//4	执行删除
 		queuingDao.delVip(id);
 	}
@@ -251,17 +257,49 @@ public class QueuingServiceImpl implements QueuingService {
 		    params.put("pageModel", pageModel);
 	    }
 		List<History> pageListH = queuingDao.pageSelectH(params);
-		//1将卸货岛封装到历史记录里 2计算时间差 3查到车的供货商
+		//1将卸货岛封装到历史记录里 2计算时间差 3查到车的供货商 
 		for (History Hparts : pageListH) {
 			Island myVpartsI = queuingDao.getparts(Hparts.getIsland_no());
 			Hparts.setHpartsI(myVpartsI);
-			
-			long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
-			//System.out.println(Hparts.getGoout_time());
-			long hour1=between%(24*3600)/3600;
-			long minute1=between%3600/60;
-			long second1=between%60;
-			Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
+			if(Hparts.getGoout_time()!=null&&Hparts.getComein_time()!=null){
+				long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
+				//System.out.println(Hparts.getGoout_time());
+				long hour1=between%(24*3600)/3600;
+				long minute1=between%3600/60;
+				long second1=between%60;
+				Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
+				
+				//进出厂时间 根据车牌号 进出卸货岛的时间 查
+				LocationInout inout = queuingDao.getInoutList(Hparts.getCar_code(),Hparts.getComein_time());
+				if(inout!=null){
+					if(inout.getCominDate()!=null&&inout.getOutDate()!=null){
+						Hparts.setInplant(inout.getCominDate());
+						Hparts.setOutplant(inout.getOutDate());
+						long betweeninout = (inout.getOutDate().getTime()-inout.getCominDate().getTime())/1000;
+						long hour1inout=betweeninout%(24*3600)/3600;
+						long minute1inout=betweeninout%3600/60;
+						long second1inout=betweeninout%60;
+						Hparts.setPlant(""+hour1inout+"小时"+minute1inout+"分"+second1inout+"秒");
+					}else{
+						Hparts.setPlant(""+0+"小时"+0+"分"+0+"秒");
+						if(inout.getCominDate()!=null){
+							Hparts.setInplant(inout.getCominDate());
+						}else if(inout.getOutDate()!=null){
+							Hparts.setOutplant(inout.getOutDate());
+						}else{
+							Hparts.setInplant(null);
+							Hparts.setOutplant(null);
+						}
+					}
+					
+				}else{
+					Hparts.setInplant(null);
+					Hparts.setOutplant(null);
+					Hparts.setPlant(""+0+"小时"+0+"分"+0+"秒");
+					Hparts.setReduce(""+0+"小时"+0+"分"+0+"秒");
+				}
+			}
+				
 			//预防查出多条 git提交
 			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
 			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
@@ -269,8 +307,6 @@ public class QueuingServiceImpl implements QueuingService {
 			}else{
 				Hparts.setSupplier("");
 			}
-			//进出记录
-			
 		}
 		return pageListH;
 	}
@@ -287,6 +323,11 @@ public class QueuingServiceImpl implements QueuingService {
 	//往普通队列表写数据
 	@Override
 	public void addO(Ordinary ordinary) {
+		//取号时间
+		 Date date = new Date();
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		 String time = format.format(date);
+		 ordinary.setTake_time( DateUtil.StringToDate(time, "yyyy-MM-dd HH:mm:ss"));
 		queuingDao.addO(ordinary);
 	}
 
@@ -371,7 +412,7 @@ public class QueuingServiceImpl implements QueuingService {
 		//删除
 		@Override
 		public void delOrdinary(Integer id) {
-			ordAgain(id);
+			//ordAgain(id);
 			queuingDao.delOrdinary(id);
 		}
 		//修改
@@ -447,7 +488,12 @@ public class QueuingServiceImpl implements QueuingService {
 			 	if(ordinary.getRemarks()==null||ordinary.getRemarks().equals("")){
 					ordinary.setRemarks("手动添加普通号");
 				}
-			 	queuingDao.addO(ordinary);
+			 	//取号时间
+				 Date date = new Date();
+				 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				 String time = format.format(date);
+				 ordinary.setTake_time( DateUtil.StringToDate(time, "yyyy-MM-dd HH:mm:ss"));
+			 	 queuingDao.addO(ordinary);
 			}
 		}
 //添加验证的友好提示
@@ -550,7 +596,72 @@ public class QueuingServiceImpl implements QueuingService {
 		}
 		@Override
 		public void updateO(Ordinary ordinary) {
+			//取号时间
+			 Date date = new Date();
+			 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			 String time = format.format(date);
+			 ordinary.setTake_time( DateUtil.StringToDate(time, "yyyy-MM-dd HH:mm:ss"));
 			queuingDao.UpdO(ordinary);
+		}
+		
+		//现场统计
+		@Override
+		public List<Map<String, Object>> selectScene() {
+			List<Island> lands = queuingDao.selectIAll();
+			List<Map<String, Object>> list=new ArrayList<>();
+			for (Island land : lands) {
+				Map<String, Object> map= new HashMap<>();
+				map.put("iname",land.getIname());
+				List<QueuingVip> listV = queuingDao.selectVAll(land.getNo());
+				List<Ordinary> listO = queuingDao.selectOAll(land.getNo());
+				//总数 急件数 普通数
+				int Sum = listV.size()+listO.size();
+				int VipSum = listV.size();
+				int OSum =  listO.size();
+				map.put("all", Sum);
+				map.put("vip", VipSum);
+				map.put("o", OSum);
+				
+				List<QueuingVip> limitV = queuingDao.selectVlimit(land.getNo());
+				List<Ordinary> limitO = queuingDao.selectOlimit(land.getNo());
+				
+					//供应商 车牌号 标记  
+					for (Ordinary Oparts : limitO) {
+							List<String> SupplierList = queuingDao.getSupplier(Oparts.getCar_code());
+							if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
+								Oparts.setSupplier(SupplierList.get(0).replace(" ", ""));
+							}else{
+								Oparts.setSupplier("");
+							}
+						}
+					map.put("Ordinarys", limitO);
+					for (QueuingVip Vparts : limitV) {
+							List<String> SupplierList = queuingDao.getSupplier(Vparts.getCar_code());
+							if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
+								Vparts.setSupplier(SupplierList.get(0).replace(" ", ""));
+							}else{
+								Vparts.setSupplier("");
+							}
+						}
+					map.put("QueuingVips", limitV);
+				
+				list.add(map);
+			}
+			return list;
+		}
+		
+		@Override
+		public int selectSum() {
+			int sum =queuingDao.selectVipSum()+queuingDao.selectOSum();
+			return sum;
+		}
+		@Override
+		public int selectVipSum() {
+			return queuingDao.selectVipSum();
+		}
+		@Override
+		public int selectOSum() {
+			return queuingDao.selectOSum();
 		}
 		
 		

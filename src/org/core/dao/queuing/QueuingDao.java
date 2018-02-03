@@ -1,6 +1,7 @@
 package org.core.dao.queuing;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.core.dao.queuing.provider.QueuingAuthorityProvider;
+import org.core.domain.location.LocationConstants;
+import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
@@ -45,7 +48,7 @@ public interface QueuingDao {
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="pageSelectV")
 	List<QueuingVip> pageSelectV(Map<String, Object> params);
 	
-	@Select("select * from "+Island.tableName)
+	@Select("select * from "+Island.tableName+" order by no ")
 	List<Island> AddVgetI();
 	
 	@SelectProvider(type=QueuingAuthorityProvider.class,method="addV")
@@ -164,11 +167,12 @@ public interface QueuingDao {
 	int getQueueMaxiByno(Integer no);
 
 	
-	@Select("select * from "+QueuingVip.tableName+" where queue_number >= #{arg0} and island_no = #{arg1}")
-	List<QueuingVip> selectVIByQI(int qAfter, int iAfter);
+	@Select("select * from "+QueuingVip.tableName+" where queue_number >= #{qAfter} and island_no = #{iAfter}")
+	List<QueuingVip> selectVIByQI(@Param("qAfter")Integer qAfter, @Param("iAfter")Integer iAfter);
 //根据车牌号查普通表 有值就删除了它
-	@Delete(" delete from "+Ordinary.tableName+" where car_code = #{car_code} ")
-	void delByCar_code(String car_code);
+	@Delete(" delete from "+Ordinary.tableName+" where car_code = #{car_code} and island_no= #{no} ")
+	void delByCar_code(@Param("no")Integer no, @Param("car_code")String car_code);
+	
 //根据岛编号查卸货岛表有值就友好提示
 	@Select("select * from "+Island.tableName+" where no = #{no} ")
 	Island selectOByNoToI(String no);
@@ -176,7 +180,7 @@ public interface QueuingDao {
 	@Select("select id from "+Ordinary.tableName+" where car_code = #{car_code} and island_no = #{island_no} ")
 	int delSort( @Param("island_no")Integer island_no, @Param("car_code")String car_code);
 
-	@Select("select * from "+Island.tableName)
+	@Select("select * from "+Island.tableName+" order by no ")
 	List<Island> selectIAll();
 
 	@Select("select * from "+History.tableName+" where island_no = #{landno} and goout_time is null order by comein_time desc limit 1")
@@ -187,5 +191,20 @@ public interface QueuingDao {
 	//模糊查车牌
 	@Select(" select VehicleCode from logis_vehicle as v WHERE v.DriverID LIKE CONCAT('%',#{vSupplier},'%') ")
 	List<String> vagueCar_code(String vSupplier);
+	
+	@Select("select count(*) from "+QueuingVip.tableName)
+	int selectVipSum();
+
+	@Select("select count(*) from "+Ordinary.tableName)
+	int selectOSum();
+
+	@Select("select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number desc  limit 10")
+	List<Ordinary> selectOlimit(int landno);
+	
+	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landno} order by queue_number desc limit 10")
+	List<QueuingVip> selectVlimit(int landno);
+
+	@Select(" select * from "+LocationConstants.INOUT+" where VehicleCode=#{car_code} and cominDate < #{comein_time} order by cominDate DESC limit 1")
+	LocationInout getInoutList(@Param("car_code")String car_code, @Param("comein_time")Date comein_time);
 	
 }
