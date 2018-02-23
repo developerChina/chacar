@@ -15,9 +15,10 @@ public class LocationInout implements java.io.Serializable{
 	
 	private String supplier; 		//供应商
 	
-	private String serverIp;  		//相机ip
-	private String serverInName;	//进场名称
-	private String serverOutName;	//进场名称
+	private String serverInIp;  		//相机进ip
+	private String serverInName;		//进场名称
+	private String serverOutIp;  		//相机出ip
+	private String serverOutName;		//出场名称
 	
 	public LocationInout() {
 		super();
@@ -58,12 +59,7 @@ public class LocationInout implements java.io.Serializable{
 	public void setOutDate(Date outDate) {
 		this.outDate = outDate;
 	}
-	public String getServerIp() {
-		return serverIp;
-	}
-	public void setServerIp(String serverIp) {
-		this.serverIp = serverIp;
-	}
+	
 	public String getServerInName() {
 		return serverInName;
 	}
@@ -75,6 +71,18 @@ public class LocationInout implements java.io.Serializable{
 	}
 	public void setServerOutName(String serverOutName) {
 		this.serverOutName = serverOutName;
+	}
+	public String getServerInIp() {
+		return serverInIp;
+	}
+	public void setServerInIp(String serverInIp) {
+		this.serverInIp = serverInIp;
+	}
+	public String getServerOutIp() {
+		return serverOutIp;
+	}
+	public void setServerOutIp(String serverOutIp) {
+		this.serverOutIp = serverOutIp;
 	}
 	
 	

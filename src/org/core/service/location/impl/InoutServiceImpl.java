@@ -65,22 +65,18 @@ public class InoutServiceImpl implements InoutService {
 				entity.setSupplier("");
 			}
 			
-			if(entity.getServerIp()!=null&&!"".equals(entity.getServerIp())){
-				String[] idArry = entity.getServerIp().split(",");
-				for (String serverIp : idArry) {
-					CarDistinguish camera = inoutDao.getCamera(serverIp);
+			if(entity.getServerInIp()!=null&&!"".equals(entity.getServerInIp())){
+					CarDistinguish camera = inoutDao.getCamera(entity.getServerInIp());
 					if(camera!=null){
-						//1进2出
-						if(camera.getNo().equals("1")){
-							entity.setServerInName(camera.getName());
-						}
-						if(camera.getNo().equals("2")){
-							entity.setServerOutName(camera.getName());
-						}
+					    entity.setServerInName(camera.getName());
 					}
 				}
+			if(entity.getServerOutIp()!=null&&!"".equals(entity.getServerOutIp())){
+				CarDistinguish camera = inoutDao.getCamera(entity.getServerOutIp());
+				if(camera!=null){
+					entity.setServerOutName(camera.getName());
+				}
 			}
-			
 			
 		}
 		return locationInouts;
