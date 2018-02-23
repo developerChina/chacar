@@ -50,6 +50,9 @@
 		 	       $("#Historyform").submit();
 		 	   })
 		 	   
+		 	   $("#target").click(function(){
+		 		  window.location = "${ctx }/queuingT/TargetSelect";
+		 	   })
 	 })
 	</script>
 	
@@ -86,6 +89,7 @@
 							卸货岛名称:<input type="text" name="vagueiname" value="${model}">&nbsp;&nbsp;
 					    	
 					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
+					   		<input id="target" type="button" value="&nbsp;&nbsp;查询进场未排队车辆&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					   		</td>
 					  	</tr>
 					  	 <tr>
@@ -103,7 +107,7 @@
 					     	<input type="button" id="search" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;&nbsp;
 					   
 					    	<input id="add" type="button" value="&nbsp;&nbsp;导出&nbsp;&nbsp;"/>&nbsp;&nbsp; 
-					    </td>
+					    	</td>
 					  </tr>
 					</table>
 				</form>
@@ -121,6 +125,7 @@
 			  <td>卸货岛名称</td>
 			  <td>供应商</td>
 			  <td>车牌号码</td>
+			  <td>车辆类型</td>
 			  <td>进场时间</td>
 			 <!--  <td>取号时间</td> -->
 			  <td>卸货开始</td>
@@ -136,6 +141,7 @@
 					  <td>${ph.hpartsI.iname}</td>
 					  <td>${ph.supplier}</td>
 					  <td>${ph.car_code}</td>
+					  <td>${ph.vehicleType}</td>
 					  
 					  <td>
 					  <f:formatDate value="${ph.inplant}" pattern="yyyy-MM-dd HH:mm:ss"/>

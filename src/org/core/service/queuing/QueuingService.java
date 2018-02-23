@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
@@ -90,5 +91,7 @@ public interface QueuingService {
 	int selectVipSum();
 
 	int selectOSum();
+
+	List<LocationInout> findInout(LocationInout locationInout, PageModel pageModel, Date startDate, Date endDate);
 	
 }

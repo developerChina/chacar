@@ -37,6 +37,8 @@ public class History implements java.io.Serializable {
 	private String plant;				//进出厂的差值
 	private Date outplant;				//出厂的时间
 	
+	private String vehicleType;			//车辆类型 固定车辆 临时车辆 其他
+	
 	public String getId() {
 		return id;
 	}
@@ -132,6 +134,12 @@ public class History implements java.io.Serializable {
 	}
 	public void setOutplant(Date outplant) {
 		this.outplant = outplant;
+	}
+	public String getVehicleType() {
+		return vehicleType;
+	}
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
 	}
 	
 	

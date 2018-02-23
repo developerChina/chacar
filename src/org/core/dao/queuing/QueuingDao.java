@@ -198,13 +198,30 @@ public interface QueuingDao {
 	@Select("select count(*) from "+Ordinary.tableName)
 	int selectOSum();
 
-	@Select("select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number desc  limit 10")
+	@Select("select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number   limit 10")
 	List<Ordinary> selectOlimit(int landno);
 	
-	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landno} order by queue_number desc limit 10")
+	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landno} order by queue_number  limit 10")
 	List<QueuingVip> selectVlimit(int landno);
 
 	@Select(" select * from "+LocationConstants.INOUT+" where VehicleCode=#{car_code} and cominDate < #{comein_time} order by cominDate DESC limit 1")
 	LocationInout getInoutList(@Param("car_code")String car_code, @Param("comein_time")Date comein_time);
+
+	@Select(" select * from "+LocationConstants.INOUT)
+	List<LocationInout> selectInoutAll();
+
+	@Select("select count(*) from "+History.tableName+" where car_code=#{vehicleCode} and comein_time>#{cominDate} order by comein_time DESC limit 1")
+	int getCarByCondition(@Param("vehicleCode")String vehicleCode, @Param("cominDate")Date cominDate);
+
+	@SelectProvider(type=QueuingAuthorityProvider.class,method="countT")
+	int countT(Map<String, Object> params);
+
+	@SelectProvider(type=QueuingAuthorityProvider.class,method="selectByTPagegy")
+	List<LocationInout> selectByTPagegy(Map<String, Object> params);
+
+	
+	@Select(" select clientId from logis_vehicle as v WHERE v.VehicleCode=#{car_code} ")
+	List<String> getVehicleTypeList(String car_code);
+	
 	
 }

@@ -1,9 +1,12 @@
 package org.core.dao.queuing.provider;
 
+import static org.core.domain.location.LocationConstants.INOUT;
+
 import java.util.Date;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
+import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
 import org.core.domain.queuing.Ordinary;
@@ -331,4 +334,74 @@ public class QueuingAuthorityProvider {
 		
 		
 	
+			
+			
+			//动态查询总数量
+			public String countT(Map<String, Object> params){
+				return new SQL(){
+					{
+						SELECT("count(*)");
+						FROM(INOUT);
+						if(params.get("locationInout")!=null){
+							LocationInout locationInout=(LocationInout) params.get("locationInout");
+							if(locationInout.getIds()!=null && !"".equals(locationInout.getIds())){
+								WHERE(" id in ("+ locationInout.getIds() +" ) ");
+							}
+							if(locationInout.getVehicleCode()!=null && !"".equals(locationInout.getVehicleCode())){
+								WHERE(" vehicleCode LIKE CONCAT('%',#{locationInout.vehicleCode},'%')");
+							}
+							if(locationInout.getSupplier() != null && !locationInout.getSupplier().equals("")){
+								WHERE(" vehicleCode in ("+ locationInout.getSupplier() +" ) ");				
+							}
+							Date startDate = (Date) params.get("startDate");
+							Date endDate = (Date) params.get("endDate");
+							if(startDate!=null&&endDate!=null){
+								WHERE(" cominDate  BETWEEN #{startDate} AND #{endDate} ");
+							}else{
+								if(startDate!=null){ WHERE(" cominDate >= #{startDate} "); }
+								if(endDate!=null){ WHERE(" cominDate <= #{endDate} "); }
+							}
+						}
+					}
+				}.toString();
+			}
+			
+			//分页动态查询
+			public String selectByTPagegy(Map<String, Object> params){
+				String sql=new SQL(){
+					{
+						SELECT("*");
+						FROM(INOUT);
+						if(params.get("locationInout")!=null){
+							LocationInout locationInout=(LocationInout) params.get("locationInout");
+							if(locationInout.getIds()!=null && !"".equals(locationInout.getIds())){
+								WHERE(" id in ("+ locationInout.getIds() +" ) ");
+							}
+							if(locationInout.getVehicleCode()!=null && !"".equals(locationInout.getVehicleCode())){
+								WHERE(" vehicleCode LIKE CONCAT('%',#{locationInout.vehicleCode},'%')");
+							}
+							if(locationInout.getSupplier() != null && !locationInout.getSupplier().equals("")){
+								WHERE(" vehicleCode in ("+ locationInout.getSupplier() +" ) ");				
+							}
+							Date startDate = (Date) params.get("startDate");
+							Date endDate = (Date) params.get("endDate");
+							if(startDate!=null&&endDate!=null){
+								WHERE(" cominDate  BETWEEN #{startDate} AND #{endDate} ");
+							}else{
+								if(startDate!=null){ WHERE(" cominDate >= #{startDate} "); }
+								if(endDate!=null){ WHERE(" cominDate <= #{endDate} "); }
+							}
+							
+						}
+						ORDER_BY("cominDate desc");
+					}
+				}.toString();
+				if(params.get("pageModel")!=null){
+					sql+=" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
+				}
+				return sql;
+			}
+			
+			
+			
 }

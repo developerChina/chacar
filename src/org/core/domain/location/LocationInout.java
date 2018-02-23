@@ -13,12 +13,14 @@ public class LocationInout implements java.io.Serializable{
 	private Date outDate;	
 	private Integer vehicleType;
 	
-	private String supplier; 		//供应商
+	private String supplier; 			//供应商
 	
 	private String serverInIp;  		//相机进ip
 	private String serverInName;		//进场名称
 	private String serverOutIp;  		//相机出ip
 	private String serverOutName;		//出场名称
+	
+	private String ids;  				//主键集合。
 	
 	public LocationInout() {
 		super();
@@ -83,6 +85,12 @@ public class LocationInout implements java.io.Serializable{
 	}
 	public void setServerOutIp(String serverOutIp) {
 		this.serverOutIp = serverOutIp;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 	
 	

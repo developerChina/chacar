@@ -30,6 +30,7 @@ import org.core.util.tag.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -666,14 +667,14 @@ public class QueuingConteoller {
 			String sDate=request.getParameter("sDate");
 			Date startDate=null;
 			try {
-				startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd");
+				startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd HH:mm:ss");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			String eDate=request.getParameter("eDate");
 			Date endDate=null;
 			try {
-				endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd");
+				endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd HH:mm:ss");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -688,7 +689,7 @@ public class QueuingConteoller {
 			sheet.setFitToPage(true);  
 		    sheet.setHorizontallyCenter(true);
 		    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
-		    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");  
+		    CellRangeAddress c = CellRangeAddress.valueOf("A2:L2");  
 			sheet.setAutoFilter(c);
 		    //设置列宽
 		    sheet.setColumnWidth(0, 4200);
@@ -701,7 +702,8 @@ public class QueuingConteoller {
 	        sheet.setColumnWidth(7, 5800);
 	        sheet.setColumnWidth(8, 5800);
 	        sheet.setColumnWidth(9, 5800);
-	        sheet.setColumnWidth(10, 2000);
+	        sheet.setColumnWidth(10, 5800);
+	        sheet.setColumnWidth(11, 3200);
 			//定义表格行索引
 	        int index=0;
 	        
@@ -711,16 +713,16 @@ public class QueuingConteoller {
 	        HSSFCell row_title0 = row_title.createCell(0);   
 	        row_title0.setCellValue(new HSSFRichTextString("历史记录")); 
 	        //合并表头单元格
-	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)10),ExcelUtil.createTitleStyle(workbook));
+	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)11),ExcelUtil.createTitleStyle(workbook));
 	        sheet.addMergedRegion(new Region(
 	        0 //first row (0-based) from 行  
 	        ,(short)0 //first column (0-based) from 列     
 	        ,0//last row  (0-based)  to 行
-	        ,(short)10//last column  (0-based)  to 列     
+	        ,(short)11//last column  (0-based)  to 列     
 	        ));
 	        
 	        //添加头信息
-	        String[] titles={"卸货岛名称","供应商","车牌号","进场时间","取号时间","卸货开始","卸货结束","出场时间","卸货时长","在场时长","描述"};
+	        String[] titles={"卸货岛名称","供应商","车牌号","车辆类型","进场时间","取号时间","卸货开始","卸货结束","出场时间","卸货时长","在场时长","描述"};
 	        HSSFRow row_head = sheet.createRow(index++);
 	        for (int i=0; i<titles.length;i++) {
 	        	HSSFCell cell = row_head.createCell(i);
@@ -743,41 +745,46 @@ public class QueuingConteoller {
 				HSSFCell cell2 = row.createCell(2);
 				cell2.setCellValue(entity.getCar_code());
 				
-				//进场时间
+				//车辆类型
 				HSSFCell cell3 = row.createCell(3);
-				cell3.setCellValue(DateUtil.DateToString(entity.getInplant(), "yyyy-MM-dd HH:mm:ss"));
+				cell3.setCellValue(entity.getVehicleType());
+				
+				
+				//进场时间
+				HSSFCell cell4 = row.createCell(4);
+				cell4.setCellValue(DateUtil.DateToString(entity.getInplant(), "yyyy-MM-dd HH:mm:ss"));
 				
 				//取号时间
-				HSSFCell cell4 = row.createCell(4);
-				cell4.setCellValue(DateUtil.DateToString(entity.getTake_time(), "yyyy-MM-dd HH:mm:ss"));
+				HSSFCell cell5 = row.createCell(5);
+				cell5.setCellValue(DateUtil.DateToString(entity.getTake_time(), "yyyy-MM-dd HH:mm:ss"));
 				
 				//驶入时间
-				HSSFCell cell5 = row.createCell(5);
-				cell5.setCellValue(DateUtil.DateToString(entity.getComein_time(), "yyyy-MM-dd HH:mm:ss"));
-				//驶出时间
 				HSSFCell cell6 = row.createCell(6);
-				cell6.setCellValue(DateUtil.DateToString(entity.getGoout_time(), "yyyy-MM-dd HH:mm:ss"));
+				cell6.setCellValue(DateUtil.DateToString(entity.getComein_time(), "yyyy-MM-dd HH:mm:ss"));
+				//驶出时间
+				HSSFCell cell7 = row.createCell(7);
+				cell7.setCellValue(DateUtil.DateToString(entity.getGoout_time(), "yyyy-MM-dd HH:mm:ss"));
 				
 				//出场时间
-				HSSFCell cell7 = row.createCell(7);
-				cell7.setCellValue(DateUtil.DateToString(entity.getOutplant(), "yyyy-MM-dd HH:mm:ss"));
-				
-				
-				//操作时间
 				HSSFCell cell8 = row.createCell(8);
-				cell8.setCellValue(entity.getReduce());
+				cell8.setCellValue(DateUtil.DateToString(entity.getOutplant(), "yyyy-MM-dd HH:mm:ss"));
+				
 				
 				//操作时间
 				HSSFCell cell9 = row.createCell(9);
-				cell9.setCellValue(entity.getPlant());
+				cell9.setCellValue(entity.getReduce());
+				
+				//操作时间
+				HSSFCell cell10 = row.createCell(10);
+				cell10.setCellValue(entity.getPlant());
 				
 				//备注
-				HSSFCell cell10 = row.createCell(10);
+				HSSFCell cell11 = row.createCell(11);
 				if(entity.getSource()==1){
-					cell10.setCellValue("普通");
+					cell11.setCellValue("普通");
 				}
 				if(entity.getSource()==0){
-					cell10.setCellValue("急件");
+					cell11.setCellValue("急件");
 				}
 			}
 	        try {
@@ -814,6 +821,63 @@ public class QueuingConteoller {
 			// 返回ModelAndView
 			return mv;
 		}
+		
+		//进场未排队车辆查询  
+		@RequestMapping(value = "/queuingT/TargetSelect")
+		public String TargetSelect(
+				Integer pageIndex,
+				 @ModelAttribute LocationInout locationInout,
+				 HttpServletRequest request,Model model) {
+			
+			String pageParam="";
+			if(locationInout.getVehicleCode()!=null&&!"".equals(locationInout.getVehicleCode())){
+				pageParam+="&vehicleCode="+locationInout.getVehicleCode();
+			}
+			if(locationInout.getVehicleType()!=null){
+				pageParam+="&vehicleType="+locationInout.getVehicleType();
+			}
+			if(locationInout.getSupplier()!=null && !locationInout.getSupplier().equals("")){
+				pageParam+="&supplier="+locationInout.getSupplier();
+			}
+			model.addAttribute("targetSupplier", locationInout.getSupplier());
+			
+			String sDate=request.getParameter("sDate");
+			if(sDate!=null && !"".equals(sDate)){
+				pageParam+="&sDate="+sDate;
+			}
+			Date startDate=null;
+			try {
+				startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd HH:mm:ss");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String eDate=request.getParameter("eDate");
+			if(eDate!=null && !"".equals(eDate)){
+				pageParam+="&eDate="+eDate;
+			}
+			Date endDate=null;
+			try {
+				endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd HH:mm:ss");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			model.addAttribute("cominDate", sDate);
+			model.addAttribute("outDate", eDate);
+			model.addAttribute("pageParam", pageParam);
+			PageModel pageModel = new PageModel();
+			if(pageIndex != null){
+				pageModel.setPageIndex(pageIndex);
+			}
+			
+			List<LocationInout> locationInouts = queuingService.findInout(locationInout, pageModel,startDate,endDate);
+			model.addAttribute("locationInouts", locationInouts);
+			model.addAttribute("pageModel", pageModel);
+			model.addAttribute("model", locationInout);
+			
+			return "queuing/queuingShowInout";
+		}
+		
+		
 		
 		
 		

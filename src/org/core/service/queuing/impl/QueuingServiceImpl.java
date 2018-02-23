@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.core.dao.location.InoutDao;
 import org.core.dao.queuing.QueuingDao;
+import org.core.domain.car.CarDistinguish;
 import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
@@ -32,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class QueuingServiceImpl implements QueuingService {
 	@Autowired
 	private QueuingDao queuingDao;
+	@Autowired
+	private InoutDao inoutDao;
 //1、卸货岛的业务逻辑层接口的实现
 	@Override
 	public List<Island> selectIByPage(Island island, PageModel pageModel) {
@@ -300,12 +304,19 @@ public class QueuingServiceImpl implements QueuingService {
 				}
 			}
 				
-			//预防查出多条 git提交
+			//预防查出多条  供应商名称  
 			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
 			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
 				Hparts.setSupplier(SupplierList.get(0));
 			}else{
 				Hparts.setSupplier("");
+			}
+			//车辆类型
+			List<String> vehicleTypeList = queuingDao.getVehicleTypeList(Hparts.getCar_code());
+			if(vehicleTypeList!=null && vehicleTypeList.size()>0 && vehicleTypeList.get(0)!=null && !vehicleTypeList.get(0).equals("")){
+				Hparts.setVehicleType(vehicleTypeList.get(0));
+			}else{
+				Hparts.setVehicleType("");
 			}
 		}
 		return pageListH;
@@ -662,6 +673,87 @@ public class QueuingServiceImpl implements QueuingService {
 		@Override
 		public int selectOSum() {
 			return queuingDao.selectOSum();
+		}
+		
+		//进场未排队
+		/*
+		 * 查询所有进出厂记录  List<LocationInout> InoutAll = queuingDao.selectInoutAll();
+		 * 根据 进出记录的车牌号和入厂时间 俩个条件 同历史记录进行判断
+		 * 判断条件 车牌号相等  --->车牌对应的历史记录的进岛时间大于车牌对应的入厂时间 			
+		 * 条件成立则：
+		 * 将主键存在字符串中 提供查询
+		 * 
+		 */
+		@Override
+		public List<LocationInout> findInout(LocationInout locationInout, PageModel pageModel, Date startDate,
+				Date endDate) {
+			String vSupplier = locationInout.getSupplier();
+			if(vSupplier!=null && !"".equals(vSupplier)){
+				String nos = "";
+				List<String> carList = queuingDao.vagueCar_code(vSupplier);
+				if(carList!=null&&carList.size()>0){
+					
+					for (String code : carList) {
+						nos+="'"+code+"'"+",";
+					}
+					//System.out.println(nos);
+					nos = nos.substring(0,nos.length() - 1);
+					//System.out.println(nos); 
+					locationInout.setSupplier(nos);
+				}else{
+					locationInout.setSupplier("000000");
+				}
+			}
+			//将主键当成一个条件
+			List<LocationInout> InoutAll = queuingDao.selectInoutAll();
+			for (LocationInout  Inout: InoutAll) {
+				int Inoutcount = queuingDao.getCarByCondition(Inout.getVehicleCode(),Inout.getCominDate());
+				if(Inoutcount==0){
+					String nos = "";
+					nos+=Inout.getId()+",";
+					nos = nos.substring(0,nos.length() - 1);
+					locationInout.setIds(nos);
+				}
+			}
+			
+			/** 当前需要分页的总数据条数  */
+			Map<String,Object> params = new HashMap<>();
+			params.put("locationInout", locationInout);
+			params.put("startDate", startDate);
+			params.put("endDate", endDate);
+			
+			int recordCount = queuingDao.countT(params);
+			
+			pageModel.setRecordCount(recordCount);
+			if(recordCount > 0){
+		        /** 开始分页查询数据：查询第几页的数据 */
+				params.put("pageModel", pageModel);
+		    }
+			List<LocationInout> locationInouts = queuingDao.selectByTPagegy(params);
+			
+			for (LocationInout entity : locationInouts) {
+				List<String> SupplierList = queuingDao.getSupplier(entity.getVehicleCode());
+				if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
+					entity.setSupplier(SupplierList.get(0));
+				}else{
+					entity.setSupplier("");
+				}
+				
+				if(entity.getServerInIp()!=null&&!"".equals(entity.getServerInIp())){
+						CarDistinguish camera = inoutDao.getCamera(entity.getServerInIp());
+						if(camera!=null){
+						    entity.setServerInName(camera.getName());
+						}
+					}
+				if(entity.getServerOutIp()!=null&&!"".equals(entity.getServerOutIp())){
+					CarDistinguish camera = inoutDao.getCamera(entity.getServerOutIp());
+					if(camera!=null){
+						entity.setServerOutName(camera.getName());
+					}
+				}
+				
+			}
+			return locationInouts;
 		}
 		
 		
