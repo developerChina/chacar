@@ -189,10 +189,10 @@ public class QueuingAuthorityProvider {
 					Date startDate = (Date) params.get("startDate");
 					Date endDate = (Date) params.get("endDate");
 					if(startDate!=null&&endDate!=null){
-						WHERE(" comein_time  BETWEEN #{startDate} AND #{endDate} ");
+						WHERE(" cominDate  BETWEEN #{startDate} AND #{endDate} ");
 					}else{
-						if(startDate!=null){ WHERE(" comein_time >= #{startDate}  "); }
-						if(endDate!=null){ WHERE(" comein_time <= #{endDate}  "); }
+						if(startDate!=null){ WHERE(" cominDate >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" cominDate <= #{endDate}  "); }
 					}
 				}
 			}
@@ -222,10 +222,10 @@ public class QueuingAuthorityProvider {
 					Date startDate = (Date) params.get("startDate");
 					Date endDate = (Date) params.get("endDate");
 					if(startDate!=null&&endDate!=null){
-						WHERE(" comein_time  BETWEEN #{startDate} AND #{endDate} ");
+						WHERE(" cominDate  BETWEEN #{startDate} AND #{endDate} ");
 					}else{
-						if(startDate!=null){ WHERE(" comein_time >= #{startDate}  "); }
-						if(endDate!=null){ WHERE(" comein_time <= #{endDate}  "); }
+						if(startDate!=null){ WHERE(" cominDate >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" cominDate <= #{endDate}  "); }
 					}
 				}
 				ORDER_BY("comein_time desc");

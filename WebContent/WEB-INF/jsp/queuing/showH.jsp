@@ -89,8 +89,10 @@
 							卸货岛名称:<input type="text" name="vagueiname" value="${model}">&nbsp;&nbsp;
 					    	
 					    	车牌号:<input type="text" name="car_code" value="${target}">&nbsp;&nbsp;
-					   		<input id="target" type="button" value="&nbsp;&nbsp;查询进场未排队车辆&nbsp;&nbsp;"/>&nbsp;&nbsp;
-					   		</td>
+<!-- 					   		
+<input id="target" type="button" value="&nbsp;&nbsp;查询进场未排队车辆&nbsp;&nbsp;"/>&nbsp;&nbsp;
+ -->					   		
+ 						</td>
 					  	</tr>
 					  	 <tr>
 					  <td class="font3">
@@ -144,7 +146,7 @@
 					  <td>${ph.vehicleType}</td>
 					  
 					  <td>
-					  <f:formatDate value="${ph.inplant}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  <f:formatDate value="${ph.cominDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					  </td>
 					  
 					 <%--  
@@ -162,7 +164,7 @@
 					  </td>
 					  
 					  <td>
-					  <f:formatDate value="${ph.outplant}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					  <f:formatDate value="${ph.outDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					  </td>
 					  
 					  <td>

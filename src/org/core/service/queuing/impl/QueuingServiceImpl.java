@@ -265,6 +265,7 @@ public class QueuingServiceImpl implements QueuingService {
 		for (History Hparts : pageListH) {
 			Island myVpartsI = queuingDao.getparts(Hparts.getIsland_no());
 			Hparts.setHpartsI(myVpartsI);
+			//计算卸货时长
 			if(Hparts.getGoout_time()!=null&&Hparts.getComein_time()!=null){
 				long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
 				//System.out.println(Hparts.getGoout_time());
@@ -272,38 +273,15 @@ public class QueuingServiceImpl implements QueuingService {
 				long minute1=between%3600/60;
 				long second1=between%60;
 				Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
-				
-				//进出厂时间 根据车牌号 进出卸货岛的时间 查
-				LocationInout inout = queuingDao.getInoutList(Hparts.getCar_code(),Hparts.getComein_time());
-				if(inout!=null){
-					if(inout.getCominDate()!=null&&inout.getOutDate()!=null){
-						Hparts.setInplant(inout.getCominDate());
-						Hparts.setOutplant(inout.getOutDate());
-						long betweeninout = (inout.getOutDate().getTime()-inout.getCominDate().getTime())/1000;
-						long hour1inout=betweeninout%(24*3600)/3600;
-						long minute1inout=betweeninout%3600/60;
-						long second1inout=betweeninout%60;
-						Hparts.setPlant(""+hour1inout+"小时"+minute1inout+"分"+second1inout+"秒");
-					}else{
-						Hparts.setPlant(""+0+"小时"+0+"分"+0+"秒");
-						if(inout.getCominDate()!=null){
-							Hparts.setInplant(inout.getCominDate());
-						}else if(inout.getOutDate()!=null){
-							Hparts.setOutplant(inout.getOutDate());
-						}else{
-							Hparts.setInplant(null);
-							Hparts.setOutplant(null);
-						}
-					}
-					
-				}else{
-					Hparts.setInplant(null);
-					Hparts.setOutplant(null);
-					Hparts.setPlant(""+0+"小时"+0+"分"+0+"秒");
-					Hparts.setReduce(""+0+"小时"+0+"分"+0+"秒");
-				}
 			}
-				
+			//计算在场时长
+			if(Hparts.getCominDate()!=null&&Hparts.getOutDate()!=null){
+				long between = (Hparts.getOutDate().getTime()-Hparts.getCominDate().getTime())/1000;
+				long hour1=between%(24*3600)/3600;
+				long minute1=between%3600/60;
+				long second1=between%60;
+				Hparts.setPlant(""+hour1+"小时"+minute1+"分"+second1+"秒");
+			}
 			//预防查出多条  供应商名称  
 			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
 			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){

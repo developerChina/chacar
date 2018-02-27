@@ -33,9 +33,13 @@ public class History implements java.io.Serializable {
 	//业务需求新增字段
 	private Date take_time;				//date				取号时间
 	
-	private Date inplant;				//进厂的时间
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date cominDate;				//进厂的时间
+	
 	private String plant;				//进出厂的差值
-	private Date outplant;				//出厂的时间
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date outDate;				//出厂的时间
 	
 	private String vehicleType;			//车辆类型 固定车辆 临时车辆 其他
 	
@@ -117,29 +121,31 @@ public class History implements java.io.Serializable {
 	public void setTake_time(Date take_time) {
 		this.take_time = take_time;
 	}
-	public Date getInplant() {
-		return inplant;
-	}
-	public void setInplant(Date inplant) {
-		this.inplant = inplant;
-	}
+	
 	public String getPlant() {
 		return plant;
 	}
 	public void setPlant(String plant) {
 		this.plant = plant;
 	}
-	public Date getOutplant() {
-		return outplant;
-	}
-	public void setOutplant(Date outplant) {
-		this.outplant = outplant;
-	}
+	
 	public String getVehicleType() {
 		return vehicleType;
 	}
 	public void setVehicleType(String vehicleType) {
 		this.vehicleType = vehicleType;
+	}
+	public Date getCominDate() {
+		return cominDate;
+	}
+	public void setCominDate(Date cominDate) {
+		this.cominDate = cominDate;
+	}
+	public Date getOutDate() {
+		return outDate;
+	}
+	public void setOutDate(Date outDate) {
+		this.outDate = outDate;
 	}
 	
 	

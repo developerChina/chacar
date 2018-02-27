@@ -735,7 +735,12 @@ public class QueuingConteoller {
 	        	
 				//卸货岛名称
 				HSSFCell cell0 = row.createCell(0);
-				cell0.setCellValue(entity.getHpartsI().getIname());
+				if(!"".equals(entity.getHpartsI())&&entity.getHpartsI()!=null){
+					cell0.setCellValue(entity.getHpartsI().getIname());
+				}else{
+					cell0.setCellValue("");
+				}
+				
 				//供应商
 				HSSFCell cell1 = row.createCell(1);
 				if(entity.getSupplier()!=null){
@@ -752,7 +757,7 @@ public class QueuingConteoller {
 				
 				//进场时间
 				HSSFCell cell4 = row.createCell(4);
-				cell4.setCellValue(DateUtil.DateToString(entity.getInplant(), "yyyy-MM-dd HH:mm:ss"));
+				cell4.setCellValue(DateUtil.DateToString(entity.getCominDate(), "yyyy-MM-dd HH:mm:ss"));
 				
 				//取号时间
 				HSSFCell cell5 = row.createCell(5);
@@ -767,26 +772,28 @@ public class QueuingConteoller {
 				
 				//出场时间
 				HSSFCell cell8 = row.createCell(8);
-				cell8.setCellValue(DateUtil.DateToString(entity.getOutplant(), "yyyy-MM-dd HH:mm:ss"));
+				cell8.setCellValue(DateUtil.DateToString(entity.getOutDate(), "yyyy-MM-dd HH:mm:ss"));
 				
 				
-				//操作时间
+				//卸货时长
 				HSSFCell cell9 = row.createCell(9);
 				cell9.setCellValue(entity.getReduce());
 				
-				//操作时间
+				//在场时长
 				HSSFCell cell10 = row.createCell(10);
 				cell10.setCellValue(entity.getPlant());
 				
 				//备注
 				HSSFCell cell11 = row.createCell(11);
+			if(!"".equals(entity.getSource())){
 				if(entity.getSource()==1){
 					cell11.setCellValue("普通");
 				}
 				if(entity.getSource()==0){
 					cell11.setCellValue("急件");
 				}
-			}
+			}	
+		}
 	        try {
 				String fileName="历史记录";
 				ExcelUtil.write(request, response, workbook, fileName);
