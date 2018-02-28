@@ -66,11 +66,11 @@
 						<c:if test="${land.all>0}">
 						<c:forEach items="${land.QueuingVips}" var="v" >
 						<td>
-						<a><img title="${v.supplier}/${v.car_code}" style="width: 45px;height: 28px;" src="${ctx}/images/vipCar.jpg"/></a></td>
+						<img title="${v.supplier}/${v.car_code}" style="width: 45px;height: 28px;" src="${ctx}/images/vipCar.jpg"/></td>
 						</c:forEach>
 						<c:forEach items="${land.Ordinarys}" var="o" >
 						<td>
-						<a><img title="${o.supplier}/${o.car_code}" style="width: 45px;height: 28px;" src="${ctx}/images/oCar.jpg"/></a></td>
+						<img title="${o.supplier}/${o.car_code}" style="width: 45px;height: 28px;" src="${ctx}/images/oCar.jpg"/></td>
 						</c:forEach>
 						</c:if>
 						
