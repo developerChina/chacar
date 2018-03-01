@@ -40,7 +40,7 @@
 	 	   })
 		    	
 		    	
-		 	   /** 给导出添加绑定点击事件 */
+		 	   /** 给导出绑定点击事件 导出excel表 */
 		 	   $("#add").click(function(){
 		 		  var actionURL = $("#Alarmform").attr("action");
 		 	       $("#Alarmform").attr("action","${ctx}/Inout/exportExcel");
@@ -56,7 +56,7 @@
 	  <tr><td height="10"></td></tr>
 	  <tr>
 	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆进出口查询 &gt; 车辆进出口查询</td>
+		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：车辆进出口 &gt; 车辆进出口记录查询</td>
 		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>

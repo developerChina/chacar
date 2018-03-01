@@ -87,7 +87,7 @@ public class InoutController {
 	
 	
 	
-	
+	//车辆进出场记录导出
 	@RequestMapping(value="/Inout/exportExcel")
 	public void exportExcel(HttpServletRequest request,HttpServletResponse response,	
 		@ModelAttribute LocationInout locationInout){
