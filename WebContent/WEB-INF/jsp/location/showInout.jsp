@@ -25,20 +25,6 @@
 			<script language="javascript" type="text/javascript" src="${ctx }/js/My97DatePicker/WdatePicker.js"></script>
 	<script type="text/javascript">
 	       $(function(){
-	    	   
-	    	   
-	    	   
-	    	   
-	    	   
-	    	   /** 获取上一次选中的部门数据 */
-	    	   var boxs  = $("input[type='checkbox'][id^='box_']");
-	    	   
-	    	   /** 给全选按钮绑定点击事件  */
-		    	$("#checkAll").click(function(){
-		    		// this是checkAll  this.checked是true
-		    		// 所有数据行的选中状态与全选的状态一致
-		    		boxs.attr("checked",this.checked);
-		    	})
 		    	
 	    	   /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
 		    	$("tr[id^='data_']").hover(function(){
@@ -47,80 +33,20 @@
 		    		$(this).css("backgroundColor","#ffffff");
 		    	})
 		    	
+            $("#search").click(function(){
+	 		   var actionURL = $("#Alarmform").attr("action");
+	 	       $("#Alarmform").attr("action","${ctx}/Inout/selectInout");
+	 	       $("#Alarmform").submit(); 
+	 	   })
 		    	
-	    	   /** 删除员工绑定点击事件 */
-	    	   $("#delete").click(function(){
-	    		   /** 获取到用户选中的复选框  */
-	    		   var checkedBoxs = boxs.filter(":checked");
-	    		   if(checkedBoxs.length < 1){
-	    			   $.ligerDialog.warn("请选择一个需要删除的员工！");
-	    		   }else{
-	    			   /** 得到用户选中的所有的需要删除的ids */
-	    			   var ids = checkedBoxs.map(function(){
-	    				   return this.value;
-	    			   })
-	    			   
-	    			   $.ligerDialog.confirm("确认要删除吗?","删除员工",function(r){
-	    				   if(r){
-	    					   // alert("删除："+ids.get());
-	    					   // 发送请求
-	    					   window.location = "${ctx }/employee/removeEmployee?ids=" + ids.get();
-	    				   }
-	    			   });
-	    		   }
-	    	   })
-	    	   
-		       /** 添加员工绑定点击事件 */
+		    	
+		 	   /** 给导出添加绑定点击事件 */
 		 	   $("#add").click(function(){
-		 		   window.location = "${ctx }/employee/addEmployee?flag=1";
+		 		  var actionURL = $("#Alarmform").attr("action");
+		 	       $("#Alarmform").attr("action","${ctx}/Inout/exportExcel");
+		 	       $("#Alarmform").submit();
 		 	   })
-		 	   
-		 	  $("#import").click(function(){
-		 		   window.location = "${ctx }/employee/importEmployeePage";
-		 	   }) 
-		 	  
-		 	   $("#bingd").click(function(){
-	    		   /** 获取到用户选中的复选框  */
-	    		   var checkedBoxs = boxs.filter(":checked");
-	    		   if(checkedBoxs.length < 1){
-	    			   $.ligerDialog.warn("请选择一个需要要绑定的员工！");
-	    		   }else{
-	    			   /** 得到用户选中的所有的需要删除的ids */
-	    			   var ids = checkedBoxs.map(function(){
-	    				   return this.value;
-	    			   })
-	    			   
-      			 	   $.ajax({
-	    	         		  type: 'POST',
-	    	         		  url: '${ctx}/employee/bingdEmployee?flag=1&ids='+ids.get(),
-	    	         		  success: function(data){
-	    	         			 alert(data);
-	    	         		  }
-	    	         	});
-	    		   }
-	    	   })
- 
-             $("#unbingd").click(function(){
-	    		   /** 获取到用户选中的复选框  */
-	    		   var checkedBoxs = boxs.filter(":checked");
-	    		   if(checkedBoxs.length < 1){
-	    			   $.ligerDialog.warn("请选择一个需要要绑定的员工！");
-	    		   }else{
-	    			   /** 得到用户选中的所有的需要删除的ids */
-	    			   var ids = checkedBoxs.map(function(){
-	    				   return this.value;
-	    			   })
-	    			   
-      			 	   $.ajax({
-	    	         		  type: 'POST',
-	    	         		  url: '${ctx}/employee/bingdEmployee?flag=0&ids='+ids.get(),
-	    	         		  success: function(data){
-	    	         			 alert(data);
-	    	         		  }
-	    	         	});
-	    		   }
-	    	   })
-	       })
+	})
 	       
 	</script>
 </head>
@@ -142,7 +68,7 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="Alarmform" method="post" id="Alarmform" action="${ctx}/Inout/selectInout">
+			  	<form name="Alarmform" method="post" id="Alarmform" >
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
@@ -161,7 +87,8 @@
 					    	-<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
 					name="eDate" id="outDate" size="20" value="${outDate}"/>
 					    	
-					    	<input type="submit" value="&nbsp;搜索&nbsp;" />
+					    	<input type="button" id="search" value="&nbsp;搜索&nbsp;" />&nbsp;&nbsp;&nbsp;
+					    	<input type="button" id="add" value="&nbsp;导出&nbsp;" />
 					    </td>
 					  </tr>
 					</table>
@@ -177,7 +104,6 @@
 	    <td height="20">
 		  <table width="100%" border="1" cellpadding="5" id="Alarmtable" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
-			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>供应商</td>
 			  <td>车牌号</td>
 			  <td>进场门岗</td>
@@ -191,7 +117,6 @@
 			</tr>
 			<c:forEach items="${requestScope.locationInouts}" var="employee" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
-				  <td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
 				  <td>${employee.supplier }</td>
 				  <td>${employee.vehicleCode }</td>
 				  	<td>${employee.serverInName }</td>
