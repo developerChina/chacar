@@ -31,6 +31,7 @@ public class UserDynaSqlProvider {
 						WHERE(" status LIKE CONCAT ('%',#{user.status},'%') ");
 					}
 				}
+				WHERE(" loginname <> 'admin'  ");
 			}
 		}.toString();
 		
@@ -55,6 +56,7 @@ public class UserDynaSqlProvider {
 						WHERE(" status LIKE CONCAT ('%',#{user.status},'%') ");
 					}
 				}
+				WHERE(" loginname <> 'admin'  ");
 			}
 		}.toString();
 	}	

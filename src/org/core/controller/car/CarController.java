@@ -17,11 +17,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.core.domain.car.CarAuthority;
 import org.core.domain.car.CarDistinguish;
 import org.core.domain.car.CarInfo;
+import org.core.domain.car.CarLogs;
 import org.core.domain.car.CarPark;
 import org.core.domain.car.CarPassageway;
 import org.core.service.car.CarAuthorityService;
 import org.core.service.car.CarDistinguishService;
 import org.core.service.car.CarInfoService;
+import org.core.service.car.CarLogsService;
 import org.core.service.car.CarParkService;
 import org.core.service.car.CarPassagewayService;
 import org.core.util.ExcelUtil;
@@ -59,6 +61,10 @@ public class CarController {
 	@Autowired
 	@Qualifier("carInfoService")
 	private CarInfoService carInfoService;
+	
+	@Autowired
+	@Qualifier("carLogsService")
+	private CarLogsService carLogsService;
 	
 	/**
 	 * 车场管理
@@ -570,6 +576,33 @@ public class CarController {
 		return mv;
 	}
 	
+	//停车场进出记录
+	@RequestMapping(value="/car/carRecord")
+	 public ModelAndView carRecord(Integer pageIndex,ModelAndView mv,
+			 @ModelAttribute CarLogs carLogs){
+			
+			String pageParam="";
+			if(carLogs.getCacrno()!=null && !carLogs.getCacrno().equals("")){
+				pageParam+="&cacrno="+carLogs.getCacrno();
+			}
+			if(carLogs.getCarMaster()!=null && !carLogs.getCarMaster().equals("")){
+				pageParam+="&carMaster="+carLogs.getCarMaster();
+			}
+			mv.addObject("pageParam", pageParam);
+			mv.addObject("targetCacrno",carLogs.getCacrno());
+			mv.addObject("targetCarMaster",carLogs.getCarMaster());
+			
+			PageModel pageModel = new PageModel();
+			if (pageIndex != null) {
+				pageModel.setPageIndex(pageIndex);
+			}
+			List<CarLogs> carLogsList = carLogsService.selectCarLogs(carLogs,pageModel);
+			
+			mv.addObject("carLogsList", carLogsList);
+			mv.addObject("pageModel", pageModel);
+			mv.setViewName("car/showCarRecord");
+			return mv;
+	}
 	
 	
 }

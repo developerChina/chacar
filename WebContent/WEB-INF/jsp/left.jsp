@@ -119,6 +119,7 @@
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carPassageway" target="main">识别仪->车场</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carInfo" target="main">车辆维护</a></img></p>
 				      <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carAuthority" target="main">车辆授权</a></img></p>
+					  <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carRecord" target="main">停车场出入记录</a></img></p>
 					</td>
 				  </tr>
 				  <tr><td height="2"></td></tr>
