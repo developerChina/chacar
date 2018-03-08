@@ -3,7 +3,6 @@ package org.core.service.webapp;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Job;
@@ -195,5 +194,12 @@ public interface HrmService {
 	 * @return
 	 */
 	List<Employee> getEmployeees(String name,String cardno,String phone);
+
+	/**
+	 * 添加员工的ajax判断，物理卡号是否重复
+	 * @param cardno
+	 * @return String 
+	 */
+	String addValidate(String cardno);
 	
 }

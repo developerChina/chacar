@@ -146,4 +146,9 @@ public interface EmployeeDao {
 		@Result(column="JOB_ID",property="job",one=@One(select="org.core.dao.webapp.JobDao.selectById",fetchType=FetchType.EAGER))
 	})
 	List<Employee> getEmployeees(@Param("name")String name,@Param("cardno")String cardno,@Param("phone")String phone);
+
+	@Select("select * from "+EMPLOYEETABLE+" where cardno = #{cardno}")
+	List<Employee> addValidate(String cardno);
+
+	
 }

@@ -390,4 +390,20 @@ public class HrmServiceImpl implements HrmService{
 		return employeeDao.getEmployeees(name,cardno,phone);
 	}
 
+	@Override
+	public String addValidate(String cardno) {
+		List<Employee> emps = employeeDao.addValidate(cardno);
+		String result="";
+		if(emps.size()>0){
+			String empNames="";
+			for (Employee entity : emps) {
+				empNames+=entity.getName()+",";
+			}
+			result="物理卡号重复！此物理卡号已被"+empNames.substring(0,empNames.length() - 1)+"占用请勿添加！";
+		}else{
+			result="";
+		}
+		return result;
+	}
+
 }

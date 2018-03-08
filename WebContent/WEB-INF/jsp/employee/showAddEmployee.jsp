@@ -27,7 +27,7 @@
 	 
 	    $(function(){
 	    	/** 员工表单提交 */
-			$("#employeeForm").submit(function(){
+			$("#add").click(function(){
 				var msg = "";
 				var name = $("#name");
 				var phone = $("#phone");
@@ -44,12 +44,22 @@
 				if (msg != ""){
 					$.ligerDialog.warn(msg);
 					return false;
-				}else{
-					return true;
 				}
-				$("#employeeForm").submit();
+				$.ajax({
+					  type: 'post',
+					  url: '${ctx}/employee/AddEmpProving',
+					  data: {
+						  "cardno":cardno.val()
+					  },success: function(data){
+						  if(data.status){
+							   $("#employeeForm").submit();
+						  }else{
+							  $.ligerDialog.error(data.message);
+						  }
+					  }
+				});
 			});
-	    });
+});
 	</script>
 </head>
 <body>
@@ -161,7 +171,7 @@
 			<tr><td class="main_tdbor"></td></tr>
 			
 			<tr><td align="left" class="fftd">
-			<input type="submit" value="&nbsp;添加&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);"  value="&nbsp;返回 &nbsp; "></td></tr>
+			<input type="button" id="add" value="&nbsp;添加&nbsp;">&nbsp;&nbsp;<input type="button" onclick="javascript:window.history.back(-1);"  value="&nbsp;返回 &nbsp; "></td></tr>
 		  </table>
 		 </form>
 	</td>

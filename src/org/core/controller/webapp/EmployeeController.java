@@ -245,7 +245,28 @@ public class EmployeeController {
 		return mv;
 
 	}
-
+	/**
+	 * 处理添加员工前验证物理卡号是否重复的Ajax请求
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/employee/AddEmpProving")
+	public Object addValidate(HttpServletRequest request,
+			 HttpServletResponse response){
+		String cardno = request.getParameter("cardno");
+		Map<String,Object> map = new HashMap<>();
+		String test = hrmService.addValidate(cardno);
+		if(!"".equals(test)){
+			map.put("status", false);
+			map.put("message", test);
+		}else{
+			map.put("status", true);
+		}
+		return map;
+	}
+	
+	
+	
 	/**
 	 * 处理删除员工请求
 	 * 
