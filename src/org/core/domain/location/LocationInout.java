@@ -22,6 +22,8 @@ public class LocationInout implements java.io.Serializable{
 	
 	private String ids;  				//主键集合。
 	
+	private String plant;				//进出厂的差值
+	
 	public LocationInout() {
 		super();
 	}
@@ -91,6 +93,12 @@ public class LocationInout implements java.io.Serializable{
 	}
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+	public String getPlant() {
+		return plant;
+	}
+	public void setPlant(String plant) {
+		this.plant = plant;
 	}
 	
 	

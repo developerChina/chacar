@@ -110,6 +110,7 @@
 			  <td>进入时间</td>
 			  <td>出场门岗</td>
 			  <td>离开时间</td>
+			  <td>在场时长</td>
 			 <!--  <td>定位仪类型</td> -->
 			  <!-- 
 			  <td>车牌号码</td>
@@ -126,6 +127,7 @@
 				 <%--  <td><c:if test="${employee.vehicleType==1}">固定定位仪</c:if>
 					  	  <c:if test="${employee.vehicleType==0}">临时定位仪</c:if>
 					  	</td> --%>
+					<td>${employee.plant}</td>  	
 				</tr>
 			</c:forEach>
 		  </table>

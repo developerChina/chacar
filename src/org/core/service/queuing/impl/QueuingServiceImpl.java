@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.core.dao.location.InoutDao;
 import org.core.dao.queuing.QueuingDao;
@@ -267,20 +268,23 @@ public class QueuingServiceImpl implements QueuingService {
 			Hparts.setHpartsI(myVpartsI);
 			//计算卸货时长
 			if(Hparts.getGoout_time()!=null&&Hparts.getComein_time()!=null){
-				long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
-				//System.out.println(Hparts.getGoout_time());
+				/*long between = (Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime())/1000;
 				long hour1=between%(24*3600)/3600;
 				long minute1=between%3600/60;
 				long second1=between%60;
-				Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");
+				Hparts.setReduce(""+hour1+"小时"+minute1+"分"+second1+"秒");*/
+				String a = formatMiliLongToString(Hparts.getGoout_time().getTime()-Hparts.getComein_time().getTime());
+				Hparts.setReduce(a);
 			}
 			//计算在场时长
 			if(Hparts.getCominDate()!=null&&Hparts.getOutDate()!=null){
-				long between = (Hparts.getOutDate().getTime()-Hparts.getCominDate().getTime())/1000;
+				/*long between = (Hparts.getOutDate().getTime()-Hparts.getCominDate().getTime())/1000;
 				long hour1=between%(24*3600)/3600;
 				long minute1=between%3600/60;
 				long second1=between%60;
-				Hparts.setPlant(""+hour1+"小时"+minute1+"分"+second1+"秒");
+				Hparts.setPlant(""+hour1+"小时"+minute1+"分"+second1+"秒");*/
+				String a = formatMiliLongToString(Hparts.getOutDate().getTime()-Hparts.getCominDate().getTime());
+				Hparts.setPlant(a);
 			}
 			//预防查出多条  供应商名称  
 			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
@@ -299,6 +303,18 @@ public class QueuingServiceImpl implements QueuingService {
 		}
 		return pageListH;
 	}
+	
+	public static String formatMiliLongToString(Long mili) {
+		if (0 == mili || null == mili) {
+			return "00:00:00";
+		}
+		Date date = new Date(mili);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		format.setTimeZone(TimeZone.getTimeZone("UTC+8"));
+		return format.format(date);
+	}
+	
+	
 	
 //4、支持其他业务的实现
 	//往历史记录表写数据

@@ -1,9 +1,11 @@
 package org.core.service.location.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.core.dao.location.InoutDao;
 import org.core.dao.queuing.QueuingDao;
@@ -77,6 +79,10 @@ public class InoutServiceImpl implements InoutService {
 					entity.setServerOutName(camera.getName());
 				}
 			}
+			if(entity.getCominDate()!=null&&entity.getOutDate()!=null){
+				String a = formatMiliLongToString(entity.getOutDate().getTime()-entity.getCominDate().getTime());
+				entity.setPlant(a);
+			}
 			
 		}
 		return locationInouts;
@@ -86,4 +92,14 @@ public class InoutServiceImpl implements InoutService {
 		return inoutDao.selectNewRecord(car_code);
 	}
 
+	public static String formatMiliLongToString(Long mili) {
+		if (0 == mili || null == mili) {
+			return "00:00:00";
+		}
+		Date date = new Date(mili);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		format.setTimeZone(TimeZone.getTimeZone("UTC+8"));
+		return format.format(date);
+	}
+	
 }
