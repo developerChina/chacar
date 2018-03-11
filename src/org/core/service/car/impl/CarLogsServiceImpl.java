@@ -45,12 +45,12 @@ public class CarLogsServiceImpl implements CarLogsService{
 		}
 		
 		Map<String,Object> params = new HashMap<>();
-		List<CarDistinguish> ipList = carLogsdao.selectIp();
+		/*List<CarDistinguish> ipList = carLogsdao.selectIp();
 		String ips = "";
 		for (CarDistinguish ip : ipList) {
 			ips+="'"+ip.getIp()+"'"+",";
 		}
-		params.put("ips", ips.substring(0,ips.length() - 1));
+		params.put("ips", ips.substring(0,ips.length() - 1));*/
 		params.put("carLogs", carLogs);
 		int recordCount = carLogsdao.countCarLogs(params);
 		pageModel.setRecordCount(recordCount);
@@ -67,7 +67,12 @@ public class CarLogsServiceImpl implements CarLogsService{
 					entity.setCarMaster(carInfo.getName());
 				}
 			}
-			//对应的ip 时间
+			//ip对应的相机名称
+			if(StringUtils.isNotBlank(entity.getServerIp())){
+				//根据相机ip 去识别仪那里找到名称
+				CarDistinguish carServerIp = carLogsdao.selectByIp(entity.getServerIp());
+				entity.setInIpName(carServerIp.getName());
+			}
 		}
 		return carLogsList;
 	}

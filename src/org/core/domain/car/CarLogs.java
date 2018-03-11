@@ -16,6 +16,8 @@ public class CarLogs implements java.io.Serializable{
 	private String carMaster;	//车主
 	private String outIp;		//另一个iP
 	private String outTime;		//另一个时间
+	private String inIpName;	//进入名称
+	private String outIpName;	//驶出名称
 	
 	public int getId() {
 		return id;
@@ -58,6 +60,18 @@ public class CarLogs implements java.io.Serializable{
 	}
 	public void setOutTime(String outTime) {
 		this.outTime = outTime;
+	}
+	public String getInIpName() {
+		return inIpName;
+	}
+	public void setInIpName(String inIpName) {
+		this.inIpName = inIpName;
+	}
+	public String getOutIpName() {
+		return outIpName;
+	}
+	public void setOutIpName(String outIpName) {
+		this.outIpName = outIpName;
 	}
 	
 	

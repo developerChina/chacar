@@ -24,6 +24,7 @@ public class carLogsProvider {
 				if(params.get("ips") != null){
 					WHERE(" serverIp in ("+ (String) params.get("ips") +")  ");				
 				}
+				ORDER_BY("shootTime desc");
 			}
 		}.toString();
 		return sql;
@@ -47,6 +48,7 @@ public class carLogsProvider {
 				if(params.get("ips") != null){
 					WHERE(" serverIp in ("+ (String) params.get("ips") +")  ");				
 				}
+				ORDER_BY("shootTime desc");
 			}
 		}.toString();
 		if(params.get("pageModel") != null){

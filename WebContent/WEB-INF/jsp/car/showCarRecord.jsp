@@ -99,8 +99,10 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td>车主</td>
 			  <td>车牌号</td>
-			  <td>相机ip</td>
+			  <td>进口ip</td>
+			  <td>进口</td>
 			  <td>进入时间</td>
+			  <td>出口ip</td>
 			  <td>出口</td>
 			  <td>离开时间</td>
 			</tr>
@@ -109,9 +111,11 @@
 				  <td>${carLogs.carMaster}</td>
 				  <td>${carLogs.cacrno}</td>
 				  <td>${carLogs.serverIp}</td>
+				  <td>${carLogs.inIpName}</td>
 				  <td>${carLogs.shootTime}</td>
-				  <td>2</td>
-				  <td>3</td>
+				 <%--  <td>${carLogs.outIp}</td>
+				  <td>${carLogs.outIpName}</td>
+				  <td>${carLogs.outTime}</td> --%>
 				</tr>
 			</c:forEach>
 		  </table>
