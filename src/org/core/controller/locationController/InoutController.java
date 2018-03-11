@@ -116,7 +116,7 @@ public class InoutController {
 			sheet.setFitToPage(true);  
 		    sheet.setHorizontallyCenter(true);
 		    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
-		    CellRangeAddress c = CellRangeAddress.valueOf("A2:F2");  
+		    CellRangeAddress c = CellRangeAddress.valueOf("A2:H2");  
 			sheet.setAutoFilter(c);
 			sheet.setColumnWidth(0, 5800);
 	        sheet.setColumnWidth(1, 5800);
@@ -124,21 +124,23 @@ public class InoutController {
 	        sheet.setColumnWidth(3, 5800);
 	        sheet.setColumnWidth(4, 5800);
 	        sheet.setColumnWidth(5, 5800);
+	        sheet.setColumnWidth(6, 5800);
+	        sheet.setColumnWidth(7, 5800);
 	        int index=0;
 	        HSSFRow row_title = sheet.createRow(index++);
 	        row_title.setHeight((short) 600);// 设置行高 
 	        HSSFCell row_title0 = row_title.createCell(0);   
 	        row_title0.setCellValue(new HSSFRichTextString("车辆进出厂记录")); 
 	        //合并表头单元格
-	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)5),ExcelUtil.createTitleStyle(workbook));
+	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)7),ExcelUtil.createTitleStyle(workbook));
 	        sheet.addMergedRegion(new Region(
 	        0 //first row (0-based) from 行  
 	        ,(short)0 //first column (0-based) from 列     
 	        ,0//last row  (0-based)  to 行
-	        ,(short)5//last column  (0-based)  to 列     
+	        ,(short)7//last column  (0-based)  to 列     
 	        ));
 	        
-	        String[] titles={"供应商","车牌号","进场门岗","进场时间","出场门岗","出场时间"};
+	        String[] titles={"供应商","车牌号","车辆类型","进场门岗","进场时间","出场门岗","出场时间","在场时长"};
 	        HSSFRow row_head = sheet.createRow(index++);
 	        for (int i=0; i<titles.length;i++) {
 	        	HSSFCell cell = row_head.createCell(i);
@@ -153,21 +155,30 @@ public class InoutController {
 				if(entity.getSupplier()!=null){
 					cell0.setCellValue(entity.getSupplier());
 				}
-				//"车牌号","进场门岗","进场时间","出场门岗","出场时间"
+				//"车牌号",
 				HSSFCell cell1 = row.createCell(1);
 				cell1.setCellValue(entity.getVehicleCode());
+				
 				//"进场门岗",
 				HSSFCell cell2 = row.createCell(2);
-				cell2.setCellValue(entity.getServerInName());
-				//"进场时间",
+				cell2.setCellValue(entity.getType());
+				
+				//"进场门岗",
 				HSSFCell cell3 = row.createCell(3);
-				cell3.setCellValue(DateUtil.DateToString(entity.getCominDate(), "yyyy-MM-dd HH:mm:ss"));
-				//"出场门岗",
+				cell3.setCellValue(entity.getServerInName());
+				//"进场时间",
 				HSSFCell cell4 = row.createCell(4);
-				cell4.setCellValue(entity.getServerOutName());
-				//"出场时间"
+				cell4.setCellValue(DateUtil.DateToString(entity.getCominDate(), "yyyy-MM-dd HH:mm:ss"));
+				//"出场门岗",
 				HSSFCell cell5 = row.createCell(5);
-				cell5.setCellValue(DateUtil.DateToString(entity.getOutDate(), "yyyy-MM-dd HH:mm:ss"));
+				cell5.setCellValue(entity.getServerOutName());
+				//"出场时间"
+				HSSFCell cell6 = row.createCell(6);
+				cell6.setCellValue(DateUtil.DateToString(entity.getOutDate(), "yyyy-MM-dd HH:mm:ss"));
+	        
+				//"出场时间"
+				HSSFCell cell7 = row.createCell(7);
+				cell7.setCellValue(entity.getPlant());
 	        }
 	        
 	        try {

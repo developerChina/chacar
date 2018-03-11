@@ -23,7 +23,8 @@ public class LocationInout implements java.io.Serializable{
 	private String ids;  				//主键集合。
 	
 	private String plant;				//进出厂的差值
-	
+	private String type;				//车辆类型 固定 临时
+ 	
 	public LocationInout() {
 		super();
 	}
@@ -99,6 +100,12 @@ public class LocationInout implements java.io.Serializable{
 	}
 	public void setPlant(String plant) {
 		this.plant = plant;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

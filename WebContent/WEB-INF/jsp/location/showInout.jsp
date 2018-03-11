@@ -106,6 +106,7 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td>供应商</td>
 			  <td>车牌号</td>
+			  <td>车辆类型</td>
 			  <td>进场门岗</td>
 			  <td>进入时间</td>
 			  <td>出场门岗</td>
@@ -120,6 +121,7 @@
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 				  <td>${employee.supplier }</td>
 				  <td>${employee.vehicleCode }</td>
+				  <td>${employee.type}</td>
 				  	<td>${employee.serverInName }</td>
 				 <td><fmt:formatDate value="${employee.cominDate}" type="date" pattern="yyyy-MM-dd HH:mm:ss" dateStyle="long"/></td>
 				 	<td>${employee.serverOutName }</td>
@@ -127,7 +129,7 @@
 				 <%--  <td><c:if test="${employee.vehicleType==1}">固定定位仪</c:if>
 					  	  <c:if test="${employee.vehicleType==0}">临时定位仪</c:if>
 					  	</td> --%>
-					<td>${employee.plant}</td>  	
+					<td><font color="green">${employee.plant}</font> </td>  	
 				</tr>
 			</c:forEach>
 		  </table>

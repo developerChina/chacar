@@ -83,6 +83,12 @@ public class InoutServiceImpl implements InoutService {
 				String a = formatMiliLongToString(entity.getOutDate().getTime()-entity.getCominDate().getTime());
 				entity.setPlant(a);
 			}
+			List<String> vehicleTypeList = queuingDao.getVehicleTypeList(entity.getVehicleCode());
+			if(vehicleTypeList!=null && vehicleTypeList.size()>0 && vehicleTypeList.get(0)!=null && !vehicleTypeList.get(0).equals("")){
+				entity.setType(vehicleTypeList.get(0));
+			}else{
+				entity.setType("");
+			}
 			
 		}
 		return locationInouts;
