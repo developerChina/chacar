@@ -80,7 +80,7 @@ public class InoutServiceImpl implements InoutService {
 				}
 			}
 			if(entity.getCominDate()!=null&&entity.getOutDate()!=null){
-				String a = formatMiliLongToString(entity.getOutDate().getTime()-entity.getCominDate().getTime());
+				String a = myDateToString(entity.getOutDate().getTime()-entity.getCominDate().getTime());
 				entity.setPlant(a);
 			}
 			List<String> vehicleTypeList = queuingDao.getVehicleTypeList(entity.getVehicleCode());
@@ -107,5 +107,14 @@ public class InoutServiceImpl implements InoutService {
 		format.setTimeZone(TimeZone.getTimeZone("UTC+8"));
 		return format.format(date);
 	}
+	
+	public static String myDateToString(Long mili) {
+		int hh = (int) (mili/(60*60*1000));
+		int mm = (int) ((mili-(60*60*1000*hh))/(60*1000));
+		int ss = (int) ((mili-(60*60*1000*hh)-(mm*60*1000))/1000);
+		String str = (hh>=10?hh:("0"+hh))+":"+(mm>=10?mm:("0"+mm))+":"+(ss>=10?ss:("0"+ss));
+		return str;
+	}
+	
 	
 }

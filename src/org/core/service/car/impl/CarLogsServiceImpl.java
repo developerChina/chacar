@@ -96,15 +96,16 @@ public class CarLogsServiceImpl implements CarLogsService{
 
 			}
 			if(entity.getShootTime()!=null&&entity.getOutTime()!=null){
-				String a = formatMiliLongToString(entity.getOutTime().getTime()-entity.getShootTime().getTime());
-				entity.setPlant(a);
+				//String a = formatMiliLongToString(entity.getOutTime().getTime()-entity.getShootTime().getTime());
+				String b = myDateToString(entity.getOutTime().getTime()-entity.getShootTime().getTime());
+				entity.setPlant(b);
 			}
 		}
 		return carLogsList;
 	}
 
 	
-	
+	//mili 2个日期的毫秒差
 	public static String formatMiliLongToString(Long mili) {
 		if (0 == mili || null == mili) {
 			return "00:00:00";
@@ -115,6 +116,13 @@ public class CarLogsServiceImpl implements CarLogsService{
 		return format.format(date);
 	}
 	
+	public static String myDateToString(Long mili) {
+		int hh = (int) (mili/(60*60*1000));
+		int mm = (int) ((mili-(60*60*1000*hh))/(60*1000));
+		int ss = (int) ((mili-(60*60*1000*hh)-(mm*60*1000))/1000);
+		String str = (hh>=10?hh:("0"+hh))+":"+(mm>=10?mm:("0"+mm))+":"+(ss>=10?ss:("0"+ss));
+		return str;
+	}
 	
 	
 	
