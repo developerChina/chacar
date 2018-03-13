@@ -1,5 +1,6 @@
 package org.core.dao.car;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,6 @@ public interface CarLogsDao {
 	CarDistinguish getDisById(String relationId);
 
 	@Select("select * from "+CarLogs.tableName+" where cacrno=#{cacrno} and serverIp=#{ip} and shootTime>#{shootTime} order by shootTime  limit 1 ")
-	CarLogs getOut(@Param("ip")String ip, @Param("shootTime")String shootTime, @Param("cacrno")String cacrno);
+	CarLogs getOut(@Param("ip")String ip, @Param("shootTime")Date shootTime, @Param("cacrno")String cacrno);
 
 }

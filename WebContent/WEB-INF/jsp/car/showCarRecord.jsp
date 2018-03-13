@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -76,9 +76,9 @@
 							车牌号码：<input type="text" name="cacrno" value="${targetCacrno}">
 							进入时间：
 							<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
-					name="sDate" id="cominDate" size="20" value="${cominDate}"/>
+					name="sDate"  size="20" value="${sDate}"/>
 					    	-<input class="Wdate" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss'});" 
-					name="eDate" id="outDate" size="20" value="${outDate}"/>
+					name="eDate"  size="20" value="${eDate}"/>
 					    	
 					    	<input type="button" id="search" value="&nbsp;搜索&nbsp;" />&nbsp;&nbsp;&nbsp;
 					    	<input type="button" id="add" value="&nbsp;导出&nbsp;" />
@@ -99,23 +99,29 @@
 		    <tr class="main_trbg_tit" align="center">
 			  <td>车主</td>
 			  <td>车牌号</td>
-			  <td>进口ip</td>
+			  <!-- <td>进口ip</td> -->
 			  <td>进口</td>
-			  <td>进入时间</td>
-			  <td>出口ip</td>
+			  <td>驶入时间</td>
+			  <!-- <td>出口ip</td> -->
 			  <td>出口</td>
-			  <td>离开时间</td>
+			  <td>驶出时间</td>
+			  <td>停车时长</td>
 			</tr>
 			<c:forEach items="${requestScope.carLogsList}" var="carLogs" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
 				  <td>${carLogs.carMaster}</td>
 				  <td>${carLogs.cacrno}</td>
-				  <td>${carLogs.serverIp}</td>
+				  <%-- <td>${carLogs.serverIp}</td> --%>
 				  <td>${carLogs.inIpName}</td>
-				  <td>${carLogs.shootTime}</td>
-				 <%--  <td>${carLogs.outIp}</td>
+				 <td>
+				 <f:formatDate value="${carLogs.shootTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				 </td>
+				  <%-- <td>${carLogs.outIp}</td> --%>
 				  <td>${carLogs.outIpName}</td>
-				  <td>${carLogs.outTime}</td> --%>
+				 <td>
+				  <f:formatDate value="${carLogs.outTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				 </td>
+				  <td><font color="green"> ${carLogs.plant}</font></td>
 				</tr>
 			</c:forEach>
 		  </table>

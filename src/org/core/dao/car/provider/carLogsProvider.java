@@ -1,5 +1,6 @@
 package org.core.dao.car.provider;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
@@ -19,6 +20,14 @@ public class carLogsProvider {
 					}
 					if(carLogs.getCarMaster() != null && !carLogs.getCarMaster().equals("")){
 						WHERE(" cacrno in ("+ carLogs.getCarMaster() +" )  ");				
+					}
+					Date startDate = (Date) params.get("startDate");
+					Date endDate = (Date) params.get("endDate");
+					if(startDate!=null&&endDate!=null){
+						WHERE(" shootTime  BETWEEN #{startDate} AND #{endDate} ");
+					}else{
+						if(startDate!=null){ WHERE(" shootTime >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" shootTime <= #{endDate}  "); }
 					}
 				}
 				if(params.get("ips") != null){
@@ -43,6 +52,14 @@ public class carLogsProvider {
 					}
 					if(carLogs.getCarMaster() != null && !carLogs.getCarMaster().equals("")){
 						WHERE(" cacrno in ("+ carLogs.getCarMaster() +" )  ");				
+					}
+					Date startDate = (Date) params.get("startDate");
+					Date endDate = (Date) params.get("endDate");
+					if(startDate!=null&&endDate!=null){
+						WHERE(" shootTime  BETWEEN #{startDate} AND #{endDate} ");
+					}else{
+						if(startDate!=null){ WHERE(" shootTime >= #{startDate}  "); }
+						if(endDate!=null){ WHERE(" shootTime <= #{endDate}  "); }
 					}
 				}
 				if(params.get("ips") != null){

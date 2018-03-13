@@ -1,8 +1,11 @@
 package org.core.service.car.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.core.dao.car.CarLogsDao;
 import org.core.domain.car.CarDistinguish;
@@ -27,7 +30,7 @@ public class CarLogsServiceImpl implements CarLogsService{
 	private CarLogsDao carLogsdao;
 	
 	@Override
-	public List<CarLogs> selectCarLogs(CarLogs carLogs, PageModel pageModel) {
+	public List<CarLogs> selectCarLogs(CarLogs carLogs, PageModel pageModel,Date startDate, Date endDate) {
 		
 		String vSupplier = carLogs.getCarMaster();
 		if(vSupplier!=null && !"".equals(vSupplier)){
@@ -45,13 +48,15 @@ public class CarLogsServiceImpl implements CarLogsService{
 		}
 		
 		Map<String,Object> params = new HashMap<>();
-		/*List<CarDistinguish> ipList = carLogsdao.selectIp();
+		List<CarDistinguish> ipList = carLogsdao.selectIp();
 		String ips = "";
 		for (CarDistinguish ip : ipList) {
 			ips+="'"+ip.getIp()+"'"+",";
 		}
-		params.put("ips", ips.substring(0,ips.length() - 1));*/
+		params.put("ips", ips.substring(0,ips.length() - 1));
 		params.put("carLogs", carLogs);
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
 		int recordCount = carLogsdao.countCarLogs(params);
 		pageModel.setRecordCount(recordCount);
 		if(recordCount > 0){
@@ -72,9 +77,48 @@ public class CarLogsServiceImpl implements CarLogsService{
 				//根据相机ip 去识别仪那里找到名称
 				CarDistinguish carServerIp = carLogsdao.selectByIp(entity.getServerIp());
 				entity.setInIpName(carServerIp.getName());
+				
+				String relationId = carLogsdao.getRelationId(entity.getServerIp());
+				CarDistinguish disById = carLogsdao.getDisById(relationId);
+				if(entity.getShootTime()!=null&&!"".equals(entity.getShootTime())){
+					if(disById!=null){
+						CarLogs outIpName = carLogsdao.getOut(disById.getIp(),entity.getShootTime(),entity.getCacrno());
+						if(outIpName!=null){
+							if(StringUtils.isNotBlank(outIpName.getServerIp())){
+								entity.setOutIp(outIpName.getServerIp());
+								CarDistinguish outIp = carLogsdao.selectByIp(outIpName.getServerIp());
+								entity.setOutIpName(outIp.getName());
+								entity.setOutTime(outIpName.getShootTime());
+							}
+						}
+					}
+				}
+
+			}
+			if(entity.getShootTime()!=null&&entity.getOutTime()!=null){
+				String a = formatMiliLongToString(entity.getOutTime().getTime()-entity.getShootTime().getTime());
+				entity.setPlant(a);
 			}
 		}
 		return carLogsList;
 	}
 
+	
+	
+	public static String formatMiliLongToString(Long mili) {
+		if (0 == mili || null == mili) {
+			return "00:00:00";
+		}
+		Date date = new Date(mili);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		format.setTimeZone(TimeZone.getTimeZone("UTC+8"));
+		return format.format(date);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

@@ -3,6 +3,7 @@ package org.core.controller.car;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,22 +11,30 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.core.domain.car.CarAuthority;
 import org.core.domain.car.CarDistinguish;
 import org.core.domain.car.CarInfo;
 import org.core.domain.car.CarLogs;
 import org.core.domain.car.CarPark;
 import org.core.domain.car.CarPassageway;
+import org.core.domain.location.LocationInout;
 import org.core.service.car.CarAuthorityService;
 import org.core.service.car.CarDistinguishService;
 import org.core.service.car.CarInfoService;
 import org.core.service.car.CarLogsService;
 import org.core.service.car.CarParkService;
 import org.core.service.car.CarPassagewayService;
+import org.core.util.DateUtil;
 import org.core.util.ExcelUtil;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
@@ -579,7 +588,8 @@ public class CarController {
 	//停车场进出记录
 	@RequestMapping(value="/car/carRecord")
 	 public ModelAndView carRecord(Integer pageIndex,ModelAndView mv,
-			 @ModelAttribute CarLogs carLogs){
+			 @ModelAttribute CarLogs carLogs,
+			 HttpServletRequest request,HttpServletResponse response){
 			
 			String pageParam="";
 			if(carLogs.getCacrno()!=null && !carLogs.getCacrno().equals("")){
@@ -588,21 +598,146 @@ public class CarController {
 			if(carLogs.getCarMaster()!=null && !carLogs.getCarMaster().equals("")){
 				pageParam+="&carMaster="+carLogs.getCarMaster();
 			}
+			
+			String sDate=request.getParameter("sDate");
+			if(sDate!=null && !"".equals(sDate)){
+				pageParam+="&sDate="+sDate;
+			}
+			Date startDate=null;
+			try {
+				startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd HH:mm:ss");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String eDate=request.getParameter("eDate");
+			if(eDate!=null && !"".equals(eDate)){
+				pageParam+="&eDate="+eDate;
+			}
+			Date endDate=null;
+			try {
+				endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd HH:mm:ss");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			mv.addObject("pageParam", pageParam);
 			mv.addObject("targetCacrno",carLogs.getCacrno());
 			mv.addObject("targetCarMaster",carLogs.getCarMaster());
-			
+			mv.addObject("sDate", sDate);
+			mv.addObject("eDate", eDate);
 			PageModel pageModel = new PageModel();
 			if (pageIndex != null) {
 				pageModel.setPageIndex(pageIndex);
 			}
-			List<CarLogs> carLogsList = carLogsService.selectCarLogs(carLogs,pageModel);
+			List<CarLogs> carLogsList = carLogsService.selectCarLogs(carLogs,pageModel,startDate,endDate);
 			
 			mv.addObject("carLogsList", carLogsList);
 			mv.addObject("pageModel", pageModel);
 			mv.setViewName("car/showCarRecord");
 			return mv;
 	}
-	
+	//停车场进出记录导出
+	@RequestMapping(value="/car/exportExcel")
+	public void exportExcel(HttpServletRequest request,HttpServletResponse response,	
+		@ModelAttribute CarLogs carLogs){
+		PageModel pageModel = new PageModel();
+		pageModel.setPageSize(Integer.MAX_VALUE);
+		
+		String sDate=request.getParameter("sDate");
+		Date startDate=null;
+		try {
+			startDate=DateUtil.StringToDate(sDate, "yyyy-MM-dd HH:mm:ss");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String eDate=request.getParameter("eDate");
+		Date endDate=null;
+		try {
+			endDate=DateUtil.StringToDate(eDate, "yyyy-MM-dd HH:mm:ss");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<CarLogs> carLogsList = carLogsService.selectCarLogs(carLogs,pageModel,startDate,endDate);
+		
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		String sheetName = "停车场进出记录";//sheet名称
+		HSSFSheet sheet = workbook.createSheet(sheetName);
+		sheet.setFitToPage(true);  
+	    sheet.setHorizontallyCenter(true);
+	    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+	    CellRangeAddress c = CellRangeAddress.valueOf("A2:G2");
+	    sheet.setAutoFilter(c);
+		sheet.setColumnWidth(0, 5800);
+        sheet.setColumnWidth(1, 5800);
+        sheet.setColumnWidth(2, 5800);
+        sheet.setColumnWidth(3, 5800);
+        sheet.setColumnWidth(4, 5800);
+        sheet.setColumnWidth(5, 5800);
+        sheet.setColumnWidth(6, 5800);
+        int index=0;
+        HSSFRow row_title = sheet.createRow(index++);
+        row_title.setHeight((short) 600);// 设置行高 
+        HSSFCell row_title0 = row_title.createCell(0);   
+        row_title0.setCellValue(new HSSFRichTextString("停车场进出记录")); 
+        //合并表头单元格
+        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)6),ExcelUtil.createTitleStyle(workbook));
+        sheet.addMergedRegion(new Region(
+        0 //first row (0-based) from 行  
+        ,(short)0 //first column (0-based) from 列     
+        ,0//last row  (0-based)  to 行
+        ,(short)6//last column  (0-based)  to 列     
+        ));
+		
+        String[] titles={"车主","车牌号","进口","驶入时间","出口","驶出时间","停车时长"};
+        HSSFRow row_head = sheet.createRow(index++);
+        for (int i=0; i<titles.length;i++) {
+        	HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+        
+        for (CarLogs entity : carLogsList) {
+        	HSSFRow row = sheet.createRow(index++);
+        	//"车主",
+			HSSFCell cell0 = row.createCell(0);
+			if(entity.getCarMaster()!=null){
+				cell0.setCellValue(entity.getCarMaster());
+			}
+			//"车牌号",
+			HSSFCell cell1 = row.createCell(1);
+			cell1.setCellValue(entity.getCacrno());
+			
+			//"进口",
+			HSSFCell cell2 = row.createCell(2);
+			cell2.setCellValue(entity.getInIpName());
+			
+			//"驶入时间",
+			HSSFCell cell3 = row.createCell(3);
+			cell3.setCellValue(DateUtil.DateToString(entity.getShootTime(), "yyyy-MM-dd HH:mm:ss"));
+			
+			//"出口",
+			HSSFCell cell4 = row.createCell(4);
+			cell4.setCellValue(entity.getOutIpName());
+			
+			//"驶出时间",
+			HSSFCell cell5 = row.createCell(5);
+			if(entity.getOutTime()!=null){
+				cell5.setCellValue(DateUtil.DateToString(entity.getOutTime(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			
+			//"停车时长",
+			HSSFCell cell6 = row.createCell(6);
+			if(entity.getPlant()!=null){
+				cell6.setCellValue(entity.getPlant());
+			}
+        }
+        
+        try {
+			String fileName="车辆进出厂记录";
+			ExcelUtil.write(request, response, workbook, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+	}
 	
 }
