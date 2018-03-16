@@ -57,5 +57,14 @@ public interface RecordBevisitedsService {
 	 * @return
 	 */
 	List<RecordBevisiteds> selectByEntity(RecordBevisiteds entity);	
+	
+	
+	/**
+	 * 根据recordIDs获取被访问人id
+	 * @param recordIDs
+	 * @return
+	 */
+	List<String> getbevisitedIDByrecordIDs(String recordIDs);
+	
 
 }

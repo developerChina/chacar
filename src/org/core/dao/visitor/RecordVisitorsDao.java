@@ -61,4 +61,10 @@ public interface RecordVisitorsDao {
 	
 	@SelectProvider(type=RecordVisitorsProvider.class,method="selectCountByStatusEqDate")
 	int selectCountByStatusEqDate(@Param("whereStatus")String whereStatus,@Param("date")Date date);
+	
+	@Select("SELECT recordID  from record_visitors "+
+			"where cardNo=#{cardNo} "+
+			"and  DATE_FORMAT(inDate,'%Y-%m-%d') =DATE_FORMAT(#{inDate},'%Y-%m-%d') "+
+			"and visitStatus>2 ")
+	List<String> getRecordIDBycardno_inDate(@Param("cardNo")String cardNo,@Param("inDate")Date inDate);
 }

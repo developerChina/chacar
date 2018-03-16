@@ -44,7 +44,7 @@ public class TrajectoryProvider {
 		if(params.get("pageModel") != null){
 			sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
 		}
-		
+		System.out.println(sql);
 		return sql;
 	}
 	public String count(Map<String, Object> params) {

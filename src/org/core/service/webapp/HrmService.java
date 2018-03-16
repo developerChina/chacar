@@ -202,4 +202,6 @@ public interface HrmService {
 	 */
 	String addValidate(String cardno);
 	
+	
+	List<Employee> getEmployeeByIds(String ids);
 }

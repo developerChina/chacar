@@ -99,6 +99,7 @@
 			  <td>电话</td>
 			  <td>工作单位</td>
 			  <td>地址</td>
+			  <td>证件照片</td>
 			</tr>
 			<c:forEach items="${requestScope.visitors}" var="visitor" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
@@ -110,6 +111,13 @@
 					 <td>${visitor.telephone }</td>
 					 <td>${visitor.company }</td>
 					 <td>${visitor.cardAddress }</td>
+					 <td>
+					     <c:if test="${visitor.cardPhoto!=null && visitor.cardPhoto!='' }">
+					     <a target="_blank" href="${imgurl}${visitor.cardPhoto }">
+						  <img width="80px;" height="60px;" src="${imgurl}${visitor.cardPhoto }">
+						  </a>
+					     </c:if>
+					  </td>
 				</tr>
 			</c:forEach>
 		  </table>

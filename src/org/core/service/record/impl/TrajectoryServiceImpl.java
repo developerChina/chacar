@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.core.dao.visitor.RecordVisitorsDao;
 import org.core.dao.visitor.TrajectoryDao;
 import org.core.domain.visitor.Trajectory;
 import org.core.domain.webapp.Access;
@@ -12,6 +13,7 @@ import org.core.domain.webapp.Elevator;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.Passageway;
 import org.core.service.record.RecordBevisitedsService;
+import org.core.service.record.RecordVisitorsService;
 import org.core.service.record.TrajectoryService;
 import org.core.service.webapp.AccessService;
 import org.core.service.webapp.ElevatorService;
@@ -44,6 +46,14 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 	@Autowired
 	@Qualifier("recordBevisitedsService")
 	private RecordBevisitedsService recordBevisitedsService;//被访人
+	
+	@Autowired
+	@Qualifier("recordVisitorsService")
+	private RecordVisitorsService recordVisitorsService;//访问记录
+	@Autowired
+	@Qualifier("hrmService")
+	private org.core.service.webapp.HrmService hrmService;
+	
 	@Override
 	public List<Trajectory> selectByPage(Trajectory entity, PageModel pageModel,Date startDate,Date endDate) {
 		/** 当前需要分页的总数据条数  */
@@ -78,7 +88,22 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 			//设置被访问信息
 			try {
 				if(trajectory.getRecordVisitors()!=null){
-					List<Employee> employees=recordBevisitedsService.selectBycardNo(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
+					System.out.println(trajectory.getRecordVisitors().getCardNo()+"-----"+trajectory.getOptDate());
+					//分开查询
+					//List<Employee> employees=recordBevisitedsService.selectBycardNo(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
+					List<String> recordIDs=recordVisitorsService.getRecordIDBycardno_inDate(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
+					StringBuffer ridsb = new StringBuffer();
+					for(int i = 0; i < recordIDs.size(); i++){
+						ridsb.append(",'"+recordIDs.get(i)+"'");
+					}
+					String rids = ridsb.toString().length()>0?ridsb.toString().substring(1):"";
+					List<String> bevisitedIDs= recordBevisitedsService.getbevisitedIDByrecordIDs(rids);
+					StringBuffer bvidsb = new StringBuffer();
+					for(int i = 0; i < bevisitedIDs.size(); i++){
+						bvidsb.append(",'"+bevisitedIDs.get(i)+"'");
+					}
+					String bvids = bvidsb.toString().length()>0?bvidsb.toString().substring(1):"";
+					List<Employee> employees=hrmService.getEmployeeByIds(bvids);
 					trajectory.setEmployees(employees);
 				}
 			} catch (Exception e) {

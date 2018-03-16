@@ -57,7 +57,7 @@ public class DeptController {
 	 * 处理部门列表展示
 	 * */
 	@RequestMapping(value="/dept/selectDept")
-	 public String selectDept(Model model,Integer pageIndex,
+	 public String selectDept(HttpServletRequest request,Model model,Integer pageIndex,
 			 @ModelAttribute Dept dept){
 		PageModel pageModel = new PageModel();
 		if(pageIndex != null){
@@ -78,7 +78,9 @@ public class DeptController {
 			pageParam+="&name="+dept.getName();
 		}
 		model.addAttribute("pageParam", pageParam);
-		
+		if(StringUtils.isNotBlank(request.getParameter("message"))){
+			model.addAttribute("message", request.getParameter("message"));
+		}
 		
 		return "dept/dept";
 		
@@ -98,11 +100,16 @@ public class DeptController {
 	 * */
 	@RequestMapping(value="/dept/removeDept")
 	 public ModelAndView removeDept(String ids,ModelAndView mv){
-		// 分解id字符串
-		String[] idArray = ids.split(",");
-		for(String id : idArray){
-			// 根据id删除部门
-			hrmService.removeDeptById(Integer.parseInt(id));
+		try {
+			// 分解id字符串
+			String[] idArray = ids.split(",");
+			for(String id : idArray){
+				// 根据id删除部门
+				hrmService.removeDeptById(Integer.parseInt(id));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("message", "删除失败,选中部门下有员工");
 		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/dept/selectDept");

@@ -55,7 +55,9 @@ public interface QueuingService {
 	
 	Ordinary selectMaxOByLand(int landid);
 	Ordinary selectOBycarno(int landno,String carno);
+	Ordinary selectOBycarno1(String carno);
 	QueuingVip selectVBycarno(int landno,String carno);
+	QueuingVip selectVBycarno1(String carno);
 	List<QueuingVip> selectVAll(int landid);
 
 	List<Ordinary> selectOAll(int landid);

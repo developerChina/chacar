@@ -150,5 +150,8 @@ public interface EmployeeDao {
 	@Select("select * from "+EMPLOYEETABLE+" where cardno = #{cardno}")
 	List<Employee> addValidate(String cardno);
 
+	@SelectProvider(type=EmployeeDynaSqlProvider.class,method="getEmployeeByIds")
+	List<Employee> getEmployeeByIds(String ids);
+
 	
 }

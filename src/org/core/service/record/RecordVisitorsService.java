@@ -73,5 +73,13 @@ public interface RecordVisitorsService {
 	 * @return
 	 */
 	int selectCountByStatus(String whereStatus, Date startDate, Date endDate);
+	
+	/**
+	 * 获取卡号某一天的正在访问ID
+	 * @param cardNo
+	 * @param inDate
+	 * @return
+	 */
+	List<String> getRecordIDBycardno_inDate(String cardNo,Date inDate);
 
 }

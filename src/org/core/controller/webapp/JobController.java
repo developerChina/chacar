@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -46,7 +48,7 @@ public class JobController {
 	 * 处理/login请求
 	 * */
 	@RequestMapping(value="/job/selectJob")
-	 public String selectJob(Model model,Integer pageIndex,
+	 public String selectJob(HttpServletRequest request,Model model,Integer pageIndex,
 			 @ModelAttribute Job job){
 		System.out.println("selectJob -->> " + job);
 		PageModel pageModel = new PageModel();
@@ -63,6 +65,9 @@ public class JobController {
 		if(job.getName()!=null){
 			pageParam+="&name="+job.getName();
 		}
+		if(StringUtils.isNotBlank(request.getParameter("message"))){
+			model.addAttribute("message", request.getParameter("message"));
+		}
 		model.addAttribute("pageParam", pageParam);
 		return "job/job";
 		
@@ -75,11 +80,17 @@ public class JobController {
 	 * */
 	@RequestMapping(value="/job/removeJob")
 	 public ModelAndView removeJob(String ids,ModelAndView mv){
-		// 分解id字符串
-		String[] idArray = ids.split(",");
-		for(String id : idArray){
-			// 根据id删除职位
-			hrmService.removeJobById(Integer.parseInt(id));
+		
+		try {
+			// 分解id字符串
+			String[] idArray = ids.split(",");
+			for(String id : idArray){
+				// 根据id删除职位
+				hrmService.removeJobById(Integer.parseInt(id));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("message", "删除失败,选中职位有员工");
 		}
 		// 设置客户端跳转到查询请求
 		mv.setViewName("redirect:/job/selectJob");

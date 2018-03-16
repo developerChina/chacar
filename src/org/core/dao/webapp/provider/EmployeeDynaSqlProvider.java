@@ -237,6 +237,8 @@ public class EmployeeDynaSqlProvider {
 		};
 		return sql.toString();
 	}
-
-
+	public String getEmployeeByIds(String ids){
+		return "SELECT * from employee_inf where id in ("+ids+")";
+	}
+	
 }

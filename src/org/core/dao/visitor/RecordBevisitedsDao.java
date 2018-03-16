@@ -47,4 +47,7 @@ public interface RecordBevisitedsDao {
 
 	@SelectProvider(type=RecordBevisitedsProvider.class,method="selectByEntity")
 	List<RecordBevisiteds> selectByEntity(RecordBevisiteds entity);
+
+	@SelectProvider(type=RecordBevisitedsProvider.class,method="getbevisitedIDByrecordIDs")
+	List<String> getbevisitedIDByrecordIDs(String recordIDs);
 }

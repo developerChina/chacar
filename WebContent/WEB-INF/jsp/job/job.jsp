@@ -77,6 +77,11 @@
 		 		 window.location = "${ctx }/job/importJobPage";
 		 	})
 		 	
+		 	if('${message}'!=''){
+		 		$.ligerDialog.warn("${message}");
+		 	   }
+		 	 
+	 	  
 	    })
 	</script>
 </head>

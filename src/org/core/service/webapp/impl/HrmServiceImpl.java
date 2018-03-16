@@ -406,4 +406,9 @@ public class HrmServiceImpl implements HrmService{
 		return result;
 	}
 
+	@Override
+	public List<Employee> getEmployeeByIds(String ids) {
+		return employeeDao.getEmployeeByIds(ids);
+	}
+
 }

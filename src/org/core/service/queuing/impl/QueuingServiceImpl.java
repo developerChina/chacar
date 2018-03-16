@@ -363,6 +363,10 @@ public class QueuingServiceImpl implements QueuingService {
 		return queuingDao.selectOBycarno(landno,carno);
 	}
 	@Override
+	public Ordinary selectOBycarno1(String carno) {
+		return queuingDao.selectOBycarno1(carno);
+	}
+	@Override
 	public List<QueuingVip> selectVAll(int landno) {
 		return queuingDao.selectVAll(landno);
 	}
@@ -604,6 +608,10 @@ public class QueuingServiceImpl implements QueuingService {
 		@Override
 		public QueuingVip selectVBycarno(int landno, String carno) {
 			return queuingDao.selectVBycarno(landno,carno);
+		}
+		@Override
+		public QueuingVip selectVBycarno1(String carno) {
+			return queuingDao.selectVBycarno1(carno);
 		}
 		@Override
 		public void updateO(Ordinary ordinary) {

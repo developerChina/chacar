@@ -112,29 +112,31 @@
 				 });
 				 return 
 	         }else{
-	        	 //加入队列，查询排队情况
-	        	 var no=${island.no};
-	        	 $.post("${ctx}/queuingI/addQueue",{island_no:no,car_code:carno.toString(),isadd:0},
-	        			 function(obj){
-	        				 if(obj.status){
-	        					 $("#all").html(obj.all);
-	        					 $("#waiting").html(obj.waiting);
-	        					 var tbody=$("#list").find("tbody");
-	        					 tbody.empty();
-	        					 loopQueue(tbody,obj.list);
-	        					 layer.open({
-	        						 	content: obj.message,
-	        							skin: 'msg',
-	        							time: 1
-	        						 });
-	        				 }else{
-	        					 layer.open({
-	        							content: obj.message,
-	        							skin: 'msg',
-	        							time: 1
-	        						 }); 
-	        				 }
-		        	     });
+	        	 	if(confirm("是否确定排队,排队成功后将之前所有卸货岛排队信息删除")==true){
+	        	 		//加入队列，查询排队情况
+		   	        	 var no=${island.no};
+		   	        	 $.post("${ctx}/queuingI/addQueue",{island_no:no,car_code:carno.toString(),isadd:0},
+	   	        			 function(obj){
+	   	        				 if(obj.status){
+	   	        					 $("#all").html(obj.all);
+	   	        					 $("#waiting").html(obj.waiting);
+	   	        					 var tbody=$("#list").find("tbody");
+	   	        					 tbody.empty();
+	   	        					 loopQueue(tbody,obj.list);
+	   	        					 layer.open({
+	   	        						 	content: obj.message,
+	   	        							skin: 'msg',
+	   	        							time: 1
+	   	        						 });
+	   	        				 }else{
+	   	        					 layer.open({
+	   	        							content: obj.message,
+	   	        							skin: 'msg',
+	   	        							time: 1
+	   	        						 }); 
+	   	        				 }
+	   		        	});
+	        	 	}
 	         }
 		});
 		

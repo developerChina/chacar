@@ -21,9 +21,6 @@ import org.core.domain.webapp.TrajectoryEmp;
 public interface TrajectoryEmpDao {
 	//动态查询
 	@SelectProvider(type=TrajectoryEmpDynaSqlProvider.class,method="selectWhitParam")
-	@Results({
-		@Result(column="cardno",property="employees",one=@One(select="org.core.dao.webapp.EmployeeDao.getEmployeeesBy_cardno",fetchType=FetchType.EAGER))
-	})
 	List<TrajectoryEmp> selectByPage(Map<String, Object> params);
 	
 	@SelectProvider(type=TrajectoryEmpDynaSqlProvider.class,method="count")

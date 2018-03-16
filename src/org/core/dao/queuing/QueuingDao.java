@@ -91,12 +91,18 @@ public interface QueuingDao {
 	@Select(" select * from "+Ordinary.tableName+" where island_no= #{landno} and car_code= #{carno} ")
 	Ordinary selectOBycarno(@Param("landno")int landno,@Param("carno")String carno);
 	
+	@Select(" select * from "+Ordinary.tableName+" where car_code= #{carno} ")
+	Ordinary selectOBycarno1(@Param("carno")String carno);
+	
 	@Select("select * from "+QueuingVip.tableName+" where island_no= #{landno} order by queue_number")
 	List<QueuingVip> selectVAll(int landno);
 
 	@Select(" select * from "+QueuingVip.tableName+" where island_no= #{landno} and car_code= #{carno} ")
 	QueuingVip selectVBycarno(@Param("landno")int landno,@Param("carno")String carno);
 
+	@Select(" select * from "+QueuingVip.tableName+" where car_code= #{carno} ")
+	QueuingVip selectVBycarno1(@Param("carno")String carno);
+	
 	@Select("select * from "+Ordinary.tableName+" where island_no= #{landno} order by queue_number")
 	List<Ordinary> selectOAll(int landno);
 	

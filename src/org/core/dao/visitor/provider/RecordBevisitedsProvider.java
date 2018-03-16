@@ -72,4 +72,9 @@ public class RecordBevisitedsProvider {
 		return sql;
 	}
 
+	public String getbevisitedIDByrecordIDs(String recordIDs) {
+		String sql = "SELECT DISTINCT(bevisitedID) from record_bevisiteds  where recordID in ("+recordIDs+") ";
+		return sql;
+	}
+	
 }

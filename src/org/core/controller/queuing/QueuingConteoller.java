@@ -80,17 +80,22 @@ public class QueuingConteoller {
 			if(inout!=null){
 				String message="";
 				if(isadd==0){
-					QueuingVip exv=queuingService.selectVBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+					//删除同一个岛排队逻辑
+					//QueuingVip exv=queuingService.selectVBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+					QueuingVip exv=queuingService.selectVBycarno1(ordinary.getCar_code());
 					if(exv!=null){
 						message="急件正在排队";
 					}else{
 						ordinary.setRemarks("普通号");
-						Ordinary exo=queuingService.selectOBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+						//删除同一个岛排队逻辑
+						//Ordinary exo=queuingService.selectOBycarno(ordinary.getIsland_no(),ordinary.getCar_code());
+						Ordinary exo=queuingService.selectOBycarno1(ordinary.getCar_code());
 						Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
 						if(exo!=null){
 							if(!exo.getCar_code().equals(maxo.getCar_code())){
-								ordinary.setQueue_number(maxo.getQueue_number()+1);
 								ordinary.setId(exo.getId());
+								ordinary.setQueue_number(maxo.getQueue_number()+1);
+								ordinary.setIsland_no(ordinary.getIsland_no());//修改排队卸货岛号
 								queuingService.updateO(ordinary); 
 							}
 						}else{

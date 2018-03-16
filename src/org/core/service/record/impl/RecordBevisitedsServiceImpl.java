@@ -65,4 +65,9 @@ public class RecordBevisitedsServiceImpl implements RecordBevisitedsService{
 	public List<RecordBevisiteds> selectByEntity(RecordBevisiteds entity) {
 		return dao.selectByEntity(entity);
 	}
+
+	@Override
+	public List<String> getbevisitedIDByrecordIDs(String recordIDs) {
+		return dao.getbevisitedIDByrecordIDs(recordIDs);
+	}
 }

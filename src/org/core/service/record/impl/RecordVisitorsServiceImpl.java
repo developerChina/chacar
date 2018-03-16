@@ -92,4 +92,9 @@ public class RecordVisitorsServiceImpl implements RecordVisitorsService{
 		}
 	}
 
+	@Override
+	public List<String> getRecordIDBycardno_inDate(String cardNo, Date inDate) {
+		return dao.getRecordIDBycardno_inDate(cardNo,inDate);
+	}
+
 }

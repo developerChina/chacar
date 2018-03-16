@@ -94,9 +94,22 @@
 	 	       $("#deptform").attr("action","${ctx}/dept/exportExcel");
 	 	       $("#deptform").submit();
 	 	   })
+	 	   
 	 	  
+	 	   if('${message}'!=''){
+	 		  mini.showMessageBox({
+		           showModal: false,
+		            width: 250,
+		            title: "提示",
+		            message: '${message}',
+		            timeout: 2000,
+		            x:"center",
+		            y:"top"
+		        });
+	 	   }
 	 	   
 	    })
+	    
 	    
 	    
 	</script>

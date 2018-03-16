@@ -30,7 +30,7 @@ public class TrajectoryEmpDynaSqlProvider {
 						WHERE(" cardno in ("+ entity.getTrajectoryDept() +" ) ");
 					}
 				}
-				ORDER_BY(" optTime DESC ");
+				ORDER_BY(" cardno, optTime DESC ");
 			}
 		}.toString();
 		

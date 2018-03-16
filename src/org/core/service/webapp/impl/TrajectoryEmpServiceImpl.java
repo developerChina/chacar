@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.mapping.FetchType;
+import org.core.dao.webapp.EmployeeDao;
 import org.core.dao.webapp.TrajectoryEmpDao;
 import org.core.domain.webapp.Employee;
 import org.core.domain.webapp.TrajectoryEmp;
@@ -19,7 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TrajectoryEmpServiceImpl implements TrajectoryEmpService {
 	@Autowired
 	private TrajectoryEmpDao dao;
-
+	@Autowired
+	private EmployeeDao employeeDao;
 	@Override
 	public List<TrajectoryEmp> selectTrajectory(TrajectoryEmp entity, PageModel pageModel) {
 		
@@ -50,6 +56,20 @@ public class TrajectoryEmpServiceImpl implements TrajectoryEmpService {
 		    params.put("pageModel", pageModel);
 	    }
 		List<TrajectoryEmp> entitys = dao.selectByPage(params);
+		for (TrajectoryEmp trajectoryEmp : entitys) {
+			List<Employee> emps=employeeDao.getEmployeeesBy_cardno(trajectoryEmp.getCardno());
+			if(emps.size()==0){
+				Employee e=new Employee();
+				e.setName("cardno="+trajectoryEmp.getCardno()+"不存在");
+				trajectoryEmp.setEmployees(e);	
+			}else{
+				Employee e=emps.get(0);
+				for (int i=1;i<emps.size();i++) {
+					e.setName(e.getName()+","+emps.get(i).getName());
+				}
+				trajectoryEmp.setEmployees(e);
+			}
+		}
 		return entitys;
 	}
 
