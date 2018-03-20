@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -65,7 +66,7 @@ public class RecordController {
 	 */
 	@RequestMapping(value="/visitor/auditRecord")
 	@ResponseBody		
-	public Object auditRecord(HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView auditRecord(HttpServletRequest request, HttpServletResponse response, ModelAndView mv){
 		String recordid=request.getParameter("recordid");
 		String isAudit_Str=request.getParameter("isAudit");
 		int isAudit=1;
@@ -106,11 +107,69 @@ public class RecordController {
 			recordBevisitedsService.update(rbv);
 			map.put("status", true);
 			map.put("message", "审核通过");
+			mv.setViewName("visitor/visitor-optsucess");
 		}else{
 			map.put("status", false);
 			map.put("message", "审核记录不存在");
+			mv.setViewName("visitor/visitor-opterr");
 		}
-		return map;
+		// 返回
+		return mv;
 	} 
+//	/**
+//	 * 审核访问记录
+//	 * @param mv
+//	 * @return		
+//	 */
+//	@RequestMapping(value="/visitor/auditRecord")
+//	@ResponseBody		
+//	public Object auditRecord(HttpServletRequest request, HttpServletResponse response){
+//		String recordid=request.getParameter("recordid");
+//		String isAudit_Str=request.getParameter("isAudit");
+//		int isAudit=1;
+//		try {
+//			isAudit=Integer.parseInt(isAudit_Str);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		String auditContent=request.getParameter("auditContent");
+//		
+//		String [] pw=request.getParameterValues("pw");
+//		String [] elt=request.getParameterValues("elt");
+//		String acce=request.getParameter("acce");
+//		String group=request.getParameter("group");
+//		
+//		List<RecordVisitors> rvs=recordVisitorsService.selectVisitorByRecordId(recordid);
+//		for (RecordVisitors rv : rvs) {
+//			rv.setVisitStatus(2);   // tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否已经访问完成(0=申请中，1=审核中，2=已审核，3=正在访问，4=访问结束,5=删除)' ,
+//			rv.setIsAudit(isAudit);   // tinyint(4) NOT NULL COMMENT '是否同意（0=未审核，1=同意，2=拒绝）' ,
+//			rv.setAuditContent(auditContent);   // varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '被访人审核意见' ,
+//			recordVisitorsService.update(rv);
+//		}
+//		
+//		RecordBevisiteds rbv=recordBevisitedsService.selectBevisitedByRecordId(recordid);
+//		Map<String, Object> map=new HashMap<>();
+//		if(rbv!=null){
+//			rbv.setBevisitedChannel(StringUtils.join(pw, ","));   // '被访人通道' ,
+//			List<Access> saveaccesss = accessgroupService.getAccessById(group);
+//			if(saveaccesss!=null && saveaccesss.size()>0){
+//				rbv.setBevisitedFloor(StringUtils.join(elt, ","));   // '被访人楼层' ,
+//				String doors="";
+//				for (Access access : saveaccesss) {
+//					doors=doors+","+access.getAccessid();
+//				}
+//				rbv.setBevisitedDoor(doors.substring(1));   // '被访人门禁' ,
+//			}
+//			rbv.setBevisitedRoom("");   // '被访人房间号' ,
+//			recordBevisitedsService.update(rbv);
+//			map.put("status", true);
+//			map.put("message", "审核通过");
+//		}else{
+//			map.put("status", false);
+//			map.put("message", "审核记录不存在");
+//		}
+//		visitor-opre
+//		return map;
+//	} 
 
 }
