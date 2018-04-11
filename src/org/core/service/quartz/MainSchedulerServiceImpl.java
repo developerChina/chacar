@@ -36,7 +36,7 @@ public class MainSchedulerServiceImpl {
 			// 2： 创建触发器 每5分钟执行一次
 			Trigger vehicleTrigger = TriggerBuilder.newTrigger()
 					 .withIdentity("VehicleTrigger", "VehicleTriggerGroup")
-					.withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(5).repeatForever())
+					.withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(1).repeatForever())
 					.build();
 			SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 			Scheduler scheduler = schedulerFactory.getScheduler();
