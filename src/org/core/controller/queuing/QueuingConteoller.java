@@ -92,9 +92,16 @@ public class QueuingConteoller {
 						Ordinary exo=queuingService.selectOBycarno1(ordinary.getCar_code());
 						Ordinary maxo=queuingService.selectMaxOByLand(ordinary.getIsland_no());
 						if(exo!=null){
-							if(!exo.getCar_code().equals(maxo.getCar_code())){
+							if(maxo!=null){
+								if(!exo.getCar_code().equals(maxo.getCar_code())){
+									ordinary.setId(exo.getId());
+									ordinary.setQueue_number(maxo.getQueue_number()+1);
+									ordinary.setIsland_no(ordinary.getIsland_no());//修改排队卸货岛号
+									queuingService.updateO(ordinary); 
+								}
+							}else{
 								ordinary.setId(exo.getId());
-								ordinary.setQueue_number(maxo.getQueue_number()+1);
+								ordinary.setQueue_number(1);
 								ordinary.setIsland_no(ordinary.getIsland_no());//修改排队卸货岛号
 								queuingService.updateO(ordinary); 
 							}

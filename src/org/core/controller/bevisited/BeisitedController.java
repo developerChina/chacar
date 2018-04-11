@@ -261,6 +261,12 @@ public class BeisitedController {
 	 */
 	private void sendAudiSMS(String visitedName,String visitorName,String visitorDate,String recordid,String phoneNumbers){
 		//发送外网程序错误，需要把访问人和被访问人对调
+		System.out.println(PropUtil.getSysValue("smsPath")+
+				    "visitedName="+visitorName+
+					"&visitorName="+visitedName+
+					"&visitorDate="+visitorDate+
+					"&recordid="+recordid+
+					"&phoneNumbers="+phoneNumbers);
 		try {
 			HttpKit.post(PropUtil.getSysValue("smsPath"), 
 					"visitedName="+visitorName+

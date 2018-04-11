@@ -88,7 +88,6 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 			//设置被访问信息
 			try {
 				if(trajectory.getRecordVisitors()!=null){
-					System.out.println(trajectory.getRecordVisitors().getCardNo()+"-----"+trajectory.getOptDate());
 					//分开查询
 					//List<Employee> employees=recordBevisitedsService.selectBycardNo(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
 					List<String> recordIDs=recordVisitorsService.getRecordIDBycardno_inDate(trajectory.getRecordVisitors().getCardNo(),DateUtil.StringToDate(trajectory.getOptDate(), "yyyy-MM-dd HH:mm:ss"));
@@ -96,13 +95,13 @@ public class TrajectoryServiceImpl implements TrajectoryService{
 					for(int i = 0; i < recordIDs.size(); i++){
 						ridsb.append(",'"+recordIDs.get(i)+"'");
 					}
-					String rids = ridsb.toString().length()>0?ridsb.toString().substring(1):"";
+					String rids = ridsb.toString().length()>0?ridsb.toString().substring(1):"''";
 					List<String> bevisitedIDs= recordBevisitedsService.getbevisitedIDByrecordIDs(rids);
 					StringBuffer bvidsb = new StringBuffer();
 					for(int i = 0; i < bevisitedIDs.size(); i++){
 						bvidsb.append(",'"+bevisitedIDs.get(i)+"'");
 					}
-					String bvids = bvidsb.toString().length()>0?bvidsb.toString().substring(1):"";
+					String bvids = bvidsb.toString().length()>0?bvidsb.toString().substring(1):"''";
 					List<Employee> employees=hrmService.getEmployeeByIds(bvids);
 					trajectory.setEmployees(employees);
 				}

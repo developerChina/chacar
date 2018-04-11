@@ -28,6 +28,7 @@ import org.core.util.GenId;
 import org.core.util.ImageUtils;
 import org.core.util.JsonUtils;
 import org.core.util.LadderControlUtil;
+import org.core.util.PropUtil;
 import org.core.util.StringUtils;
 import org.core.util.tag.PageModel;
 import org.springframework.beans.BeanUtils;
@@ -246,12 +247,15 @@ public class SingleVisitorController {
 	 */
 	@RequestMapping(value="/visitor/selectVisitor")
 	 public String selectDept(Model model,Integer pageIndex,
-			 @ModelAttribute VisitorInfo visitorInfo){
+			 @ModelAttribute VisitorInfo visitorInfo,
+				HttpServletRequest request, 
+				HttpServletResponse response){
 		PageModel pageModel = new PageModel();
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);
 		}
 		List<VisitorInfo> visitors=visitorInfoService.selectByPage(visitorInfo,pageModel);
+		model.addAttribute("imgurl", PropUtil.getSysValue("serverPath")+request.getContextPath()+"/");
 		model.addAttribute("visitors", visitors);
 		model.addAttribute("pageModel", pageModel);
 		model.addAttribute("visitorInfo", visitorInfo);

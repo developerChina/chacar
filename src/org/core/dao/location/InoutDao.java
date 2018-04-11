@@ -16,7 +16,8 @@ public interface InoutDao {
 	@SelectProvider(type=InoutSqlProvider.class,method="selectByPagegy")	
 	List<LocationInout> selectByPagegy(Map<String, Object> gy);
 
-	@Select(" select * from "+LocationConstants.INOUT+" where VehicleCode=#{carno} and DATE_FORMAT(cominDate,'%m-%d-%Y')=DATE_FORMAT(NOW(),'%m-%d-%Y') and outDate is null order by cominDate DESC limit 1")
+//	@Select(" select * from "+LocationConstants.INOUT+" where VehicleCode=#{carno} and DATE_FORMAT(cominDate,'%m-%d-%Y')=DATE_FORMAT(NOW(),'%m-%d-%Y') and outDate is null order by cominDate DESC limit 1")
+	@Select(" select * from "+LocationConstants.INOUT+" where VehicleCode=#{carno} and HOUR(timediff(now(),cominDate))<24 and outDate is null order by cominDate DESC limit 1")
 	LocationInout selectNewRecord(String carno);
 	
 	@Select(" select * from "+CarDistinguish.tableName+" where ip = #{serverIp}")
