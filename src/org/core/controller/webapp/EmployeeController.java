@@ -579,13 +579,13 @@ public class EmployeeController {
 		String pageParam=""; 
 		String name=request.getParameter("name");
 		model.addAttribute("name", name);
-		if(StringUtils.isNotBlank(name)){pageParam+="&name="+name;}
+		if(StringUtils.isNotBlank(name)){pageParam+="&name="+name;}else{pageParam+="&name=";}
 		String cardno=request.getParameter("cardno");
 		model.addAttribute("cardno", cardno);
-		if(StringUtils.isNotBlank(cardno)){pageParam+="&cardno="+cardno;}
+		if(StringUtils.isNotBlank(cardno)){pageParam+="&cardno="+cardno;}else{pageParam+="&cardno=";}
 		String phone=request.getParameter("phone");
 		model.addAttribute("phone", phone);
-		if(StringUtils.isNotBlank(phone)){pageParam+="&phone="+phone;}
+		if(StringUtils.isNotBlank(phone)){pageParam+="&phone="+phone;}else{pageParam+="&phone=";}
 		String sDate=request.getParameter("sDate");
 		model.addAttribute("sDate", sDate);
 		if(StringUtils.isNotBlank(sDate)){pageParam+="&sDate="+sDate;}
