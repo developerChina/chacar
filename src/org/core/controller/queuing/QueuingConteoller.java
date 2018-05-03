@@ -804,6 +804,9 @@ public class QueuingConteoller {
 				if(entity.getSource()==0){
 					cell11.setCellValue("急件");
 				}
+				if(entity.getSource()==2){
+					cell11.setCellValue("岛外卸货");
+				}
 			}	
 		}
 	        try {

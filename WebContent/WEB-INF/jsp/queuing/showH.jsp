@@ -178,6 +178,7 @@
 					  <td>
 					  <c:if test="${ph.source==1}">普通</c:if>
 					  <c:if test="${ph.source==0}">急件</c:if>
+					  <c:if test="${ph.source==2}">岛外卸货</c:if>
 					  </td>
 					  <%-- <td>${ph.empname}</td> --%> 
 				</tr>

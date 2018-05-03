@@ -300,6 +300,12 @@ public class QueuingServiceImpl implements QueuingService {
 			}else{
 				Hparts.setVehicleType("");
 			}
+			
+			//修改非法急件
+			if(Hparts.getGoout_time()==null&&Hparts.getComein_time()==null){
+				Hparts.setSource(2);
+			}
+			
 		}
 		return pageListH;
 	}
