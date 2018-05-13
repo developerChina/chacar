@@ -142,7 +142,7 @@ public class MoreVisitorController {
 			List<RecordVisitors> rvings=recordVisitorsService.selectRecordInfoBycardID_status(cardid, 3);
 			if(blacklist.size()>0){
 				bool=false;
-				message=message+cardName+"已经上黑名单。";
+				message=message+cardName+"您证件访问受限，请联系管理员。";
 			}
 			
 			if(rvings.size()>0){

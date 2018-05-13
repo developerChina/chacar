@@ -24,8 +24,8 @@ public class PJSqlProvider {
 					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
 						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
 					}
-					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
-						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
+					if(passagewayj.getDept_string()!=null && !passagewayj.getDept_string().equals("")){
+						WHERE(" pjempid in ( "+ passagewayj.getDept_string() +"  ) ");
 					}
 				}
 			}
@@ -33,7 +33,6 @@ public class PJSqlProvider {
 		if(gy.get("pageModel")!=null){
 			sql+=" limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
 		}
-		System.out.println(sql);
 		return sql;
 	}
 	//动态查询总数量  +','+PASSAGEWAYTABLE+','+MIDDLETOPGTABLE
@@ -52,6 +51,9 @@ public class PJSqlProvider {
 					}
 					if(passagewayj.getpEmpName()!=null && !passagewayj.getpEmpName().equals("")){
 						WHERE(" pjempid in ( "+ passagewayj.getpEmpName() +"  ) ");
+					}
+					if(passagewayj.getDept_string()!=null && !passagewayj.getDept_string().equals("")){
+						WHERE(" pjempid in ( "+ passagewayj.getDept_string() +"  ) ");
 					}
 				} 
 			}

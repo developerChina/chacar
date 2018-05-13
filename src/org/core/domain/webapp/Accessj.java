@@ -19,6 +19,9 @@ public class Accessj implements Serializable{
 	private	String pganame;		//用来模糊查询门禁名称
 	private	String ajEmpName;	//用来模糊查询员工名称
 	private	String ajphone;		//用来模糊查询员工电话
+	
+	private Integer dept_id;	//接收部门的查询条件
+	private	String dept_string;	//接收根据dept查出员工id的条件
 	/*
 	 *  授权里的门禁分组集合
 	 */
@@ -105,7 +108,18 @@ public class Accessj implements Serializable{
 	public void setAjphone(String ajphone) {
 		this.ajphone = ajphone;
 	}
-	
+	public Integer getDept_id() {
+		return dept_id;
+	}
+	public void setDept_id(Integer dept_id) {
+		this.dept_id = dept_id;
+	}
+	public String getDept_string() {
+		return dept_string;
+	}
+	public void setDept_string(String dept_string) {
+		this.dept_string = dept_string;
+	}
 	
 	
 	

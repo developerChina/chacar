@@ -149,7 +149,7 @@ public class SingleVisitorController {
 		String message="";
 		if(blacklist.size()>0){
 			bool=false;
-			message=message+"你已经上黑名单。";
+			message=message+"您证件访问受限，请联系管理员。";
 		}
 		
 		if(recordVisitors.size()>0){

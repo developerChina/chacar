@@ -108,7 +108,7 @@
 			  <td>控制器</td>
 			  <td>被访人</td>
 			  <td>时间</td>
-			  <td>状态</td>
+			  <!-- <td>状态</td> -->
 			  <td>证件照片</td>
 			  <!-- 
 			  <td>现场照片</td>
@@ -130,7 +130,7 @@
 					  
 					  ${trajectory.optDate }
 					  </td>
-					  <td>
+					  <%-- <td>
 					     <c:if test="${trajectory.recordVisitors.visitStatus!=null && trajectory.recordVisitors.visitStatus!='' }">
 					      <c:if test="${trajectory.recordVisitors.visitStatus==0}">
 					       	申请中
@@ -151,7 +151,7 @@
 					   		审核拒绝   
 					      </c:if>
 					     </c:if>
-					  </td>
+					  </td> --%>
 					  <td>
 					     <c:if test="${trajectory.recordVisitors.cardPhoto!=null && trajectory.recordVisitors.cardPhoto!='' }">
 					     <a target="_blank" href="${imgurl}${trajectory.recordVisitors.cardPhoto }">

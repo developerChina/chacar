@@ -144,6 +144,7 @@ public class AccessJurisdictionController {
 		@RequestMapping(value="/AccessJurisdiction/selectAJ")
 		public String selectPJ(Integer pageIndex,
 				@ModelAttribute Accessj accessj,Model model){
+			
 			String pageParam="";
 			if(StringUtils.isNotBlank(accessj.getAjEmpName())){
 				pageParam+="&ajEmpName="+accessj.getAjEmpName();
@@ -151,14 +152,14 @@ public class AccessJurisdictionController {
 			if(StringUtils.isNotBlank(accessj.getPganame())){
 				pageParam+="&pganame="+accessj.getPganame();
 			}
-			/*if(StringUtils.isNotBlank(accessj.getAjphone())){
-				pageParam+="&ajphone="+accessj.getAjphone();
-			}*/
-			model.addAttribute("pageParam", pageParam);
+			if(accessj.getDept_id()!=null&&accessj.getDept_id()!=0){
+				pageParam+="&dept_id="+accessj.getDept_id();
+			}
+			model.addAttribute("pageParam",pageParam);
+			model.addAttribute("dept_id", accessj.getDept_id());
 			
 			model.addAttribute("targetEmp", accessj.getAjEmpName());
 			model.addAttribute("target",accessj.getPganame());
-			/*model.addAttribute("targetPh",accessj.getAjphone());*/
 			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
@@ -182,9 +183,11 @@ public class AccessJurisdictionController {
 				selectaccessj.setAjEmployee(EmpById);
 				
 			}
+			// 查询部门信息 ，用于模糊查询
+			List<Dept> depts = hrmService.findAllDept();
+			model.addAttribute("depts", depts);
 			model.addAttribute("accessjs", accessjs);
 			model.addAttribute("pageModel", pageModel);
-			
 			return "group/showAJ";
 		}
 		/**

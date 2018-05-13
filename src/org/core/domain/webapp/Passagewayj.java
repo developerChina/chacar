@@ -20,6 +20,9 @@ public class Passagewayj implements Serializable{
 	private String pEmpName;
 	
 	private	String pjphone;		//用来模糊查询员工电话
+	
+	private Integer dept_id;	//接收部门的查询条件
+	private	String dept_string;	//接收根据dept查出员工id的条件
 	/*
 	 *  授权里的通道分组集合
 	 */
@@ -61,7 +64,6 @@ public class Passagewayj implements Serializable{
 	}
 	public Passagewayj() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Employee getPjEmployee() {
 		return pjEmployee;
@@ -69,12 +71,7 @@ public class Passagewayj implements Serializable{
 	public void setPjEmployee(Employee pjEmployee) {
 		this.pjEmployee = pjEmployee;
 	}
-	@Override
-	public String toString() {
-		return "Passagewayj [pjid=" + pjid + ", pjname=" + pjname + ", pjempid=" + pjempid + ", pjgroupid=" + pjgroupid
-				+ ", passagewayjid=" + passagewayjid + ", pjempno=" + pjempno + ", pgroups=" + pgroups + ", pjEmployee="
-				+ pjEmployee + "]";
-	}
+	
 	public String getPassagewayjid() { 
 		return passagewayjid;
 	}
@@ -110,6 +107,18 @@ public class Passagewayj implements Serializable{
 	}
 	public void setPjphone(String pjphone) {
 		this.pjphone = pjphone;
+	}
+	public Integer getDept_id() {
+		return dept_id;
+	}
+	public void setDept_id(Integer dept_id) {
+		this.dept_id = dept_id;
+	}
+	public String getDept_string() {
+		return dept_string;
+	}
+	public void setDept_string(String dept_string) {
+		this.dept_string = dept_string;
 	}
 	
 	

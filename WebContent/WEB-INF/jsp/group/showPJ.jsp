@@ -95,9 +95,14 @@
 					  <tr>
 					    <td class="font3">
 					    	<!-- 通道授权名:<input type="text" name="pjname">&nbsp; -->
-					    	通道名称:<input type="text" name="pganame" >&nbsp;
-					    	员工姓名:<input type="text" name="pEmpName" >
-					    	<!-- 手机号:<input type="text" name="pjphone"> -->
+					    	<!-- 通道名称:<input type="text" name="pganame" >&nbsp; -->
+					    	所属部门：<select  name="dept_id" style="width:320px;">
+								   <option value="0">--部门选择--</option>
+								   <c:forEach items="${requestScope.depts }" var="dept">
+					    				<option value="${dept.id}" <c:if test="${dept_id==dept.id }">selected </c:if> >${dept.name }</option>
+					    			</c:forEach>
+							</select>&nbsp;&nbsp;
+					    	员工姓名:<input type="text" name="pEmpName" value="${targetEmp}" >
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delpj" type="button" value="&nbsp;&nbsp;解除通道授权&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="addpj" type="button" value="&nbsp;&nbsp;绑定通道授权&nbsp;&nbsp;"/>&nbsp;

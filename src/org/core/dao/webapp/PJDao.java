@@ -50,4 +50,7 @@ public interface PJDao {
 		List<Employee> getEmp(String pen);
 		@Select(" select * from "+EMPLOYEETABLE+" where phone LIKE CONCAT('%',#{pph},'%')")
 		List<Employee> getEmpByPh(String pph);
+		
+		@Select(" select * from "+EMPLOYEETABLE+" where dept_id = #{pj_deptid} ")
+		List<Employee> getEmpByDept(Integer pj_deptid);
 }

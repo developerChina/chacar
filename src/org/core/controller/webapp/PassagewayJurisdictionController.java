@@ -112,11 +112,6 @@ public class PassagewayJurisdictionController {
 		public ModelAndView shouPJG(String ids,String flag,Model model,ModelAndView mv,
 				String pjemps,String pjname,String pjgroup,
 				HttpServletRequest request){
-			/*int count = pJService.selectPJG(id);
-			if(count>0){
-				//System.out.println("已经存在权限。。。");
-			}else{*/
-			
 				if(flag.equals("1")){
 					//查询一下单个员工
 					List<Employee> findEmployeeById = pJService.findEmployeeByIds(ids);
@@ -140,10 +135,8 @@ public class PassagewayJurisdictionController {
 					//执行保存
 					String[] empids = request.getParameterValues("pjemps");
 					
-						pJService.savePJNew(empids,pjname,pjgroup);
-						
-				
-					//pJService.savePJ(passagewayj);
+					pJService.savePJNew(empids,pjname,pjgroup);
+					
 					mv.setViewName("redirect:/PassagewayJurisdiction/selectPJ");
 				}
 			
@@ -162,13 +155,12 @@ public class PassagewayJurisdictionController {
 			if(StringUtils.isNotBlank(passagewayj.getpEmpName())){
 				pageParam+="&pEmpName="+passagewayj.getpEmpName();
 			}
+			if(passagewayj.getDept_id()!=null&&passagewayj.getDept_id()!=0){
+				pageParam+="&dept_id="+passagewayj.getDept_id();
+			}
 			model.addAttribute("pageParam", pageParam);
-			model.addAttribute("model", passagewayj.getPganame());
-			
+			model.addAttribute("dept_id", passagewayj.getDept_id());
 			model.addAttribute("targetEmp", passagewayj.getpEmpName());
-			model.addAttribute("target",passagewayj.getPganame());
-			/*model.addAttribute("targetPh",passagewayj.getPjphone());*/
-			
 			
 			PageModel pageModel = new PageModel();
 			if(pageIndex != null){
@@ -198,6 +190,10 @@ public class PassagewayJurisdictionController {
 			}
 			model.addAttribute("passagewayjs", passagewayjs);
 			model.addAttribute("pageModel", pageModel);
+			// 查询部门信息 ，用于模糊查询
+			List<Dept> depts = hrmService.findAllDept();
+			model.addAttribute("depts", depts);
+			
 			return "group/showPJ";
 		}
 		/**

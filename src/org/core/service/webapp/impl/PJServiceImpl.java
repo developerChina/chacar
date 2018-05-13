@@ -48,22 +48,7 @@ public class PJServiceImpl implements PJService {
 	//查询授权表并分页
 	@Override
 	public List<Passagewayj> selectPJ(Passagewayj passagewayj, PageModel pageModel) {
-		String vague = passagewayj.getPganame();
-		if(vague!=null&& !"".equals(vague)){
-			List<Passageway>  vagueList = pJDao.getPlist(vague);
-			String myids="";
-			if(vagueList!=null && vagueList.size()>0){
-				for (Passageway passageway : vagueList) {
-				myids+=passageway.getPassagewayID()+",";
-			   }
-				myids = myids.substring(0,myids.length() - 1);
-				passagewayj.setPganame(myids);
-			}else{
-				passagewayj.setPganame("000000");
-			}
-			
-		}
-		
+		//员工名称查
 		String pen = passagewayj.getpEmpName();
 		if(pen!=null && !"".equals(pen)){
 			List<Employee>  vagueList = pJDao.getEmp(pen);
@@ -79,22 +64,21 @@ public class PJServiceImpl implements PJService {
 			}
 			
 		}
-		
-		/*String pph = passagewayj.getPjphone();
-		if(pen!=null && !"".equals(pen)){
-			List<Employee>  vagueList = pJDao.getEmpByPh(pph);
+		//按部门查
+		if(passagewayj.getDept_id()!=null&&passagewayj.getDept_id()!=0){
+			int pj_deptid = passagewayj.getDept_id();
+			List<Employee>  deptList = pJDao.getEmpByDept(pj_deptid);
 			String myids="";
-			if(vagueList!=null&&vagueList.size()>0){
-				for (Employee employee : vagueList) {
-					myids+=employee.getId()+",";
+			if(deptList!=null&&deptList.size()>0){
+			for (Employee employee : deptList) {
+				myids+=employee.getId()+",";
 				}
 				myids = myids.substring(0,myids.length() - 1);
-				passagewayj.setPjphone(myids);
+				passagewayj.setDept_string(myids);
 			}else{
-				passagewayj.setPjphone("000000");
+				passagewayj.setDept_string("000000");
+				}
 			}
-			
-		}*/
 		
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> gy = new HashMap<>();

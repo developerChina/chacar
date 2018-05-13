@@ -68,6 +68,7 @@ public class AJServiceImpl implements AJService {
 	// 查询授权并分页
 	@Override
 	public List<Accessj> selectAJ(Accessj accessj, PageModel pageModel) {
+		
 		String vague = accessj.getPganame();
 		if(vague!=null&& !"".equals(vague)){
 			List<Access>  vagueList = aJDao.getPlist(vague);
@@ -83,7 +84,7 @@ public class AJServiceImpl implements AJService {
 			}
 			
 		}
-		
+		//按员工名称模糊查询
 		String empName = accessj.getAjEmpName();
 		if(empName!=null&& !"".equals(empName)){
 			List<Employee>  vagueList = aJDao.getEmp(empName);
@@ -98,23 +99,21 @@ public class AJServiceImpl implements AJService {
 				accessj.setAjEmpName("000000");
 			}
 		}
-		
-		/*String aph = accessj.getAjphone();
-		if(aph!=null&& !"".equals(aph)){
-			List<Employee>  vagueList = aJDao.getEmpByPh(aph);
+		//按部门查
+		if(accessj.getDept_id()!=null&&accessj.getDept_id()!=0){
+			int aj_deptid = accessj.getDept_id();
+			List<Employee>  deptList = aJDao.getEmpByDept(aj_deptid);
 			String myids="";
-			if(vagueList!=null&&vagueList.size()>0){
-				for (Employee employee : vagueList) {
+			if(deptList!=null&&deptList.size()>0){
+				for (Employee employee : deptList) {
 					myids+=employee.getId()+",";
 				}
 				myids = myids.substring(0,myids.length() - 1);
-				accessj.setAjphone(myids);
+				accessj.setDept_string(myids);
 			}else{
-				accessj.setAjphone("000000");
+				accessj.setDept_string("000000");
 			}
-		}*/
-		
-		
+		}
 		/** 当前需要分页的总数据条数 */
 		Map<String, Object> gy = new HashMap<>();
 		gy.put("accessj", accessj);

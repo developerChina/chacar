@@ -93,8 +93,14 @@
 					  <tr>
 					    <td class="font3">
 					    	<!-- 门禁授权名:<input type="text" name="ajname">&nbsp; -->
-					    	门禁名:<input type="text" name="pganame" >&nbsp;
-					    	员工名称:<input type="text" name="ajEmpName" >&nbsp;
+					    	<!-- 门禁名:<input type="text" name="pganame" >&nbsp; -->
+					    	所属部门：<select  name="dept_id" style="width:320px;">
+								   <option value="0">--部门选择--</option>
+								   <c:forEach items="${requestScope.depts }" var="dept">
+					    				<option value="${dept.id}" <c:if test="${dept_id==dept.id }">selected </c:if> >${dept.name }</option>
+					    			</c:forEach>
+							</select>&nbsp;&nbsp;
+					    	员工名称:<input type="text" name="ajEmpName" value="${targetEmp}">&nbsp;
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>
 					    	<input id="delaj" type="button" value="&nbsp;&nbsp;解除门禁授权&nbsp;&nbsp;"/>
 					    	<input id="addaj" type="button" value="&nbsp;&nbsp;绑定门禁授权&nbsp;&nbsp;"/>

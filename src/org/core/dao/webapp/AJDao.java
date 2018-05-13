@@ -72,8 +72,16 @@ public interface AJDao {
 	//门禁名称的模糊查询
 		@Select(" select * from "+ACCESSTABLE+" where accessname LIKE CONCAT('%',#{vague},'%')")
 		List<Access> getPlist(String vague);
+		
 		@Select(" select * from "+EMPLOYEETABLE+" where name LIKE CONCAT('%',#{empName},'%')")
 		List<Employee> getEmp(String empName);
+		
 		@Select(" select * from "+EMPLOYEETABLE+" where phone LIKE CONCAT('%',#{aph},'%')")
 		List<Employee> getEmpByPh(String aph);
+		
+		@Select(" select * from "+EMPLOYEETABLE+" where dept_id = #{aj_deptid} ")
+		List<Employee> getEmpByDept(Integer aj_deptid);
+		
+		@Select(" select * from "+EMPLOYEETABLE+" where job_id = #{aj_jobtid} ")
+		List<Employee> getEmpByJob(int aj_jobtid);
 }
