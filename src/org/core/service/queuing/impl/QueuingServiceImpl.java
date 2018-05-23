@@ -12,6 +12,7 @@ import java.util.TimeZone;
 import org.core.dao.location.InoutDao;
 import org.core.dao.queuing.QueuingDao;
 import org.core.domain.car.CarDistinguish;
+import org.core.domain.location.LocationDriver;
 import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
@@ -225,9 +226,7 @@ public class QueuingServiceImpl implements QueuingService {
 				for (Island Single : vagueI) {
 					nos+=Single.getNo()+",";
 				}
-				//System.out.println(nos); 1,2,3,
 				nos = nos.substring(0,nos.length() - 1);
-				//System.out.println(nos); 1,2,3
 				history.setVagueiname(nos);
 			}else{
 				history.setVagueiname("000000");
@@ -238,19 +237,31 @@ public class QueuingServiceImpl implements QueuingService {
 		if(vSupplier!=null && !"".equals(vSupplier)){
 			String nos = "";
 			List<String> carList = queuingDao.vagueCar_code(vSupplier);
+			List<String>  driverList = queuingDao.driverCar_code(vSupplier);
 			if(carList!=null&&carList.size()>0){
-				
 				for (String code : carList) {
 					nos+="'"+code+"'"+",";
 				}
-				//System.out.println(nos);
+			if(driverList!=null&&driverList.size()>0){
+					for (String drivercode : driverList) {
+						nos+="'"+drivercode+"'"+",";
+					}
+				}	
 				nos = nos.substring(0,nos.length() - 1);
-				//System.out.println(nos); 
 				history.setSupplier(nos);
 			}else{
-				history.setSupplier("000000");
+				if(driverList!=null&&driverList.size()>0){
+					for (String drivercode : driverList) {
+						nos+="'"+drivercode+"'"+",";
+					}
+					nos = nos.substring(0,nos.length() - 1);
+					history.setSupplier(nos);
+				}else{
+					history.setSupplier("000000");
+				}
 			}
 		}
+		
 		
 		Map<String,Object> params = new HashMap<>();
 		params.put("history", history);
@@ -278,34 +289,66 @@ public class QueuingServiceImpl implements QueuingService {
 			}
 			//计算在场时长
 			if(Hparts.getCominDate()!=null&&Hparts.getOutDate()!=null){
-				/*long between = (Hparts.getOutDate().getTime()-Hparts.getCominDate().getTime())/1000;
-				long hour1=between%(24*3600)/3600;
-				long minute1=between%3600/60;
-				long second1=between%60;
-				Hparts.setPlant(""+hour1+"小时"+minute1+"分"+second1+"秒");*/
 				String a = myDateToString(Hparts.getOutDate().getTime()-Hparts.getCominDate().getTime());
 				Hparts.setPlant(a);
 			}
-			//预防查出多条  供应商名称  
-			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
-			if(SupplierList!=null && SupplierList.size()>0 && SupplierList.get(0)!=null && !SupplierList.get(0).equals("")){
-				Hparts.setSupplier(SupplierList.get(0));
-			}else{
-				Hparts.setSupplier("");
-			}
-			//车辆类型
-			List<String> vehicleTypeList = queuingDao.getVehicleTypeList(Hparts.getCar_code());
-			if(vehicleTypeList!=null && vehicleTypeList.size()>0 && vehicleTypeList.get(0)!=null && !vehicleTypeList.get(0).equals("")){
-				Hparts.setVehicleType(vehicleTypeList.get(0));
-			}else{
-				Hparts.setVehicleType("");
-			}
-			
 			//修改非法急件
 			if(Hparts.getGoout_time()==null&&Hparts.getComein_time()==null){
 				Hparts.setSource(2);
 			}
 			
+			//供应商信息 查定位仪表的车主信息（根据车牌号）
+			List<String> SupplierList = queuingDao.getSupplier(Hparts.getCar_code());
+			//查询车主表 根据车牌获取对象
+			LocationDriver driver = queuingDao.getDriver(Hparts.getCar_code());
+			//车辆类型  查定位仪表的车辆类型（根据车牌号）
+			List<String> vehicleTypeList = queuingDao.getVehicleTypeList(Hparts.getCar_code());
+			if(SupplierList!=null && SupplierList.size()>0){
+				//如果能查出来说明在定位仪中存在 去车主表里查一下
+				//如果不为空则是 修改车 跟换车主
+				if(driver!=null){
+					if(driver.getOptdate()!=null&&Hparts.getComein_time()!=null){
+						// 进入时间  小于  操作时间  将供应商显示为 车主表中的供应商
+						if(Hparts.getComein_time().before(driver.getOptdate())){
+							Hparts.setSupplier(driver.getName());
+							if(driver.getType()==1){
+								//修改车
+								Hparts.setVehicleType(driver.getCartType());
+							}
+						}else{
+							//显示定位仪表中字段
+							Hparts.setSupplier(SupplierList.get(0));
+							//显示定位仪表中车辆类型
+							if(vehicleTypeList!=null && vehicleTypeList.size()>0 ){
+								Hparts.setVehicleType(vehicleTypeList.get(0));
+							}
+						}
+					}else{/* 操作时间或进入时间有空值  */
+						Hparts.setSupplier("暂无供应商信息");
+						Hparts.setVehicleType("暂无车辆类型");
+					}
+			}else{/* 在车主表中未查到值  */
+				 //显示定位仪表中字段
+				Hparts.setSupplier(SupplierList.get(0));
+				//显示定位仪表中车辆类型
+				if(vehicleTypeList!=null && vehicleTypeList.size()>0 ){
+					Hparts.setVehicleType(vehicleTypeList.get(0));
+					}
+				}
+			}else{
+				//查询车主表，有值则此车为删除车 此车将不再通过车辆识别仪
+				//记录表中将无此车辆信息，就无需判断时间
+				if(driver!=null){
+					Hparts.setSupplier(driver.getName());
+					if(driver.getType()==0){
+						//删除车
+						Hparts.setVehicleType("已经注销");
+					}
+				}else{
+					Hparts.setSupplier("暂无供应商信息");
+					Hparts.setVehicleType("暂无车辆类型");
+				}
+			}
 		}
 		return pageListH;
 	}

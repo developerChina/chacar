@@ -689,13 +689,13 @@ public class EmployeeController {
 				sheet.setFitToPage(true);  
 			    sheet.setHorizontallyCenter(true);
 			    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
-			    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");  
+			    CellRangeAddress c = CellRangeAddress.valueOf("A2:F2");  
 				sheet.setAutoFilter(c);
 			    //设置列宽
-			    sheet.setColumnWidth(0, 3200);
-		        sheet.setColumnWidth(1, 4800);		
-		        sheet.setColumnWidth(2, 6800);
-		        sheet.setColumnWidth(3, 3200);
+			    sheet.setColumnWidth(0, 5000);
+		        sheet.setColumnWidth(1, 5000);		
+		        sheet.setColumnWidth(2, 5000);
+		        sheet.setColumnWidth(3, 5000);
 		        sheet.setColumnWidth(4, 5000);
 		        sheet.setColumnWidth(5, 6000);
 		      //定义表格行索引
@@ -736,8 +736,12 @@ public class EmployeeController {
 					cell2.setCellValue(entity.getEmployees().getCardno());
 		        	//部门
 					HSSFCell cell3 = row.createCell(3);
-					cell3.setCellValue(entity.getEmployees().getDept().getName());
-		        	//进出
+					if(entity.getEmployees().getDept()!=null){
+						cell3.setCellValue(entity.getEmployees().getDept().getName());
+					}else{
+						cell3.setCellValue("");
+					}
+					//进出
 					HSSFCell cell4 = row.createCell(4);
 					cell4.setCellValue(entity.getOptAction());
 		        	//时间

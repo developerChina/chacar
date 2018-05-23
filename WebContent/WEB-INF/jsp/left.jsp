@@ -170,7 +170,8 @@
 				    <p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/queuingI/IslandAck" target="main">卸货岛维护</a></img></p>
 					<!--识别仪  -->
 					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/car/carDistinguish" target="main">识别仪</a></img></p>
-					
+					<!--车主信息维护  -->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx }/driver/DriverAck" target="main">车主信息维护</a></img></p>
 					</td>
 				  </tr>
 				  <tr><td height="2"></td></tr>

@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.core.dao.queuing.provider.QueuingAuthorityProvider;
 import org.core.domain.location.LocationConstants;
+import org.core.domain.location.LocationDriver;
 import org.core.domain.location.LocationInout;
 import org.core.domain.queuing.History;
 import org.core.domain.queuing.Island;
@@ -228,6 +229,13 @@ public interface QueuingDao {
 	
 	@Select(" select clientId from logis_vehicle as v WHERE v.VehicleCode=#{car_code} ")
 	List<String> getVehicleTypeList(String car_code);
+
+	
+	@Select(" select * from "+LocationDriver.tableName+" as d WHERE d.VehicleCode=#{car_code} ")
+	LocationDriver getDriver(String car_code);
+
+	@Select(" select VehicleCode from "+LocationDriver.tableName+" as d WHERE d.name LIKE CONCAT('%',#{vSupplier},'%') ")
+	List<String> driverCar_code(String vSupplier);
 	
 	
 }
