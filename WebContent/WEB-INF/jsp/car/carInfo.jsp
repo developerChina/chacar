@@ -68,7 +68,12 @@
 	 	   /** 导入车辆 */
 	 	  $("#import").click(function(){
 	 		   window.location = "${ctx }/car/importcarPage";
-	 	  }) 
+	 	  })
+	 	  $("#induce").click(function(){
+	 		   window.location = "${ctx }/car/induce";
+	 	  })
+	 	  
+	 	 
 	 })
 	</script>
 </head>
@@ -100,6 +105,7 @@
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;"/>
 					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
+					    	<input id="induce" type="button" value="&nbsp;导出&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

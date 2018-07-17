@@ -740,4 +740,75 @@ public class CarController {
         
 	}
 	
+	
+	//停车场进出记录导出
+		@RequestMapping(value="/car/induce")
+		public void exportExcelCar(HttpServletRequest request,
+				HttpServletResponse response,
+				@ModelAttribute CarInfo carInfo){
+			PageModel pageModel = new PageModel();
+			pageModel.setPageSize(Integer.MAX_VALUE);
+			
+			List<CarInfo> cars = carInfoService.selectByPage(carInfo, pageModel);
+
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			String sheetName = "停车场车辆信息";//sheet名称
+			HSSFSheet sheet = workbook.createSheet(sheetName);
+			sheet.setFitToPage(true);  
+		    sheet.setHorizontallyCenter(true);
+		    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+		    CellRangeAddress c = CellRangeAddress.valueOf("A2:B2");
+		    sheet.setAutoFilter(c);
+			sheet.setColumnWidth(0, 5800);
+	        sheet.setColumnWidth(1, 5800);
+	        int index=0;
+	        HSSFRow row_title = sheet.createRow(index++);
+	        row_title.setHeight((short) 600);// 设置行高 
+	        HSSFCell row_title0 = row_title.createCell(0);   
+	        row_title0.setCellValue(new HSSFRichTextString("停车场车辆信息")); 
+	        //合并表头单元格
+	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)1),ExcelUtil.createTitleStyle(workbook));
+	        sheet.addMergedRegion(new Region(
+	        0 //first row (0-based) from 行  
+	        ,(short)0 //first column (0-based) from 列     
+	        ,0//last row  (0-based)  to 行
+	        ,(short)1//last column  (0-based)  to 列     
+	        ));
+			
+	        String[] titles={"车主","车牌号"};
+	        HSSFRow row_head = sheet.createRow(index++);
+	        for (int i=0; i<titles.length;i++) {
+	        	HSSFCell cell = row_head.createCell(i);
+				cell.setCellValue(titles[i]);
+				cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			}
+			
+	        for (CarInfo entity : cars) {
+	        	HSSFRow row = sheet.createRow(index++);
+	        	//"车主",
+				HSSFCell cell0 = row.createCell(0);
+				if(entity.getName()!=null){
+					cell0.setCellValue(entity.getName());
+				}
+				//"车牌号",
+				HSSFCell cell1 = row.createCell(1);
+				if(entity.getCarno()!=null){
+					cell1.setCellValue(entity.getCarno());
+				}
+	        }
+	        try {
+				String fileName="停车场车辆信息";
+				ExcelUtil.write(request, response, workbook, fileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	
+	
+	
+	
+	
+	
+	
+	
 }
