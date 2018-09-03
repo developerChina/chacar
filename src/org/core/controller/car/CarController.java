@@ -398,6 +398,7 @@ public class CarController {
 			}
 			List<CarInfo> cars = carInfoService.selectByPage(carInfo, pageModel);
 			mv.addObject("cars", cars);
+			mv.addObject("carInfo", carInfo);
 			mv.addObject("pageModel", pageModel);
 			//添加停车场
 			List<CarPark> parks=carParkService.selectAll();
@@ -496,7 +497,7 @@ public class CarController {
 		if(flag.equals("1")){
 			mv.setViewName("car/carInfoAdd");
 		}else{
-			carInfoService.saveOrUpdateDept(carInfo); 
+			carInfoService.saveCar(carInfo); 
 			mv.setViewName("redirect:/car/carInfo");
 		}
 		return mv;
@@ -516,7 +517,7 @@ public class CarController {
 			mv.addObject("car", target);
 			mv.setViewName("car/carInfoUpdate");
 		}else{
-			carInfoService.saveOrUpdateDept(carInfo);
+			carInfoService.updateCar(carInfo);
 			mv.setViewName("redirect:/car/carInfo");
 		}
 		return mv;
@@ -741,7 +742,7 @@ public class CarController {
 	}
 	
 	
-	//停车场进出记录导出
+	//停车场车辆信息导出
 		@RequestMapping(value="/car/induce")
 		public void exportExcelCar(HttpServletRequest request,
 				HttpServletResponse response,
@@ -757,25 +758,34 @@ public class CarController {
 			sheet.setFitToPage(true);  
 		    sheet.setHorizontallyCenter(true);
 		    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
-		    CellRangeAddress c = CellRangeAddress.valueOf("A2:B2");
+		    CellRangeAddress c = CellRangeAddress.valueOf("A2:K2");
 		    sheet.setAutoFilter(c);
-			sheet.setColumnWidth(0, 5800);
-	        sheet.setColumnWidth(1, 5800);
+			sheet.setColumnWidth(0, 3800);
+	        sheet.setColumnWidth(1, 3800);
+	        sheet.setColumnWidth(2, 3800);
+	        sheet.setColumnWidth(3, 5800);
+	        sheet.setColumnWidth(4, 2800);
+	        sheet.setColumnWidth(5, 5800);
+	        sheet.setColumnWidth(6, 2800);
+	        sheet.setColumnWidth(7, 2800);
+	        sheet.setColumnWidth(8, 3800);
+	        sheet.setColumnWidth(9, 3800);
+	        sheet.setColumnWidth(10, 3800);
 	        int index=0;
 	        HSSFRow row_title = sheet.createRow(index++);
 	        row_title.setHeight((short) 600);// 设置行高 
 	        HSSFCell row_title0 = row_title.createCell(0);   
 	        row_title0.setCellValue(new HSSFRichTextString("停车场车辆信息")); 
 	        //合并表头单元格
-	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)1),ExcelUtil.createTitleStyle(workbook));
+	        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)10),ExcelUtil.createTitleStyle(workbook));
 	        sheet.addMergedRegion(new Region(
 	        0 //first row (0-based) from 行  
 	        ,(short)0 //first column (0-based) from 列     
 	        ,0//last row  (0-based)  to 行
-	        ,(short)1//last column  (0-based)  to 列     
+	        ,(short)10//last column  (0-based)  to 列     
 	        ));
 			
-	        String[] titles={"车主","车牌号"};
+	        String[] titles={"车主姓名","车牌号","联系电话","身份证号","工号","所在单位","班组","岗位职务","车辆品牌型号","车辆属性","颜色"};
 	        HSSFRow row_head = sheet.createRow(index++);
 	        for (int i=0; i<titles.length;i++) {
 	        	HSSFCell cell = row_head.createCell(i);
@@ -795,6 +805,51 @@ public class CarController {
 				if(entity.getCarno()!=null){
 					cell1.setCellValue(entity.getCarno());
 				}
+				//"tel",
+				HSSFCell cell2 = row.createCell(2);
+				if(entity.getTel()!=null){
+					cell2.setCellValue(entity.getTel());
+				}
+				//"idNumber",
+				HSSFCell cell3 = row.createCell(3);
+				if(entity.getIdNumber()!=null){
+					cell3.setCellValue(entity.getIdNumber());
+				}
+				//"workNumber",
+				HSSFCell cell4 = row.createCell(4);
+				if(entity.getWorkNumber()!=null){
+					cell4.setCellValue(entity.getWorkNumber());
+				}
+				//"company",
+				HSSFCell cell5 = row.createCell(5);
+				if(entity.getCompany()!=null){
+					cell5.setCellValue(entity.getCompany());
+				}
+				//"team",
+				HSSFCell cell6 = row.createCell(6);
+				if(entity.getTeam()!=null){
+					cell6.setCellValue(entity.getTeam());
+				}
+				//"job",
+				HSSFCell cell7 = row.createCell(7);
+				if(entity.getJob()!=null){
+					cell7.setCellValue(entity.getJob());
+				}
+				//"model",
+				HSSFCell cell8 = row.createCell(8);
+				if(entity.getModel()!=null){
+					cell8.setCellValue(entity.getModel());
+				}
+				//"attribute",
+				HSSFCell cell9 = row.createCell(9);
+				if(entity.getAttribute()!=null){
+					cell9.setCellValue(entity.getAttribute());
+				}
+				//"colour",
+				HSSFCell cell10 = row.createCell(10);
+				if(entity.getColour()!=null){
+					cell10.setCellValue(entity.getColour());
+				}
 	        }
 	        try {
 				String fileName="停车场车辆信息";
@@ -805,10 +860,134 @@ public class CarController {
 		}
 	
 	
+		//避免冲突 车辆导入模板			
+		@RequestMapping(value = "/car/exportTemplate")
+		public void exportTemplate(HttpServletRequest request, HttpServletResponse response) {
+			// 声明一个工作薄
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			HSSFSheet sheet = workbook.createSheet("车辆信息");
+			sheet.setFitToPage(true);
+			sheet.setHorizontallyCenter(true);
+			// 里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+			CellRangeAddress c = CellRangeAddress.valueOf("A1:L1");
+			sheet.setAutoFilter(c);
+			sheet.setColumnWidth(0, 2800);
+			sheet.setColumnWidth(1, 3800);
+	        sheet.setColumnWidth(2, 3800);
+	        sheet.setColumnWidth(3, 3800);
+	        sheet.setColumnWidth(4, 5800);
+	        sheet.setColumnWidth(5, 2800);
+	        sheet.setColumnWidth(6, 5800);
+	        sheet.setColumnWidth(7, 2800);
+	        sheet.setColumnWidth(8, 2800);
+	        sheet.setColumnWidth(9, 3800);
+	        sheet.setColumnWidth(10, 3800);
+	        sheet.setColumnWidth(11, 3800);
+			// 定义表格行索引
+			int index = 0;
+			// 添加头信息
+			String[] titles = { "编号","车主姓名","车牌号","联系电话","身份证号","工号","所在单位","班组","岗位职务","车辆品牌型号","车辆属性","颜色"};
+			HSSFRow row_head = sheet.createRow(index++);
+			for (int i = 0; i < titles.length; i++) {
+				HSSFCell cell = row_head.createCell(i);
+				cell.setCellValue(titles[i]);
+				cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+			}
+			try {
+				String fileName="车辆导入模板";
+				ExcelUtil.write(request, response, workbook, fileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//友好提示 此车辆已经被添加	
+		@ResponseBody
+		@RequestMapping(value="/car/addValidate")
+		public Object addValidate(HttpServletRequest request,
+				 HttpServletResponse response){
+			
+			String carno = request.getParameter("carno");
+			Map<String,Object> map = new HashMap<>();
+			String test = carInfoService.addValidate(carno);
+			if(!"".equals(test)){
+				map.put("status", false);
+				map.put("message", test);
+			}else{
+				map.put("status", true);
+				map.put("message", "验证通过");
+			}
+			return map;
+		}
 	
-	
-	
-	
-	
-	
+		/**
+		 * 批量导入车辆  改进
+		 */
+		@SuppressWarnings("unused")
+		@RequestMapping(value = "/car/importCar")
+		public ModelAndView importCar(ModelAndView mv,
+				@RequestParam(value = "file", required = false) MultipartFile file) {
+			Map<String, Object> map = new HashMap<>();
+			//执行excel的行索引
+			int excelRowIndex=0;
+			int success=0;
+			String failure="";
+			try {
+				InputStream is = file.getInputStream();
+				Workbook workbook = new HSSFWorkbook(is);
+				Sheet sheet = workbook.getSheetAt(0);
+				Row row = sheet.getRow(0);
+				int colNum = row.getPhysicalNumberOfCells();
+				List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
+				//名称
+				for (Map<Integer, String> data : list) {
+					CarInfo car=new CarInfo();
+					for (Integer key : data.keySet()) {
+						car.setName(data.get(1));
+						car.setCarno(data.get(2));
+						car.setTel(data.get(3));
+						car.setIdNumber(data.get(4));
+						car.setWorkNumber(data.get(5));
+						car.setCompany(data.get(6));
+						car.setTeam(data.get(7));
+						car.setJob(data.get(8));
+						car.setModel(data.get(9));
+						car.setAttribute(data.get(10));
+						car.setColour(data.get(11));
+					}
+					if(StringUtils.isNotBlank(car.getCarno())){
+						String test = carInfoService.addValidate(car.getCarno());
+						if(!"".equals(test)){
+							failure+="导入第"+(excelRowIndex+1)+"行数据出错:车牌号已经存在!<br/>";
+						}else{
+							carInfoService.saveCar(car);
+							success++;
+						}
+					}else{
+						failure+="导入第"+(excelRowIndex+1)+"行数据出错:车牌号为空!<br/>";
+					}
+					excelRowIndex++;
+				}
+				map.put("status", true);
+				map.put("message", "成功导入"+success+"行数据");
+				map.put("exception", failure);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				map.put("status", false);
+				map.put("message", "成功导入"+excelRowIndex+"行数据");
+				map.put("exception", "导入第"+(excelRowIndex+1)+"行数据出错："+e1.getMessage());
+			}
+			mv.addObject("map", map);
+			mv.setViewName("upload/resultImport");
+			return mv;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

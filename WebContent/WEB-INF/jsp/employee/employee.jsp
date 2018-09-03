@@ -82,7 +82,7 @@
 	    		   /** 获取到用户选中的复选框  */
 	    		   var checkedBoxs = boxs.filter(":checked");
 	    		   if(checkedBoxs.length < 1){
-	    			   $.ligerDialog.warn("请选择一个需要要绑定的员工！");
+	    			   $.ligerDialog.warn("请选择一个需要绑定的员工！");
 	    		   }else{
 	    			   /** 得到用户选中的所有的需要删除的ids */
 	    			   var ids = checkedBoxs.map(function(){
@@ -103,7 +103,7 @@
 	    		   /** 获取到用户选中的复选框  */
 	    		   var checkedBoxs = boxs.filter(":checked");
 	    		   if(checkedBoxs.length < 1){
-	    			   $.ligerDialog.warn("请选择一个需要要绑定的员工！");
+	    			   $.ligerDialog.warn("请选择一个需要解除绑定的员工！");
 	    		   }else{
 	    			   /** 得到用户选中的所有的需要删除的ids */
 	    			   var ids = checkedBoxs.map(function(){
@@ -145,20 +145,12 @@
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
-					    	职位：
-							    <select name="job_id" style="width:143px;" value="${job_id }">
-					    			<option value="0">--请选择职位--</option>
-					    			<c:forEach items="${requestScope.jobs }" var="job">
-					    				<option value="${job.id }"  <c:if test="${job_id==job.id }">selected </c:if> >${job.name }</option>
-					    			</c:forEach>
-					    		</select>
 					    	姓名：<input type="text" name="name" value="${model.name }">
 					    	身份证号码：<input type="text" name="cardId" maxlength="18" value="${model.cardId }">
-					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>
-					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
-					    	<input id="add" type="button" value="&nbsp;添加&nbsp;"/>
-					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
-					    </td>
+					    	员工编号：<input type="text" name="hobby" value="${model.hobby }">
+					    	手机：<input type="text" name="phone" value="${model.phone }">
+					    	员工卡号：<input type="text" name="cardno" value="${model.cardno }">&nbsp;
+					    	</td>
 					  </tr>
 					  <tr><td class="font3"><hr></td></tr>
 					  <tr>
@@ -169,16 +161,27 @@
 					    			<option value="1" <c:if test="${model.carstatus==1 }">selected </c:if> >已授权</option>
 					    			<option value="0" <c:if test="${model.carstatus==0 }">selected </c:if> >未授权</option>
 					    		</select>
-					    	手机：<input type="text" name="phone" value="${model.phone }">
-					    	所属部门：&nbsp;<select  name="dept_id" style="width:166px;" value="${dept_id }">
+					    	
+					    	所属部门：<select  name="dept_id" style="width:166px;" value="${dept_id }">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
 					    				<option value="${dept.id }"  <c:if test="${dept_id==dept.id }">selected </c:if>  >${dept.name }</option>
 					    			</c:forEach>
-							</select>&nbsp;
+							</select>
 					    	
+					    	职位：<select name="job_id" style="width:143px;" value="${job_id }">
+					    			<option value="0">--请选择职位--</option>
+					    			<c:forEach items="${requestScope.jobs }" var="job">
+					    				<option value="${job.id }"  <c:if test="${job_id==job.id }">selected </c:if> >${job.name }</option>
+					    			</c:forEach>
+					    		</select>&nbsp;
+					    	<input id="search" type="button" value="&nbsp;搜索&nbsp;"/>	
 					    	<input id="bingd" type="button" value="&nbsp;绑定权限  &nbsp;"/>
 					    	<input id="unbingd" type="button" value="&nbsp;解除绑定 &nbsp;"/>
+					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
+					    	<input id="add" type="button" value="&nbsp;添加&nbsp;"/>
+					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
+					    
 					    </td>
 					  </tr>
 					</table>

@@ -40,4 +40,19 @@ public interface CarInfoService {
 	 * 保存或者修改
 	 */
 	void saveOrUpdateDept(CarInfo car);
+
+	
+	
+	/**
+	 * 只执行保存，通过ajax校验车牌号是否重复
+	 */
+	void saveCar(CarInfo carInfo);
+	/**
+	 * 只执行修改，车牌号在jsp控制不可修改
+	 */
+	void updateCar(CarInfo carInfo);
+	/**
+	 * 添加时ajax校验车牌号是否重复
+	 */
+	String addValidate(String carno);
 }

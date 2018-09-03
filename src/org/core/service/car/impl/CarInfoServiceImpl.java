@@ -73,4 +73,24 @@ public class CarInfoServiceImpl implements CarInfoService{
 		}
 	}
 
+	@Override
+	public void saveCar(CarInfo carInfo) {
+		dao.save(carInfo);
+	}
+
+	@Override
+	public void updateCar(CarInfo carInfo) {
+		dao.update(carInfo);
+	}
+
+	@Override
+	public String addValidate(String carno) {
+		CarInfo exits=dao.selectByCarno(carno);
+		String text = "";
+		if(exits!=null){
+			text="此车辆已经添加!请勿重复添加,当前车主:"+exits.getName();
+		}
+		return text;
+	}
+
 }

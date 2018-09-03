@@ -68,7 +68,26 @@
 		    	<table>
 		    		<tr>
 		    			<td class="font3 fftd">车主姓名：<input type="text" name="name" id="name" size="20" value="${car.name }"/></td>
-		    			<td class="font3 fftd">车牌号：<input type="text" name="carno" id="carno" size="20" value="${car.carno }"/></td>
+		    			<td class="font3 fftd">车牌号：&nbsp;&nbsp;<input type="hidden" name="carno" id="carno" size="20" value="${car.carno}"/>${car.carno}</td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd">联系电话：<input type="text" name="tel" id="tel" size="20" value="${car.tel}"/></td>
+		    			<td class="font3 fftd">身份证号：<input type="text" name="idNumber" id="idNumber" size="20" value="${car.idNumber}"/></td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd">工号：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="workNumber" id="workNumber" size="20" value="${car.workNumber}"/></td>
+		    			<td class="font3 fftd">所在单位：<input type="text" name="company" id="company" size="20" value="${car.company}"/></td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd">班组：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="team" id="team" size="20" value="${car.team}"/></td>
+		    			<td class="font3 fftd">岗位职务：<input type="text" name="job" id="job" size="20" value="${car.job}"/></td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd">品牌型号：<input type="text" name="model" id="model" size="20" value="${car.model}"/></td>
+		    			<td class="font3 fftd">车辆属性：<input type="text" name="attribute" id="attribute" size="20" value="${car.attribute}"/></td>
+		    		</tr>
+		    		<tr>
+		    			<td class="font3 fftd">颜色：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="colour" id="colour" size="20" value="${car.colour}"/></td>
 		    		</tr>
 		    	</table>
 		    </td></tr>

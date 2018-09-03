@@ -31,7 +31,7 @@ public class Employee implements java.io.Serializable{
 	private String race;				// 名族
 	private String education;			// 学历
 	private String speciality;			// 专业
-	private String hobby;				// 爱好
+	private String hobby;				// 爱好-->被员工编号使用了。
 	private String remark;				// 备注
 	private java.util.Date createDate;	// 建档日期
 	private String cardno;				//员工卡号

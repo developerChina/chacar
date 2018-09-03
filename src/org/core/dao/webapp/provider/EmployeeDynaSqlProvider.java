@@ -31,19 +31,25 @@ public class EmployeeDynaSqlProvider {
 						WHERE(" JOB_ID = #{employee.job.id} ");
 					}
 					if(employee.getName() != null && !employee.getName().equals("")){
-						WHERE("  NAME LIKE CONCAT ('%',#{employee.name},'%') ");
+						WHERE("  NAME LIKE CONCAT('%',#{employee.name},'%') ");
 					}
 					if(employee.getPhone() != null && !employee.getPhone().equals("")){
-						WHERE(" phone LIKE CONCAT ('%',#{employee.phone},'%') ");
+						WHERE(" phone LIKE CONCAT('%',#{employee.phone},'%') ");
 					}
 					if(employee.getCardId() != null && !employee.getCardId().equals("") ){
-						WHERE(" card_id LIKE CONCAT ('%',#{employee.cardId},'%') ");
+						WHERE(" card_id LIKE CONCAT('%',#{employee.cardId},'%') ");
 					}
 					if(employee.getCarstatus() != null && employee.getCarstatus() != -1 ){
 						WHERE(" carstatus = #{employee.carstatus} ");
 					}
 					if(employee.getSex()!= null && employee.getSex() != 0){
 						WHERE("sex = #{employee.sex}");
+					}
+					if(employee.getHobby()!=null && !employee.getHobby().equals("")){
+						WHERE("hobby = #{employee.hobby}");
+					}
+					if(employee.getCardno()!=null && !employee.getCardno().equals("")){
+						WHERE("cardno = #{employee.cardno}");
 					}
 				}
 			}
@@ -69,19 +75,25 @@ public class EmployeeDynaSqlProvider {
 						WHERE(" JOB_ID = #{employee.job.id} ");
 					}
 					if(employee.getName() != null && !employee.getName().equals("")){
-						WHERE("  NAME LIKE CONCAT ('%',#{employee.name},'%') ");
+						WHERE("  NAME LIKE CONCAT('%',#{employee.name},'%') ");
 					}
 					if(employee.getPhone() != null && !employee.getPhone().equals("")){
-						WHERE(" phone LIKE CONCAT ('%',#{employee.phone},'%') ");
+						WHERE(" phone LIKE CONCAT('%',#{employee.phone},'%') ");
 					}
 					if(employee.getCardId() != null && !employee.getCardId().equals("") ){
-						WHERE(" card_id LIKE CONCAT ('%',#{employee.cardId},'%') ");
+						WHERE(" card_id LIKE CONCAT('%',#{employee.cardId},'%') ");
 					}
 					if(employee.getCarstatus() != null && employee.getCarstatus() != -1 ){
 						WHERE(" carstatus = #{employee.carstatus} ");
 					}
 					if(employee.getSex()!= null && employee.getSex() != 0){
 						WHERE("sex = #{employee.sex}");
+					}
+					if(employee.getHobby()!=null && !employee.getHobby().equals("")){
+						WHERE("hobby = #{employee.hobby}");
+					}
+					if(employee.getCardno()!=null && !employee.getCardno().equals("")){
+						WHERE("cardno = #{employee.cardno}");
 					}
 				}
 			}

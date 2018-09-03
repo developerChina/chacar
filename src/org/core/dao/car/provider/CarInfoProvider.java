@@ -18,7 +18,7 @@ public class CarInfoProvider {
 				Map<String, Object> map=BeanUtil.getFiledsInfo(entity,exceptFields);
 				for (Map.Entry<String, Object> entry : map.entrySet()) { 
 					VALUES(entry.getKey(), "#{"+entry.getKey()+"}");
-				} 
+				}
 			}
 		}.toString();
 	}
@@ -44,12 +44,13 @@ public class CarInfoProvider {
 				if(params.get("entity") != null){
 					CarInfo entity = (CarInfo) params.get("entity");
 					if(entity.getName() != null && !entity.getName().equals("")){
-						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+						WHERE("  name LIKE CONCAT('%',#{entity.name},'%') ");
 					}
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
-						WHERE("  carno LIKE CONCAT ('%',#{entity.carno},'%') ");
+						WHERE("  carno LIKE CONCAT('%',#{entity.carno},'%') ");
 					}
 				}
+				ORDER_BY("carno desc");
 			}
 		}.toString();
 		
@@ -67,10 +68,10 @@ public class CarInfoProvider {
 				if(params.get("entity") != null){
 					CarInfo entity = (CarInfo) params.get("entity");
 					if(entity.getName() != null && !entity.getName().equals("")){
-						WHERE("  name LIKE CONCAT ('%',#{entity.name},'%') ");
+						WHERE("  name LIKE CONCAT('%',#{entity.name},'%') ");
 					}
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
-						WHERE("  carno LIKE CONCAT ('%',#{entity.carno},'%') ");
+						WHERE("  carno LIKE CONCAT('%',#{entity.carno},'%') ");
 					}
 				}
 			}

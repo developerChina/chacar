@@ -124,6 +124,15 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>车主姓名</td>
 			  <td>车牌号</td>
+			  <td>联系电话</td>
+			  <td>身份证号</td>
+			  <td>工号</td>
+			  <td>所在单位</td>
+			  <td>班组</td>
+			  <td>岗位及职务</td>
+			  <td>车辆品牌型号</td>
+			  <td>车辆属性</td>
+			  <td>颜色</td>
 			  <!-- 
 			  <td>车位数</td>
 			   -->
@@ -134,6 +143,15 @@
 					<td><input type="checkbox" id="box_${stat.index}" value="${car.id}"></td>
 					 <td>${car.name }</td>
 					  <td>${car.carno }</td>
+					  <td>${car.tel}</td>
+					  <td>${car.idNumber}</td>
+					  <td>${car.workNumber}</td>
+					  <td>${car.company}</td>
+					  <td>${car.team}</td>
+					  <td>${car.job}</td>
+					  <td>${car.model}</td>
+					  <td>${car.attribute}</td>
+					  <td>${car.colour}</td>
 					  <!-- 
 					  <td>${park.num }</td>
 					   -->

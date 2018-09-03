@@ -115,8 +115,8 @@
 					    <td class="font3">
 					    	<!-- 隐藏表单，flag表示添加标记 -->
     	 					<input type="hidden" name="flag" value="1">
-					    	车主姓名：<input type="text" name="name">
-					    	车牌号：<input type="text" name="carno">
+					    	车主姓名：<input type="text" name="name" value="${carInfo.name}">
+					    	车牌号：<input type="text" name="carno" value="${carInfo.carno }">
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    </td>
 					  </tr>
@@ -158,14 +158,32 @@
 		  <table width="100%" border="1" cellpadding="5" cellspacing="0" style="border:#c2c6cc 1px solid; border-collapse:collapse;">
 		    <tr class="main_trbg_tit" align="center">
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-			  <td>车主姓名</td>
+			   <td>车主姓名</td>
 			  <td>车牌号</td>
+			  <td>联系电话</td>
+			  <td>身份证号</td>
+			  <td>工号</td>
+			  <td>所在单位</td>
+			  <td>班组</td>
+			  <td>岗位及职务</td>
+			  <td>车辆品牌型号</td>
+			  <td>车辆属性</td>
+			  <td>颜色</td>
 			</tr>
 			<c:forEach items="${requestScope.cars}" var="car" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${car.carno}"></td>
-					<td>${car.name }</td>
-					<td>${car.carno }</td>
+					  <td>${car.name}</td>
+					  <td>${car.carno}</td>
+					  <td>${car.tel}</td>
+					  <td>${car.idNumber}</td>
+					  <td>${car.workNumber}</td>
+					  <td>${car.company}</td>
+					  <td>${car.team}</td>
+					  <td>${car.job}</td>
+					  <td>${car.model}</td>
+					  <td>${car.attribute}</td>
+					  <td>${car.colour}</td>
 				</tr>
 			</c:forEach>
 		  </table>
