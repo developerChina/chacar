@@ -364,16 +364,23 @@ public class CarController {
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);
 		}
+		String pageParam="";
+		if(carAuthority.getCarno()!=null&&!"".equals(carAuthority.getCarno())){
+			pageParam+="&carno="+carAuthority.getCarno();
+		}
+		if(carAuthority.getName()!=null&&!"".equals(carAuthority.getName())){
+			pageParam+="&name="+carAuthority.getName();
+		}
+		mv.addObject("name", carAuthority.getName());
+		mv.addObject("pageParam", pageParam);
+		
+		
 		List<CarAuthority> authoritys = carAuthorityService.selectByPage(carAuthority, pageModel);
 		mv.addObject("authoritys", authoritys);
 		mv.addObject("pageModel", pageModel);
 		mv.addObject("carAuthority", carAuthority);
 		mv.setViewName("car/carAuthority");
-		String pageParam="";
-		if(carAuthority.getCarno()!=null){
-			pageParam+="&carno="+carAuthority.getCarno();
-		}
-		mv.addObject("pageParam", pageParam);
+		
 		return mv;
 	}
 	
@@ -396,6 +403,20 @@ public class CarController {
 			if(pageIndex != null){
 				pageModel.setPageIndex(pageIndex);
 			}
+			String pageParam="";
+			if(carInfo.getName()!=null&&!"".equals(carInfo.getName())){
+				pageParam+="&name="+carInfo.getName();
+			}
+			if(carInfo.getCarno()!=null&&!"".equals(carInfo.getCarno())){
+				pageParam+="&carno="+carInfo.getCarno();
+			}
+			if(carInfo.getCompany()!=null&&!"".equals(carInfo.getCompany())){
+				pageParam+="&company="+carInfo.getCompany();
+			}
+			if(carInfo.getWorkNumber()!=null&&!"".equals(carInfo.getWorkNumber())){
+				pageParam+="&workNumber="+carInfo.getWorkNumber();
+			}
+			mv.addObject("pageParam", pageParam);
 			List<CarInfo> cars = carInfoService.selectByPage(carInfo, pageModel);
 			mv.addObject("cars", cars);
 			mv.addObject("carInfo", carInfo);
@@ -467,20 +488,26 @@ public class CarController {
 		if(pageIndex != null){
 			pageModel.setPageIndex(pageIndex);
 		}
+		String pageParam="";
+		if(carInfo.getName()!=null&&!"".equals(carInfo.getName())){
+			pageParam+="&name="+carInfo.getName();
+		}
+		if(carInfo.getCarno()!=null&&!"".equals(carInfo.getCarno())){
+			pageParam+="&carno="+carInfo.getCarno();
+		}
+		if(carInfo.getCompany()!=null&&!"".equals(carInfo.getCompany())){
+			pageParam+="&company="+carInfo.getCompany();
+		}
+		if(carInfo.getWorkNumber()!=null&&!"".equals(carInfo.getWorkNumber())){
+			pageParam+="&workNumber="+carInfo.getWorkNumber();
+		}
+		mv.addObject("pageParam", pageParam);
+		
 		List<CarInfo> cars = carInfoService.selectByPage(carInfo, pageModel);
 		mv.addObject("cars", cars);
 		mv.addObject("pageModel", pageModel);
 		mv.addObject("carInfo", carInfo);
 		mv.setViewName("car/carInfo");
-		
-		String pageParam="";
-		if(carInfo.getName()!=null){
-			pageParam+="&name="+carInfo.getName();
-		}
-		if(carInfo.getCarno()!=null){
-			pageParam+="&carno="+carInfo.getCarno();
-		}
-		mv.addObject("pageParam", pageParam);
 		
 		return mv;
 	}

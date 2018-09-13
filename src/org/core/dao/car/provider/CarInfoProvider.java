@@ -49,6 +49,12 @@ public class CarInfoProvider {
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
 						WHERE("  carno LIKE CONCAT('%',#{entity.carno},'%') ");
 					}
+					if(entity.getCompany() != null && !entity.getCompany().equals("")){
+						WHERE("  company LIKE CONCAT('%',#{entity.company},'%') ");
+					}
+					if(entity.getWorkNumber() != null && !entity.getWorkNumber().equals("")){
+						WHERE("  workNumber LIKE CONCAT('%',#{entity.workNumber},'%') ");
+					}
 				}
 				ORDER_BY("carno desc");
 			}
@@ -72,6 +78,12 @@ public class CarInfoProvider {
 					}
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
 						WHERE("  carno LIKE CONCAT('%',#{entity.carno},'%') ");
+					}
+					if(entity.getCompany() != null && !entity.getCompany().equals("")){
+						WHERE("  company LIKE CONCAT('%',#{entity.company},'%') ");
+					}
+					if(entity.getWorkNumber() != null && !entity.getWorkNumber().equals("")){
+						WHERE("  workNumber LIKE CONCAT('%',#{entity.workNumber},'%') ");
 					}
 				}
 			}

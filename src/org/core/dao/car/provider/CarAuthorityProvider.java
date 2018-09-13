@@ -48,6 +48,9 @@ public class CarAuthorityProvider {
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
 						WHERE("  carno LIKE CONCAT('%',#{entity.carno},'%') ");
 					}
+					if(entity.getName() != null && !entity.getName().equals("")){
+						WHERE(" carno in ("+ entity.getName() +" ) ");
+					}
 				}
 				ORDER_BY("carno desc,passageway_id desc");
 			}
@@ -68,6 +71,9 @@ public class CarAuthorityProvider {
 					CarAuthority entity = (CarAuthority) params.get("entity");
 					if(entity.getCarno() != null && !entity.getCarno().equals("")){
 						WHERE("  carno LIKE CONCAT('%',#{entity.carno},'%') ");
+					}
+					if(entity.getName() != null && !entity.getName().equals("")){
+						WHERE(" carno in ("+ entity.getName() +" ) ");
 					}
 				}
 			}

@@ -58,6 +58,21 @@ public class CarAuthorityServiceImpl implements CarAuthorityService{
 
 	@Override
 	public List<CarAuthority> selectByPage(CarAuthority entity,PageModel pageModel) {
+		String vague = entity.getName();
+		if(vague!=null && !"".equals(vague)){
+			String nos = "";
+			List<CarInfo> vagueI = carInfodao.vagueI(vague);
+			if(vagueI!=null&&vagueI.size()>0){
+				for (CarInfo Single : vagueI) {
+					nos+="'"+Single.getCarno()+"'"+",";
+				}
+				nos = nos.substring(0,nos.length() - 1);
+				entity.setName(nos);
+			}else{
+				entity.setName("000000");
+			}
+		}
+		
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);

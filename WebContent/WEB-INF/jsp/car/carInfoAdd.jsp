@@ -41,7 +41,7 @@
 				  type: 'post',
 				  url: '${ctx}/car/addValidate',
 				  data: {
-					  "carno":carno.val(),
+					  "carno":carno.val()
 				  },
 				  success: function(data){
 				  		if(data.status){

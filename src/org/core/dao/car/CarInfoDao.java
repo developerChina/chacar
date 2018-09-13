@@ -36,5 +36,8 @@ public interface CarInfoDao {
 
 	@Select("select * from "+CarInfo.tableName+" where carno = #{carno}")
 	CarInfo selectByCarno(String carno);
+
+	@Select("select * from "+CarInfo.tableName+" where  name LIKE CONCAT('%',#{vague},'%')")
+	List<CarInfo> vagueI(String vague);
 	
 }

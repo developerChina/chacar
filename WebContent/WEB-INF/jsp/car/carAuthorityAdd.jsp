@@ -117,6 +117,8 @@
     	 					<input type="hidden" name="flag" value="1">
 					    	车主姓名：<input type="text" name="name" value="${carInfo.name}">
 					    	车牌号：<input type="text" name="carno" value="${carInfo.carno }">
+					    	所在单位：<input type="text" name="company" value="${carInfo.company}">
+					    	工号：<input type="text" name="workNumber" value="${carInfo.workNumber}">
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    </td>
 					  </tr>
@@ -197,7 +199,7 @@
 		  	        pageSize="${requestScope.pageModel.pageSize}" 
 		  	        recordCount="${requestScope.pageModel.recordCount}" 
 		  	        style="digg"
-		  	        submitUrl="${ctx}/car/addcarAuthority?pageIndex={0}&flag=1"/>
+		  	        submitUrl="${ctx}/car/addcarAuthority?pageIndex={0}&flag=1${pageParam}"/>
 		  </td>
 	  </tr>
 	</table>
