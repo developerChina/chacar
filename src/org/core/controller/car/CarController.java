@@ -371,11 +371,16 @@ public class CarController {
 		if(carAuthority.getName()!=null&&!"".equals(carAuthority.getName())){
 			pageParam+="&name="+carAuthority.getName();
 		}
+		if(carAuthority.getPark_id()!=null&&!"".equals(carAuthority.getPark_id())){
+			pageParam+="&park_id="+carAuthority.getPark_id();
+		}
 		mv.addObject("name", carAuthority.getName());
 		mv.addObject("pageParam", pageParam);
-		
+		mv.addObject("park_id", carAuthority.getPark_id());
 		
 		List<CarAuthority> authoritys = carAuthorityService.selectByPage(carAuthority, pageModel);
+		List<CarPark> carParks=carParkService.selectAll();
+		mv.addObject("carParks", carParks);
 		mv.addObject("authoritys", authoritys);
 		mv.addObject("pageModel", pageModel);
 		mv.addObject("carAuthority", carAuthority);
@@ -1009,7 +1014,80 @@ public class CarController {
 			return mv;
 		}
 		
-		
+		//车辆授权信息导出
+				@RequestMapping(value="/authority/induce")
+				public void exportExcelCarAuthority(HttpServletRequest request,
+						HttpServletResponse response,
+						@ModelAttribute CarAuthority carAuthority){
+					PageModel pageModel = new PageModel();
+					pageModel.setPageSize(Integer.MAX_VALUE);
+					
+					List<CarAuthority> authoritys = carAuthorityService.selectByPage(carAuthority, pageModel);
+
+					HSSFWorkbook workbook = new HSSFWorkbook();
+					String sheetName = "车辆授权信息";//sheet名称
+					HSSFSheet sheet = workbook.createSheet(sheetName);
+					sheet.setFitToPage(true);  
+				    sheet.setHorizontallyCenter(true);
+				    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+				    CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");
+				    sheet.setAutoFilter(c);
+					sheet.setColumnWidth(0, 3800);
+			        sheet.setColumnWidth(1, 3800);
+			        sheet.setColumnWidth(2, 5800);
+			        sheet.setColumnWidth(3, 5800);
+			        int index=0;
+			        HSSFRow row_title = sheet.createRow(index++);
+			        row_title.setHeight((short) 600);// 设置行高 
+			        HSSFCell row_title0 = row_title.createCell(0);   
+			        row_title0.setCellValue(new HSSFRichTextString("车辆授权信息")); 
+			        //合并表头单元格
+			        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)3),ExcelUtil.createTitleStyle(workbook));
+			        sheet.addMergedRegion(new Region(
+			        0 //first row (0-based) from 行  
+			        ,(short)0 //first column (0-based) from 列     
+			        ,0//last row  (0-based)  to 行
+			        ,(short)3//last column  (0-based)  to 列     
+			        ));
+					
+			        String[] titles={"车主姓名","车牌号","出入口","所属车场"};
+			        HSSFRow row_head = sheet.createRow(index++);
+			        for (int i=0; i<titles.length;i++) {
+			        	HSSFCell cell = row_head.createCell(i);
+						cell.setCellValue(titles[i]);
+						cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+					}
+					
+			        for (CarAuthority entity : authoritys) {
+			        	HSSFRow row = sheet.createRow(index++);
+			        	//"车主",
+						HSSFCell cell0 = row.createCell(0);
+						if(entity.getName()!=null){
+							cell0.setCellValue(entity.getName());
+						}
+						//"车牌号",
+						HSSFCell cell1 = row.createCell(1);
+						if(entity.getCarno()!=null){
+							cell1.setCellValue(entity.getCarno());
+						}
+						//"出入口",
+						HSSFCell cell2 = row.createCell(2);
+						if(entity.getCarPassageway()!=null){
+							cell2.setCellValue(entity.getCarPassageway().getName());
+						}
+						//"所属车场",
+						HSSFCell cell3 = row.createCell(3);
+						if(entity.getCarPark()!=null){
+							cell3.setCellValue(entity.getCarPark().getName());
+						}
+			        }
+			        try {
+						String fileName="车辆授权信息";
+						ExcelUtil.write(request, response, workbook, fileName);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 		
 		
 		

@@ -51,6 +51,9 @@ public class CarAuthorityProvider {
 					if(entity.getName() != null && !entity.getName().equals("")){
 						WHERE(" carno in ("+ entity.getName() +" ) ");
 					}
+					if(entity.getPark_id() != null && !entity.getPark_id().equals("")){
+						WHERE(" passageway_id in ("+ entity.getPark_id() +" ) ");
+					}
 				}
 				ORDER_BY("carno desc,passageway_id desc");
 			}
@@ -59,7 +62,6 @@ public class CarAuthorityProvider {
 		if(params.get("pageModel") != null){
 			sql += " limit #{pageModel.firstLimitParam} , #{pageModel.pageSize}  ";
 		}
-		
 		return sql;
 	}
 	public String count(Map<String, Object> params) {
@@ -74,6 +76,9 @@ public class CarAuthorityProvider {
 					}
 					if(entity.getName() != null && !entity.getName().equals("")){
 						WHERE(" carno in ("+ entity.getName() +" ) ");
+					}
+					if(entity.getPark_id() != null && !entity.getPark_id().equals("")){
+						WHERE(" passageway_id in ("+ entity.getPark_id() +" ) ");
 					}
 				}
 			}

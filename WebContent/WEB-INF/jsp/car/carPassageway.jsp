@@ -95,8 +95,8 @@
 					    	&nbsp;&nbsp;所属车场：
 					    	<select name="park_id" style="width:200px;">
 				    			<option value="0">--请选择车场--</option> 
-				    			<c:forEach items="${requestScope.carParks }" var="carPark">
-				    				<option value="${carPark.id }"  <c:if test="${carPark.id==carPassageway.park_id }">selected </c:if> >${carPark.name }</option>
+				    			<c:forEach items="${requestScope.carParks}" var="carPark">
+				    				<option value="${carPark.id}"  <c:if test="${carPark.id==carPassageway.park_id}">selected </c:if> >${carPark.name }</option>
 				    			</c:forEach>
 				    		</select>
 					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;

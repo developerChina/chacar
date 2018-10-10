@@ -42,7 +42,7 @@
 		    	})
 		    	
 		    	
-		 	   /** 删除员工绑定点击事件 */
+		 	   /** 删除绑定点击事件 */
 		 	   $("#delete").click(function(){
 		 		   /** 获取到选中的复选框  */
 		 		   var checkedBoxs = boxs.filter(":checked");
@@ -61,10 +61,23 @@
 		 			   });
 		 		   }
 		 	   })
-		 	   /** 添加员工绑定点击事件 */
+		 	   /** 添加绑定点击事件 */
 		 	   $("#add").click(function(){
 		 		   window.location = "${ctx }/car/addcarAuthority?flag=1";
-		 	   })	
+		 	   })
+		 	   
+		 	  $("#search").click(function(){
+		 		   var actionURL = $("#empform").attr("action");
+		 	       $("#empform").attr("action","${ctx}/car/carAuthority");
+		 	       $("#empform").submit(); 
+		 	   }) 
+			 /** 给导出添加绑定点击事件 */
+			 $("#induce").click(function(){
+			 		  var actionURL = $("#empform").attr("action");
+			 	       $("#empform").attr("action","${ctx}/authority/induce");
+			 	       $("#empform").submit();
+			 	   })
+		 	 
 	  })
 	</script>
 </head>
@@ -86,15 +99,23 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/car/carAuthority">
+			  	<form name="empform" method="post" id="empform">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
 					    	车主姓名：<input type="text" name="name" value="${name}">
 					    	车牌号：<input type="text" name="carno" value="${carAuthority.carno }">
-					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
+					    	所属车场：
+					    	<select name="park_id" >
+				    			<option value="0">--请选择车场--</option> 
+				    			<c:forEach items="${requestScope.carParks}" var="carPark">
+				    				<option value="${carPark.id}" <c:if test="${carPark.id==park_id}">selected </c:if> >${carPark.name}</option>
+				    			</c:forEach>
+				    		</select>
+					    	<input type="button" id="search" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;授权&nbsp;&nbsp;"/>
+					    	<input id="induce" type="button" value="&nbsp;导出&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>
@@ -113,14 +134,16 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>车主姓名</td>
 			  <td>车牌号码</td>
+			  <td>出入口</td>
 			  <td>所属车场</td>
 			</tr>
 			<c:forEach items="${requestScope.authoritys}" var="authority" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg">
 					<td><input type="checkbox" id="box_${stat.index}" value="${authority.id}"></td>
-					 <td>${authority.name }</td>
-					 <td>${authority.carno }</td>
-					 <td>${authority.carPark.name }</td>
+					 <td>${authority.name}</td>
+					 <td>${authority.carno}</td>
+					 <td>${authority.carPassageway.name}</td>
+					 <td>${authority.carPark.name}</td>
 				</tr>
 			</c:forEach>
 		  </table>

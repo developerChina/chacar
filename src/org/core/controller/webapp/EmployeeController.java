@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.core.domain.car.CarAuthority;
 import org.core.domain.webapp.Access;
 import org.core.domain.webapp.Dept;
 import org.core.domain.webapp.Elevator;
@@ -51,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @Description: 处理员工请求控制器 <br>
- * 				网站：<a href="http://www.fkit.org">疯狂Java</a>
+ *               网站：<a href="http://www.fkit.org">疯狂Java</a>
  * @author 肖文吉 36750064@qq.com
  * @version V1.0
  */
@@ -64,23 +65,22 @@ public class EmployeeController {
 	@Qualifier("hrmService")
 	private HrmService hrmService;
 
-	@Autowired 
+	@Autowired
 	@Qualifier("accessgroupService")
 	private AccessGroupService accessgroupService;
-	
+
 	@Autowired
 	@Qualifier("passagewayGroupService")
 	private PassagewayGroupService passagewayGroupService;
-	
+
 	@Autowired
 	@Qualifier("groupService")
 	private GroupService groupService;
-	
+
 	@Autowired
 	@Qualifier("trajectoryEmpService")
 	private TrajectoryEmpService trajectoryEmpService;
-	
-	
+
 	/**
 	 * 处理查询请求
 	 * 
@@ -96,8 +96,8 @@ public class EmployeeController {
 	 *            model
 	 */
 	@RequestMapping(value = "/employee/selectEmployee")
-	public String selectEmployee(Integer pageIndex, Integer job_id, Integer dept_id, 
-			@ModelAttribute Employee employee,Model model) {
+	public String selectEmployee(Integer pageIndex, Integer job_id, Integer dept_id, @ModelAttribute Employee employee,
+			Model model) {
 		// 模糊查询时判断是否有关联对象传递，如果有，创建并封装关联对象
 		this.genericAssociation(job_id, dept_id, employee);
 		// 创建分页对象
@@ -117,28 +117,28 @@ public class EmployeeController {
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("depts", depts);
 		model.addAttribute("pageModel", pageModel);
-		//分页参数
+		// 分页参数
 		model.addAttribute("model", employee);
 		model.addAttribute("job_id", job_id);
 		model.addAttribute("dept_id", dept_id);
-		String pageParam="";
-		if(job_id!=null&&job_id>0){
-			pageParam+="&job_id="+job_id;
+		String pageParam = "";
+		if (job_id != null && job_id > 0) {
+			pageParam += "&job_id=" + job_id;
 		}
-		if(StringUtils.isNotBlank(employee.getName())){
-			pageParam+="&name="+employee.getName();
+		if (StringUtils.isNotBlank(employee.getName())) {
+			pageParam += "&name=" + employee.getName();
 		}
-		if(StringUtils.isNotBlank(employee.getCardId())){
-			pageParam+="&cardId="+employee.getCardId();
+		if (StringUtils.isNotBlank(employee.getCardId())) {
+			pageParam += "&cardId=" + employee.getCardId();
 		}
-		if(employee.getCarstatus()!=null&&employee.getCarstatus()>0){
-			pageParam+="&carstatus="+employee.getCarstatus();
+		if (employee.getCarstatus() != null && employee.getCarstatus() > 0) {
+			pageParam += "&carstatus=" + employee.getCarstatus();
 		}
-		if(StringUtils.isNotBlank(employee.getPhone())){
-			pageParam+="&phone="+employee.getPhone();
+		if (StringUtils.isNotBlank(employee.getPhone())) {
+			pageParam += "&phone=" + employee.getPhone();
 		}
-		if(dept_id!=null&&dept_id>0){
-			pageParam+="&dept_id="+dept_id;
+		if (dept_id != null && dept_id > 0) {
+			pageParam += "&dept_id=" + dept_id;
 		}
 		model.addAttribute("pageParam", pageParam);
 		// 返回员工页面
@@ -148,64 +148,68 @@ public class EmployeeController {
 
 	@RequestMapping(value = "/employee/bingdEmployee")
 	@ResponseBody
-	public Object bingdEmployee(HttpServletRequest request,HttpServletResponse response) {
-		String ids=request.getParameter("ids");
-		String flag=request.getParameter("flag");
-		//所有门禁
-		List<Access> agAccesss=accessgroupService.selectAGSubordinate();
-		//所有通道
-		List<Passageway> passList=passagewayGroupService.selectPGSubordinate();
-		//所有电梯
-		List<Elevator> egElevators= groupService.selectEGSubordinate();
-		Map<String,Object> map = new HashMap<>();
-		String b="授权操作成功";
+	public Object bingdEmployee(HttpServletRequest request, HttpServletResponse response) {
+		String ids = request.getParameter("ids");
+		String flag = request.getParameter("flag");
+		// 所有门禁
+		List<Access> agAccesss = accessgroupService.selectAGSubordinate();
+		// 所有通道
+		List<Passageway> passList = passagewayGroupService.selectPGSubordinate();
+		// 所有电梯
+		List<Elevator> egElevators = groupService.selectEGSubordinate();
+		Map<String, Object> map = new HashMap<>();
+		String b = "授权操作成功";
 		map.put("message", b);
 		// 分解id字符串
 		try {
 			String[] idArray = ids.split(",");
-			for(String id : idArray){
+			for (String id : idArray) {
 				// 根据id查询员工
 				Employee employee = hrmService.findEmployeeById(Integer.parseInt(id));
-				//授权
-				GrantAuthorization(agAccesss,passList,egElevators,employee.getCardno(),Integer.parseInt(flag));
-				//修改状态
+				// 授权
+				GrantAuthorization(agAccesss, passList, egElevators, employee.getCardno(), Integer.parseInt(flag));
+				// 修改状态
 				employee.setCarstatus(new Integer(flag));
 				hrmService.modifyEmployee(employee);
 			}
-		}catch(Exception e) {
-			b="授权操作失败";
+		} catch (Exception e) {
+			b = "授权操作失败";
 			map.put("message", b);
 		}
 		return map;
 	}
-    //门禁,通道  int authority[] = { 1, 1, 1, 1 };
-	public static void GrantAuthorization(List<Access> agAccesss,List<Passageway> passList,List<Elevator> egElevators,String cardno,int flag) {
+
+	// 门禁,通道 int authority[] = { 1, 1, 1, 1 };
+	public static void GrantAuthorization(List<Access> agAccesss, List<Passageway> passList, List<Elevator> egElevators,
+			String cardno, int flag) {
 		int authority[] = { 0, 0, 0, 0 };
 		int lay[] = { 0, 0, 0, 0, 0 };
-		if(flag==1) {
-			authority[0]=1;
-			authority[1]=1;
-			authority[2]=1;
-			authority[3]=1;
-			lay[0]=255;
-			lay[1]=255;
-			lay[2]=255;
-			lay[3]=255;
-			lay[4]=255;
+		if (flag == 1) {
+			authority[0] = 1;
+			authority[1] = 1;
+			authority[2] = 1;
+			authority[3] = 1;
+			lay[0] = 255;
+			lay[1] = 255;
+			lay[2] = 255;
+			lay[3] = 255;
+			lay[4] = 255;
 		}
-		for(Access ac:agAccesss) {
-		   AControlUtil.AddUserCard(Long.valueOf(ac.getCsn()), ac.getCip(), Long.valueOf(cardno), (byte) 0x20, (byte) 0x29, (byte) 0x12,
-					(byte) 0x31, authority);
+		for (Access ac : agAccesss) {
+			AControlUtil.AddUserCard(Long.valueOf(ac.getCsn()), ac.getCip(), Long.valueOf(cardno), (byte) 0x20,
+					(byte) 0x29, (byte) 0x12, (byte) 0x31, authority);
 		}
-		for(Passageway pa:passList) {
-			   AControlUtil.AddUserCard(Long.valueOf(pa.getControllerSN()), pa.getControllerIP(), Long.valueOf(cardno), (byte) 0x20, (byte) 0x29, (byte) 0x12,
-						(byte) 0x31, authority);
+		for (Passageway pa : passList) {
+			AControlUtil.AddUserCard(Long.valueOf(pa.getControllerSN()), pa.getControllerIP(), Long.valueOf(cardno),
+					(byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31, authority);
 		}
-		for(Elevator ea:egElevators) {
-			LadderControlUtil.LadderControlUserCard(Long.valueOf(ea.getControllerSN()), ea.getControllerIP(), Long.valueOf(cardno), 1, (byte) 0x20, (byte) 0x29,
-					(byte) 0x12, (byte) 0x31, lay[0], lay[1], lay[2], lay[3], lay[4]);
+		for (Elevator ea : egElevators) {
+			LadderControlUtil.LadderControlUserCard(Long.valueOf(ea.getControllerSN()), ea.getControllerIP(),
+					Long.valueOf(cardno), 1, (byte) 0x20, (byte) 0x29, (byte) 0x12, (byte) 0x31, lay[0], lay[1], lay[2],
+					lay[3], lay[4]);
 		}
 	}
+
 	/**
 	 * 处理添加员工请求
 	 * 
@@ -245,28 +249,26 @@ public class EmployeeController {
 		return mv;
 
 	}
+
 	/**
 	 * 处理添加员工前验证物理卡号是否重复的Ajax请求
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value="/employee/AddEmpProving")
-	public Object addValidate(HttpServletRequest request,
-			 HttpServletResponse response){
+	@RequestMapping(value = "/employee/AddEmpProving")
+	public Object addValidate(HttpServletRequest request, HttpServletResponse response) {
 		String cardno = request.getParameter("cardno");
-		Map<String,Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		String test = hrmService.addValidate(cardno);
-		if(!"".equals(test)){
+		if (!"".equals(test)) {
 			map.put("status", false);
 			map.put("message", test);
-		}else{
+		} else {
 			map.put("status", true);
 		}
 		return map;
 	}
-	
-	
-	
+
 	/**
 	 * 处理删除员工请求
 	 * 
@@ -324,7 +326,7 @@ public class EmployeeController {
 		} else {
 			// 创建并封装关联对象
 			this.genericAssociation(job_id, dept_id, employee);
-			//System.out.println("updateEmployee -->> " + employee);
+			// System.out.println("updateEmployee -->> " + employee);
 			// 执行修改操作
 			hrmService.modifyEmployee(employee);
 			// 设置客户端跳转到查询请求
@@ -367,7 +369,7 @@ public class EmployeeController {
 		this.createDept(workbook);
 		this.createJob(workbook);
 		try {
-			String fileName="员工导入模板";
+			String fileName = "员工导入模板";
 			ExcelUtil.write(request, response, workbook, fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -384,7 +386,8 @@ public class EmployeeController {
 		// 定义表格行索引
 		int index = 0;
 		// 添加头信息
-		String[] titles = { "姓名","身份证号","卡号","员工编号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业","备注","车牌号","地址"};
+		String[] titles = { "姓名", "身份证号", "卡号", "员工编号", "性别", "手机", "部门", "职位", "生日", "邮政编码", "电话", "qq号码", "邮箱",
+				"政治面貌", "民族", "学历", "专业", "备注", "车牌号", "地址" };
 		HSSFRow row_head = sheet.createRow(index++);
 		for (int i = 0; i < titles.length; i++) {
 			HSSFCell cell = row_head.createCell(i);
@@ -488,21 +491,21 @@ public class EmployeeController {
 	@RequestMapping(value = "/employee/importEmployee")
 	public ModelAndView importEmployee(ModelAndView mv,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
-		
-		List<Dept> depts=hrmService.findAllDept();
-		Map<String, Integer> map_dept=new HashMap<>();
+
+		List<Dept> depts = hrmService.findAllDept();
+		Map<String, Integer> map_dept = new HashMap<>();
 		for (Dept dept : depts) {
 			map_dept.put(dept.getName(), dept.getId());
 		}
-		List<Job> jobs=hrmService.findAllJob();
-		Map<String, Integer> map_job=new HashMap<>();
+		List<Job> jobs = hrmService.findAllJob();
+		Map<String, Integer> map_job = new HashMap<>();
 		for (Job job : jobs) {
 			map_job.put(job.getName(), job.getId());
 		}
-		
-		//执行excel的行索引
-		int excelRowIndex=0;
-		
+
+		// 执行excel的行索引
+		int excelRowIndex = 0;
+
 		Map<String, Object> map = new HashMap<>();
 		try {
 			InputStream is = file.getInputStream();
@@ -511,7 +514,8 @@ public class EmployeeController {
 			Row row = sheet.getRow(0);
 			int colNum = row.getPhysicalNumberOfCells();
 			List<Map<Integer, String>> list = ExcelUtil.readSheet(sheet, colNum);
-			// "姓名","身份证号","卡号"," 员工编号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业","备注","车牌号","地址"
+			// "姓名","身份证号","卡号","
+			// 员工编号","性别","手机","部门","职位","生日","邮政编码","电话","qq号码","邮箱","政治面貌","民族","学历","专业","备注","车牌号","地址"
 			for (Map<Integer, String> data : list) {
 				Employee employee = new Employee();
 				for (Integer key : data.keySet()) {
@@ -525,17 +529,17 @@ public class EmployeeController {
 						employee.setSex(1);
 					}
 					employee.setPhone(data.get(5));
-					if(StringUtils.isNotBlank(data.get(6))){
+					if (StringUtils.isNotBlank(data.get(6))) {
 						Dept dept = new Dept();
 						dept.setId(map_dept.get(data.get(6)));
-						employee.setDept(dept);	
+						employee.setDept(dept);
 					}
-					if(StringUtils.isNotBlank(data.get(7))){
+					if (StringUtils.isNotBlank(data.get(7))) {
 						Job job = new Job();
 						job.setId(map_job.get(data.get(7)));
 						employee.setJob(job);
 					}
-					if(StringUtils.isNotBlank(data.get(8))){
+					if (StringUtils.isNotBlank(data.get(8))) {
 						employee.setBirthday(DateUtil.StringToDate(data.get(8), DateStyle.YYYY_MM_DD_EN));
 					}
 					employee.setPostCode(data.get(9));
@@ -554,12 +558,12 @@ public class EmployeeController {
 				excelRowIndex++;
 			}
 			map.put("status", true);
-			map.put("message", "成功导入"+list.size()+"行数据");
+			map.put("message", "成功导入" + list.size() + "行数据");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			map.put("status", false);
-			map.put("message", "成功导入"+excelRowIndex+"行数据");
-			map.put("exception", "导入第"+(excelRowIndex+1)+"行数据出错："+e1.getMessage());
+			map.put("message", "成功导入" + excelRowIndex + "行数据");
+			map.put("exception", "导入第" + (excelRowIndex + 1) + "行数据出错：" + e1.getMessage());
 		}
 		mv.addObject("map", map);
 		mv.setViewName("upload/resultImport");
@@ -567,199 +571,323 @@ public class EmployeeController {
 
 	}
 
-	
 	@RequestMapping(value = "/employee/selectTrajectoryEmp")
-	public String selectTrajectoryEmp(HttpServletRequest request,Integer pageIndex,Model model) {
+	public String selectTrajectoryEmp(HttpServletRequest request, Integer pageIndex, Model model) {
 		// 创建分页对象
 		PageModel pageModel = new PageModel();
 		// 如果参数pageIndex不为null，设置pageIndex，即显示第几页
 		if (pageIndex != null) {
 			pageModel.setPageIndex(pageIndex);
 		}
-		String pageParam=""; 
-		String name=request.getParameter("name");
+		String pageParam = "";
+		String name = request.getParameter("name");
 		model.addAttribute("name", name);
-		if(StringUtils.isNotBlank(name)){pageParam+="&name="+name;}else{pageParam+="&name=";}
-		String cardno=request.getParameter("cardno");
-		model.addAttribute("cardno", cardno);
-		if(StringUtils.isNotBlank(cardno)){pageParam+="&cardno="+cardno;}else{pageParam+="&cardno=";}
-		String phone=request.getParameter("phone");
-		model.addAttribute("phone", phone);
-		if(StringUtils.isNotBlank(phone)){pageParam+="&phone="+phone;}else{pageParam+="&phone=";}
-		String sDate=request.getParameter("sDate");
-		model.addAttribute("sDate", sDate);
-		if(StringUtils.isNotBlank(sDate)){pageParam+="&sDate="+sDate;}
-		String eDate=request.getParameter("eDate");
-		model.addAttribute("eDate", eDate);
-		if(StringUtils.isNotBlank(eDate)){pageParam+="&eDate="+eDate;}
-		//Osnd 部门条件
-		String dept_id=request.getParameter("dept_id");
-		model.addAttribute("dept_id", dept_id);
-		if(StringUtils.isNotBlank(dept_id)){
-			pageParam+="&dept_id="+dept_id;
+		if (StringUtils.isNotBlank(name)) {
+			pageParam += "&name=" + name;
+		} else {
+			pageParam += "&name=";
 		}
-		
+		String cardno = request.getParameter("cardno");
+		model.addAttribute("cardno", cardno);
+		if (StringUtils.isNotBlank(cardno)) {
+			pageParam += "&cardno=" + cardno;
+		} else {
+			pageParam += "&cardno=";
+		}
+		String phone = request.getParameter("phone");
+		model.addAttribute("phone", phone);
+		if (StringUtils.isNotBlank(phone)) {
+			pageParam += "&phone=" + phone;
+		} else {
+			pageParam += "&phone=";
+		}
+		String sDate = request.getParameter("sDate");
+		model.addAttribute("sDate", sDate);
+		if (StringUtils.isNotBlank(sDate)) {
+			pageParam += "&sDate=" + sDate;
+		}
+		String eDate = request.getParameter("eDate");
+		model.addAttribute("eDate", eDate);
+		if (StringUtils.isNotBlank(eDate)) {
+			pageParam += "&eDate=" + eDate;
+		}
+		// Osnd 部门条件
+		String dept_id = request.getParameter("dept_id");
+		model.addAttribute("dept_id", dept_id);
+		if (StringUtils.isNotBlank(dept_id)) {
+			pageParam += "&dept_id=" + dept_id;
+		}
+
 		model.addAttribute("pageParam", pageParam);
-		
-		TrajectoryEmp trajectoryEmp=new TrajectoryEmp();
-		if(StringUtils.isNotBlank(name)||StringUtils.isNotBlank(cardno)||StringUtils.isNotBlank(phone)){
-			List<Employee> list=hrmService.getEmployeees(name, cardno, phone);
-			String cardnos="";
+
+		TrajectoryEmp trajectoryEmp = new TrajectoryEmp();
+		if (StringUtils.isNotBlank(name) || StringUtils.isNotBlank(cardno) || StringUtils.isNotBlank(phone)) {
+			List<Employee> list = hrmService.getEmployeees(name, cardno, phone);
+			String cardnos = "";
 			for (Employee employee : list) {
-				cardnos+=",'"+employee.getCardno()+"' ";
+				cardnos += ",'" + employee.getCardno() + "' ";
 			}
-			if(cardnos.contains(",")){
+			if (cardnos.contains(",")) {
 				trajectoryEmp.setCardno(cardnos.substring(1));
-			}else{
+			} else {
 				trajectoryEmp.setCardno("null");
 			}
 		}
-		
-		if(StringUtils.isNotBlank(sDate)){
+
+		if (StringUtils.isNotBlank(sDate)) {
 			trajectoryEmp.setStartTime(DateUtil.StringToDate(sDate));
 		}
-		if(StringUtils.isNotBlank(eDate)){
+		if (StringUtils.isNotBlank(eDate)) {
 			trajectoryEmp.setEndTime(DateUtil.StringToDate(eDate));
 		}
-		//Osnd加的部门信息
+		// Osnd加的部门信息
 		List<Dept> depts = hrmService.findAllDept();
 		model.addAttribute("depts", depts);
-		//按部门查
-		if(StringUtils.isNotBlank(dept_id)){
+		// 按部门查
+		if (StringUtils.isNotBlank(dept_id)) {
 			trajectoryEmp.setTrajectoryDept(dept_id);
 		}
-		
-		List<TrajectoryEmp> traEmps=trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
+
+		List<TrajectoryEmp> traEmps = trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
 		model.addAttribute("traEmps", traEmps);
 		model.addAttribute("pageModel", pageModel);
 		// 返回员工页面
 		return "employee/trajectoryEmp";
 
 	}
-	//导出内部员工的出入记录
-	//导出历史记录Excel 
-			@RequestMapping(value="/employee/exportExcel")
-			public void exportExcel(HttpServletRequest request,
-					HttpServletResponse response){
-				
-			PageModel pageModel = new PageModel();
-			pageModel.setPageSize(Integer.MAX_VALUE);
-				
-				//名字导出
-				String name=request.getParameter("name");
-				//卡号导出
-				String cardno=request.getParameter("cardno");
-				//电话号导出
-				String phone=request.getParameter("phone");
-				//时间导出
-				String sDate=request.getParameter("sDate");
-				String eDate=request.getParameter("eDate");
-				//按部门
-				String dept_id=request.getParameter("dept_id");
-				
-				TrajectoryEmp trajectoryEmp=new TrajectoryEmp();
-				if(StringUtils.isNotBlank(name)||StringUtils.isNotBlank(cardno)||StringUtils.isNotBlank(phone)){
-					List<Employee> list=hrmService.getEmployeees(name, cardno, phone);
-					String cardnos="";
-					for (Employee employee : list) {
-						cardnos+=",'"+employee.getCardno()+"' ";
-					}
-					if(cardnos.contains(",")){
-						trajectoryEmp.setCardno(cardnos.substring(1));
-					}else{
-						trajectoryEmp.setCardno("null");
-					}
-				}
-				
-				if(StringUtils.isNotBlank(sDate)){
-					trajectoryEmp.setStartTime(DateUtil.StringToDate(sDate));
-				}
-				if(StringUtils.isNotBlank(eDate)){
-					trajectoryEmp.setEndTime(DateUtil.StringToDate(eDate));
-				}
-				if(StringUtils.isNotBlank(dept_id)){
-					trajectoryEmp.setTrajectoryDept(dept_id);
-				}
-				List<TrajectoryEmp> traEmps=trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
-				
-				// 声明一个工作薄
-				HSSFWorkbook workbook = new HSSFWorkbook();
-				String sheetName = "员工出入记录";//sheet名称
-				HSSFSheet sheet = workbook.createSheet(sheetName);
-				sheet.setFitToPage(true);  
-			    sheet.setHorizontallyCenter(true);
-			    //里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
-			    CellRangeAddress c = CellRangeAddress.valueOf("A2:F2");  
-				sheet.setAutoFilter(c);
-			    //设置列宽
-			    sheet.setColumnWidth(0, 5000);
-		        sheet.setColumnWidth(1, 5000);		
-		        sheet.setColumnWidth(2, 5000);
-		        sheet.setColumnWidth(3, 5000);
-		        sheet.setColumnWidth(4, 5000);
-		        sheet.setColumnWidth(5, 6000);
-		      //定义表格行索引
-		        int index=0;
-		      //添加标题
-		        HSSFRow row_title = sheet.createRow(index++);
-		        row_title.setHeight((short) 600);// 设置行高 
-		        HSSFCell row_title0 = row_title.createCell(0);   
-		        row_title0.setCellValue(new HSSFRichTextString("员工出入记录")); 
-		        //合并表头单元格
-		        ExcelUtil.setRegionStyle(sheet, new Region(0,(short)0,0,(short)5),ExcelUtil.createTitleStyle(workbook));
-		        sheet.addMergedRegion(new Region(
-		        0 //first row (0-based) from 行  
-		        ,(short)0 //first column (0-based) from 列     
-		        ,0//last row  (0-based)  to 行
-		        ,(short)5//last column  (0-based)  to 列     
-		        ));
-		        
-		        //添加头信息
-		        String[] titles={"姓名","手机号码","员工卡号","部门","进出","时间"};
-		        HSSFRow row_head = sheet.createRow(index++);
-		        for (int i=0; i<titles.length;i++) {
-		        	HSSFCell cell = row_head.createCell(i);
-					cell.setCellValue(titles[i]);
-					cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
-				}
-		        
-		        for (TrajectoryEmp entity : traEmps) {
-		        	HSSFRow row = sheet.createRow(index++);
-		        	//姓名
-		        	HSSFCell cell0 = row.createCell(0);
-		        	cell0.setCellValue(entity.getEmployees().getName());
-		        	//手机号码
-		        	HSSFCell cell1 = row.createCell(1);
-					cell1.setCellValue(entity.getEmployees().getPhone());
-		        	//员工卡号
-					HSSFCell cell2 = row.createCell(2);
-					cell2.setCellValue(entity.getEmployees().getCardno());
-		        	//部门
-					HSSFCell cell3 = row.createCell(3);
-					if(entity.getEmployees().getDept()!=null){
-						cell3.setCellValue(entity.getEmployees().getDept().getName());
-					}else{
-						cell3.setCellValue("");
-					}
-					//进出
-					HSSFCell cell4 = row.createCell(4);
-					cell4.setCellValue(entity.getOptAction());
-		        	//时间
-					HSSFCell cell5 = row.createCell(5);
-					cell5.setCellValue(DateUtil.DateToString(entity.getOptTime(), "yyyy-MM-dd HH:mm:ss"));
-				}
-		        try {
-					String fileName="员工出入记录";
-					ExcelUtil.write(request, response, workbook, fileName);
-					
-					for (TrajectoryEmp entity : traEmps) {
-						trajectoryEmpService.deleteTrajectory(entity.getId());
-					}
-					
-				} catch (IOException e) {
-					e.printStackTrace();
+
+	// 导出内部员工的出入记录
+	// 导出历史记录Excel
+	@RequestMapping(value = "/employee/exportExcel")
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
+
+		PageModel pageModel = new PageModel();
+		pageModel.setPageSize(Integer.MAX_VALUE);
+
+		// 名字导出
+		String name = request.getParameter("name");
+		// 卡号导出
+		String cardno = request.getParameter("cardno");
+		// 电话号导出
+		String phone = request.getParameter("phone");
+		// 时间导出
+		String sDate = request.getParameter("sDate");
+		String eDate = request.getParameter("eDate");
+		// 按部门
+		String dept_id = request.getParameter("dept_id");
+
+		TrajectoryEmp trajectoryEmp = new TrajectoryEmp();
+		if (StringUtils.isNotBlank(name) || StringUtils.isNotBlank(cardno) || StringUtils.isNotBlank(phone)) {
+			List<Employee> list = hrmService.getEmployeees(name, cardno, phone);
+			String cardnos = "";
+			for (Employee employee : list) {
+				cardnos += ",'" + employee.getCardno() + "' ";
+			}
+			if (cardnos.contains(",")) {
+				trajectoryEmp.setCardno(cardnos.substring(1));
+			} else {
+				trajectoryEmp.setCardno("null");
+			}
+		}
+
+		if (StringUtils.isNotBlank(sDate)) {
+			trajectoryEmp.setStartTime(DateUtil.StringToDate(sDate));
+		}
+		if (StringUtils.isNotBlank(eDate)) {
+			trajectoryEmp.setEndTime(DateUtil.StringToDate(eDate));
+		}
+		if (StringUtils.isNotBlank(dept_id)) {
+			trajectoryEmp.setTrajectoryDept(dept_id);
+		}
+		List<TrajectoryEmp> traEmps = trajectoryEmpService.selectTrajectory(trajectoryEmp, pageModel);
+
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		String sheetName = "员工出入记录";// sheet名称
+		HSSFSheet sheet = workbook.createSheet(sheetName);
+		sheet.setFitToPage(true);
+		sheet.setHorizontallyCenter(true);
+		// 里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+		CellRangeAddress c = CellRangeAddress.valueOf("A2:F2");
+		sheet.setAutoFilter(c);
+		// 设置列宽
+		sheet.setColumnWidth(0, 5000);
+		sheet.setColumnWidth(1, 5000);
+		sheet.setColumnWidth(2, 5000);
+		sheet.setColumnWidth(3, 5000);
+		sheet.setColumnWidth(4, 5000);
+		sheet.setColumnWidth(5, 6000);
+		// 定义表格行索引
+		int index = 0;
+		// 添加标题
+		HSSFRow row_title = sheet.createRow(index++);
+		row_title.setHeight((short) 600);// 设置行高
+		HSSFCell row_title0 = row_title.createCell(0);
+		row_title0.setCellValue(new HSSFRichTextString("员工出入记录"));
+		// 合并表头单元格
+		ExcelUtil.setRegionStyle(sheet, new Region(0, (short) 0, 0, (short) 5), ExcelUtil.createTitleStyle(workbook));
+		sheet.addMergedRegion(new Region(0 // first row (0-based) from 行
+				, (short) 0 // first column (0-based) from 列
+				, 0// last row (0-based) to 行
+				, (short) 5// last column (0-based) to 列
+		));
+
+		// 添加头信息
+		String[] titles = { "姓名", "手机号码", "员工卡号", "部门", "进出", "时间" };
+		HSSFRow row_head = sheet.createRow(index++);
+		for (int i = 0; i < titles.length; i++) {
+			HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+
+		for (TrajectoryEmp entity : traEmps) {
+			HSSFRow row = sheet.createRow(index++);
+			// 姓名
+			HSSFCell cell0 = row.createCell(0);
+			cell0.setCellValue(entity.getEmployees().getName());
+			// 手机号码
+			HSSFCell cell1 = row.createCell(1);
+			cell1.setCellValue(entity.getEmployees().getPhone());
+			// 员工卡号
+			HSSFCell cell2 = row.createCell(2);
+			cell2.setCellValue(entity.getEmployees().getCardno());
+			// 部门
+			HSSFCell cell3 = row.createCell(3);
+			if (entity.getEmployees().getDept() != null) {
+				cell3.setCellValue(entity.getEmployees().getDept().getName());
+			} else {
+				cell3.setCellValue("");
+			}
+			// 进出
+			HSSFCell cell4 = row.createCell(4);
+			cell4.setCellValue(entity.getOptAction());
+			// 时间
+			HSSFCell cell5 = row.createCell(5);
+			cell5.setCellValue(DateUtil.DateToString(entity.getOptTime(), "yyyy-MM-dd HH:mm:ss"));
+		}
+		try {
+			String fileName = "员工出入记录";
+			ExcelUtil.write(request, response, workbook, fileName);
+
+			for (TrajectoryEmp entity : traEmps) {
+				trajectoryEmpService.deleteTrajectory(entity.getId());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 导出员工信息
+	@RequestMapping(value = "/employee/induce")
+	public void exportExcelInduce(HttpServletRequest request, HttpServletResponse response, Integer job_id,
+			Integer dept_id, @ModelAttribute Employee employee) {
+
+		PageModel pageModel = new PageModel();
+		pageModel.setPageSize(Integer.MAX_VALUE);
+
+		// 模糊查询时判断是否有关联对象传递，如果有，创建并封装关联对象
+		this.genericAssociation(job_id, dept_id, employee);
+		List<Employee> employees = hrmService.findEmployee(employee, pageModel);
+
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		String sheetName = "员工信息";// sheet名称
+		HSSFSheet sheet = workbook.createSheet(sheetName);
+		sheet.setFitToPage(true);
+		sheet.setHorizontallyCenter(true);
+		// 里的A1：R1，表示是从哪里开始，哪里结束这个筛选框
+		CellRangeAddress c = CellRangeAddress.valueOf("A2:D2");
+		sheet.setAutoFilter(c);
+		sheet.setColumnWidth(0, 2800);
+		sheet.setColumnWidth(1, 2800);
+		sheet.setColumnWidth(2, 4800);
+		sheet.setColumnWidth(3, 8800);
+		sheet.setColumnWidth(4, 3800);
+		sheet.setColumnWidth(5, 3800);
+		sheet.setColumnWidth(6, 3800);
+		sheet.setColumnWidth(7, 4800);
+		sheet.setColumnWidth(8, 3800);
+		int index = 0;
+		HSSFRow row_title = sheet.createRow(index++);
+		row_title.setHeight((short) 600);// 设置行高
+		HSSFCell row_title0 = row_title.createCell(0);
+		row_title0.setCellValue(new HSSFRichTextString("员工信息"));
+		// 合并表头单元格
+		ExcelUtil.setRegionStyle(sheet, new Region(0, (short) 0, 0, (short) 8), ExcelUtil.createTitleStyle(workbook));
+		sheet.addMergedRegion(new Region(0 // first row (0-based) from 行
+				, (short) 0 // first column (0-based) from 列
+				, 0// last row (0-based) to 行
+				, (short) 8// last column (0-based) to 列
+		));
+
+		String[] titles = { "姓名", "编号", "职位", "部门","手机号码","员工卡号","卡授权状态", "身份证号码","建档日期"};
+		HSSFRow row_head = sheet.createRow(index++);
+		for (int i = 0; i < titles.length; i++) {
+			HSSFCell cell = row_head.createCell(i);
+			cell.setCellValue(titles[i]);
+			cell.setCellStyle(ExcelUtil.createTextStyle(workbook));
+		}
+
+		for (Employee entity : employees) {
+			HSSFRow row = sheet.createRow(index++);
+			// "姓名", 
+			HSSFCell cell0 = row.createCell(0);
+			if (entity.getName() != null) {
+				cell0.setCellValue(entity.getName());
+			}
+			// "编号", 
+			HSSFCell cell1 = row.createCell(1);
+			if (entity.getHobby() != null) {
+				cell1.setCellValue(entity.getHobby());
+			}
+			// "职位", 
+			HSSFCell cell2 = row.createCell(2);
+			if (entity.getJob() != null) {
+				cell2.setCellValue(entity.getJob().getName());
+			}
+			// "部门",
+			HSSFCell cell3 = row.createCell(3);
+			if (entity.getDept() != null) {
+				cell3.setCellValue(entity.getDept().getName());
+			}
+			//"手机号码",
+			HSSFCell cell4 = row.createCell(4);
+			if (entity.getPhone() != null) {
+				cell4.setCellValue(entity.getPhone());
+			}
+			//"员工卡号",
+			HSSFCell cell5 = row.createCell(5);
+			if (entity.getCardno() != null) {
+				cell5.setCellValue(entity.getCardno());
+			}
+			//"卡授权状态", 
+			HSSFCell cell6 = row.createCell(6);
+			if (entity.getCarstatus() != null) {
+				if(entity.getCarstatus()==1){
+					cell6.setCellValue("内部员工授权");
+				}else{
+					cell6.setCellValue("外部员工授权");
 				}
 			}
-	
-	
+			//"身份证号码",
+			HSSFCell cell7 = row.createCell(7);
+			if (entity.getCardId() != null) {
+				cell7.setCellValue(entity.getCardId());
+			}
+			//"建档日期"
+			HSSFCell cell8 = row.createCell(8);
+			if (entity.getCreateDate() != null) {
+				cell8.setCellValue(DateUtil.DateToString(entity.getCreateDate(), "yyyy-MM-dd"));
+			}
+			
+		}
+		try {
+			String fileName = "员工信息";
+			ExcelUtil.write(request, response, workbook, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

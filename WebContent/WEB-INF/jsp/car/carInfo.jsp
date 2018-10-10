@@ -61,18 +61,28 @@
 	 			   });
 	 		   }
 	 	   })
-	 	   /** 添加员工绑定点击事件 */
+	 	   /** 添加绑定点击事件 */
 	 	   $("#add").click(function(){
-	 		   window.location = "${ctx }/car/addcarInfo?flag=1";
+	 		   window.location = "${ctx}/car/addcarInfo?flag=1";
 	 	   })
 	 	   /** 导入车辆 */
 	 	  $("#import").click(function(){
-	 		   window.location = "${ctx }/car/importcarPage";
+	 		   window.location = "${ctx}/car/importcarPage";
 	 	  })
-	 	  $("#induce").click(function(){
-	 		   window.location = "${ctx }/car/induce";
-	 	  })
+	 	 
 	 	  
+	 	 $("#search").click(function(){
+	 		   var actionURL = $("#carform").attr("action");
+	 	       $("#carform").attr("action"," ${ctx}/car/carInfo");
+	 	       $("#carform").submit(); 
+	 	   })
+		 /** 给导出添加绑定点击事件 */
+		 $("#induce").click(function(){
+		 		  var actionURL = $("#carform").attr("action");
+		 	       $("#carform").attr("action","${ctx}/car/induce");
+		 	       $("#carform").submit();
+		 	   })
+	 	 
 	 	 
 	 })
 	</script>
@@ -95,7 +105,7 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="carform" method="post" id="carform" action="${ctx}/car/carInfo">
+			  	<form name="carform" method="post" id="carform" >
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
@@ -103,7 +113,7 @@
 					    	车牌号：<input type="text" name="carno" value="${carInfo.carno }">
 					    	所在单位：<input type="text" name="company" value="${carInfo.company}">
 					    	工号：<input type="text" name="workNumber" value="${carInfo.workNumber}">
-					    	<input type="submit" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
+					    	<input type="button" id="search" value="&nbsp;&nbsp;搜索&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="delete" type="button" value="&nbsp;&nbsp;删除&nbsp;&nbsp;"/>&nbsp;
 					    	<input id="add" type="button" value="&nbsp;&nbsp;添加&nbsp;&nbsp;"/>
 					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>

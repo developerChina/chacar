@@ -68,6 +68,13 @@
 		 	       $("#empform").attr("action","${ctx}/employee/selectEmployee");
 		 	       $("#empform").submit();
 		 	   })
+		 	   /** 给导出添加绑定点击事件 */
+			 $("#induce").click(function(){
+			 		  var actionURL = $("#empform").attr("action");
+			 	       $("#empform").attr("action","${ctx}/employee/induce");
+			 	       $("#empform").submit();
+			 	   })
+		 	   
 	    	   
 		       /** 添加员工绑定点击事件 */
 		 	   $("#add").click(function(){
@@ -119,6 +126,7 @@
 	    	         	});
 	    		   }
 	    	   })
+	    	   
 	       })
 	       
 	</script>
@@ -141,7 +149,7 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/employee/selectEmployee">
+			  	<form name="empform" method="post" id="empform" >
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
@@ -181,7 +189,7 @@
 					    	<input id="delete" type="button" value="&nbsp;删除&nbsp;"/>
 					    	<input id="add" type="button" value="&nbsp;添加&nbsp;"/>
 					    	<input id="import" type="button" value="&nbsp;导入&nbsp;"/>
-					    
+					    	<input id="induce" type="button" value="&nbsp;导出&nbsp;"/>
 					    </td>
 					  </tr>
 					</table>

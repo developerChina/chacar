@@ -69,10 +69,28 @@ public class CarAuthorityServiceImpl implements CarAuthorityService{
 				nos = nos.substring(0,nos.length() - 1);
 				entity.setName(nos);
 			}else{
-				entity.setName("000000");
+				entity.setName("'000000'");
 			}
+		}else{
+			entity.setName("");
 		}
-		
+		//按车场查询park_id
+		String parkid = entity.getPark_id();
+		if(parkid!=null && !"0".equals(parkid)){
+			String nos = "";
+			List<CarPassageway> listpid = passagewaydao.selectByParkid(Integer.parseInt(parkid));
+			if(listpid!=null&&listpid.size()>0){
+				for (CarPassageway entityCP : listpid) {
+					nos+=entityCP.getId()+",";
+				}
+				nos = nos.substring(0,nos.length() - 1);
+				entity.setPark_id(nos);
+			}else{
+				entity.setPark_id("000000");
+			}
+		}else{
+			entity.setPark_id("");
+		}
 		/** 当前需要分页的总数据条数  */
 		Map<String,Object> params = new HashMap<>();
 		params.put("entity", entity);
