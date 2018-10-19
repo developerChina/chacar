@@ -117,7 +117,9 @@
 		    			   <input type="checkbox" name="userPower" id="authority_8" value="8" checked/>定位系统
 		    			   &nbsp;
 		    			   <input type="checkbox" name="userPower" id="authority_9" value="9" checked/>排队叫号
-		    			   &nbsp; 
+		    			   &nbsp;
+		    			   <input type="checkbox" name="userPower" id="authority_11" value="11" checked/>临时定位仪系统 
+		    			   &nbsp;
 		    			</td>
 		    		</tr>
 		    	</table>

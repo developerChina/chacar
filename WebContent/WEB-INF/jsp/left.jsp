@@ -177,6 +177,20 @@
 				  <tr><td height="2"></td></tr>
 			  </c:if>
 			  
+			  <!-- 2018-10-17 新增的临时GPS办理 -->
+			   <c:if test="${th=='11'}">
+		           <tr><td id="navbg10" class="left_nav_closed" ><div class="font1">临时定位仪系统</div></td></tr>
+				  <tr valign="top" id="submenu10" style="display: none">
+				    <td class="left_nav_bgshw tdbtmline" height="50">
+				    <!--查询-->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/temporary/queryAck" target="main">查询</a></img></p>
+					<!--办理-->
+					<p class="left_nav_link"><img src="${ctx}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${ctx}/temporary/handleAck" target="main">办理</a></img></p>
+					</td>
+				  </tr>
+				  <tr><td height="2"></td></tr>
+			  </c:if>
+			  
 			  
 			</c:forEach>
 			  <tr><td height="2"></td></tr>
